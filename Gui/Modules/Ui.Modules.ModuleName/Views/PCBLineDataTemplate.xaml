@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:if="clr-namespace:Ui.Modules.ModuleName.ViewModels"
+                    xmlns:local="clr-namespace:Ui.Modules.ModuleName.Views">
+    <DataTemplate DataType="{x:Type if:ViewModelLine}">
+        <Canvas Visibility="{Binding LineVisibility}">
+            <Canvas.ToolTip>
+                <ToolTip Visibility="Visible" Content="{Binding ObjectNames}" />
+            </Canvas.ToolTip>
+            <Canvas.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Hide" Command="{Binding Hide}" />
+                </ContextMenu>
+            </Canvas.ContextMenu>
+            <Path Data="{Binding Points}" Opacity="{Binding Opacity}" StrokeThickness="3" Stroke="{Binding LineColor}"/>
+            <Label Content="{Binding NetName}" Opacity="{Binding Opacity}">
+                <Label.RenderTransform>
+                    <TranslateTransform X="{Binding XPositionNetName}" Y="{Binding YPositionNetName}"/>
+                </Label.RenderTransform>
+            </Label>
+        </Canvas>
+    </DataTemplate>
+</ResourceDictionary>

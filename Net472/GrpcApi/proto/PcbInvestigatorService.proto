@@ -1,0 +1,91 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+service PcbInvestigatorService {
+	// Gets all objects
+	rpc GetConvertedObjects(Request) returns (Result) {};
+	rpc GetConvertedObjectsByZip(RequestZip) returns (Result) {};
+	rpc ClientAvailable(Empty) returns (StatusResult) {};
+}
+
+message Empty {}
+
+message StatusResult {
+	bool status = 1;
+}
+
+message RequestZip {
+	bytes zipFolder = 1;
+}
+
+message Request {
+	string pathToOdb = 1;
+}
+
+message Result {
+	map<int32, PinGrpc> pins = 1;
+	map<int32, ComponentGrpc> components = 2;
+	map<int32, NetGrpc> nets = 3;
+}
+
+message PinGrpc {
+	repeated int32 nets = 1;
+	GeometricsGrpc geometrics = 2;
+	PinTypeGrpc pinType = 3;
+}
+
+enum PinTypeGrpc {
+	UnknownPinType = 0;
+	PinEllipse = 1;
+	PinRectangle = 2;
+	PinPolygon = 3;
+}
+
+message GeometricsGrpc {
+	RectangleGrpc bounds = 1;
+	PointGrpc centerPoint = 2;
+	float rotation = 3;
+}
+
+message RectangleGrpc {
+	int32 x = 1;
+	int32 y = 2;
+	int32 width = 3;
+	int32 height = 4;
+}
+
+message PointGrpc {
+	float x = 1;
+	float y = 2;
+}
+
+message NetGrpc {
+	repeated int32 pins = 1;
+	repeated int32 components = 2;
+	string netName = 3;
+}
+
+message ComponentGrpc {
+	GeometricsGrpc geometrics = 1;
+	FunctionalAttributesGrpc functionals = 2;
+	repeated int32 pins = 3;
+}
+
+message FunctionalAttributesGrpc {
+	ComponentTypeGrpc componentType = 1;
+	string ref = 2;
+	string partName = 3;
+	string layerName = 4;
+	string packageName = 5;
+}
+
+enum ComponentTypeGrpc {
+	UnknownComponentType = 0;
+	Arc = 1;
+	Line = 2;
+	Pad = 3;
+	Surface = 4;
+	Text = 5;
+	Symbol = 6;
+	Component = 7;
+}

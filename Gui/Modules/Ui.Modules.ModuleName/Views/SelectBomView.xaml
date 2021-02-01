@@ -1,0 +1,35 @@
+﻿<Window x:Class="Ui.Modules.ModuleName.Views.SelectBomView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ui.Modules.ModuleName.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="true"
+        mc:Ignorable="d"
+        Title="BOM file settings" Height="250" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Separator:" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding Separator, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="5" VerticalAlignment="Center" />
+        <TextBlock Text="Column number of REF:" Grid.Row="1" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding ColumnRef, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="5" VerticalAlignment="Center" />
+        <TextBlock Text="Column number of VALUE:" Grid.Row="2" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding ColumnValue, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Margin="5" VerticalAlignment="Center" />
+        <TextBlock Text="Path to BOM file:" Grid.Row="3" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding BomFile, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" VerticalAlignment="Center" />
+        <Button Content="Select BOM file" Grid.Column="1" Command="{Binding PathCommand}" Grid.Row="5" Padding="5" Margin="5" Width="120" VerticalAlignment="Center" />
+        <Button Content="Finish" Command="{Binding FinishCommand}" Grid.Row="5" Margin="5" Padding="5"  Width="120" VerticalAlignment="Center" />
+    </Grid>
+</Window>

@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:if="clr-namespace:Ui.Modules.ModuleName.ViewModels"
+                    xmlns:local="clr-namespace:Ui.Modules.ModuleName.Views">
+    <DataTemplate DataType="{x:Type if:ViewModelTestpoint}">
+        <Grid>
+            <Grid.RenderTransform>
+                <TranslateTransform X="{Binding PosXWithOffset}" Y="{Binding PosYWithOffset}"/>
+            </Grid.RenderTransform>
+            <Label ClipToBounds="False" Content="{Binding Name}" FontSize="{Binding FontSize}" Panel.ZIndex="1000" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Ellipse Width="{Binding GeometricAttributes.Bounds.Width}" Height="{Binding GeometricAttributes.Bounds.Height}" Fill="{Binding BackgroundColor}" Stroke="Black"
+                   Opacity="{Binding Opacity}"/>
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Toggle visibility" Command="{Binding ToggleVisiblity}"/>
+                    <MenuItem Header="Toggle visibility of all objects with the same type" Command="{Binding ToggleVisiblityAll}" />
+                    <MenuItem Header="Toggle display of connections" Command="{Binding ToggleConnections}" />
+                </ContextMenu>
+            </Grid.ContextMenu>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

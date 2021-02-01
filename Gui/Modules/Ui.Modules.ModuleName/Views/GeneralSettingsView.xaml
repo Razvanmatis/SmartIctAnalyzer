@@ -1,0 +1,79 @@
+﻿<Window x:Class="Ui.Modules.ModuleName.Views.GeneralSettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ui.Modules.ModuleName.Views"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        prism:ViewModelLocator.AutoWireViewModel="true"
+        mc:Ignorable="d"
+        Title="General settings" Height="400" Width="800">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding KeyCommand}" Key="Enter"></KeyBinding>
+    </Window.InputBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Resistor identifier (a;b;c):" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding ResistorIdentifier, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Column="2" Text="Resistor color:" Margin="5" VerticalAlignment="Center"/>
+        <xctk:ColorPicker VerticalAlignment="Center" Margin="5" Grid.Column="3" SelectedColor="{Binding ResistorColor, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox Grid.Column="4" Margin="5" VerticalAlignment="Center" Content="Show names" IsChecked="{Binding ResistorNamesChecked, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <TextBlock Grid.Row="1" Text="Capacitor identifier (a;b;c):" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding CapacitorIdentifier, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="Capacitor color:" Margin="5" VerticalAlignment="Center"/>
+        <xctk:ColorPicker Grid.Row="1" VerticalAlignment="Center" Margin="5" Grid.Column="3" SelectedColor="{Binding CapacitorColor, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox Grid.Row="1" Grid.Column="4" Margin="5" VerticalAlignment="Center" Content="Show names" IsChecked="{Binding CapacitorNamesChecked, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <TextBlock Grid.Row="2" Text="Induction identifier (a;b;c):" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding InductionIdentifier, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="Induction color:" Margin="5" VerticalAlignment="Center"/>
+        <xctk:ColorPicker Grid.Row="2" VerticalAlignment="Center" Margin="5" Grid.Column="3" SelectedColor="{Binding InductionColor, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox Grid.Row="2" Grid.Column="4" Margin="5" VerticalAlignment="Center" Content="Show names" IsChecked="{Binding InductionNamesChecked, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <TextBlock Grid.Row="3" Text="Testpoint identifier (a;b;c):" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding TestpointIdentifier, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="Testpoint color:" Margin="5" VerticalAlignment="Center"/>
+        <xctk:ColorPicker Grid.Row="3" VerticalAlignment="Center" Margin="5" Grid.Column="3" SelectedColor="{Binding TestpointColor, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox Grid.Row="3" Grid.Column="4" Margin="5" VerticalAlignment="Center" Content="Show names" IsChecked="{Binding TestpointNamesChecked, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <TextBlock Grid.Row="4" Text="IC identifier (a;b;c):" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding ICIdentifier, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="IC color:" Margin="5" VerticalAlignment="Center"/>
+        <xctk:ColorPicker Grid.Row="4" VerticalAlignment="Center" Margin="5" Grid.Column="3" SelectedColor="{Binding ICColor, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox Grid.Row="4" Grid.Column="4" Margin="5" VerticalAlignment="Center" Content="Show names" IsChecked="{Binding ICNamesChecked, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <TextBlock Grid.Row="5" Text="Connector identifier (a;b;c):" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding ConnectorIdentifier, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="Connector color:" Margin="5" VerticalAlignment="Center"/>
+        <xctk:ColorPicker Grid.Row="5" VerticalAlignment="Center" Margin="5" Grid.Column="3" SelectedColor="{Binding ConnectorColor, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox Grid.Row="5" Grid.Column="4" Margin="5" VerticalAlignment="Center" Content="Show names" IsChecked="{Binding ConnectorNamesChecked, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="Color of all other components:" Margin="5" VerticalAlignment="Center"/>
+        <xctk:ColorPicker Grid.Row="6" VerticalAlignment="Center" Margin="5" Grid.Column="3" SelectedColor="{Binding CompColor, UpdateSourceTrigger=PropertyChanged}" />
+        <CheckBox Grid.Row="6" Grid.Column="4" Margin="5" VerticalAlignment="Center" Content="Show names" IsChecked="{Binding CompNamesChecked, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <TextBlock Grid.Row="7" Text="Fontsize of names:" Margin="5" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="5" Text="{Binding FontSizeNames, UpdateSourceTrigger=PropertyChanged}" />
+        <Button Content="Save" Grid.Column="3" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="25" Command="{Binding SaveCommand}" />
+        <CheckBox Grid.Row="7" Grid.Column="4" Margin="5" VerticalAlignment="Center" Content="Show net names" IsChecked="{Binding NetNamesChecked, UpdateSourceTrigger=PropertyChanged}" />
+    </Grid>
+</Window>
