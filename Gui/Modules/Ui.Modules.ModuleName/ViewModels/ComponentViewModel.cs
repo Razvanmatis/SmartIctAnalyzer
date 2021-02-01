@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using GrpcClientParser.Implementations;
 using Interfaces;
 using Interfaces.Gui;
@@ -24,7 +26,7 @@ using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.ViewModels
 {
-    public class ComponentViewModel : RegionViewModelBase
+    public class ComponentViewModel : RegionViewModelBase, IComponentViewModel
     {
         private readonly double offsetScrollbar = 25;
         private string message;
@@ -60,9 +62,6 @@ namespace Ui.Modules.ModuleName.ViewModels
             this.settingsVm = settingsVm;
             this.testCoverageDeterminer = testCoverageDeterminer;
             eventService.Subscribe<AddPcbObjectsEvent>(async (x) => await AddPCBComponent(x).ConfigureAwait(true), ThreadOption.UIThread);
-            eventService.Subscribe<HideComponentsByTypeEvent>(ToggleCompleteVisibility, ThreadOption.UIThread);
-            eventService.Subscribe<ShowConnectionsEvent>(ToggleShowConnections, ThreadOption.UIThread);
-            eventService.Subscribe<ShowLayersWithObjectsEvent>(ShowLayerObjects, ThreadOption.UIThread);
             eventService.Subscribe<ResetViewEvent>(ResetView, ThreadOption.UIThread);
             eventService.Subscribe<AddTestCoverageObjectsEvent>(AddTestCoverageObjectToView, ThreadOption.UIThread);
             eventService.Subscribe<ShowObjectsEvent>(ShowTestCoverageObjects, ThreadOption.UIThread);
@@ -196,13 +195,93 @@ namespace Ui.Modules.ModuleName.ViewModels
             ComponentViews.Clear();
             foreach (IPCBComponent compInner in this.allObjects)
             {
-                allViewModelsForPainting.Add(ViewModelFactory.GetViewModelObject(compInner, eventService, settingsVm));
+                allViewModelsForPainting.Add(ViewModelFactory.GetViewModelObject(compInner, eventService, settingsVm, this));
             }
 
             DefineRanges();
             eventService.Publish<SetBusyEvent>(new SetBusyEvent(false));
             eventService.Publish<ChangeExportMenuItemEnabledStateEvent>(new ChangeExportMenuItemEnabledStateEvent(true));
             eventService.Publish<ComponentsImportFinishedEvent>(new ComponentsImportFinishedEvent());
+        }
+
+        public async Task ShowLayerObjects(IList<string> layersToShow)
+        {
+            await Task.Run(() =>
+            {
+                List<string> layersToRemove = GetLayersToRemove(layersToShow, actualLayers);
+                List<string> layersToAdd = GetLayersToAdd(layersToShow, actualLayers);
+                Application.Current.Dispatcher.Invoke(() => RemoveLayerObjectsFromView(layersToRemove));
+                AddLayerObjectsToView(layersToAdd);
+                actualLayers.Clear();
+                actualLayers.AddRange(layersToShow);
+                actualTestCoverageObjects.Clear();
+            }).ConfigureAwait(false);
+        }
+
+        public async Task ToggleCompleteVisibility(Type typeToHide)
+        {
+            await Task.Run(() =>
+            {
+                foreach (ViewModelPCBBase comp in componentViews)
+                {
+                    if (comp is ViewModelPCBComponentBase compToTrigger && compToTrigger.GetType().Equals(typeToHide))
+                    {
+                        compToTrigger.ToggleVisiblity.Execute(null);
+                    }
+                }
+            }).ConfigureAwait(false);
+        }
+
+        public async Task ToggleShowConnections(ViewModelPCBComponentBase comp, bool shouldShow)
+        {
+            await Task.Run(() =>
+            {
+                if (shouldShow)
+                {
+                    List<ViewModelLine> lines = new List<ViewModelLine>();
+
+                    foreach (var net in allNets)
+                    {
+                        if (net.Components.Contains(comp.BaseComponent))
+                        {
+                            foreach (var compOut in net.Components)
+                            {
+                                if (compOut != comp.BaseComponent)
+                                {
+                                    ViewModelPCBComponentBase compWithLines = GetVmObject(compOut);
+                                    if (compWithLines != null)
+                                    {
+                                        PositionHelper pOut = new PositionHelper(comp.GeometricAttributes.Bounds);
+                                        PositionHelper pIn = new PositionHelper(compOut.GeometricAttributes.Bounds);
+                                        PointCollection points = pOut.GetPointsForObject(pIn);
+                                        ViewModelLine lineVm = new ViewModelLine(points, points[points.Count - 1], net.NetName, settingsVm, testCoverageDeterminer);
+                                        lineVm.ConnectedComponents.Add(comp.BaseComponent);
+                                        lineVm.ConnectedComponents.Add(compOut);
+                                        lineVm.CheckForTestCoverage();
+                                        lines.Add(lineVm);
+                                        comp.Lines.Add(lineVm);
+                                        compWithLines.Lines.Add(lineVm);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (lines.Count > 0)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => componentViews.AddRange(lines));
+                    }
+                }
+                else
+                {
+                    foreach (var line in comp.Lines)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => componentViews.Remove(line));
+                    }
+
+                    comp.Lines.Clear();
+                }
+            }).ConfigureAwait(false);
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -267,17 +346,6 @@ namespace Ui.Modules.ModuleName.ViewModels
             allObjects?.Clear();
             allViewModelsForPainting?.Clear();
             eventService.Publish<ChangeExportMenuItemEnabledStateEvent>(new ChangeExportMenuItemEnabledStateEvent(false));
-        }
-
-        private void ShowLayerObjects(ShowLayersWithObjectsEvent obj)
-        {
-            List<string> layersToRemove = GetLayersToRemove(obj.LayersToShow, actualLayers);
-            List<string> layersToAdd = GetLayersToAdd(obj.LayersToShow, actualLayers);
-            RemoveLayerObjectsFromView(layersToRemove);
-            AddLayerObjectsToView(layersToAdd);
-            actualLayers.Clear();
-            actualLayers.AddRange(obj.LayersToShow);
-            actualTestCoverageObjects.Clear();
         }
 
         private void AddLayerObjectsToView(List<string> layersToAdd)
@@ -352,7 +420,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             {
                 if (!ComponentViews.Contains(comp))
                 {
-                    ComponentViews.Add(comp);
+                    Application.Current.Dispatcher.Invoke(() => ComponentViews.Add(comp));
                 }
             }
         }
@@ -387,7 +455,7 @@ namespace Ui.Modules.ModuleName.ViewModels
                     rem.ToggleConnections.Execute(null);
                 }
 
-                ComponentViews.Remove(rem);
+                Application.Current.Dispatcher.Invoke(() => ComponentViews.Remove(rem));
             }
         }
 
@@ -397,55 +465,6 @@ namespace Ui.Modules.ModuleName.ViewModels
             foreach (var obj in objects.GetObjects())
             {
                 mapTestCoverageObjects.Add(obj.Key, obj.Value);
-            }
-        }
-
-        private void ToggleShowConnections(ShowConnectionsEvent obj)
-        {
-            if (obj.ShouldShow)
-            {
-                List<ViewModelLine> lines = new List<ViewModelLine>();
-
-                foreach (var net in allNets)
-                {
-                    if (net.Components.Contains(obj.Component.BaseComponent))
-                    {
-                        foreach (var compOut in net.Components)
-                        {
-                            if (compOut != obj.Component.BaseComponent)
-                            {
-                                ViewModelPCBComponentBase compWithLines = GetVmObject(compOut);
-                                if (compWithLines != null)
-                                {
-                                    PositionHelper pOut = new PositionHelper(obj.Component.GeometricAttributes.Bounds);
-                                    PositionHelper pIn = new PositionHelper(compOut.GeometricAttributes.Bounds);
-                                    PointCollection points = pOut.GetPointsForObject(pIn);
-                                    ViewModelLine lineVm = new ViewModelLine(points, points[points.Count - 1], net.NetName, settingsVm, testCoverageDeterminer);
-                                    lineVm.ConnectedComponents.Add(obj.Component.BaseComponent);
-                                    lineVm.ConnectedComponents.Add(compOut);
-                                    lineVm.CheckForTestCoverage();
-                                    lines.Add(lineVm);
-                                    obj.Component.Lines.Add(lineVm);
-                                    compWithLines.Lines.Add(lineVm);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (lines.Count > 0)
-                {
-                    componentViews.AddRange(lines);
-                }
-            }
-            else
-            {
-                foreach (var line in obj.Component.Lines)
-                {
-                    componentViews.Remove(line);
-                }
-
-                obj.Component.Lines.Clear();
             }
         }
 
@@ -472,17 +491,6 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
 
             return null;
-        }
-
-        private void ToggleCompleteVisibility(HideComponentsByTypeEvent obj)
-        {
-            foreach (ViewModelPCBBase comp in componentViews)
-            {
-                if (comp is ViewModelPCBComponentBase compToTrigger && compToTrigger.GetType().Equals(obj.ComponenTypeToHide))
-                {
-                    compToTrigger.ToggleVisiblity.Execute(null);
-                }
-            }
         }
 
         private void MoveMouseHandler(MouseEventArgs obj)

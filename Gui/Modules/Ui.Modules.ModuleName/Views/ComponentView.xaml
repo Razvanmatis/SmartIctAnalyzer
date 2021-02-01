@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Ui.Modules.ModuleName.Views"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             prism:ViewModelLocator.AutoWireViewModel="true" >
+             prism:ViewModelLocator.AutoWireViewModel="false" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

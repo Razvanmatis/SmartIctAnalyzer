@@ -12,8 +12,8 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         private IGeneralSettingsData settingsVm;
 
-        public ViewModelConnector(IPCBComponent component, IEventService eventService, IGeneralSettingsData settingsVm)
-            : base(component, eventService, settingsVm)
+        public ViewModelConnector(IPCBComponent component, IEventService eventService, IGeneralSettingsData settingsVm, IComponentViewModel componentVm)
+            : base(component, eventService, settingsVm, componentVm)
         {
             this.settingsVm = settingsVm;
             InitSettings();

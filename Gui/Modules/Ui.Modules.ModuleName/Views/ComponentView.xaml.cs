@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Interfaces.PCBApiObjects;
 using Interfaces.PcbInvestigator;
+using Ui.Modules.ModuleName.Interfaces;
 using Ui.Modules.ModuleName.ViewModels;
 
 namespace Ui.Modules.ModuleName.Views
@@ -23,8 +24,9 @@ namespace Ui.Modules.ModuleName.Views
     /// </summary>
     public partial class ComponentView : UserControl
     {
-        public ComponentView()
+        public ComponentView(IComponentViewModel componentVm)
         {
+            DataContext = componentVm;
             InitializeComponent();
             ((ComponentViewModel)DataContext).Scrollviewer = Scrollviewer;
         }

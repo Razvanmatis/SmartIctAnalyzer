@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -28,16 +29,18 @@ namespace Ui.Modules.ModuleName.ViewModels
         private SolidColorBrush borderColor;
         private int borderThickness;
         private Visibility toolTipVisible;
+        private IComponentViewModel componentVm;
 
-        public ViewModelPCBComponentBase(IPCBComponent component, IEventService eventService, IGeneralSettingsData settingsVm)
+        public ViewModelPCBComponentBase(IPCBComponent component, IEventService eventService, IGeneralSettingsData settingsVm, IComponentViewModel componentVm)
             : base(component.GeometricAttributes.Bounds.X, component.GeometricAttributes.Bounds.Y)
         {
+            this.componentVm = componentVm;
             this.component = component;
             this.settingsVm = settingsVm;
             this.eventService = eventService;
             ToggleVisiblity = new DelegateCommand(ToggleVisibleState);
-            ToggleVisiblityAll = new DelegateCommand(ToggleVisibiltyAll);
-            ToggleConnections = new DelegateCommand(ToggleConnectionsShowing);
+            ToggleVisiblityAll = new DelegateCommand(async () => await ToggleVisibiltyAll().ConfigureAwait(false));
+            ToggleConnections = new DelegateCommand(async () => await ToggleConnectionsShowing().ConfigureAwait(false));
             Name = component?.FunctionalAttributes?.Ref;
             Value = component?.FunctionalAttributes?.Value;
             InitValues(false);
@@ -192,10 +195,10 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
-        private void ToggleConnectionsShowing()
+        private async Task ToggleConnectionsShowing()
         {
             connectionsShowed = !connectionsShowed;
-            eventService.Publish<ShowConnectionsEvent>(new ShowConnectionsEvent(this, connectionsShowed));
+            await componentVm.ToggleShowConnections(this, connectionsShowed).ConfigureAwait(false);
         }
 
         private void ToggleVisibleState()
@@ -203,9 +206,9 @@ namespace Ui.Modules.ModuleName.ViewModels
             Opacity = Opacity == ViewModelPCBBase.OPACITYMAX ? OPACITYMIN : ViewModelPCBBase.OPACITYMAX;
         }
 
-        private void ToggleVisibiltyAll()
+        private async Task ToggleVisibiltyAll()
         {
-            eventService.Publish<HideComponentsByTypeEvent>(new HideComponentsByTypeEvent(GetType()));
+            await componentVm.ToggleCompleteVisibility(GetType()).ConfigureAwait(false);
         }
     }
 }

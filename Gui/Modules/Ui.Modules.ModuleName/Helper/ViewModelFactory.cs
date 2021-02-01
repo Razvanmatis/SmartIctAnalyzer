@@ -11,35 +11,35 @@ namespace Ui.Modules.ModuleName.Helper
 {
     public static class ViewModelFactory
     {
-        public static ViewModelPCBComponentBase GetViewModelObject(IPCBComponent component, IEventService eventService, IGeneralSettingsData settingsVm)
+        public static ViewModelPCBComponentBase GetViewModelObject(IPCBComponent component, IEventService eventService, IGeneralSettingsData settingsVm, IComponentViewModel componentVm)
         {
             if (component is PCBResistor)
             {
-                return new ViewModelResistor(component, eventService, settingsVm);
+                return new ViewModelResistor(component, eventService, settingsVm, componentVm);
             }
             else if (component is PCBCapacitor)
             {
-                return new ViewModelCapacitor(component, eventService, settingsVm);
+                return new ViewModelCapacitor(component, eventService, settingsVm, componentVm);
             }
             else if (component is PCBInduction)
             {
-                return new ViewModelInduction(component, eventService, settingsVm);
+                return new ViewModelInduction(component, eventService, settingsVm, componentVm);
             }
             else if (component is PCBTestpoint)
             {
-                return new ViewModelTestpoint(component, eventService, settingsVm);
+                return new ViewModelTestpoint(component, eventService, settingsVm, componentVm);
             }
             else if (component is PCBIc)
             {
-                return new ViewModelIc(component, eventService, settingsVm);
+                return new ViewModelIc(component, eventService, settingsVm, componentVm);
             }
             else if (component is PCBConnector)
             {
-                return new ViewModelConnector(component, eventService, settingsVm);
+                return new ViewModelConnector(component, eventService, settingsVm, componentVm);
             }
             else
             {
-                return new ViewModelComponent(component, eventService, settingsVm);
+                return new ViewModelComponent(component, eventService, settingsVm, componentVm);
             }
         }
     }

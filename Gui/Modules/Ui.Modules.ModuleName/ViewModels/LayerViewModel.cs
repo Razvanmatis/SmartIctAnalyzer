@@ -10,6 +10,7 @@ using Prism.Regions;
 using ProMik.Services.Interfaces;
 using Ui.Core.Mvvm;
 using Ui.Modules.ModuleName.Events;
+using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.ViewModels
 {
@@ -20,10 +21,12 @@ namespace Ui.Modules.ModuleName.ViewModels
         private ICommand selectionChanged;
         private ObservableCollection<string> objects = new ObservableCollection<string>();
         private ICommand selectionChangedObjects;
+        private IComponentViewModel componentVm;
 
-        public LayerViewModel(IRegionManager regionManager, IEventService eventService)
+        public LayerViewModel(IRegionManager regionManager, IEventService eventService, IComponentViewModel componentVm)
             : base(regionManager)
         {
+            this.componentVm = componentVm;
             this.eventService = eventService;
             eventService.Subscribe<SendLayersEvent>(GetLayers);
             SelectionChanged = new DelegateCommand<IList>(async (x) => await ChangedTheSelection(x).ConfigureAwait(true));
@@ -86,16 +89,13 @@ namespace Ui.Modules.ModuleName.ViewModels
 
         private async Task ChangedTheSelection(IList obj)
         {
-            await Task.Run(() =>
+            IList<string> list = new List<string>();
+            foreach (var item in obj)
             {
-                IList<string> list = new List<string>();
-                foreach (var item in obj)
-                {
-                    list.Add(item.ToString());
-                }
+                list.Add(item.ToString());
+            }
 
-                eventService.Publish<ShowLayersWithObjectsEvent>(new ShowLayersWithObjectsEvent(list));
-            }).ConfigureAwait(true);
+            await componentVm.ShowLayerObjects(list).ConfigureAwait(false);
         }
 
         private async Task ChangedTheSelectionObjects(IList obj)
