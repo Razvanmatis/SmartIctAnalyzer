@@ -20,6 +20,7 @@ namespace TestDotNetCore
     public class TestParserLogic
     {
         private const string PATHTOODB = "C:\\Repositories\\smart_ict_analyser\\Testdaten\\panel";
+        private const string PATHTOIMPORTFILE = "C:\\Repositories\\smart_ict_analyser\\Testdaten\\panel_FullDataWithValues_export.json";
         private static string filePath = Directory.GetCurrentDirectory() + "\\exportApiObjects.txt";
 
         /// <summary>
@@ -33,6 +34,24 @@ namespace TestDotNetCore
             Assert.NotNull(resultData);
             Assert.True(resultData.Count > 0);
             var result = grpcHandler.GetParsedObjectsFromGrpc(PATHTOODB).Result;
+            Assert.NotNull(result);
+            Assert.True(result.Components.Count > 0);
+            Assert.True(result.Nets.Count > 0);
+            TestContent(resultData, result);
+            Debug.WriteLine("Tests finished sucessfully!");
+        }
+
+        /// <summary>
+        /// TestParsingFromApi.
+        /// </summary>
+        [Fact]
+        public void TestParsingFromImport()
+        {
+            IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler();
+            List<PcbTestObject> resultData = GetSerialzedData(filePath);
+            Assert.NotNull(resultData);
+            Assert.True(resultData.Count > 0);
+            var result = grpcHandler.ImportComponentsFromFile(PATHTOIMPORTFILE);
             Assert.NotNull(result);
             Assert.True(result.Components.Count > 0);
             Assert.True(result.Nets.Count > 0);
