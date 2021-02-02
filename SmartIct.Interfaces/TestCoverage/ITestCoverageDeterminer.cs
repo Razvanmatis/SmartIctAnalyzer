@@ -29,10 +29,16 @@ namespace Interfaces.TestCoverage
 
         Task<IList<ITestCoverageResult>> DefineTestCoverageForPullUpDownObjects(IList<IPCBComponent> ics = null, IList<IPCBComponent> pullUpsDowns = null, bool usePullDown = true);
 
-        Task<float> GetTestCoveragePercentageValueForAllOtherObjects(IList<IPCBComponent> ics = null, IList<IPCBComponent> pullUpsDowns = null);
+        Task<float> GetTestCoveragePercentageValueForAllOtherObjects(IList<IPCBComponent> ics = null);
 
         Task<float> GetTestCoveragePercentageValue(IList<IPCBComponent> pullUpsDowns = null, IList<IPCBComponent> ics = null);
 
         Task<float> GetTestCoveragePercentageValueForIcs(IList<IPCBComponent> ics = null);
+
+        void SetTestsPerformedState(TestCoverageObject objectType, bool value);
+
+        bool GetTestsPerformedState(TestCoverageObject objectType);
+
+        IList<IPCBComponent> DefineOthers();
     }
 }

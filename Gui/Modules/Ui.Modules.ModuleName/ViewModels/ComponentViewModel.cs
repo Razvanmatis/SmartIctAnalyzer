@@ -327,9 +327,13 @@ namespace Ui.Modules.ModuleName.ViewModels
             {
                 return TestCoverageObject.PULLDOWN;
             }
-            else
+            else if (layer.Equals("JTAG"))
             {
                 return TestCoverageObject.JTAG;
+            }
+            else
+            {
+                return TestCoverageObject.OTHERS;
             }
         }
 

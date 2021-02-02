@@ -21,6 +21,11 @@ namespace Interfaces.TestCoverage
         /// JTAG
         /// </summary>
         JTAG,
+
+        /// <summary>
+        /// The other components
+        /// </summary>
+        OTHERS,
     }
 
     public interface ITestCoverageResult

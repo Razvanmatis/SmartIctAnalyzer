@@ -31,7 +31,7 @@ namespace Ui.ViewModels
     {
         private const string ITEMNOTSELECTED = "CheckboxBlankOutline";
         private const string ITEMSELECTED = "Checkbox";
-        private static string[] testCoverageObjects = new string[] { "Pullups", "Pulldowns", "JTAG" };
+        private static string[] testCoverageObjects = new string[] { "Pullups", "Pulldowns", "JTAG", "Others" };
         private IEventService eventService;
         private string title = "Smart ICT Tool";
         private GeneralSettingsView generalSettingsView;
@@ -646,6 +646,7 @@ namespace Ui.ViewModels
                 mapObjects.Add(TestCoverageObject.PULLUP, testCoverageDeterminer.DefinePullUpResistors());
                 mapObjects.Add(TestCoverageObject.PULLDOWN, testCoverageDeterminer.DefinePullDownResistors());
                 mapObjects.Add(TestCoverageObject.JTAG, testCoverageDeterminer.DefineIcs());
+                mapObjects.Add(TestCoverageObject.OTHERS, testCoverageDeterminer.DefineOthers());
                 eventService.Publish<AddTestCoverageObjectsEvent>(new AddTestCoverageObjectsEvent(mapObjects));
                 eventService.Publish<TestCoverageForDeterminingObjectsPerformedEvent>(new TestCoverageForDeterminingObjectsPerformedEvent(testCoverageObjects.ToList()));
                 ItemTestCoverageObjects = ITEMSELECTED;
@@ -662,67 +663,81 @@ namespace Ui.ViewModels
 
         private async Task TestCoverageForIcs()
         {
+            bool value = false;
             IList<ITestCoverageResult> result = testCoverageDeterminer.DefineTestCoverageForIcObjects();
             if (result.Count > 0)
             {
                 eventService.Publish<RefreshTestcoverageResultObjects>(new RefreshTestcoverageResultObjects());
                 ItemTestCoverageJtag = ToggleItem(ItemTestCoverageJtag);
+                value = !testCoverageDeterminer.GetTestsPerformedState(TestCoverageObject.JTAG);
             }
             else
             {
                 ItemTestCoverageJtag = ITEMNOTSELECTED;
             }
 
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.JTAG, value);
             DefineTestCoverageLabel(await testCoverageDeterminer.GetTestCoveragePercentageValueForIcs().ConfigureAwait(false));
         }
 
         private async Task TestCoverageForPullUps()
         {
+            bool value = false;
             IList<ITestCoverageResult> results = await testCoverageDeterminer.DefineTestCoverageForPullUpDownObjects(testCoverageDeterminer.DefineIcs(), testCoverageDeterminer.DefinePullUpResistors(), false).ConfigureAwait(true);
             if (results.Count > 0)
             {
                 eventService.Publish<RefreshTestcoverageResultObjects>(new RefreshTestcoverageResultObjects());
                 ItemTestCoveragePullup = ToggleItem(ItemTestCoveragePullup);
+                value = !testCoverageDeterminer.GetTestsPerformedState(TestCoverageObject.PULLUP);
             }
             else
             {
                 ItemTestCoveragePullup = ITEMNOTSELECTED;
             }
 
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.PULLUP, value);
             DefineTestCoverageLabel(await testCoverageDeterminer.GetTestCoveragePercentageValue(testCoverageDeterminer.DefinePullUpResistors()).ConfigureAwait(false));
         }
 
         private async Task TestCoverageForPullDowns()
         {
+            bool value = false;
             IList<ITestCoverageResult> results = await testCoverageDeterminer.DefineTestCoverageForPullUpDownObjects(testCoverageDeterminer.DefineIcs(), testCoverageDeterminer.DefinePullDownResistors()).ConfigureAwait(true);
             if (results.Count > 0)
             {
                 eventService.Publish<RefreshTestcoverageResultObjects>(new RefreshTestcoverageResultObjects());
                 ItemTestCoveragePulldown = ToggleItem(ItemTestCoveragePulldown);
+                value = !testCoverageDeterminer.GetTestsPerformedState(TestCoverageObject.PULLDOWN);
             }
             else
             {
                 ItemTestCoveragePulldown = ITEMNOTSELECTED;
             }
 
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.PULLDOWN, value);
             DefineTestCoverageLabel(await testCoverageDeterminer.GetTestCoveragePercentageValue(testCoverageDeterminer.DefinePullDownResistors()).ConfigureAwait(false));
         }
 
         private async Task TestCoverageForPullUpsDowns()
         {
+            bool valueUp = false;
+            bool valueDown = false;
             IList<ITestCoverageResult> results = await testCoverageDeterminer.DefineTestCoverageForPullUpDownObjects().ConfigureAwait(true);
             if (results.Count > 0)
             {
                 eventService.Publish<RefreshTestcoverageResultObjects>(new RefreshTestcoverageResultObjects());
-                ItemTestCoveragePulldown = ToggleItem(ItemTestCoveragePulldown);
-                ItemTestCoveragePullup = ToggleItem(ItemTestCoveragePullup);
-                if (ItemTestCoveragePulldown.Equals(ITEMSELECTED) && ItemTestCoveragePullup.Equals(ITEMSELECTED))
+                ItemTestCoveragePullupdown = ToggleItem(ItemTestCoveragePullupdown);
+                if (ItemTestCoveragePullupdown.Equals(ITEMSELECTED))
                 {
-                    ItemTestCoveragePullupdown = ITEMSELECTED;
+                    ItemTestCoveragePulldown = ITEMSELECTED;
+                    ItemTestCoveragePullup = ITEMSELECTED;
+                    valueUp = true;
+                    valueDown = true;
                 }
                 else
                 {
-                    ItemTestCoveragePullupdown = ITEMNOTSELECTED;
+                    ItemTestCoveragePulldown = ITEMNOTSELECTED;
+                    ItemTestCoveragePullup = ITEMNOTSELECTED;
                 }
             }
             else
@@ -732,76 +747,88 @@ namespace Ui.ViewModels
                 ItemTestCoveragePullupdown = ITEMNOTSELECTED;
             }
 
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.PULLUP, valueUp);
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.PULLDOWN, valueDown);
             DefineTestCoverageLabel(await testCoverageDeterminer.GetTestCoveragePercentageValue().ConfigureAwait(false));
         }
 
         private async Task TestCoverageForAllOthers()
         {
+            bool valueBool = false;
             float value = await testCoverageDeterminer.GetTestCoveragePercentageValueForAllOtherObjects().ConfigureAwait(true);
             DefineTestCoverageLabel(value);
             if (value > 0)
             {
-                ItemTestCoverageOthers = ITEMSELECTED;
+                ItemTestCoverageOthers = ToggleItem(ItemTestCoverageOthers);
+                valueBool = !testCoverageDeterminer.GetTestsPerformedState(TestCoverageObject.OTHERS);
             }
             else
             {
                 ItemTestCoverageOthers = ITEMNOTSELECTED;
             }
+
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.OTHERS, valueBool);
         }
 
         private async Task GetCompleteTestCoverageOfAllJtags()
         {
+            bool valueUp = false;
+            bool valueDown = false;
+            bool valueJtag = false;
             bool someThingChanged = false;
+            bool valueOthers = false;
             IList<ITestCoverageResult> listPullUpsPullDowns = await testCoverageDeterminer.DefineTestCoverageForPullUpDownObjects().ConfigureAwait(true);
             if (listPullUpsPullDowns != null && listPullUpsPullDowns.Count > 0)
             {
-                ItemTestCoveragePulldown = ToggleItem(ItemTestCoveragePulldown);
-                ItemTestCoveragePullup = ToggleItem(ItemTestCoveragePullup);
-                if (ItemTestCoveragePulldown.Equals(ITEMSELECTED) && ItemTestCoveragePullup.Equals(ITEMSELECTED))
-                {
-                    ItemTestCoveragePullupdown = ITEMSELECTED;
-                }
-                else
-                {
-                    ItemTestCoveragePullupdown = ITEMNOTSELECTED;
-                }
-
                 someThingChanged = true;
-            }
-            else
-            {
-                ItemTestCoveragePulldown = ITEMNOTSELECTED;
-                ItemTestCoveragePullup = ITEMNOTSELECTED;
-                ItemTestCoveragePullupdown = ITEMNOTSELECTED;
             }
 
             IList<ITestCoverageResult> listJtags = testCoverageDeterminer.DefineTestCoverageForIcObjects();
             if (listJtags != null && listJtags.Count > 0)
             {
                 someThingChanged = true;
-                ItemTestCoverageJtag = ToggleItem(ItemTestCoverageJtag);
-            }
-            else
-            {
-                ItemTestCoverageJtag = ITEMNOTSELECTED;
             }
 
             float valueOfOthers = await testCoverageDeterminer.GetTestCoveragePercentageValueForAllOtherObjects().ConfigureAwait(true);
             if (valueOfOthers > 0)
             {
-                ItemTestCoverageOthers = ITEMSELECTED;
                 someThingChanged = true;
+            }
+
+            DefineTestCoverageLabel(await testCoverageDeterminer.GetTestCoveragePercentageValue().ConfigureAwait(true) + valueOfOthers);
+            string textValue = ITEMNOTSELECTED;
+            if (someThingChanged)
+            {
+                eventService.Publish<RefreshTestcoverageResultObjects>(new RefreshTestcoverageResultObjects());
+                ItemTestCoverageAll = ToggleItem(ItemTestCoverageAll);
+                if (ItemTestCoverageAll.Equals(ITEMSELECTED))
+                {
+                    textValue = ITEMSELECTED;
+                    valueUp = true;
+                    valueDown = true;
+                    valueJtag = true;
+                    valueOthers = true;
+                }
+            }
+
+            ItemTestCoveragePulldown = textValue;
+            ItemTestCoveragePullup = textValue;
+            ItemTestCoveragePullupdown = textValue;
+            ItemTestCoverageJtag = textValue;
+            ItemTestCoverageAll = textValue;
+            if (someThingChanged)
+            {
+                ItemTestCoverageOthers = ITEMSELECTED;
             }
             else
             {
                 ItemTestCoverageOthers = ITEMNOTSELECTED;
             }
 
-            DefineTestCoverageLabel(await testCoverageDeterminer.GetTestCoveragePercentageValue().ConfigureAwait(true) + valueOfOthers);
-            if (someThingChanged)
-            {
-                ItemTestCoverageAll = ToggleItem(ItemTestCoverageAll);
-            }
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.PULLUP, valueUp);
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.PULLDOWN, valueDown);
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.JTAG, valueJtag);
+            testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.OTHERS, valueOthers);
         }
 
         private void DefineTestCoverageLabel(float value)

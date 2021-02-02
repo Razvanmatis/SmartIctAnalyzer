@@ -47,6 +47,48 @@ namespace TestCoverage
             return GetNets(nets, jtagIdentifier, jtagBlacklist);
         }
 
+        public static IList<IPCBComponent> GetOthers(IList<IPCBComponent> ics, IList<IPCBComponent> pullDowns, IList<IPCBComponent> pullUps)
+        {
+            IList<IPCBComponent> resistors = new List<IPCBComponent>(pullDowns);
+            foreach (var comp in pullUps)
+            {
+                resistors.Add(comp);
+            }
+
+            IList<IPCBComponent> compsToUse = new List<IPCBComponent>();
+            foreach (var comp in ics)
+            {
+                foreach (var pin in comp.Connections)
+                {
+                    foreach (var net in pin.Nets)
+                    {
+                        foreach (var compToUse in net.Components)
+                        {
+                            if (!compsToUse.Contains(compToUse) && !IsComponentInList(compToUse, ics) && !IsComponentInList(compToUse, resistors))
+                            {
+                                compsToUse.Add(compToUse);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return compsToUse;
+        }
+
+        public static bool IsComponentInList(IPCBComponent comp, IList<IPCBComponent> list)
+        {
+            foreach (var ic in list)
+            {
+                if (comp == ic)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         private static IList<IPCBComponent> GetResistors(IList<INetComponent> nets)
         {
             IList<IPCBComponent> list = new List<IPCBComponent>();

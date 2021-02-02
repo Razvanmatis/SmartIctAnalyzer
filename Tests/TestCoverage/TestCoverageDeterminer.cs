@@ -14,6 +14,7 @@ namespace TestCoverage
     {
         private IList<IPCBComponent> pullDowns = new List<IPCBComponent>();
         private IList<IPCBComponent> pullUps = new List<IPCBComponent>();
+        private IList<IPCBComponent> others = new List<IPCBComponent>();
         private IList<IPCBComponent> ics = new List<IPCBComponent>();
         private IList<INetComponent> gndNets = new List<INetComponent>();
         private IList<INetComponent> jtagNets = new List<INetComponent>();
@@ -22,6 +23,7 @@ namespace TestCoverage
         private bool jtagIcTestsPerformed;
         private bool jtagPullUpTestsPerformed;
         private bool jtagPullDownTestsPerformed;
+        private bool othersTestsPerformed;
 
         public IList<ITestCoverageResult> DefineTestCoverageForIcObjects(IList<IPCBComponent> ics = null)
         {
@@ -67,8 +69,47 @@ namespace TestCoverage
             }
 
             FinalizeTestCoverageDetermination(coverageResult);
-            jtagIcTestsPerformed = !jtagIcTestsPerformed;
             return coverageResult;
+        }
+
+        public void SetTestsPerformedState(TestCoverageObject objectType, bool value)
+        {
+            if (objectType == TestCoverageObject.JTAG)
+            {
+                jtagIcTestsPerformed = value;
+            }
+            else if (objectType == TestCoverageObject.PULLDOWN)
+            {
+                jtagPullDownTestsPerformed = value;
+            }
+            else if (objectType == TestCoverageObject.PULLUP)
+            {
+                jtagPullUpTestsPerformed = value;
+            }
+            else
+            {
+                othersTestsPerformed = value;
+            }
+        }
+
+        public bool GetTestsPerformedState(TestCoverageObject objectType)
+        {
+            if (objectType == TestCoverageObject.JTAG)
+            {
+                return jtagIcTestsPerformed;
+            }
+            else if (objectType == TestCoverageObject.PULLDOWN)
+            {
+                return jtagPullDownTestsPerformed;
+            }
+            else if (objectType == TestCoverageObject.PULLUP)
+            {
+                return jtagPullUpTestsPerformed;
+            }
+            else
+            {
+                return othersTestsPerformed;
+            }
         }
 
         public bool IsTestResultAvailableForComponentsAndType(IPCBComponent comp, IPCBComponent second)
@@ -102,21 +143,37 @@ namespace TestCoverage
                     {
                         return jtagPullUpTestsPerformed;
                     }
+
+                    if (others.Contains(other))
+                    {
+                        return othersTestsPerformed;
+                    }
                 }
             }
 
             return false;
         }
 
+        public IList<IPCBComponent> DefineOthers()
+        {
+            others = TestCoverageObjectDeterminer.GetOthers(ics, pullDowns, pullUps);
+            return others;
+        }
+
         public void ClearAllObjects()
         {
             pullDowns.Clear();
             pullUps.Clear();
+            others.Clear();
             ics.Clear();
             gndNets.Clear();
             powerNets.Clear();
             jtagNets.Clear();
             testCoverageResult.Clear();
+            jtagIcTestsPerformed = false;
+            jtagPullDownTestsPerformed = false;
+            jtagPullUpTestsPerformed = false;
+            othersTestsPerformed = false;
         }
 
         public IList<INetComponent> DefineGndNets(IList<INetComponent> nets, string gndIdentifier, string gndBlacklist)
@@ -216,21 +273,11 @@ namespace TestCoverage
             return (float)pullUpsDowns.Count / baseValue * 100;
         }
 
-        public async Task<float> GetTestCoveragePercentageValueForAllOtherObjects(IList<IPCBComponent> ics = null, IList<IPCBComponent> pullUpsDowns = null)
+        public async Task<float> GetTestCoveragePercentageValueForAllOtherObjects(IList<IPCBComponent> ics = null)
         {
             if (ics == null)
             {
                 ics = this.ics;
-            }
-
-            IList<IPCBComponent> resistors = pullUpsDowns;
-            if (resistors == null)
-            {
-                resistors = new List<IPCBComponent>(pullDowns);
-                foreach (var comp in pullUps)
-                {
-                    resistors.Add(comp);
-                }
             }
 
             int baseNumber = 0;
@@ -244,36 +291,57 @@ namespace TestCoverage
                 return 0;
             }
 
-            IList<IPCBComponent> compsToUse = new List<IPCBComponent>();
-            int foundObjects = 0;
+            int amountNets = 0;
             await Task.Run(() =>
             {
+                IList<INetComponent> nets = new List<INetComponent>();
+                IList<INetComponent> netsFromIc = new List<INetComponent>();
                 foreach (var comp in ics)
                 {
                     foreach (var pin in comp.Connections)
                     {
                         foreach (var net in pin.Nets)
                         {
-                            foreach (var compToUse in net.Components)
+                            if (!netsFromIc.Contains(net))
                             {
-                                if (!compsToUse.Contains(compToUse) && !IsComponentInList(compToUse, ics) && !IsComponentInList(compToUse, resistors))
-                                {
-                                    compsToUse.Add(compToUse);
-                                }
+                                netsFromIc.Add(net);
                             }
                         }
                     }
                 }
 
-                foundObjects = GetAmountOfNetObjectsFromList(compsToUse, ics);
-            }).ConfigureAwait(false);
+                foreach (var comp in others)
+                {
+                    foreach (var pin in comp.Connections)
+                    {
+                        foreach (var net in pin.Nets)
+                        {
+                            IList<INetComponent> netToCheck = new List<INetComponent>();
+                            netToCheck.Add(net);
+                            if (!nets.Contains(net) && GotTheSameNet(netToCheck, netsFromIc))
+                            {
+                                nets.Add(net);
+                            }
+                        }
+                    }
+                }
 
-            return (float)foundObjects / baseNumber * 100;
+                amountNets = nets.Count;
+
+                IList<ITestCoverageResult> results = new List<ITestCoverageResult>();
+                foreach (var comp in others)
+                {
+                    results.Add(new TestCoverageResult(comp, 100.0f));
+                }
+
+                FinalizeTestCoverageDetermination(results);
+            }).ConfigureAwait(true);
+
+            return (float)amountNets / baseNumber * 100;
         }
 
         public async Task<IList<ITestCoverageResult>> DefineTestCoverageForPullUpDownObjects(IList<IPCBComponent> ics = null, IList<IPCBComponent> pullUpsDowns = null, bool usePullDown = true)
         {
-            bool usePullUp = false;
             IList<ITestCoverageResult> results = new List<ITestCoverageResult>();
             await Task.Run(() =>
             {
@@ -285,8 +353,6 @@ namespace TestCoverage
                 IList<IPCBComponent> pulls = pullUpsDowns;
                 if (pulls == null)
                 {
-                    usePullUp = true;
-                    usePullDown = true;
                     pulls = new List<IPCBComponent>();
                     foreach (var comp in this.pullDowns)
                     {
@@ -297,10 +363,6 @@ namespace TestCoverage
                     {
                         pulls.Add(comp);
                     }
-                }
-                else if (!usePullDown)
-                {
-                    usePullUp = true;
                 }
 
                 foreach (var ic in ics)
@@ -332,15 +394,6 @@ namespace TestCoverage
 
                 FinalizeTestCoverageDetermination(results);
             }).ConfigureAwait(false);
-            if (usePullDown)
-            {
-                jtagPullDownTestsPerformed = !jtagPullDownTestsPerformed;
-            }
-
-            if (usePullUp)
-            {
-                jtagPullUpTestsPerformed = !jtagPullUpTestsPerformed;
-            }
 
             return results;
         }
@@ -372,48 +425,6 @@ namespace TestCoverage
             }
 
             return (float)ics.Count / baseValue * 100;
-        }
-
-        private static bool IsComponentInList(IPCBComponent comp, IList<IPCBComponent> list)
-        {
-            foreach (var ic in list)
-            {
-                if (comp == ic)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private static int GetAmountOfNetObjectsFromList(IList<IPCBComponent> componentsToUse, IList<IPCBComponent> ics)
-        {
-            IList<INetComponent> nets = new List<INetComponent>();
-            foreach (var comp in componentsToUse)
-            {
-                foreach (var pin in comp.Connections)
-                {
-                    foreach (var net in pin.Nets)
-                    {
-                        foreach (var compInner in ics)
-                        {
-                            foreach (var pinInner in compInner.Connections)
-                            {
-                                foreach (var netInner in pinInner.Nets)
-                                {
-                                    if (net == netInner && !nets.Contains(net))
-                                    {
-                                        nets.Add(net);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            return nets.Count;
         }
 
         private static bool GotTheSameNet(IList<INetComponent> nets1, IList<INetComponent> nets2)
