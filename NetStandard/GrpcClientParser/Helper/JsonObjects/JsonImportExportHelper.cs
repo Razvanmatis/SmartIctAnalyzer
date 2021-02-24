@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using GrpcClientParser.Helper.JsonObjects;
 using GrpcClientParser.Interfaces;
+using Interfaces.Gui;
 using Interfaces.PCBApiObjects;
 using Interfaces.PcbInvestigator;
 using Interfaces.PcbInvestigator.Enums;
@@ -16,7 +18,7 @@ namespace GrpcClientParser.Helper.JsonObjects
 {
     public static class JsonImportExportHelper
     {
-        public static void ExportComponentsToFile(IParsedResult result, string filePath)
+        public static void ExportComponentsToFile(IParsedResult result, string filePath, ILogger logger)
         {
             IList<IPinComponent> pins = new List<IPinComponent>();
             foreach (var comp in result.Components)
@@ -46,11 +48,11 @@ namespace GrpcClientParser.Helper.JsonObjects
 
             foreach (var pin in pins)
             {
-                pinJson.Add(new PinJson(GetNetsJson(pin.Nets, result.Nets), GetGeometricsJson(pin.GeometricAttributes), GetPinTypeJson(pin.PinType)));
+                pinJson.Add(new PinJson(GetNetsJson(pin.Nets, result.Nets), GetGeometricsJson(pin.GeometricAttributes), GetPinTypeJson(pin.PinType), pin.PinNumber));
             }
 
             IResultJson resultJson = new ResultJson(pinJson, compJson, netJsons);
-            HandleFileSaving(resultJson, filePath);
+            HandleFileSaving(resultJson, filePath, logger);
         }
 
         public static IList<IPCBComponent> GetParsedComponents(
@@ -104,15 +106,16 @@ namespace GrpcClientParser.Helper.JsonObjects
            IList<string> iIdentifier,
            IList<string> icIdentifier,
            IList<string> conIdentifier,
-           Func<IFunctionalAttributes, bool> isTestPoint)
+           Func<IFunctionalAttributes, bool> isTestPoint,
+           ILogger logger)
         {
             if (!File.Exists(filePath))
             {
-                Debug.WriteLine("No such file for import exists: " + filePath);
+                logger.LogMessage("No such file for import exists: " + filePath, LogCategory.ERROR);
                 return null;
             }
 
-            IResultJson resultJson = GetResultJsonFromFile(filePath);
+            IResultJson resultJson = GetResultJsonFromFile(filePath, logger);
             if (resultJson != null)
             {
                 IList<IPCBComponent> components = GetParsedComponents(
@@ -132,22 +135,42 @@ namespace GrpcClientParser.Helper.JsonObjects
             }
         }
 
-        private static IResultJson GetResultJsonFromFile(string filePath)
+        private static IResultJson GetResultJsonFromFile(string filePath, ILogger logger)
         {
             string content = string.Empty;
             try
             {
                 content = File.ReadAllText(filePath);
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                Debug.WriteLine("Error reading out the text of the file " + filePath + ": " + e.Message);
+                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
+                return null;
+            }
+            catch (ArgumentException e)
+            {
+                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
+                return null;
+            }
+            catch (NotSupportedException e)
+            {
+                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
+                return null;
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
+                return null;
+            }
+            catch (SecurityException e)
+            {
+                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
                 return null;
             }
 
             if (string.IsNullOrEmpty(content))
             {
-                Debug.WriteLine("Read out text was empty!");
+                logger.LogMessage("Read out text was empty!", LogCategory.ERROR);
                 return null;
             }
 
@@ -156,15 +179,15 @@ namespace GrpcClientParser.Helper.JsonObjects
             {
                 result = JsonConvert.DeserializeObject<ResultJson>(content);
             }
-            catch (Exception e)
+            catch (JsonException e)
             {
-                Debug.WriteLine("Error at parsing file for getting all objects: " + e.Message);
+                logger.LogMessage("Error at parsing file for getting all objects: " + e.Message, LogCategory.ERROR);
             }
 
             return result;
         }
 
-        private static void HandleFileSaving(IResultJson resultJson, string filePath)
+        private static void HandleFileSaving(IResultJson resultJson, string filePath, ILogger logger)
         {
             if (!File.Exists(filePath))
             {
@@ -172,9 +195,24 @@ namespace GrpcClientParser.Helper.JsonObjects
                 {
                     File.Create(filePath).Close();
                 }
-                catch (Exception e)
+                catch (IOException e)
                 {
-                    Debug.WriteLine("Error creating file for export of data: " + filePath + ": " + e.Message);
+                    logger.LogMessage("Error creating file for export of data: " + filePath + ": " + e.Message, LogCategory.ERROR);
+                    return;
+                }
+                catch (ArgumentException e)
+                {
+                    logger.LogMessage("Error creating file for export of data: " + filePath + ": " + e.Message, LogCategory.ERROR);
+                    return;
+                }
+                catch (NotSupportedException e)
+                {
+                    logger.LogMessage("Error creating file for export of data: " + filePath + ": " + e.Message, LogCategory.ERROR);
+                    return;
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    logger.LogMessage("Error creating file for export of data: " + filePath + ": " + e.Message, LogCategory.ERROR);
                     return;
                 }
             }
@@ -184,9 +222,25 @@ namespace GrpcClientParser.Helper.JsonObjects
             {
                 File.WriteAllText(filePath, jsonString);
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                Debug.WriteLine(e.Message);
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+            }
+            catch (ArgumentException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+            }
+            catch (NotSupportedException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+            }
+            catch (SecurityException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
             }
         }
 
@@ -333,7 +387,7 @@ namespace GrpcClientParser.Helper.JsonObjects
             List<IPinComponent> parsedPins = new List<IPinComponent>();
             foreach (var pin in pins)
             {
-                parsedPins.Add(new PinComponent(GetParsedGeometricAttributes(pin.Geometrics), GetParsedPinType(pin.PinType), new List<INetComponent>()));
+                parsedPins.Add(new PinComponent(GetParsedGeometricAttributes(pin.Geometrics), GetParsedPinType(pin.PinType), new List<INetComponent>(), pin.PinNumber));
             }
 
             return parsedPins;

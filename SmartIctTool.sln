@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcClientParser", "NetStan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectNet472", "Tests\TestProjectNet472\TestProjectNet472.csproj", "{E35538D1-8651-4F8F-A965-C5B3FDB33B30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinInformationExtractor", "PinInformationExtractor\PinInformationExtractor.csproj", "{6C2283FA-24D2-4578-A470-58D98ABEBE01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,14 @@ Global
 		{E35538D1-8651-4F8F-A965-C5B3FDB33B30}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E35538D1-8651-4F8F-A965-C5B3FDB33B30}.Release|x64.ActiveCfg = Release|x64
 		{E35538D1-8651-4F8F-A965-C5B3FDB33B30}.Release|x64.Build.0 = Release|x64
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +158,7 @@ Global
 		{C278E262-7CE6-48E4-8EEC-42A002EA4B2F} = {BD86B0C9-DDAD-4049-9532-317FA30C4CB5}
 		{379ACC97-8276-43CD-9630-A9DA23C3702C} = {C4F2F89D-6921-434B-86C9-346C3DE6A759}
 		{E35538D1-8651-4F8F-A965-C5B3FDB33B30} = {E6DFECD3-8233-44E5-967A-919520B46C49}
+		{6C2283FA-24D2-4578-A470-58D98ABEBE01} = {C4F2F89D-6921-434B-86C9-346C3DE6A759}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0D22598-E6BF-4F6B-BA77-C0E5CB83D006}

@@ -116,6 +116,7 @@ namespace GrpcApi.Handler
                 {
                     Geometrics = GetGeometricsGrpc(pin.GeometricAttributes),
                     PinType = GetPinTypeGrpc(pin.PinType),
+                    PinNumber = pin.PinNumber,
                 };
                 pinGrpc.Nets.AddRange(nets);
 
@@ -346,7 +347,7 @@ namespace GrpcApi.Handler
                 {
                     IGeometricAttributes geometricAttributes = GetPinGeometricAttributes(pinToCheck, component);
                     PinComponentType pinType = GetPinType(pinToCheck.Type);
-                    IPinComponent pin = new PinComponent(geometricAttributes, pinType, new List<INetComponent>());
+                    IPinComponent pin = new PinComponent(geometricAttributes, pinType, new List<INetComponent>(), pinToCheck.PinNumber);
                     allPins.Add(pinToCheck, pin);
                 }
 

@@ -115,7 +115,7 @@ namespace GrpcApi.Handler
                 List<PinTestObject> testPins = new List<PinTestObject>();
                 foreach (var pin in comp.GetPinList())
                 {
-                    testPins.Add(new PinTestObject(mapPinNets[pin].Select(x => x.NetName).ToList()));
+                    testPins.Add(new PinTestObject(pin.PinNumber, mapPinNets[pin].Select(x => x.NetName).ToList()));
                 }
 
                 PcbTestObject testResult = new PcbTestObject(comp.Ref, testPins);

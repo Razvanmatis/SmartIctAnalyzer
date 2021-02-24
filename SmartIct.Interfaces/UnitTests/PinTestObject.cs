@@ -6,14 +6,17 @@ namespace Interfaces.UnitTests
 {
     public class PinTestObject
     {
-        public PinTestObject(List<string> nets)
+        public PinTestObject(string pinNumber, List<string> nets)
         {
+            PinNumber = pinNumber;
             Nets = nets;
         }
 
         public PinTestObject()
         {
         }
+
+        public string PinNumber { get; set; }
 
         public List<string> Nets { get; set; } = new List<string>();
     }

@@ -5,6 +5,7 @@ namespace TestDotNetCore
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Security;
     using GrpcClientParser;
     using GrpcClientParser.Helper;
     using GrpcClientParser.Interfaces;
@@ -29,7 +30,7 @@ namespace TestDotNetCore
         [Fact]
         public void TestParsingFromApi()
         {
-            IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler();
+            IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler(new DebugLogger());
             List<PcbTestObject> resultData = GetSerialzedData(filePath);
             Assert.NotNull(resultData);
             Assert.True(resultData.Count > 0);
@@ -47,7 +48,7 @@ namespace TestDotNetCore
         [Fact]
         public void TestParsingFromImport()
         {
-            IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler();
+            IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler(new DebugLogger());
             List<PcbTestObject> resultData = GetSerialzedData(filePath);
             Assert.NotNull(resultData);
             Assert.True(resultData.Count > 0);
@@ -66,7 +67,27 @@ namespace TestDotNetCore
             {
                 content = File.ReadAllText(fileToUse);
             }
-            catch (Exception e)
+            catch (IOException e)
+            {
+                Debug.WriteLine("Error reading out the export file: " + fileToUse + ": " + e.Message);
+                return null;
+            }
+            catch (ArgumentException e)
+            {
+                Debug.WriteLine("Error reading out the export file: " + fileToUse + ": " + e.Message);
+                return null;
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Debug.WriteLine("Error reading out the export file: " + fileToUse + ": " + e.Message);
+                return null;
+            }
+            catch (NotSupportedException e)
+            {
+                Debug.WriteLine("Error reading out the export file: " + fileToUse + ": " + e.Message);
+                return null;
+            }
+            catch (SecurityException e)
             {
                 Debug.WriteLine("Error reading out the export file: " + fileToUse + ": " + e.Message);
                 return null;
@@ -83,7 +104,7 @@ namespace TestDotNetCore
             {
                 data = JsonConvert.DeserializeObject<List<PcbTestObject>>(content);
             }
-            catch (Exception e)
+            catch (JsonException e)
             {
                 Debug.WriteLine("Error parsing export file: " + e.Message);
                 return null;
@@ -102,7 +123,22 @@ namespace TestDotNetCore
                 IPCBComponent comp = GetComponentFromList(data.Name, result.Components);
                 Assert.NotNull(comp);
                 Assert.True(data.Pins.Count == comp.Connections.Count);
+                AreAllPinsIncluded(data.Pins, comp);
                 Assert.True(AreAllNetsIncluded(data.Pins, comp));
+            }
+        }
+
+        private static void AreAllPinsIncluded(List<PinTestObject> pins, IPCBComponent comp)
+        {
+            Assert.Equal(pins.Count, comp.Connections.Count);
+            foreach (var pin in comp.Connections)
+            {
+                Assert.Contains(pins, x => x.PinNumber.Equals(pin.PinNumber));
+            }
+
+            foreach (var pin in pins)
+            {
+                Assert.Equal(pin.Nets.Count, comp.Connections.FirstOrDefault(x => x.PinNumber.Equals(pin.PinNumber)).Nets.Count);
             }
         }
 

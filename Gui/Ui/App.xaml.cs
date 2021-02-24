@@ -4,6 +4,7 @@ using GrpcClientParser.Interfaces;
 using Interfaces;
 using Interfaces.Gui;
 using Interfaces.TestCoverage;
+using PinInformationExtractor;
 using Prism.Ioc;
 using Prism.Modularity;
 using ProMik.Services;
@@ -43,6 +44,8 @@ namespace Ui
             containerRegistry.RegisterSingleton<IBomDataModel, BomDataModel>();
             containerRegistry.RegisterSingleton<IGrpcClientParserHandler, GrpcClientParserHandler>();
             containerRegistry.RegisterSingleton<ITestCoverageDeterminer, TestCoverageDeterminer>();
+            containerRegistry.RegisterSingleton<IPinInformationExtractor, PinInformationExtractor.PinInformationExtractor>();
+            containerRegistry.RegisterSingleton<ILogger, Logger>();
         }
     }
 }

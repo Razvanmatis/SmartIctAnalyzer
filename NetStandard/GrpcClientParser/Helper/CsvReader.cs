@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Interfaces.Gui;
 using Interfaces.PcbInvestigator;
 
 namespace GrpcClientParser.Helper
@@ -11,12 +12,18 @@ namespace GrpcClientParser.Helper
     public class CsvReader
     {
         private Dictionary<string, string> content = new Dictionary<string, string>();
+        private ILogger logger;
+
+        public CsvReader(ILogger logger)
+        {
+            this.logger = logger;
+        }
 
         public Dictionary<string, string> ReadContentFromLine(string path, string separator, int columnRef, int columnValue)
         {
             if (!File.Exists(path))
             {
-                Debug.WriteLine("No file available under the path " + path);
+                logger.LogMessage("No file available under the path " + path, LogCategory.ERROR);
                 return content;
             }
 
@@ -33,9 +40,25 @@ namespace GrpcClientParser.Helper
                     }
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                Debug.WriteLine(e.Message);
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+            }
+            catch (ArgumentException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+            }
+            catch (NotSupportedException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+            }
+            catch (System.Security.SecurityException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
             }
 
             return content;
@@ -45,7 +68,7 @@ namespace GrpcClientParser.Helper
         {
             if (content.Count == 0 && (contentToUse == null || (contentToUse != null && contentToUse.Count == 0)))
             {
-                Debug.WriteLine("Perform the reading of the file content before executing this method or provide a valid object!");
+                logger.LogMessage("Perform the reading of the file content before executing this method or provide a valid object!", LogCategory.ERROR);
                 return null;
             }
 

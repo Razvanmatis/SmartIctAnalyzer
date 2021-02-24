@@ -1,5 +1,4 @@
 syntax = "proto3";
-import "google/protobuf/empty.proto";
 
 service PcbInvestigatorService {
 	// Gets all objects
@@ -32,6 +31,7 @@ message PinGrpc {
 	repeated int32 nets = 1;
 	GeometricsGrpc geometrics = 2;
 	PinTypeGrpc pinType = 3;
+	string pinNumber = 4;
 }
 
 enum PinTypeGrpc {

@@ -106,6 +106,15 @@ namespace Ui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export PIN connection information into local file.
+        /// </summary>
+        internal static string PinExportTitle {
+            get {
+                return ResourceManager.GetString("PinExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select the ODB project path.
         /// </summary>
         internal static string SelectTheOdbProjectPath {

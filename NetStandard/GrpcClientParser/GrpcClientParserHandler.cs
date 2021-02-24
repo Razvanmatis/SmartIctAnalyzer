@@ -9,6 +9,7 @@ using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcClientParser.Helper.JsonObjects;
 using GrpcClientParser.Interfaces;
+using Interfaces.Gui;
 using Interfaces.PcbInvestigator;
 using static PcbInvestigatorService;
 
@@ -24,9 +25,11 @@ namespace GrpcClientParser
 
         private static PcbInvestigatorServiceClient client;
         private GrpcChannel channel;
+        private ILogger logger;
 
-        public GrpcClientParserHandler()
+        public GrpcClientParserHandler(ILogger logger)
         {
+            this.logger = logger;
             SetSwitch(DEFIP);
         }
 
@@ -45,9 +48,9 @@ namespace GrpcClientParser
                     return false;
                 }
             }
-            catch (Exception e)
+            catch (RpcException e)
             {
-                Debug.WriteLine("Serve is not available!");
+                logger.LogMessage("Serve is not available:" + e.Message, LogCategory.ERROR);
                 return false;
             }
 
@@ -77,7 +80,7 @@ namespace GrpcClientParser
 
         public void ExportComponentsToFile(IParsedResult result, string filePath)
         {
-            JsonImportExportHelper.ExportComponentsToFile(result, filePath);
+            JsonImportExportHelper.ExportComponentsToFile(result, filePath, logger);
         }
 
         public IParsedResult ImportComponentsFromFile(
@@ -102,7 +105,8 @@ namespace GrpcClientParser
                 iIdentifier,
                 icIdentifier,
                 conIdentifier,
-                isTestPoint);
+                isTestPoint,
+                logger);
         }
 
         public async Task<IParsedResult> GetParsedObjectsFromGrpcByZipFolder(string pathToOdb, IList<string> rIdentifier = null, IList<string> cIdentifier = null, IList<string> iIdentifier = null, IList<string> tpIdentifier = null, IList<string> icIdentifier = null, IList<string> conIdentifier = null)
@@ -118,9 +122,21 @@ namespace GrpcClientParser
             {
                 File.Delete(FILEPATH);
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                Debug.WriteLine("Error deleting zip file!" + e.Message);
+                logger.LogMessage("Error deleting zip file!" + e.Message, LogCategory.ERROR);
+            }
+            catch (ArgumentException e)
+            {
+                logger.LogMessage("Error deleting zip file!" + e.Message, LogCategory.ERROR);
+            }
+            catch (NotSupportedException e)
+            {
+                logger.LogMessage("Error deleting zip file!" + e.Message, LogCategory.ERROR);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                logger.LogMessage("Error deleting zip file!" + e.Message, LogCategory.ERROR);
             }
 
             request.ZipFolder = ByteString.CopyFrom(data);
@@ -161,11 +177,11 @@ namespace GrpcClientParser
             });
         }
 
-        private static IParsedResult FinalizeHandling(Result result, IList<string> rIdentifier, IList<string> cIdentifier, IList<string> iIdentifier, IList<string> tpIdentifier, IList<string> icIdentifier, IList<string> conIdentifier)
+        private IParsedResult FinalizeHandling(Result result, IList<string> rIdentifier, IList<string> cIdentifier, IList<string> iIdentifier, IList<string> tpIdentifier, IList<string> icIdentifier, IList<string> conIdentifier)
         {
             string message = "Received from GRPC amount PCB Components: " + result.Components.Count + ", nets: " + result.Nets.Count + " and pins: " + result.Pins.Count;
-            Debug.WriteLine(message);
             Console.WriteLine(message);
+            logger.LogMessage(message, LogCategory.INFO);
             IResultJson resultJson = GrpcJsonConverter.GetResultJson(result);
 
             Func<IFunctionalAttributes, bool> isTestPoint = ISTESTPOINTDEF;
@@ -186,16 +202,16 @@ namespace GrpcClientParser
 
             int pinAmount = GetTotalPinAmount(components);
             message = "After parsing creation of total objects PCB Components: " + components.Count + ", nets: " + nets.Count + " and pins: " + pinAmount;
-            Debug.WriteLine(message);
             Console.WriteLine(message);
+            logger.LogMessage(message, LogCategory.INFO);
             return new ParsedResult(components, nets);
         }
 
-        private static byte[] GetZipFolderAsBytes(string pathToOdb)
+        private byte[] GetZipFolderAsBytes(string pathToOdb)
         {
             if (!Directory.Exists(pathToOdb))
             {
-                Debug.WriteLine("Folder does not exist!" + pathToOdb);
+                logger.LogMessage("Folder does not exist!" + pathToOdb, LogCategory.ERROR);
                 return null;
             }
 
@@ -203,15 +219,30 @@ namespace GrpcClientParser
             {
                 ZipFile.CreateFromDirectory(pathToOdb, FILEPATH);
             }
-            catch (Exception e)
+            catch (IOException e)
             {
-                Debug.WriteLine(e.Message);
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+                return null;
+            }
+            catch (ArgumentException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+                return null;
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
+                return null;
+            }
+            catch (NotSupportedException e)
+            {
+                logger.LogMessage(e.Message, LogCategory.ERROR);
                 return null;
             }
 
             if (!File.Exists(FILEPATH))
             {
-                Debug.WriteLine("Zip file does not exist!" + FILEPATH);
+                logger.LogMessage("Zip file does not exist!" + FILEPATH, LogCategory.ERROR);
                 return null;
             }
 

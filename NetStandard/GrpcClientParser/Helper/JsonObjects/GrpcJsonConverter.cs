@@ -38,7 +38,7 @@ namespace GrpcClientParser.Helper.JsonObjects
 
         public static PinJson GetPinJson(PinGrpc pin)
         {
-            return new PinJson(GetListOfNumbers(pin.Nets), GetGeometricJson(pin.Geometrics), GetPinTypeJson(pin.PinType));
+            return new PinJson(GetListOfNumbers(pin.Nets), GetGeometricJson(pin.Geometrics), GetPinTypeJson(pin.PinType), pin.PinNumber);
         }
 
         public static NetJson GetNetJson(NetGrpc net)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Interfaces.Gui;
 using Prism.Commands;
 using ProMik.Services.Interfaces;
 using Ui.Core.Mvvm;
@@ -21,10 +22,12 @@ namespace Ui.Modules.ModuleName.ViewModels
         private string powerBlacklist;
         private string jtagIdentifier;
         private string jtagBlacklist;
+        private ILogger logger;
 
-        public TestCoverageSettingsViewModel(IGeneralSettingsData settingData, IEventService eventService)
+        public TestCoverageSettingsViewModel(IGeneralSettingsData settingData, IEventService eventService, ILogger logger)
         {
             this.settingData = settingData;
+            this.logger = logger;
             this.eventService = eventService;
             InitValues();
             SaveCommand = new DelegateCommand(SaveCommandHandler);
@@ -127,6 +130,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         {
             settingData.SaveValues();
             eventService.Publish<CloseTestCoverageSettingsEvent>(new CloseTestCoverageSettingsEvent(false));
+            logger.LogMessage("Test coverage settings saved", LogCategory.INFO);
         }
 
         private void HandleEnterKey()

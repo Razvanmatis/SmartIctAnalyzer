@@ -50,15 +50,18 @@ namespace Ui.Modules.ModuleName.ViewModels
         private IGeneralSettingsData settingsVm;
         private Dictionary<TestCoverageObject, IList<IPCBComponent>> mapTestCoverageObjects = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
         private ITestCoverageDeterminer testCoverageDeterminer;
+        private ILogger logger;
 
         public ComponentViewModel(
             IRegionManager regionManager,
             IMessageService messageService,
             IEventService eventService,
             IGeneralSettingsData settingsVm,
-            ITestCoverageDeterminer testCoverageDeterminer)
+            ITestCoverageDeterminer testCoverageDeterminer,
+            ILogger logger)
             : base(regionManager)
         {
+            this.logger = logger;
             this.settingsVm = settingsVm;
             this.testCoverageDeterminer = testCoverageDeterminer;
             eventService.Subscribe<AddPcbObjectsEvent>(async (x) => await AddPCBComponent(x).ConfigureAwait(true), ThreadOption.UIThread);
@@ -269,7 +272,11 @@ namespace Ui.Modules.ModuleName.ViewModels
 
                     if (lines.Count > 0)
                     {
-                        Application.Current.Dispatcher.Invoke(() => componentViews.AddRange(lines));
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            componentViews.AddRange(lines);
+                            logger.LogMessage("Show connections for component " + comp.BaseComponent.FunctionalAttributes.Ref + " with total amount: " + lines.Count, LogCategory.INFO);
+                        });
                     }
                 }
                 else
@@ -367,6 +374,13 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
 
             InsertObjectsIntoView(convertedList);
+            if (convertedList.Count > 0)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    logger.LogMessage("Inserted total amount of objects to be visible: " + convertedList.Count, LogCategory.INFO);
+                });
+            }
         }
 
         private void RemoveLayerObjectsFromView(List<string> layersToRemove)
@@ -384,6 +398,13 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
 
             RemoveObjectsFromView(compsToRemove);
+            if (compsToRemove.Count > 0)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    logger.LogMessage("Removed total amount of objects from view: " + compsToRemove.Count, LogCategory.INFO);
+                });
+            }
         }
 
         private void ShowTestCoverageObjects(ShowObjectsEvent obj)
@@ -399,6 +420,7 @@ namespace Ui.Modules.ModuleName.ViewModels
 
         private void AddTestCoverageObjectsToView(List<string> layersToAdd)
         {
+            List<ViewModelPCBBase> convertedListTotal = new List<ViewModelPCBBase>();
             foreach (string layer in layersToAdd)
             {
                 TestCoverageObject objectType = GetTestCoverageObjectType(layer);
@@ -410,11 +432,20 @@ namespace Ui.Modules.ModuleName.ViewModels
                         if (compInner is ViewModelPCBComponentBase compInnerBase && compInnerBase.BaseComponent == objToAdd)
                         {
                             convertedList.Add(compInner);
+                            if (!convertedListTotal.Contains(compInner))
+                            {
+                                convertedListTotal.Add(compInner);
+                            }
                         }
                     }
 
                     InsertObjectsIntoView(convertedList);
                 }
+            }
+
+            if (convertedListTotal.Count > 0)
+            {
+                logger.LogMessage("Inserted total amount of test coverage related objects into view: " + convertedListTotal.Count, LogCategory.INFO);
             }
         }
 
@@ -431,6 +462,7 @@ namespace Ui.Modules.ModuleName.ViewModels
 
         private void RemoveTestCoverageObjectsFromView(List<string> layersToRemove)
         {
+            List<ViewModelPCBComponentBase> compsToRemoveTotal = new List<ViewModelPCBComponentBase>();
             foreach (string layer in layersToRemove)
             {
                 TestCoverageObject objectType = GetTestCoverageObjectType(layer);
@@ -442,11 +474,20 @@ namespace Ui.Modules.ModuleName.ViewModels
                         if (comp is ViewModelPCBComponentBase compBase && compBase.BaseComponent == objToRemove)
                         {
                             compsToRemove.Add(compBase);
+                            if (!compsToRemoveTotal.Contains(compBase))
+                            {
+                                compsToRemoveTotal.Add(compBase);
+                            }
                         }
                     }
 
                     RemoveObjectsFromView(compsToRemove);
                 }
+            }
+
+            if (compsToRemoveTotal.Count > 0)
+            {
+                logger.LogMessage("Removed total amount of test coverage related objects from view: " + compsToRemoveTotal.Count, LogCategory.INFO);
             }
         }
 
@@ -577,6 +618,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             OverallHeight = (maxHeight + offsetY + (2 * ViewModelPCBBase.OFFSET)) * ZoomFactor;
             originalHeight = OverallHeight;
             Scrollviewer.UpdateLayout();
+            logger.LogMessage("Updated view sizes by width: " + OverallWidth + " and height: " + OverallHeight, LogCategory.INFO);
         }
 
         private void RefreshTestCoverageResults(RefreshTestcoverageResultObjects obj)

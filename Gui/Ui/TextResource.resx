@@ -132,6 +132,9 @@
   <data name="JsonFilter" xml:space="preserve">
     <value>json files (*.json)|*.json|All files (*.*)|*.*</value>
   </data>
+  <data name="PinExportTitle" xml:space="preserve">
+    <value>Export PIN connection information into local file</value>
+  </data>
   <data name="SelectTheOdbProjectPath" xml:space="preserve">
     <value>Select the ODB project path</value>
   </data>

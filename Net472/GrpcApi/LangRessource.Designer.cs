@@ -61,6 +61,24 @@ namespace GrpcApi {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error by receiving empty zip folder data!.
+        /// </summary>
+        internal static string ErrorByReceivingEmptyZipFolder {
+            get {
+                return ResourceManager.GetString("ErrorByReceivingEmptyZipFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error getting parsed objects by folder!.
+        /// </summary>
+        internal static string ErrorGettingParsedObjectsByFolder {
+            get {
+                return ResourceManager.GetString("ErrorGettingParsedObjectsByFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version 1.0.
         /// </summary>
         internal static string Version {

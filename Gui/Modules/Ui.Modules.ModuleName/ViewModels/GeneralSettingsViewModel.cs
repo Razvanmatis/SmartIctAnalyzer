@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using Interfaces.Gui;
 using Prism.Commands;
 using ProMik.Services.Interfaces;
 using Ui.Core.Mvvm;
@@ -40,10 +41,12 @@ namespace Ui.Modules.ModuleName.ViewModels
         private string connectorIdentifier;
         private bool netNamesChecked;
         private IGeneralSettingsData settingsData;
+        private ILogger logger;
 
-        public GeneralSettingsViewModel(IGeneralSettingsData settingsData, IEventService eventService)
+        public GeneralSettingsViewModel(IGeneralSettingsData settingsData, IEventService eventService, ILogger logger)
         {
             this.settingsData = settingsData;
+            this.logger = logger;
             this.eventService = eventService;
             InitValues();
             SaveCommand = new DelegateCommand(SaveValues);
@@ -420,6 +423,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         {
             settingsData.SaveValues();
             eventService.Publish<CloseGeneralSettingsEvent>(new CloseGeneralSettingsEvent(false));
+            logger.LogMessage("General settings saved", LogCategory.INFO);
         }
     }
 }

@@ -6,14 +6,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Grpc.Core;
 using GrpcClientParser;
 using GrpcClientParser.Helper;
 using GrpcClientParser.Interfaces;
 using Interfaces;
+using Interfaces.Gui;
 using Interfaces.PCBApiObjects;
 using Interfaces.PcbInvestigator;
 using Interfaces.TestCoverage;
 using Ookii.Dialogs.Wpf;
+using PinInformationExtractor;
 using Prism.Commands;
 using Prism.Mvvm;
 using ProMik.Services.Interfaces;
@@ -58,6 +61,12 @@ namespace Ui.ViewModels
         private string itemTestCoverageOthers;
         private string itemTestCoverageAll;
         private bool testCoverageMenuItemsEnabled;
+        private IPinInformationExtractor pinInformationExtractor;
+        private IList<IPCBComponent> ics = new List<IPCBComponent>();
+        private IList<IPCBComponent> pullUps = new List<IPCBComponent>();
+        private IList<IPCBComponent> pullDowns = new List<IPCBComponent>();
+        private ILogger logger;
+        private int logIndex;
 
         public MainWindowViewModel(
             IEventService eventService,
@@ -65,9 +74,13 @@ namespace Ui.ViewModels
             ISettingsStorageManager settingsStorageManager,
             IBomDataModel bomData,
             IGrpcClientParserHandler grpcParser,
-            ITestCoverageDeterminer testCoverageDeterminer)
+            ITestCoverageDeterminer testCoverageDeterminer,
+            IPinInformationExtractor pinInformationExtractor,
+            ILogger logger)
         {
+            this.logger = logger;
             ResetAllMenuItems();
+            this.pinInformationExtractor = pinInformationExtractor;
             this.bomData = bomData;
             this.testCoverageDeterminer = testCoverageDeterminer;
             this.settingsData = settingsData;
@@ -101,6 +114,9 @@ namespace Ui.ViewModels
             eventService.Subscribe<ComponentsImportFinishedEvent>(HandleComponentImportFinishedEvent);
             GrpcServerSettingsCommand = new DelegateCommand(OpenGrpcSettingsView);
             eventService.Subscribe<CloseGrpcSettingsEvent>(CloseGrpcSettingsView);
+            GetPinInformationJtags = new DelegateCommand(GetPinInformationJtagsIntoFile);
+            AddLogEntry = new DelegateCommand(AddLogEntryItem);
+            grpcParser.ChangeIpAdressOfClient(settingsData.IPAddress);
         }
 
         public ICommand GrpcServerSettingsCommand { get; private set; }
@@ -133,11 +149,15 @@ namespace Ui.ViewModels
 
         public ICommand ImportBomCommand { get; private set; }
 
+        public ICommand GetPinInformationJtags { get; private set; }
+
         public ICommand RunTestCoverageForPullUpsDowns { get; private set; }
 
         public ICommand RunTestCoverageForPullUps { get; private set; }
 
         public ICommand RunTestCoverageForPullDowns { get; private set; }
+
+        public ICommand AddLogEntry { get; private set; }
 
         public string ItemTestCoverageObjects
         {
@@ -375,16 +395,44 @@ namespace Ui.ViewModels
                 List<string> tDef = GetListFromString(content.TIdentifier);
                 List<string> icDef = GetListFromString(content.ICIdentifier);
                 List<string> conDef = GetListFromString(content.ConIdentifier);
+                logger.LogMessage("Using of PCBInvestigator API for getting objects for path " + selectedPath + " started...", LogCategory.INFO);
                 this.result = await grpcParser.GetParsedObjectsFromGrpcByZipFolder(selectedPath, rDef, cDef, iDef, tDef, icDef, conDef).ConfigureAwait(true);
                 var layerNames = GetLayers(result);
+                LogResults(layerNames, result);
                 eventService.Publish<AddPcbObjectsEvent>(new AddPcbObjectsEvent(result.Components, result.Nets));
                 eventService.Publish<SendLayersEvent>(new SendLayersEvent(layerNames));
             }
-            catch (Exception e)
+            catch (RpcException e)
             {
-                Debug.WriteLine(e.Message);
+                logger.LogMessage("Error getting parsed objects: " + e.Message, LogCategory.ERROR);
                 IsBusy = false;
             }
+        }
+
+        private void LogResults(List<string> layerNames, IParsedResult result)
+        {
+            string layers = string.Empty;
+            foreach (var layer in layerNames)
+            {
+                layers += layer + ", ";
+            }
+
+            logger.LogMessage("Layers received: " + layers.Substring(0, layers.Length - 2), LogCategory.INFO);
+            logger.LogMessage("Components received: " + result.Components.Count, LogCategory.INFO);
+            logger.LogMessage("Nets received: " + result.Nets.Count, LogCategory.INFO);
+            List<IPinComponent> pins = new List<IPinComponent>();
+            foreach (var comp in result.Components)
+            {
+                foreach (var pin in comp.Connections)
+                {
+                    if (!pins.Contains(pin))
+                    {
+                        pins.Add(pin);
+                    }
+                }
+            }
+
+            logger.LogMessage("Pins received: " + pins.Count, LogCategory.INFO);
         }
 
         private async Task HandleImport()
@@ -406,6 +454,7 @@ namespace Ui.ViewModels
                 List<string> tDef = GetListFromString(content.TIdentifier);
                 List<string> icDef = GetListFromString(content.ICIdentifier);
                 List<string> conDef = GetListFromString(content.ConIdentifier);
+                logger.LogMessage("Import of JSON data started for file " + filePath, LogCategory.INFO);
                 await Task.Run(() =>
                 {
                     this.result = grpcParser.ImportComponentsFromFile(
@@ -421,6 +470,7 @@ namespace Ui.ViewModels
                 {
                     settingsData.UseValues = CheckIfValuesAreBeingUsed();
                     var layerNames = GetLayers(result);
+                    LogResults(layerNames, result);
                     eventService.Publish<AddPcbObjectsEvent>(new AddPcbObjectsEvent(result.Components, result.Nets));
                     eventService.Publish<SendLayersEvent>(new SendLayersEvent(layerNames));
                 }
@@ -438,6 +488,7 @@ namespace Ui.ViewModels
             settingsData.UseValues = false;
             ResetAllMenuItems();
             TestCoverageMenuItemsEnabled = false;
+            logger.LogMessage("All things are being resetted", LogCategory.INFO);
         }
 
         private void HandleChangeExportMenuItemState(ChangeExportMenuItemEnabledStateEvent obj)
@@ -477,12 +528,21 @@ namespace Ui.ViewModels
                     filePath += ".json";
                 }
 
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    logger.LogMessage("Export for data to JSON started into file " + filePath, LogCategory.INFO);
+                });
+
                 IsBusy = true;
                 await Task.Run(() =>
                 {
                     grpcParser.ExportComponentsToFile(this.result, filePath);
                     IsBusy = false;
                 }).ConfigureAwait(false);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    logger.LogMessage("JSON export finished", LogCategory.INFO);
+                });
             }
         }
 
@@ -497,20 +557,21 @@ namespace Ui.ViewModels
             {
                 if (!int.TryParse(bomData.ColumnRef, out int colRef))
                 {
-                    Debug.WriteLine("Error parsing the column number for the REF column!");
+                    logger.LogMessage("Error parsing the column number for the REF column!", LogCategory.ERROR);
                     return false;
                 }
 
                 if (!int.TryParse(bomData.ColumnValue, out int colValue))
                 {
-                    Debug.WriteLine("Error parsing the column number for the VALUE column!");
+                    logger.LogMessage("Error parsing the column number for the VALUE column!", LogCategory.ERROR);
                     return false;
                 }
 
-                CsvReader csvReader = new CsvReader();
+                CsvReader csvReader = new CsvReader(logger);
                 var values = csvReader.ReadContentFromLine(bomData.BomFile, bomData.Separator, colRef, colValue);
                 csvReader.SetValuesToObjectsFromCsv(components, values);
                 eventService.Publish<UpdateBomDataEvent>(new UpdateBomDataEvent());
+                logger.LogMessage("Import of BOM file " + bomData.BomFile + " finished", LogCategory.INFO);
                 return true;
             }
             else
@@ -580,6 +641,7 @@ namespace Ui.ViewModels
                 }
 
                 settingsStorageManager.ExportStorageContent(fileName);
+                logger.LogMessage("Settings file was exported to " + fileName, LogCategory.INFO);
             }
         }
 
@@ -594,6 +656,7 @@ namespace Ui.ViewModels
             {
                 settingsStorageManager.ImportStorageContent(path);
                 settingsData.InitContent();
+                logger.LogMessage("Settings file was imported from " + path, LogCategory.INFO);
             }
         }
 
@@ -643,10 +706,14 @@ namespace Ui.ViewModels
                 testCoverageDeterminer.DefinePowerNets(result.Nets, content.PowerNetIdentifier, content.PowerNetBlacklist);
                 testCoverageDeterminer.DefineJtagNets(result.Nets, content.JTAGNetIdentifier, content.JTAGNetBlacklist);
                 Dictionary<TestCoverageObject, IList<IPCBComponent>> mapObjects = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
-                mapObjects.Add(TestCoverageObject.PULLUP, testCoverageDeterminer.DefinePullUpResistors());
-                mapObjects.Add(TestCoverageObject.PULLDOWN, testCoverageDeterminer.DefinePullDownResistors());
-                mapObjects.Add(TestCoverageObject.JTAG, testCoverageDeterminer.DefineIcs());
+                ics = testCoverageDeterminer.DefineIcs();
+                pullUps = testCoverageDeterminer.DefinePullUpResistors();
+                pullDowns = testCoverageDeterminer.DefinePullDownResistors();
+                mapObjects.Add(TestCoverageObject.PULLUP, pullUps);
+                mapObjects.Add(TestCoverageObject.PULLDOWN, pullDowns);
+                mapObjects.Add(TestCoverageObject.JTAG, ics);
                 mapObjects.Add(TestCoverageObject.OTHERS, testCoverageDeterminer.DefineOthers());
+                LogTestCoverageObjects(mapObjects);
                 eventService.Publish<AddTestCoverageObjectsEvent>(new AddTestCoverageObjectsEvent(mapObjects));
                 eventService.Publish<TestCoverageForDeterminingObjectsPerformedEvent>(new TestCoverageForDeterminingObjectsPerformedEvent(testCoverageObjects.ToList()));
                 ItemTestCoverageObjects = ITEMSELECTED;
@@ -661,6 +728,14 @@ namespace Ui.ViewModels
             }
         }
 
+        private void LogTestCoverageObjects(Dictionary<TestCoverageObject, IList<IPCBComponent>> mapObjects)
+        {
+            logger.LogMessage("Determined pull up objects: " + mapObjects[TestCoverageObject.PULLUP].Count, LogCategory.INFO);
+            logger.LogMessage("Determined pull down objects: " + mapObjects[TestCoverageObject.PULLDOWN].Count, LogCategory.INFO);
+            logger.LogMessage("Determined IC objects: " + mapObjects[TestCoverageObject.JTAG].Count, LogCategory.INFO);
+            logger.LogMessage("Determined other objects which are connected to the ICs: " + mapObjects[TestCoverageObject.OTHERS].Count, LogCategory.INFO);
+        }
+
         private async Task TestCoverageForIcs()
         {
             bool value = false;
@@ -673,6 +748,7 @@ namespace Ui.ViewModels
             }
             else
             {
+                logger.LogMessage("No ICs were detected before", LogCategory.WARNING);
                 ItemTestCoverageJtag = ITEMNOTSELECTED;
             }
 
@@ -692,6 +768,7 @@ namespace Ui.ViewModels
             }
             else
             {
+                logger.LogMessage("No pull ups were detected before", LogCategory.WARNING);
                 ItemTestCoveragePullup = ITEMNOTSELECTED;
             }
 
@@ -711,6 +788,7 @@ namespace Ui.ViewModels
             }
             else
             {
+                logger.LogMessage("No pull downs were detected before", LogCategory.WARNING);
                 ItemTestCoveragePulldown = ITEMNOTSELECTED;
             }
 
@@ -742,6 +820,7 @@ namespace Ui.ViewModels
             }
             else
             {
+                logger.LogMessage("No pull ups and pull downs were detected before", LogCategory.WARNING);
                 ItemTestCoveragePulldown = ITEMNOTSELECTED;
                 ItemTestCoveragePullup = ITEMNOTSELECTED;
                 ItemTestCoveragePullupdown = ITEMNOTSELECTED;
@@ -764,6 +843,7 @@ namespace Ui.ViewModels
             }
             else
             {
+                logger.LogMessage("No other components connected to ICs were detected before", LogCategory.WARNING);
                 ItemTestCoverageOthers = ITEMNOTSELECTED;
             }
 
@@ -829,6 +909,40 @@ namespace Ui.ViewModels
             testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.PULLDOWN, valueDown);
             testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.JTAG, valueJtag);
             testCoverageDeterminer.SetTestsPerformedState(TestCoverageObject.OTHERS, valueOthers);
+        }
+
+        private void AddLogEntryItem()
+        {
+            if (++logIndex % 3 == 0)
+            {
+                logger.LogMessage("This is a test info message " + logIndex, LogCategory.INFO);
+            }
+            else if (logIndex % 3 == 1)
+            {
+                logger.LogMessage("This is a test warning message " + logIndex, LogCategory.WARNING);
+            }
+            else
+            {
+                logger.LogMessage("This is a test error message " + logIndex, LogCategory.ERROR);
+            }
+        }
+
+        private void GetPinInformationJtagsIntoFile()
+        {
+            VistaSaveFileDialog saveDialog = new VistaSaveFileDialog();
+            saveDialog.Title = TextResource.PinExportTitle;
+            saveDialog.ShowDialog();
+            string fileName = saveDialog.FileName;
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                if (!fileName.ToLower(CultureInfo.CurrentCulture).Substring(fileName.Length - 4).Contains(".", StringComparison.Ordinal))
+                {
+                    fileName += ".txt";
+                }
+
+                pinInformationExtractor.CreatePinInformationFile(fileName, ics, pullUps, pullDowns);
+                logger.LogMessage("PIN information exported into file " + fileName, LogCategory.INFO);
+            }
         }
 
         private void DefineTestCoverageLabel(float value)

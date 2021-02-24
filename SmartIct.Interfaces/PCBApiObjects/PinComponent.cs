@@ -11,9 +11,15 @@ namespace Interfaces.PCBApiObjects
         private IList<INetComponent> nets;
         private IGeometricAttributes geometricAttributes;
         private PinComponentType pinType;
+        private string pinNumber;
 
-        public PinComponent(IGeometricAttributes geometricAttributes, PinComponentType pinType, IList<INetComponent> nets)
+        public PinComponent(
+            IGeometricAttributes geometricAttributes,
+            PinComponentType pinType,
+            IList<INetComponent> nets,
+            string pinNumber)
         {
+            this.pinNumber = pinNumber;
             this.geometricAttributes = geometricAttributes;
             this.pinType = pinType;
             this.nets = nets;
@@ -30,6 +36,14 @@ namespace Interfaces.PCBApiObjects
             get
             {
                 return geometricAttributes;
+            }
+        }
+
+        public string PinNumber
+        {
+            get
+            {
+                return pinNumber;
             }
         }
 

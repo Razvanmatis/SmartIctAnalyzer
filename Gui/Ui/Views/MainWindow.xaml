@@ -6,11 +6,19 @@
         prism:ViewModelLocator.AutoWireViewModel="true"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:core="clr-namespace:Ui.Core;assembly=Ui.Core"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         Title="{Binding Title}" Height="1000" Width="1920" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -129,9 +137,16 @@
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Export PIN connection information into file" Command="{Binding GetPinInformationJtags}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="FileExport" Width="22" Height="22"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Add dummy data" Command="{Binding AddDummyCommand}"/>
+                <MenuItem Header="Add dummy data" Command="{Binding AddDummyCommand}" Visibility="Hidden"/>
+                <MenuItem Header="Add log entry" Command="{Binding AddLogEntry}" />
             </Menu>
         </DockPanel>
         <ContentControl IsEnabled="{Binding MenuEnabled}" Grid.Row="1" Grid.Column="0" prism:RegionManager.RegionName="{x:Static core:RegionNames.LayerRegion}" />
@@ -141,5 +156,12 @@
             <Run Text="Test coverage: "/>
             <Run Text="{Binding TestCoverage, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,0.00}}"/>
         </TextBlock>
+        <Expander Grid.Column="1" Grid.Row="2" Header="Logging area">
+            <StackPanel Orientation="Vertical" Height="300px"
+            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+            Margin="24,8,24,16">
+                <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.LogRegion}" />
+            </StackPanel>
+        </Expander>
     </Grid>
 </Window>

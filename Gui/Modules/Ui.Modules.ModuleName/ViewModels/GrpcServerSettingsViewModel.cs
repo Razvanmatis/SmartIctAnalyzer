@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Input;
 using System.Windows.Media;
 using GrpcClientParser.Interfaces;
+using Interfaces.Gui;
 using Prism.Commands;
 using ProMik.Services.Interfaces;
 using Ui.Core.Mvvm;
@@ -19,10 +20,16 @@ namespace Ui.Modules.ModuleName.ViewModels
         private IGrpcClientParserHandler grpcParser;
         private SolidColorBrush brush;
         private IEventService eventService;
+        private ILogger logger;
 
-        public GrpcServerSettingsViewModel(IEventService eventService, IGeneralSettingsData settingData, IGrpcClientParserHandler grpcParser)
+        public GrpcServerSettingsViewModel(
+            IEventService eventService,
+            IGeneralSettingsData settingData,
+            IGrpcClientParserHandler grpcParser,
+            ILogger logger)
         {
             this.eventService = eventService;
+            this.logger = logger;
             this.settingData = settingData;
             this.grpcParser = grpcParser;
             InitValues();
@@ -67,6 +74,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             settingData.SaveValues();
             await grpcParser.ChangeIpAdressOfClient(IP).ConfigureAwait(true);
             CheckColor();
+            logger.LogMessage("IP setting saved", LogCategory.INFO);
         }
 
         private async void CheckColor()
@@ -74,10 +82,12 @@ namespace Ui.Modules.ModuleName.ViewModels
             bool result = await grpcParser.IsGrpcServerAvailable().ConfigureAwait(true);
             if (result)
             {
+                logger.LogMessage("Connection established", LogCategory.INFO);
                 Color = Brushes.Green;
             }
             else
             {
+                logger.LogMessage("Connection not possible", LogCategory.ERROR);
                 Color = Brushes.Red;
             }
         }

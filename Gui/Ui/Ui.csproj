@@ -8,6 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.0.1" />
+    <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="3.1.0" />
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
@@ -15,6 +16,7 @@
     <PackageReference Include="ProMik.Services.Interfaces" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PinInformationExtractor\PinInformationExtractor.csproj" />
     <ProjectReference Include="..\..\Tests\TestCoverage\TestCoverage.csproj" />
     <ProjectReference Include="..\Ui.Core\Ui.Core.csproj" />
     <ProjectReference Include="..\Modules\Ui.Modules.ModuleName\Ui.Modules.ModuleName.csproj" />

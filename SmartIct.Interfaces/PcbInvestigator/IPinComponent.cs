@@ -12,5 +12,7 @@ namespace Interfaces.PcbInvestigator
         IGeometricAttributes GeometricAttributes { get; }
 
         PinComponentType PinType { get; }
+
+        string PinNumber { get; }
     }
 }

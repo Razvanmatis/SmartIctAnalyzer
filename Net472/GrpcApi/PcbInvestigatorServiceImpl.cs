@@ -28,7 +28,7 @@ namespace GrpcApi
         {
             if (request.ZipFolder == null || request.ZipFolder.Length == 0)
             {
-                Console.WriteLine("Error by receiving empty zip folder data!");
+                Console.WriteLine(LangRessource.ErrorByReceivingEmptyZipFolder);
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
             }
 
@@ -39,7 +39,22 @@ namespace GrpcApi
                 stream.Write(data, 0, data.Length);
                 stream.Close();
             }
-            catch (Exception e)
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+                return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+            catch (NotSupportedException e)
+            {
+                Console.WriteLine(e.Message);
+                return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+            catch (UnauthorizedAccessException e)
             {
                 Console.WriteLine(e.Message);
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
@@ -49,7 +64,27 @@ namespace GrpcApi
             {
                 ZipFile.ExtractToDirectory(FILEPATHREQUEST, FILEPATHEXTRACT);
             }
-            catch (Exception e)
+            catch (IOException e)
+            {
+                Console.WriteLine(e.Message);
+                return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Console.WriteLine(e.Message);
+                return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+            catch (NotSupportedException e)
+            {
+                Console.WriteLine(e.Message);
+                return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+            catch (InvalidDataException e)
             {
                 Console.WriteLine(e.Message);
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
@@ -62,7 +97,15 @@ namespace GrpcApi
                 {
                     Directory.Delete(FILEPATHEXTRACT, true);
                 }
-                catch (Exception e)
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (UnauthorizedAccessException e)
                 {
                     Console.WriteLine(e.Message);
                 }
@@ -71,7 +114,19 @@ namespace GrpcApi
                 {
                     File.Delete(FILEPATHREQUEST);
                 }
-                catch (Exception e)
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (NotSupportedException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (UnauthorizedAccessException e)
                 {
                     Console.WriteLine(e.Message);
                 }
@@ -80,7 +135,7 @@ namespace GrpcApi
             }
             else
             {
-                Console.WriteLine("Error getting parsed objects by folder!");
+                Console.WriteLine(LangRessource.ErrorGettingParsedObjectsByFolder);
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
             }
         }
