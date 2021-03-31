@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Google.Protobuf.Collections;
+using GrpcClientParser.Implementations;
 using GrpcClientParser.Interfaces;
 
 namespace GrpcClientParser.Helper.JsonObjects

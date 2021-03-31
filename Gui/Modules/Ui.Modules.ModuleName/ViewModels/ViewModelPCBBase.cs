@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Ui.Core.Mvvm;
+﻿using Ui.Core.Mvvm;
 
 namespace Ui.Modules.ModuleName.ViewModels
 {
@@ -9,31 +6,56 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         public const double OPACITYMAX = 1;
         public const int OFFSET = 15;
+        private const int ZINDEXDEF = 1000;
         private static int offsetX;
         private static int offsetY;
-        private double posX;
-        private double posY;
         private double opacity = OPACITYMAX;
+        private double posXToUse;
+        private double posYToUse;
 
         public ViewModelPCBBase(double posX, double posY)
         {
-            this.posX = posX;
-            this.posY = posY;
+            posXToUse = posX;
+            posYToUse = posY;
         }
 
-        public double PosXWithOffset
+        public static int OffsetX
         {
             get
             {
-                return posX + offsetX + OFFSET;
+                return offsetX;
             }
         }
 
-        public double PosYWithOffset
+        public static int OffsetY
         {
             get
             {
-                return posY + offsetY + OFFSET;
+                return offsetY;
+            }
+        }
+
+        public virtual int ZIndex
+        {
+            get
+            {
+                return ZINDEXDEF;
+            }
+        }
+
+        public virtual double PosXWithOffset
+        {
+            get
+            {
+                return posXToUse + offsetX + OFFSET;
+            }
+        }
+
+        public virtual double PosYWithOffset
+        {
+            get
+            {
+                return posYToUse + offsetY + OFFSET;
             }
         }
 
@@ -47,6 +69,32 @@ namespace Ui.Modules.ModuleName.ViewModels
             set
             {
                 SetProperty(ref opacity, value);
+            }
+        }
+
+        public int PosXToUse
+        {
+            get
+            {
+                return (int)posXToUse;
+            }
+
+            set
+            {
+                SetProperty(ref posXToUse, (double)value);
+            }
+        }
+
+        public int PosYToUse
+        {
+            get
+            {
+                return (int)posYToUse;
+            }
+
+            set
+            {
+                SetProperty(ref posYToUse, (double)value);
             }
         }
 

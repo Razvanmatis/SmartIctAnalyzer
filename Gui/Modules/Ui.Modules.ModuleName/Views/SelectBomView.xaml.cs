@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using ProMik.Services.Interfaces;
+using ProMik.Core.Interfaces.Events;
 using Ui.Modules.ModuleName.Events;
-using Ui.Modules.ModuleName.Interfaces;
+using Ui.Modules.ModuleName.ViewModels;
 
 namespace Ui.Modules.ModuleName.Views
 {
@@ -21,17 +11,20 @@ namespace Ui.Modules.ModuleName.Views
     /// </summary>
     public partial class SelectBomView : Window
     {
-        private IEventService eventService;
+        private readonly IEventService eventService;
+        private readonly bool autoMode;
 
-        public SelectBomView(IEventService eventService)
+        public SelectBomView(IEventService eventService, bool autoMode)
         {
             this.eventService = eventService;
+            this.autoMode = autoMode;
             InitializeComponent();
+            ((SelectBomViewModel)DataContext).AutoMode = autoMode;
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            eventService.Publish<SelectBomFinishEvent>(new SelectBomFinishEvent(true));
+            eventService.Publish<SelectBomFinishEvent>(new SelectBomFinishEvent(true, autoMode));
         }
     }
 }

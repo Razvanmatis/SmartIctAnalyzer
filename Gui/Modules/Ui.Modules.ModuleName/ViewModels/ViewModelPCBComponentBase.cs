@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Interfaces.PcbInvestigator;
 using Prism.Commands;
-using ProMik.Services.Interfaces;
-using Ui.Core.Mvvm;
-using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.ViewModels
@@ -18,26 +12,26 @@ namespace Ui.Modules.ModuleName.ViewModels
     public abstract class ViewModelPCBComponentBase : ViewModelPCBBase
     {
         private const double OPACITYMIN = 0.1;
-        private IGeneralSettingsData settingsVm;
-        private IPCBComponent component;
+        private static bool xAxisMirror;
+        private static bool yAxisMirror;
+        private readonly ISettingsData settingsVm;
+        private readonly IPCBComponent component;
+        private readonly ObservableCollection<ViewModelLine> lines = new ObservableCollection<ViewModelLine>();
+        private readonly IComponentViewModel componentVm;
         private bool connectionsShowed;
         private string name;
-        private IEventService eventService;
-        private ObservableCollection<ViewModelLine> lines = new ObservableCollection<ViewModelLine>();
         private SolidColorBrush brush;
         private string valueInner;
         private SolidColorBrush borderColor;
         private int borderThickness;
         private Visibility toolTipVisible;
-        private IComponentViewModel componentVm;
 
-        public ViewModelPCBComponentBase(IPCBComponent component, IEventService eventService, IGeneralSettingsData settingsVm, IComponentViewModel componentVm)
+        public ViewModelPCBComponentBase(IPCBComponent component, ISettingsData settingsVm, IComponentViewModel componentVm)
             : base(component.GeometricAttributes.Bounds.X, component.GeometricAttributes.Bounds.Y)
         {
             this.componentVm = componentVm;
             this.component = component;
             this.settingsVm = settingsVm;
-            this.eventService = eventService;
             ToggleVisiblity = new DelegateCommand(ToggleVisibleState);
             ToggleVisiblityAll = new DelegateCommand(async () => await ToggleVisibiltyAll().ConfigureAwait(false));
             ToggleConnections = new DelegateCommand(async () => await ToggleConnectionsShowing().ConfigureAwait(false));
@@ -167,6 +161,72 @@ namespace Ui.Modules.ModuleName.ViewModels
             get
             {
                 return connectionsShowed;
+            }
+        }
+
+        public static bool MirrorUsed(bool xAxis)
+        {
+            if (xAxis)
+            {
+                return xAxisMirror;
+            }
+            else
+            {
+                return yAxisMirror;
+            }
+        }
+
+        public static void MirrorAxis(bool xAxis)
+        {
+            if (xAxis)
+            {
+                xAxisMirror = !xAxisMirror;
+            }
+            else
+            {
+                yAxisMirror = !yAxisMirror;
+            }
+        }
+
+        public void MirrorAxis(string xAxis)
+        {
+            if (bool.TrueString.Equals(xAxis))
+            {
+                if (PosYToUse != component.GeometricAttributes.Bounds.Y)
+                {
+                    PosYToUse = component.GeometricAttributes.Bounds.Y;
+                }
+                else
+                {
+                    PosYToUse *= -1;
+                    if (component.GeometricAttributes.Bounds.Y < 0)
+                    {
+                        PosYToUse -= component.GeometricAttributes.Bounds.Height;
+                    }
+                    else
+                    {
+                        PosYToUse += component.GeometricAttributes.Bounds.Height;
+                    }
+                }
+            }
+            else
+            {
+                if (PosXToUse != component.GeometricAttributes.Bounds.X)
+                {
+                    PosXToUse = component.GeometricAttributes.Bounds.X;
+                }
+                else
+                {
+                    PosXToUse *= -1;
+                    if (component.GeometricAttributes.Bounds.X < 0)
+                    {
+                        PosXToUse += component.GeometricAttributes.Bounds.Width;
+                    }
+                    else
+                    {
+                        PosXToUse -= component.GeometricAttributes.Bounds.Width;
+                    }
+                }
             }
         }
 

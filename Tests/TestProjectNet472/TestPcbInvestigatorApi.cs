@@ -1,13 +1,11 @@
-﻿using GrpcApi.Handler;
-using Interfaces.UnitTests;
+﻿using GrpcApi.Implementations;
+using Interfaces.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using PCBI.Automation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 namespace TestProjectNet472
 {
@@ -15,7 +13,7 @@ namespace TestProjectNet472
     public class TestPcbInvestigatorApi
     {
         private const string PATHTOODB = "C:\\Repositories\\smart_ict_analyser\\Testdaten\\panel";
-        private static string filePath = Directory.GetCurrentDirectory() + "\\exportApiObjects.txt";
+        private static readonly string FILEPATH = Directory.GetCurrentDirectory() + "\\exportApiObjects.txt";
 
         [TestMethod]
         public void TestCollectingItemsFromApi()
@@ -23,7 +21,7 @@ namespace TestProjectNet472
             List<PcbTestObject> result = PcbInvestigatorApiHandler.GetAllObjectsFromPcbInvestigator(PATHTOODB);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
-            SaveStorageContentIntoFile(result, filePath);
+            SaveStorageContentIntoFile(result, FILEPATH);
         }
 
         private static void SaveStorageContentIntoFile(List<PcbTestObject> content, string filePathToUse)

@@ -1,9 +1,7 @@
-﻿using Interfaces.Gui;
-using Prism.Ioc;
+﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using Ui.Core;
-using Ui.Modules.ModuleName.Helper;
 using Ui.Modules.ModuleName.Interfaces;
 using Ui.Modules.ModuleName.ViewModels;
 using Ui.Modules.ModuleName.Views;
@@ -23,14 +21,14 @@ namespace Ui.Modules.ModuleName
         {
             regionManager.RequestNavigate(RegionNames.ContentRegion, "ComponentView");
             regionManager.RequestNavigate(RegionNames.LayerRegion, "LayerView");
-            regionManager.RequestNavigate(RegionNames.LogRegion, "LogView");
+            regionManager.RequestNavigate(RegionNames.MenuRegion, "MenuView");
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<ComponentView>();
             containerRegistry.RegisterForNavigation<LayerView>();
-            containerRegistry.RegisterForNavigation<LogView>();
+            containerRegistry.RegisterForNavigation<MenuView>();
             containerRegistry.RegisterSingleton<IComponentViewModel, ComponentViewModel>();
         }
     }

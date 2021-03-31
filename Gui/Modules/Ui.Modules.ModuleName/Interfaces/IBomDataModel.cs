@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
+﻿using Ui.Modules.ModuleName.Helper;
 
 namespace Ui.Modules.ModuleName.Interfaces
 {
@@ -15,6 +12,12 @@ namespace Ui.Modules.ModuleName.Interfaces
 
         string Separator { get; set; }
 
+        string BomData { get; set; }
+
+        BomSettings BomSettings { get; set; }
+
         void ResetValues();
+
+        void SetBomSettings(BomSettings settings);
     }
 }

@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Grpc.Core;
-using GrpcApi.Handler;
+using GrpcApi.Implementations;
 using GrpcApi.Interfaces;
-using Interfaces.PcbInvestigator;
 
 namespace GrpcApi
 {
@@ -19,8 +16,10 @@ namespace GrpcApi
 
         public override async Task<StatusResult> ClientAvailable(Empty request, ServerCallContext context)
         {
-            StatusResult result = new StatusResult();
-            result.Status = true;
+            StatusResult result = new StatusResult
+            {
+                Status = true,
+            };
             return await Task.FromResult(result).ConfigureAwait(true);
         }
 
@@ -90,7 +89,7 @@ namespace GrpcApi
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
             }
 
-            Result result = await FinishParsing(FILEPATHEXTRACT).ConfigureAwait(true);
+            Result result = await FinishParsing(FILEPATHEXTRACT, request.Steps).ConfigureAwait(true);
             if (result != null)
             {
                 try
@@ -148,14 +147,14 @@ namespace GrpcApi
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
             }
 
-            return await FinishParsing(request.PathToOdb).ConfigureAwait(true);
+            return await FinishParsing(request.PathToOdb, request.Steps).ConfigureAwait(true);
         }
 
-        private static async Task<Result> FinishParsing(string pathToOdb)
+        private static async Task<Result> FinishParsing(string pathToOdb, string steps)
         {
             IPcbInvestigatorApiConverter converter = new PcbInvestigatorApiConverter();
             IPcbInvestigatorApiHandler apiHandler = new PcbInvestigatorApiHandler(pathToOdb, converter);
-            IGrpcResult components = apiHandler.GetAllComponents();
+            IGrpcResult components = apiHandler.GetAllComponents(steps);
             IList<PinGrpc> pinsGrpc = converter.GetPinsGrpc(components.AllPins, components.AllNets);
             IList<ComponentGrpc> componentsGrpc = converter.GetComponentsGrpc(components.AllComponents, components.AllPins);
             IList<NetGrpc> netsGrpc = converter.GetNetsGrpc(components.AllPins, components.AllComponents, components.AllNets);

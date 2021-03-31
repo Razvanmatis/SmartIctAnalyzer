@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Grpc.Core;
 using static PcbInvestigatorService;
 
@@ -12,11 +8,16 @@ namespace GrpcApi
 {
     public static class Programm
     {
-        private const bool TESTMODE = false;
+      // private const bool TESTMODE = false;
         private const int PORT = 50151;
 
         public static void Main(string[] args)
         {
+            if (args != null && args.Length > 0)
+            {
+                Console.WriteLine("Received arguments: " + args.ToString());
+            }
+
             PcbInvestigatorServiceBase impl = new PcbInvestigatorServiceImpl();
             Server server = new Server()
             {
@@ -34,13 +35,13 @@ namespace GrpcApi
                 Console.WriteLine("Error because of " + e.Message);
             }
 
-            if (TESTMODE)
+          /*  if (TESTMODE)
             {
                 string pathToOdb = "C:\\Repositories\\smart_ict_analyser\\Testdaten\\panel";
                 Request request = new Request();
                 request.PathToOdb = pathToOdb;
                 var objects = impl.GetConvertedObjects(request, new DummyServerCallContext()).Result;
-            }
+            } */
 
             while (true)
             {

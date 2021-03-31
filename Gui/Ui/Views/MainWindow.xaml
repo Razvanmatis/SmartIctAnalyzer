@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:beh="http://schemas.microsoft.com/xaml/behaviors"
         prism:ViewModelLocator.AutoWireViewModel="true"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:core="clr-namespace:Ui.Core;assembly=Ui.Core"
+        xmlns:logPanel="clr-namespace:ProMik.UI.WPF.Panels.LogPanel;assembly=ProMik.UI.WPF"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -14,6 +15,11 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="{Binding Title}" Height="1000" Width="1920" >
+    <beh:Interaction.Triggers>
+        <beh:EventTrigger EventName="Closing">
+            <beh:InvokeCommandAction Command="{Binding WindowClosingCommand}" PassEventArgsToCommand="True" />
+        </beh:EventTrigger>
+    </beh:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -24,131 +30,7 @@
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DockPanel Grid.ColumnSpan="2">
-            <Menu DockPanel.Dock="Top" IsEnabled="{Binding MenuEnabled}">
-                <MenuItem Header="File">
-                    <MenuItem Header="Open ODB project folder" Command="{Binding OpenCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="OpenInNew" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem IsEnabled="{Binding ExportEnabled}" Header="Import BOM data file" Command="{Binding ImportBomCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="WatchImport" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="Import data from JSON file" Command="{Binding ImportCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="WatchImport" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem IsEnabled="{Binding ExportEnabled}" Header="Export data into JSON file" Command="{Binding ExportCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="FileExport" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="Exit" Command="{Binding ExitCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="ExitRun" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Settings">
-                    <MenuItem Header="GRPC Server connections settings" Command="{Binding GrpcServerSettingsCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="Connection" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="General settings" Command="{Binding GeneralSettingsCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="Settings" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Test coverage settings" Command="{Binding TestCoverageSettingsCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="SettingsRemote" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem Header="Import settings file" Command="{Binding ImportSettingsCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="Import" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="Export settings file" Command="{Binding ExportSettingsCommand}">
-                        <MenuItem.Icon>
-                            <materialDesign:PackIcon Kind="Export" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Test coverage">
-                    <MenuItem Header="Boundary scan test">
-                        <MenuItem Header="Determine all boundary scan objects" Command="{Binding RunTestCoverageForDeterminingObjects}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="{Binding ItemTestCoverageObjects}" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Determine test coverage for JTAGs" Command="{Binding RunTestCoverageForIcs}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="{Binding ItemTestCoverageJtag}" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Determine test coverage for all PullUps" Command="{Binding RunTestCoverageForPullUps}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="{Binding ItemTestCoveragePullup}" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Determine test coverage for all PullDowns" Command="{Binding RunTestCoverageForPullDowns}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="{Binding ItemTestCoveragePulldown}" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Determine test coverage for all PullUps and PullDowns" Command="{Binding RunTestCoverageForPullUpsDowns}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="{Binding ItemTestCoveragePullupdown}" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Determine test coverage for all other components" Command="{Binding GetTestCoverageForAllOthers}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="{Binding ItemTestCoverageOthers}" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Determine complete test coverage of boundary scan" Command="{Binding GetCompleteTestCoverageOfJtags}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="{Binding ItemTestCoverageAll}" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Export PIN connection information into file" Command="{Binding GetPinInformationJtags}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="FileExport" Width="22" Height="22"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Add dummy data" Command="{Binding AddDummyCommand}" Visibility="Hidden"/>
-                <MenuItem Header="Add log entry" Command="{Binding AddLogEntry}" />
-            </Menu>
-        </DockPanel>
+        <ContentControl IsEnabled="{Binding MenuEnabled}" Grid.ColumnSpan="2" prism:RegionManager.RegionName="{x:Static core:RegionNames.MenuRegion}" />
         <ContentControl IsEnabled="{Binding MenuEnabled}" Grid.Row="1" Grid.Column="0" prism:RegionManager.RegionName="{x:Static core:RegionNames.LayerRegion}" />
         <ContentControl IsEnabled="{Binding MenuEnabled}" Grid.Row="1" Grid.Column="1" prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
         <xctk:BusyIndicator Grid.Row="1" Grid.Column="1" Panel.ZIndex="10000" IsBusy="{Binding IsBusy}" />
@@ -157,11 +39,13 @@
             <Run Text="{Binding TestCoverage, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,0.00}}"/>
         </TextBlock>
         <Expander Grid.Column="1" Grid.Row="2" Header="Logging area">
-            <StackPanel Orientation="Vertical" Height="300px"
-            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-            Margin="24,8,24,16">
-                <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.LogRegion}" />
-            </StackPanel>
+            <logPanel:LogPanel EventService="{Binding EventService}" LogService="{Binding LogService}" Height="300px" ContextMenuActions="{Binding LogContext}">
+                <beh:Interaction.Triggers>
+                    <beh:EventTrigger EventName="Loaded">
+                        <beh:InvokeCommandAction Command="{Binding LogPanelLoaded}" />
+                    </beh:EventTrigger>
+                </beh:Interaction.Triggers>
+            </logPanel:LogPanel>
         </Expander>
     </Grid>
 </Window>

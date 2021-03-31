@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using Interfaces.Gui;
 using Interfaces.PcbInvestigator;
 
@@ -11,54 +8,25 @@ namespace GrpcClientParser.Helper
 {
     public class CsvReader
     {
-        private Dictionary<string, string> content = new Dictionary<string, string>();
-        private ILogger logger;
+        private readonly Dictionary<string, string> content = new Dictionary<string, string>();
+        private readonly ILogger logger;
 
         public CsvReader(ILogger logger)
         {
             this.logger = logger;
         }
 
-        public Dictionary<string, string> ReadContentFromLine(string path, string separator, int columnRef, int columnValue)
+        public Dictionary<string, string> ReadContentFromData(string data, string separator, int columnRef, int columnValue)
         {
-            if (!File.Exists(path))
-            {
-                logger.LogMessage("No file available under the path " + path, LogCategory.ERROR);
-                return content;
-            }
-
             content.Clear();
-            try
+            List<string> readContent = new List<string>(Regex.Split(data, Environment.NewLine));
+            foreach (string text in readContent)
             {
-                List<string> readContent = File.ReadAllLines(path).ToList();
-                foreach (string text in readContent)
+                string[] values = text.Split(separator);
+                if (values.Length >= columnRef && values.Length >= columnValue)
                 {
-                    string[] values = text.Split(separator);
-                    if (values.Length >= columnRef && values.Length >= columnValue)
-                    {
-                        content.Add(values[columnRef], values[columnValue]);
-                    }
+                    content.Add(values[columnRef], values[columnValue]);
                 }
-            }
-            catch (IOException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
-            }
-            catch (ArgumentException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
-            }
-            catch (NotSupportedException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
-            }
-            catch (System.Security.SecurityException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
             }
 
             return content;

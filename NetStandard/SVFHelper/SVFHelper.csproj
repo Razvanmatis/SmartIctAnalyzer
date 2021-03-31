@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="SvfPlayer.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SvfPlayer.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.3-beta" />
+    <PackageReference Include="ProMik.SvfPlayer" Version="1.0.5-beta" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SmartIct.Interfaces\Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

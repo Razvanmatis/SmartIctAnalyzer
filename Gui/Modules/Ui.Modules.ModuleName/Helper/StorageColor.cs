@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Globalization;
+using System.Windows.Media;
 
 namespace Ui.Modules.ModuleName.Helper
 {
@@ -18,5 +17,10 @@ namespace Ui.Modules.ModuleName.Helper
         public int G { get; }
 
         public int B { get; }
+
+        public override string ToString()
+        {
+            return Color.FromRgb((byte)R, (byte)G, (byte)B).ToString(CultureInfo.CurrentCulture);
+        }
     }
 }

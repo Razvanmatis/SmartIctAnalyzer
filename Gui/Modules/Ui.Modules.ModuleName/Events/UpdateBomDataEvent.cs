@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ProMik.Core.Interfaces.Events;
 
 namespace Ui.Modules.ModuleName.Events
 {
-    public class UpdateBomDataEvent
+    public class UpdateBomDataEvent : EventPayload
     {
     }
 }

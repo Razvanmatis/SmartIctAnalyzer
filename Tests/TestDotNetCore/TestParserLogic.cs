@@ -6,13 +6,11 @@ namespace TestDotNetCore
     using System.IO;
     using System.Linq;
     using System.Security;
-    using GrpcClientParser;
-    using GrpcClientParser.Helper;
+    using GrpcClientParser.Implementations;
     using GrpcClientParser.Interfaces;
+    using Interfaces.Helper;
     using Interfaces.PcbInvestigator;
-    using Interfaces.UnitTests;
     using Newtonsoft.Json;
-    using Ui.Modules.ModuleName.Helper;
     using Xunit;
 
     /// <summary>
@@ -22,7 +20,7 @@ namespace TestDotNetCore
     {
         private const string PATHTOODB = "C:\\Repositories\\smart_ict_analyser\\Testdaten\\panel";
         private const string PATHTOIMPORTFILE = "C:\\Repositories\\smart_ict_analyser\\Testdaten\\panel_FullDataWithValues_export.json";
-        private static string filePath = Directory.GetCurrentDirectory() + "\\exportApiObjects.txt";
+        private static readonly string FILEPATH = Directory.GetCurrentDirectory() + "\\exportApiObjects.txt";
 
         /// <summary>
         /// TestParsingFromApi.
@@ -31,10 +29,10 @@ namespace TestDotNetCore
         public void TestParsingFromApi()
         {
             IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler(new DebugLogger());
-            List<PcbTestObject> resultData = GetSerialzedData(filePath);
+            List<PcbTestObject> resultData = GetSerialzedData(FILEPATH);
             Assert.NotNull(resultData);
             Assert.True(resultData.Count > 0);
-            var result = grpcHandler.GetParsedObjectsFromGrpc(PATHTOODB).Result;
+            var result = grpcHandler.GetParsedObjectsFromGrpc(PATHTOODB, "-1").Result;
             Assert.NotNull(result);
             Assert.True(result.Components.Count > 0);
             Assert.True(result.Nets.Count > 0);
@@ -49,7 +47,7 @@ namespace TestDotNetCore
         public void TestParsingFromImport()
         {
             IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler(new DebugLogger());
-            List<PcbTestObject> resultData = GetSerialzedData(filePath);
+            List<PcbTestObject> resultData = GetSerialzedData(FILEPATH);
             Assert.NotNull(resultData);
             Assert.True(resultData.Count > 0);
             var result = grpcHandler.ImportComponentsFromFile(PATHTOIMPORTFILE);
@@ -62,7 +60,7 @@ namespace TestDotNetCore
 
         private static List<PcbTestObject> GetSerialzedData(string fileToUse)
         {
-            string content = string.Empty;
+            string content;
             try
             {
                 content = File.ReadAllText(fileToUse);
@@ -99,7 +97,7 @@ namespace TestDotNetCore
                 return null;
             }
 
-            List<PcbTestObject> data = null;
+            List<PcbTestObject> data;
             try
             {
                 data = JsonConvert.DeserializeObject<List<PcbTestObject>>(content);
@@ -139,6 +137,30 @@ namespace TestDotNetCore
             foreach (var pin in pins)
             {
                 Assert.Equal(pin.Nets.Count, comp.Connections.FirstOrDefault(x => x.PinNumber.Equals(pin.PinNumber)).Nets.Count);
+            }
+
+            foreach (var pin in pins)
+            {
+                List<string> nets = new List<string>();
+                foreach (var pinInner in comp.Connections)
+                {
+                    if (pinInner.PinNumber.Equals(pin.PinNumber))
+                    {
+                        foreach (var net in pinInner.Nets)
+                        {
+                            if (!nets.Contains(net.NetName))
+                            {
+                                nets.Add(net.NetName);
+                            }
+                        }
+                    }
+                }
+
+                Assert.Equal(pin.Nets.Count, nets.Count);
+                foreach (var net in pin.Nets)
+                {
+                    Assert.Contains<string>(net, nets);
+                }
             }
         }
 

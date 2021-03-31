@@ -1,9 +1,0 @@
-HideComponentsByTypeEvent
-	- subscribe: ComponentViewModel
-	- publish: ViewModelPCBComponentBase, 
-ShowConnectionsEvent
-	- subscribe: ComponentViewModel
-	- publish: ViewModelPCBComponentBase
-ShowLayersWithObjectsEvent
-	- subscribe: ComponentViewModel
-	- publish: LayerViewModel

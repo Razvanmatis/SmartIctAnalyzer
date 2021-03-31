@@ -4,20 +4,25 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>Ui.Modules.ModuleName</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
+    <NeutralLanguage>en-150</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="4.6.96" />
     <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="3.1.0" />
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
-    <PackageReference Include="ProMik.Services.Interfaces" Version="1.0.0" />
+    <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.3-beta" />
+    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.17-beta" />
+    <PackageReference Include="ProMik.UI.WPF" Version="1.0.15-beta" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.ObjectModel" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\NetStandard\GrpcClientParser\GrpcClientParser.csproj" />
+    <ProjectReference Include="..\..\..\NetStandard\PinInformationExtractor\PinInformationExtractor.csproj" />
+    <ProjectReference Include="..\..\..\NetStandard\SVFHelper\SVFHelper.csproj" />
     <ProjectReference Include="..\..\..\SmartIct.Interfaces\Interfaces.csproj" />
+    <ProjectReference Include="..\..\..\Tests\TestCoverage\TestCoverage.csproj" />
     <ProjectReference Include="..\..\Ui.Core\Ui.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -27,7 +32,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.333">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -38,6 +43,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TextRessources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\MenuView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="TextRessources.resx">
@@ -46,6 +54,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\MenuView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\PCBLineDataTemplate.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

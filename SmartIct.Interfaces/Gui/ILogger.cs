@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Interfaces.Gui
+﻿namespace Interfaces.Gui
 {
     public enum LogCategory
     {
@@ -25,7 +21,5 @@ namespace Interfaces.Gui
     public interface ILogger
     {
         void LogMessage(string message, LogCategory category);
-
-        void RegisterMethodCallback(Action<string, LogCategory> action);
     }
 }

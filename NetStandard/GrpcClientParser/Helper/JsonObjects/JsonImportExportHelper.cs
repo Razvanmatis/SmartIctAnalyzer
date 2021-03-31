@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Security;
-using System.Text;
-using GrpcClientParser.Helper.JsonObjects;
+using GrpcClientParser.Implementations;
 using GrpcClientParser.Interfaces;
 using Interfaces.Gui;
-using Interfaces.PCBApiObjects;
 using Interfaces.PcbInvestigator;
 using Interfaces.PcbInvestigator.Enums;
+using Interfaces.PcbInvestigator.Implementations;
 using Newtonsoft.Json;
 
 namespace GrpcClientParser.Helper.JsonObjects
 {
     public static class JsonImportExportHelper
     {
-        public static void ExportComponentsToFile(IParsedResult result, string filePath, ILogger logger)
+        public static string GetDataAsString(IParsedResult result, ILogger logger)
         {
             IList<IPinComponent> pins = new List<IPinComponent>();
             foreach (var comp in result.Components)
@@ -52,7 +48,7 @@ namespace GrpcClientParser.Helper.JsonObjects
             }
 
             IResultJson resultJson = new ResultJson(pinJson, compJson, netJsons);
-            HandleFileSaving(resultJson, filePath, logger);
+            return GetSerializedData(resultJson, logger);
         }
 
         public static IList<IPCBComponent> GetParsedComponents(
@@ -100,7 +96,7 @@ namespace GrpcClientParser.Helper.JsonObjects
         }
 
         public static IParsedResult ImportComponentsFromFile(
-           string filePath,
+           string data,
            IList<string> rIdentifier,
            IList<string> cIdentifier,
            IList<string> iIdentifier,
@@ -109,13 +105,7 @@ namespace GrpcClientParser.Helper.JsonObjects
            Func<IFunctionalAttributes, bool> isTestPoint,
            ILogger logger)
         {
-            if (!File.Exists(filePath))
-            {
-                logger.LogMessage("No such file for import exists: " + filePath, LogCategory.ERROR);
-                return null;
-            }
-
-            IResultJson resultJson = GetResultJsonFromFile(filePath, logger);
+            IResultJson resultJson = GetResultJsonFromData(data, logger);
             if (resultJson != null)
             {
                 IList<IPCBComponent> components = GetParsedComponents(
@@ -135,39 +125,8 @@ namespace GrpcClientParser.Helper.JsonObjects
             }
         }
 
-        private static IResultJson GetResultJsonFromFile(string filePath, ILogger logger)
+        private static IResultJson GetResultJsonFromData(string content, ILogger logger)
         {
-            string content = string.Empty;
-            try
-            {
-                content = File.ReadAllText(filePath);
-            }
-            catch (IOException e)
-            {
-                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
-                return null;
-            }
-            catch (ArgumentException e)
-            {
-                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
-                return null;
-            }
-            catch (NotSupportedException e)
-            {
-                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
-                return null;
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
-                return null;
-            }
-            catch (SecurityException e)
-            {
-                logger.LogMessage("Error reading out the text of the file " + filePath + ": " + e.Message, LogCategory.ERROR);
-                return null;
-            }
-
             if (string.IsNullOrEmpty(content))
             {
                 logger.LogMessage("Read out text was empty!", LogCategory.ERROR);
@@ -187,60 +146,16 @@ namespace GrpcClientParser.Helper.JsonObjects
             return result;
         }
 
-        private static void HandleFileSaving(IResultJson resultJson, string filePath, ILogger logger)
+        private static string GetSerializedData(IResultJson resultJson, ILogger logger)
         {
-            if (!File.Exists(filePath))
-            {
-                try
-                {
-                    File.Create(filePath).Close();
-                }
-                catch (IOException e)
-                {
-                    logger.LogMessage("Error creating file for export of data: " + filePath + ": " + e.Message, LogCategory.ERROR);
-                    return;
-                }
-                catch (ArgumentException e)
-                {
-                    logger.LogMessage("Error creating file for export of data: " + filePath + ": " + e.Message, LogCategory.ERROR);
-                    return;
-                }
-                catch (NotSupportedException e)
-                {
-                    logger.LogMessage("Error creating file for export of data: " + filePath + ": " + e.Message, LogCategory.ERROR);
-                    return;
-                }
-                catch (UnauthorizedAccessException e)
-                {
-                    logger.LogMessage("Error creating file for export of data: " + filePath + ": " + e.Message, LogCategory.ERROR);
-                    return;
-                }
-            }
-
-            string jsonString = JsonConvert.SerializeObject(resultJson, Formatting.Indented);
             try
             {
-                File.WriteAllText(filePath, jsonString);
+                return JsonConvert.SerializeObject(resultJson, Formatting.Indented);
             }
-            catch (IOException e)
+            catch (JsonException e)
             {
                 logger.LogMessage(e.Message, LogCategory.ERROR);
-            }
-            catch (ArgumentException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
-            }
-            catch (UnauthorizedAccessException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
-            }
-            catch (NotSupportedException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
-            }
-            catch (SecurityException e)
-            {
-                logger.LogMessage(e.Message, LogCategory.ERROR);
+                return string.Empty;
             }
         }
 

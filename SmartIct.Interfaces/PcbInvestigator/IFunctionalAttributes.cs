@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Interfaces.PcbInvestigator.Enums;
+﻿using Interfaces.PcbInvestigator.Enums;
 
 namespace Interfaces.PcbInvestigator
 {

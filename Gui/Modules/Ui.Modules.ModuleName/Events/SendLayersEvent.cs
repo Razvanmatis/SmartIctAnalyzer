@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using ProMik.Core.Interfaces.Events;
 
 namespace Ui.Modules.ModuleName.Events
 {
-    public class SendLayersEvent
+    public class SendLayersEvent : EventPayload
     {
         public SendLayersEvent(List<string> layers)
         {

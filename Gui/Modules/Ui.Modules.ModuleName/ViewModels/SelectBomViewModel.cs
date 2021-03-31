@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
-using Ookii.Dialogs.Wpf;
+﻿using System.Windows.Input;
+using Interfaces.Gui;
 using Prism.Commands;
-using ProMik.Services.Interfaces;
+using ProMik.Core.Interfaces.Events;
 using Ui.Core.Mvvm;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Interfaces;
@@ -13,16 +10,18 @@ namespace Ui.Modules.ModuleName.ViewModels
 {
     public class SelectBomViewModel : ViewModelBase
     {
+        private readonly IEventService eventService;
+        private readonly IBomDataModel bomDataModel;
+        private readonly IDialogSelector dialogSelector;
         private string columnRef;
         private string columnValue;
         private string bomFile;
         private string separator;
-        private IEventService eventService;
-        private IBomDataModel bomDataModel;
 
-        public SelectBomViewModel(IEventService eventService, IBomDataModel bomDataModel)
+        public SelectBomViewModel(IEventService eventService, IBomDataModel bomDataModel, IDialogSelector dialogSelector)
         {
             this.bomDataModel = bomDataModel;
+            this.dialogSelector = dialogSelector;
             this.eventService = eventService;
             PathCommand = new DelegateCommand(OpenSelectFileDialog);
             FinishCommand = new DelegateCommand(FinishEventCalling);
@@ -44,6 +43,8 @@ namespace Ui.Modules.ModuleName.ViewModels
                 bomDataModel.ColumnRef = value;
             }
         }
+
+        public bool AutoMode { get; set; }
 
         public string ColumnValue
         {
@@ -93,18 +94,18 @@ namespace Ui.Modules.ModuleName.ViewModels
 
         private void OpenSelectFileDialog()
         {
-            VistaOpenFileDialog fileDialog = new VistaOpenFileDialog();
-            fileDialog.Title = TextRessources.SelectBomFile;
-            fileDialog.ShowDialog();
-            if (fileDialog.FileName != null && fileDialog.FileName.Length > 0)
+            string fileName = string.Empty;
+            if (!dialogSelector.OpenGenericDialog(DialogType.OPENFILE, TextRessources.SelectBomFile, "No valid BOM file selected!", out fileName))
             {
-                BomFile = fileDialog.FileName;
+                return;
             }
+
+            BomFile = fileName;
         }
 
         private void FinishEventCalling()
         {
-            eventService.Publish<SelectBomFinishEvent>(new SelectBomFinishEvent(false));
+            eventService.Publish<SelectBomFinishEvent>(new SelectBomFinishEvent(false, AutoMode));
         }
     }
 }

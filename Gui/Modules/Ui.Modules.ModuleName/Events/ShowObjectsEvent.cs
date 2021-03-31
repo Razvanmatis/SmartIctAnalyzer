@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using ProMik.Core.Interfaces.Events;
 
 namespace Ui.Modules.ModuleName.Events
 {
-    public class ShowObjectsEvent
+    public class ShowObjectsEvent : EventPayload
     {
-        private IList<string> objects;
+        private readonly IList<string> objects;
 
         public ShowObjectsEvent(IList<string> objects)
         {

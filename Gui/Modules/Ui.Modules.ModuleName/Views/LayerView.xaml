@@ -5,7 +5,6 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Ui.Modules.ModuleName.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200"
              prism:ViewModelLocator.AutoWireViewModel="true">
@@ -17,7 +16,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Text="Layers:" HorizontalAlignment="Left" Margin="10, 0, 0, 0" FontSize="20" FontWeight="Bold" />
-        <ListView x:Name="ListView" Grid.Row="1" ItemsSource="{Binding Layers}">
+        <ListView x:Name="ListView" Grid.Row="1" ItemsSource="{Binding Layers}" SelectedItem="{Binding SelectedLayer, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding SelectionChanged}" PassEventArgsToCommand="True"
@@ -26,7 +25,7 @@
             </i:Interaction.Triggers>
         </ListView>
         <TextBlock Text="Objects:" Grid.Row="2" HorizontalAlignment="Left" Margin="10, 0, 0, 0" FontSize="20" FontWeight="Bold" />
-        <ListView x:Name="ListViewObjects" Grid.Row="3" ItemsSource="{Binding Objects}">
+        <ListView x:Name="ListViewObjects" Grid.Row="3" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding SelectionChangedObjects}" PassEventArgsToCommand="True"

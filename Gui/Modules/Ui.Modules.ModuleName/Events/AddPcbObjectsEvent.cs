@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Interfaces.PcbInvestigator;
+using ProMik.Core.Interfaces.Events;
 
 namespace Ui.Modules.ModuleName.Events
 {
-    public class AddPcbObjectsEvent
+    public class AddPcbObjectsEvent : EventPayload
     {
-        private IList<INetComponent> nets;
-        private IList<IPCBComponent> list;
+        private readonly IList<INetComponent> nets;
+        private readonly IList<IPCBComponent> list;
 
         public AddPcbObjectsEvent(IList<IPCBComponent> list, IList<INetComponent> nets)
         {

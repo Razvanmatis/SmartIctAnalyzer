@@ -15,10 +15,12 @@ message StatusResult {
 
 message RequestZip {
 	bytes zipFolder = 1;
+	string steps = 2;
 }
 
 message Request {
 	string pathToOdb = 1;
+	string steps = 2;
 }
 
 message Result {

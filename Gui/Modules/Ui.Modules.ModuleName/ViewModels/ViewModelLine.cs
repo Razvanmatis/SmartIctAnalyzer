@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
-using Interfaces;
 using Interfaces.PcbInvestigator;
-using Interfaces.TestCoverage;
 using Prism.Commands;
+using TestCoverage.Interfaces;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.ViewModels
@@ -17,16 +14,16 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         private static int offsetX;
         private static int offsetY;
-        private double posXLabel;
-        private double posyLabel;
-        private StreamGeometry geometry = new StreamGeometry();
-        private ObservableCollection<IPCBComponent> connections = new ObservableCollection<IPCBComponent>();
+        private readonly double posXLabel;
+        private readonly double posyLabel;
+        private readonly StreamGeometry geometry = new StreamGeometry();
+        private readonly ITestCoverageDeterminer testCoverageDeterminer;
+        private readonly ObservableCollection<IPCBComponent> connections = new ObservableCollection<IPCBComponent>();
         private string objectNames;
         private Visibility lineVisibility;
         private Brush lineColor = Brushes.Black;
-        private ITestCoverageDeterminer testCoverageDeterminer;
 
-        public ViewModelLine(PointCollection points, Point pointOfNetName, string netName, IGeneralSettingsData settingsVm, ITestCoverageDeterminer testCoverageDeterminer)
+        public ViewModelLine(PointCollection points, Point pointOfNetName, string netName, ISettingsData settingsVm, ITestCoverageDeterminer testCoverageDeterminer)
             : base(points[0].X, points[0].Y)
         {
             this.testCoverageDeterminer = testCoverageDeterminer;

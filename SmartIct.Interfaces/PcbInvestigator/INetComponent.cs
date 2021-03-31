@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Interfaces.PcbInvestigator;
+﻿using System.Collections.Generic;
 
 namespace Interfaces.PcbInvestigator
 {

@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using Newtonsoft.Json;
-using Ui.Modules.ModuleName.Helper;
-
-namespace Ui.Modules.ModuleName.Interfaces
+﻿namespace Ui.Modules.ModuleName.Interfaces
 {
     public interface ISettingsStorageManager
     {
-        void SaveStorageContent(ISettingsStorageContent content);
+        void SaveStorageContent(ISettingsStorageModel content);
 
-        ISettingsStorageContent GetStorageContent();
+        ISettingsStorageModel GetStorageContent();
 
-        void ImportStorageContent(string filePath);
+        byte[] IsValidSettingsFile(string fileName);
 
-        void ExportStorageContent(string filePath);
+        void ImportStorageContent(byte[] data);
+
+        byte[] GetSettingsContent();
     }
 }

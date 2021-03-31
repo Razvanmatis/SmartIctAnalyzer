@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
-using GrpcClientParser.Implementations;
-using Interfaces;
 using Interfaces.Gui;
-using Interfaces.PCBApiObjects;
 using Interfaces.PcbInvestigator;
-using Interfaces.TestCoverage;
 using Prism.Commands;
 using Prism.Regions;
-using ProMik.Services.Interfaces;
-using ProMik.Services.Interfaces.Enums;
+using ProMik.Core.Interfaces.Events;
+using ProMik.Core.Interfaces.Events.Enums;
+using TestCoverage.Events;
+using TestCoverage.Interfaces;
 using Ui.Core.Mvvm;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Helper;
@@ -26,9 +22,17 @@ using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.ViewModels
 {
-    public class ComponentViewModel : RegionViewModelBase, IComponentViewModel
+    public class ComponentViewModel : RegionViewModelBase, IComponentViewModel, IFilesDropped
     {
         private readonly double offsetScrollbar = 25;
+        private readonly List<string> actualLayers = new List<string>();
+        private readonly IEventService eventService;
+        private readonly List<string> actualTestCoverageObjects = new List<string>();
+        private readonly ISettingsData settingsVm;
+        private readonly IList<ViewModelPCBBase> allViewModelsForPainting = new List<ViewModelPCBBase>();
+        private readonly ITestCoverageDeterminer testCoverageDeterminer;
+        private readonly Dictionary<TestCoverageObject, IList<IPCBComponent>> mapTestCoverageObjects = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
+        private readonly ILogger logger;
         private string message;
         private ObservableCollection<ViewModelPCBBase> componentViews;
         private double overallWidth;
@@ -39,24 +43,17 @@ namespace Ui.Modules.ModuleName.ViewModels
         private double actualXPos;
         private double actualYPos;
         private bool isClicked;
-        private IEventService eventService;
         private double realXPos;
         private double realYPos;
         private IList<IPCBComponent> allObjects;
         private IList<INetComponent> allNets;
-        private List<string> actualLayers = new List<string>();
-        private List<string> actualTestCoverageObjects = new List<string>();
-        private IList<ViewModelPCBBase> allViewModelsForPainting = new List<ViewModelPCBBase>();
-        private IGeneralSettingsData settingsVm;
-        private Dictionary<TestCoverageObject, IList<IPCBComponent>> mapTestCoverageObjects = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
-        private ITestCoverageDeterminer testCoverageDeterminer;
-        private ILogger logger;
+        private Visibility buttonVisibility;
+        private bool componentsAreLoaded;
 
         public ComponentViewModel(
             IRegionManager regionManager,
-            IMessageService messageService,
             IEventService eventService,
-            IGeneralSettingsData settingsVm,
+            ISettingsData settingsVm,
             ITestCoverageDeterminer testCoverageDeterminer,
             ILogger logger)
             : base(regionManager)
@@ -68,10 +65,9 @@ namespace Ui.Modules.ModuleName.ViewModels
             eventService.Subscribe<ResetViewEvent>(ResetView, ThreadOption.UIThread);
             eventService.Subscribe<AddTestCoverageObjectsEvent>(AddTestCoverageObjectToView, ThreadOption.UIThread);
             eventService.Subscribe<ShowObjectsEvent>(ShowTestCoverageObjects, ThreadOption.UIThread);
-            eventService.Subscribe<RefreshTestcoverageResultObjects>(RefreshTestCoverageResults);
-            eventService.Subscribe<CloseGeneralSettingsEvent>(CloseGeneralSettingsEventHandling);
-            Message = messageService.GetMessage();
+            eventService.Subscribe<RefreshTestcoverageResultObjectsEvent>(RefreshTestCoverageResults);
             eventService.Subscribe<UpdateBomDataEvent>(HandleUpdateBomEvent);
+            eventService.Subscribe<CloseAllSettingsEvent>(CloseAllSettingsEventHandling);
             this.eventService = eventService;
             componentViews = new ObservableCollection<ViewModelPCBBase>();
             MouseWheelCommand = new DelegateCommand<MouseWheelEventArgs>(MouseWheelHandler);
@@ -79,6 +75,10 @@ namespace Ui.Modules.ModuleName.ViewModels
             MouseMoveStart = new DelegateCommand<MouseButtonEventArgs>((x) => MouseMoveStartEndHandler(true));
             MouseMoveEnd = new DelegateCommand<MouseButtonEventArgs>((x) => MouseMoveStartEndHandler(false));
             MouseLeave = new DelegateCommand<MouseEventArgs>((x) => MouseMoveStartEndHandler(false));
+            ButtonVisibility = Visibility.Hidden;
+            ButtonScrollInCommand = new DelegateCommand(() => HandleButtonScroll(true));
+            ButtonScrollOutCommand = new DelegateCommand(() => HandleButtonScroll(false));
+            MirrorCommand = new DelegateCommand<string>(MirrorAxis);
         }
 
         public double ZoomFactor
@@ -122,6 +122,25 @@ namespace Ui.Modules.ModuleName.ViewModels
         public DelegateCommand<MouseButtonEventArgs> MouseMoveStart { get; set; }
 
         public DelegateCommand<MouseButtonEventArgs> MouseMoveEnd { get; set; }
+
+        public ICommand ButtonScrollInCommand { get; private set; }
+
+        public ICommand ButtonScrollOutCommand { get; private set; }
+
+        public ICommand MirrorCommand { get; private set; }
+
+        public Visibility ButtonVisibility
+        {
+            get
+            {
+                return buttonVisibility;
+            }
+
+            set
+            {
+                SetProperty(ref buttonVisibility, value);
+            }
+        }
 
         public double OverallHeight
         {
@@ -181,6 +200,18 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
+        public void OnFilesDropped(string[] files)
+        {
+            if (files.Length > 1)
+            {
+                logger.LogMessage("Please just drop one file at the same time!", LogCategory.WARNING);
+            }
+            else
+            {
+                eventService.Publish(new HandleDropEvent(files[0]));
+            }
+        }
+
         public async Task AddPCBComponent(AddPcbObjectsEvent comp)
         {
             await Task.Run(() =>
@@ -198,10 +229,13 @@ namespace Ui.Modules.ModuleName.ViewModels
             ComponentViews.Clear();
             foreach (IPCBComponent compInner in this.allObjects)
             {
-                allViewModelsForPainting.Add(ViewModelFactory.GetViewModelObject(compInner, eventService, settingsVm, this));
+                allViewModelsForPainting.Add(ViewModelFactory.GetViewModelObject(compInner, settingsVm, this));
             }
 
+            allViewModelsForPainting.Add(new CoordinatesOriginViewModel(0, 0));
             DefineRanges();
+            componentsAreLoaded = true;
+            SetShowButtonsVisibility();
             eventService.Publish<SetBusyEvent>(new SetBusyEvent(false));
             eventService.Publish<ChangeExportMenuItemEnabledStateEvent>(new ChangeExportMenuItemEnabledStateEvent(true));
             eventService.Publish<ComponentsImportFinishedEvent>(new ComponentsImportFinishedEvent());
@@ -254,10 +288,10 @@ namespace Ui.Modules.ModuleName.ViewModels
                                     ViewModelPCBComponentBase compWithLines = GetVmObject(compOut);
                                     if (compWithLines != null)
                                     {
-                                        PositionHelper pOut = new PositionHelper(comp.GeometricAttributes.Bounds);
-                                        PositionHelper pIn = new PositionHelper(compOut.GeometricAttributes.Bounds);
+                                        PositionHelper pOut = new PositionHelper(GetTranslatedBounds(comp.GeometricAttributes.Bounds));
+                                        PositionHelper pIn = new PositionHelper(GetTranslatedBounds(compOut.GeometricAttributes.Bounds));
                                         PointCollection points = pOut.GetPointsForObject(pIn);
-                                        ViewModelLine lineVm = new ViewModelLine(points, points[points.Count - 1], net.NetName, settingsVm, testCoverageDeterminer);
+                                        ViewModelLine lineVm = new ViewModelLine(points, points[^1], net.NetName, settingsVm, testCoverageDeterminer);
                                         lineVm.ConnectedComponents.Add(comp.BaseComponent);
                                         lineVm.ConnectedComponents.Add(compOut);
                                         lineVm.CheckForTestCoverage();
@@ -310,6 +344,44 @@ namespace Ui.Modules.ModuleName.ViewModels
             return toAdd;
         }
 
+        private static Rectangle GetTranslatedBounds(Rectangle bounds)
+        {
+            if (!ViewModelPCBComponentBase.MirrorUsed(true) && !ViewModelPCBComponentBase.MirrorUsed(false))
+            {
+                return bounds;
+            }
+
+            int x = bounds.X;
+            int y = bounds.Y;
+            if (ViewModelPCBComponentBase.MirrorUsed(true))
+            {
+                y *= -1;
+                if (bounds.Y < 0)
+                {
+                    y -= bounds.Height;
+                }
+                else
+                {
+                    y += bounds.Height;
+                }
+            }
+
+            if (ViewModelPCBComponentBase.MirrorUsed(false))
+            {
+                x *= -1;
+                if (bounds.X < 0)
+                {
+                    y += bounds.Width;
+                }
+                else
+                {
+                    y -= bounds.Width;
+                }
+            }
+
+            return new Rectangle(x, y, bounds.Width, bounds.Height);
+        }
+
         private static List<string> GetLayersToRemove(IList<string> layersToShow, IList<string> layersBase)
         {
             List<string> toRemove = new List<string>();
@@ -356,6 +428,8 @@ namespace Ui.Modules.ModuleName.ViewModels
             allNets?.Clear();
             allObjects?.Clear();
             allViewModelsForPainting?.Clear();
+            componentsAreLoaded = false;
+            SetShowButtonsVisibility();
             eventService.Publish<ChangeExportMenuItemEnabledStateEvent>(new ChangeExportMenuItemEnabledStateEvent(false));
         }
 
@@ -544,8 +618,8 @@ namespace Ui.Modules.ModuleName.ViewModels
             {
                 actualXPos = obj.GetPosition(Scrollviewer).X + Scrollviewer.HorizontalOffset;
                 actualYPos = obj.GetPosition(Scrollviewer).Y + Scrollviewer.VerticalOffset;
-                XPosition = actualXPos / ZoomFactor;
-                YPosition = actualYPos / ZoomFactor;
+                XPosition = (actualXPos / ZoomFactor) - (ViewModelPCBBase.OffsetX + ViewModelPCBBase.OFFSET);
+                YPosition = (actualYPos / ZoomFactor) - (ViewModelPCBBase.OffsetY + ViewModelPCBBase.OFFSET);
             }
             else if (obj.GetPosition(Scrollviewer).X < Scrollviewer.ActualWidth - offsetScrollbar && obj.GetPosition(Scrollviewer).Y < Scrollviewer.ActualHeight - offsetScrollbar)
             {
@@ -573,35 +647,68 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
-        private void DefineRanges()
+        private void HandleButtonScroll(bool scrollIn)
         {
-            int maxWidth = 0;
-            int maxHeight = 0;
-            int minPosX = 0;
-            int minPosY = 0;
+            if (scrollIn)
+            {
+                ZoomFactor += 0.1;
+            }
+            else if (ZoomFactor > 0)
+            {
+                ZoomFactor -= 0.1;
+            }
+
+            OverallWidth = originalWidth * ZoomFactor;
+            OverallHeight = originalHeight * ZoomFactor;
+        }
+
+        private void MirrorAxis(string xAxis)
+        {
+            eventService.Publish(new ResetLayersSelectionEvent());
             foreach (ViewModelPCBBase comp in allViewModelsForPainting)
             {
                 if (comp is ViewModelPCBComponentBase compBase)
                 {
-                    int xValue = compBase.GeometricAttributes.Bounds.X + compBase.GeometricAttributes.Bounds.Width;
+                    compBase.MirrorAxis(xAxis);
+                }
+            }
+
+            ViewModelPCBComponentBase.MirrorAxis(bool.TrueString.Equals(xAxis));
+            DefineRanges();
+        }
+
+        private void DefineRanges()
+        {
+            ZoomFactor = 1.0;
+            int maxWidth = 0;
+            int maxHeight = 0;
+            int minPosX = 0;
+            int minPosY = 0;
+            bool initValue = false;
+            foreach (ViewModelPCBBase comp in allViewModelsForPainting)
+            {
+                if (comp is ViewModelPCBComponentBase compBase)
+                {
+                    int posX = comp.PosXToUse;
+                    if (posX < minPosX || !initValue)
+                    {
+                        minPosX = posX;
+                    }
+
+                    int xValue = posX + compBase.GeometricAttributes.Bounds.Width;
                     if (xValue > maxWidth)
                     {
                         maxWidth = xValue;
                     }
 
-                    int posX = compBase.GeometricAttributes.Bounds.X;
-                    if (posX < 0 && posX < minPosX)
-                    {
-                        minPosX = posX;
-                    }
-
-                    int posY = compBase.GeometricAttributes.Bounds.Y;
-                    if (posY < 0 && posY < minPosY)
+                    int posY = comp.PosYToUse;
+                    if (posY < minPosY || !initValue)
                     {
                         minPosY = posY;
+                        initValue = true;
                     }
 
-                    int yValue = compBase.GeometricAttributes.Bounds.Y + compBase.GeometricAttributes.Bounds.Height;
+                    int yValue = posY + compBase.GeometricAttributes.Bounds.Height;
                     if (yValue > maxHeight)
                     {
                         maxHeight = yValue;
@@ -617,11 +724,13 @@ namespace Ui.Modules.ModuleName.ViewModels
             originalWidth = OverallWidth;
             OverallHeight = (maxHeight + offsetY + (2 * ViewModelPCBBase.OFFSET)) * ZoomFactor;
             originalHeight = OverallHeight;
+            ComponentViews.Remove(allViewModelsForPainting[allViewModelsForPainting.Count - 1]);
+            ComponentViews.Add(allViewModelsForPainting[allViewModelsForPainting.Count - 1]);
             Scrollviewer.UpdateLayout();
             logger.LogMessage("Updated view sizes by width: " + OverallWidth + " and height: " + OverallHeight, LogCategory.INFO);
         }
 
-        private void RefreshTestCoverageResults(RefreshTestcoverageResultObjects obj)
+        private void RefreshTestCoverageResults(RefreshTestcoverageResultObjectsEvent obj)
         {
             foreach (var comp in componentViews)
             {
@@ -632,9 +741,9 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
-        private void CloseGeneralSettingsEventHandling(CloseGeneralSettingsEvent obj)
+        private void CloseAllSettingsEventHandling(CloseAllSettingsEvent obj)
         {
-            if (!obj.WasClosedManually && componentViews != null && componentViews.Count > 0)
+            if (!obj.WasManuallyClosed && componentViews != null && componentViews.Count > 0)
             {
                 foreach (var comp in componentViews)
                 {
@@ -643,6 +752,20 @@ namespace Ui.Modules.ModuleName.ViewModels
                         compVm.InitSettings();
                     }
                 }
+            }
+
+            SetShowButtonsVisibility();
+        }
+
+        private void SetShowButtonsVisibility()
+        {
+            if (settingsVm.ShowButtons && componentsAreLoaded)
+            {
+                ButtonVisibility = Visibility.Visible;
+            }
+            else
+            {
+                ButtonVisibility = Visibility.Hidden;
             }
         }
     }

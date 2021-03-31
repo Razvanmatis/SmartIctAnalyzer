@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Ui.Modules.ModuleName.Helper;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.Model
@@ -15,12 +13,26 @@ namespace Ui.Modules.ModuleName.Model
 
         public string Separator { get; set; }
 
+        public string BomData { get; set; }
+
+        public BomSettings BomSettings { get; set; }
+
+        public void SetBomSettings(BomSettings settings)
+        {
+            ColumnRef = settings.ColRef;
+            ColumnValue = settings.ColValue;
+            Separator = settings.Separator;
+            BomSettings = settings;
+        }
+
         public void ResetValues()
         {
             ColumnRef = string.Empty;
             ColumnValue = string.Empty;
             BomFile = string.Empty;
             Separator = string.Empty;
+            BomSettings = null;
+            BomData = string.Empty;
         }
     }
 }

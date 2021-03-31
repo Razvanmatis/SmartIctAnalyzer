@@ -4,6 +4,6 @@
     {
         public const string ContentRegion = "ContentRegion";
         public const string LayerRegion = "LayerRegion";
-        public const string LogRegion = "LogRegion";
+        public const string MenuRegion = "MenuRegion";
     }
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Interfaces.PCBApiObjects;
+﻿using System.Collections.Generic;
 using Interfaces.PcbInvestigator;
+using Interfaces.PcbInvestigator.Implementations;
 
 namespace GrpcClientParser.Implementations
 {

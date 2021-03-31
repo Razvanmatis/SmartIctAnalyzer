@@ -61,11 +61,137 @@ namespace Ui.Modules.ModuleName {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export object data.
+        /// </summary>
+        internal static string ExportObjectData {
+            get {
+                return ResourceManager.GetString("ExportObjectData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export settings file&quot;.
+        /// </summary>
+        internal static string ExportSettingsFile {
+            get {
+                return ResourceManager.GetString("ExportSettingsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import object data from file.
+        /// </summary>
+        internal static string ImportDataFromFile {
+            get {
+                return ResourceManager.GetString("ImportDataFromFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import settings file.
+        /// </summary>
+        internal static string ImportSettingsFile {
+            get {
+                return ResourceManager.GetString("ImportSettingsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to json files (*.json)|*.json|All files (*.*)|*.*.
+        /// </summary>
+        internal static string JsonFilter {
+            get {
+                return ResourceManager.GetString("JsonFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export PIN connection information into local file.
+        /// </summary>
+        internal static string PinExportTitle {
+            get {
+                return ResourceManager.GetString("PinExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select BOM file.
         /// </summary>
         internal static string SelectBomFile {
             get {
                 return ResourceManager.GetString("SelectBomFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select BSDL file for JTAG device.
+        /// </summary>
+        internal static string SelectBsdlFile {
+            get {
+                return ResourceManager.GetString("SelectBsdlFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the project file for opening.
+        /// </summary>
+        internal static string SelectProjectFileForOpening {
+            get {
+                return ResourceManager.GetString("SelectProjectFileForOpening", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select location for saving the project file.
+        /// </summary>
+        internal static string SelectProjectFileToSave {
+            get {
+                return ResourceManager.GetString("SelectProjectFileToSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select folder to save the SVF files at.
+        /// </summary>
+        internal static string SelectSvfFolder {
+            get {
+                return ResourceManager.GetString("SelectSvfFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the ODB project path.
+        /// </summary>
+        internal static string SelectTheOdbProjectPath {
+            get {
+                return ResourceManager.GetString("SelectTheOdbProjectPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select VSF file to be played with the programmer.
+        /// </summary>
+        internal static string SelectVsfFile {
+            get {
+                return ResourceManager.GetString("SelectVsfFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to database files (*.db)|*.db|All files (*.*)|*.*.
+        /// </summary>
+        internal static string SettingsFilter {
+            get {
+                return ResourceManager.GetString("SettingsFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the output folder path for the logfiles.
+        /// </summary>
+        internal static string SvfLogPath {
+            get {
+                return ResourceManager.GetString("SvfLogPath", resourceCulture);
             }
         }
     }

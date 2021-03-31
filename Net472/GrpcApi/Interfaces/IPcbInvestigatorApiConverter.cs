@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Interfaces.PcbInvestigator;
 using PCBI.Automation.Interfaces;
 
@@ -8,7 +6,7 @@ namespace GrpcApi.Interfaces
 {
     public interface IPcbInvestigatorApiConverter
     {
-        IGrpcResult GetConvertedObjects(IList<InterfaceCMPObject> pcbObjects, IList<InterfaceNet> allNets);
+        IGrpcResult GetConvertedObjects(IList<InterfaceCMPObject> pcbObjects, IList<InterfaceNet> allNets, AbstractDataProvider dataProvider);
 
         IList<NetGrpc> GetNetsGrpc(IList<IPinComponent> allPins, IList<IPCBComponent> allComponents, IList<INetComponent> allNets);
 

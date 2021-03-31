@@ -117,7 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ExportObjectData" xml:space="preserve">
+    <value>Export object data</value>
+  </data>
+  <data name="ExportSettingsFile" xml:space="preserve">
+    <value>Export settings file"</value>
+  </data>
+  <data name="ImportDataFromFile" xml:space="preserve">
+    <value>Import object data from file</value>
+  </data>
+  <data name="ImportSettingsFile" xml:space="preserve">
+    <value>Import settings file</value>
+  </data>
+  <data name="JsonFilter" xml:space="preserve">
+    <value>json files (*.json)|*.json|All files (*.*)|*.*</value>
+  </data>
+  <data name="PinExportTitle" xml:space="preserve">
+    <value>Export PIN connection information into local file</value>
+  </data>
   <data name="SelectBomFile" xml:space="preserve">
     <value>Select BOM file</value>
+  </data>
+  <data name="SelectBsdlFile" xml:space="preserve">
+    <value>Select BSDL file for JTAG device</value>
+  </data>
+  <data name="SelectProjectFileForOpening" xml:space="preserve">
+    <value>Select the project file for opening</value>
+  </data>
+  <data name="SelectProjectFileToSave" xml:space="preserve">
+    <value>Select location for saving the project file</value>
+  </data>
+  <data name="SelectSvfFolder" xml:space="preserve">
+    <value>Select folder to save the SVF files at</value>
+  </data>
+  <data name="SelectTheOdbProjectPath" xml:space="preserve">
+    <value>Select the ODB project path</value>
+  </data>
+  <data name="SelectVsfFile" xml:space="preserve">
+    <value>Please select VSF file to be played with the programmer</value>
+  </data>
+  <data name="SettingsFilter" xml:space="preserve">
+    <value>database files (*.db)|*.db|All files (*.*)|*.*</value>
+  </data>
+  <data name="SvfLogPath" xml:space="preserve">
+    <value>Select the output folder path for the logfiles</value>
   </data>
 </root>

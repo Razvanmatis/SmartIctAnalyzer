@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Interfaces.PcbInvestigator;
 
 namespace GrpcClientParser.Interfaces
 {
@@ -10,6 +7,7 @@ namespace GrpcClientParser.Interfaces
     {
         Task<IParsedResult> GetParsedObjectsFromGrpc(
             string pathToOdb,
+            string steps,
             IList<string> rIdentifier = null,
             IList<string> cIdentifier = null,
             IList<string> iIdentifier = null,
@@ -19,6 +17,7 @@ namespace GrpcClientParser.Interfaces
 
         Task<IParsedResult> GetParsedObjectsFromGrpcByZipFolder(
             string pathToOdb,
+            string steps,
             IList<string> rIdentifier = null,
             IList<string> cIdentifier = null,
             IList<string> iIdentifier = null,
@@ -26,10 +25,10 @@ namespace GrpcClientParser.Interfaces
             IList<string> icIdentifier = null,
             IList<string> conIdentifier = null);
 
-        void ExportComponentsToFile(IParsedResult result, string filePath);
+        string GetDataAsString(IParsedResult result);
 
         IParsedResult ImportComponentsFromFile(
-            string filePath,
+            string data,
             IList<string> rIdentifier = null,
             IList<string> cIdentifier = null,
             IList<string> iIdentifier = null,

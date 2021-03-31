@@ -1,0 +1,36 @@
+﻿<Window x:Class="Ui.Modules.ModuleName.Views.AllSettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:settingsPanel="clr-namespace:ProMik.UI.WPF.Panels.SettingsPanel;assembly=ProMik.UI.WPF"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="true"
+        mc:Ignorable="d"
+        Title="All settings" Height="900" Width="1200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <settingsPanel:SettingsPanel SettingsService="{Binding SettingsService}" UseSaveButton="True" AfterSaveAction="{Binding AfterSaveAction}" >
+            <settingsPanel:SettingsPanel.Resources>
+                <Style TargetType="GroupBox" BasedOn="{StaticResource MaterialDesignGroupBox}">
+                    <Setter Property="materialDesign:ColorZoneAssist.Mode" Value="Custom"/>
+                    <Setter Property="materialDesign:ColorZoneAssist.Background" Value="Black"/>
+                    <Setter Property="materialDesign:ColorZoneAssist.Foreground" Value="White"/>
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" FontSize="16" FontWeight="DemiBold"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </settingsPanel:SettingsPanel.Resources>
+        </settingsPanel:SettingsPanel>
+    </Grid>
+</Window>
