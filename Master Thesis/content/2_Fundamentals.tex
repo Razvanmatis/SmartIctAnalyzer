@@ -1,14 +1,90 @@
 \chapter{Fundamentals}
 
-	\section{PCB Investigator}
+	\section{PCB-Investigator}
+The \ac{PCB}-Investigator is a software provided by EasyLogix \ac{aka} Schindler \& Schill GmbH and provides many functionality regarding the opening, viewing and measuring of different kind of \ac{CAD} project files\cite{.472021}:
+\begin{itemize}
+	\item \ac{ODB}++
+	\item Gerber 274x
+	\item Gen Cad 1.4
+	\item Eagle files
+	\item IDF files
+	\item DXF files
+	\item DPF files
+	\item IPC2581 files
+	\item IPC356 files
+	\item PDF
+\end{itemize} 
+Further the \ac{EXE} file application itself provides different public functions which are accessible by adding the \textbf{PCB-Investigator.exe} as a reference to the project. As the company is just interested in extracting all relevant information from any \ac{ODB}++ relative projects the following public functions where used by the software\cite{.472021b}:
+\begin{itemize}
+	\item IAutomation.IAutomationInit() - Initialization of the \ac{API}
+	\item IAutomation.CreateNewPCBIWindow(bool visible) - Creates the base window
+	\item IPCBIWindow.LoadData(string path) - Loads a specific project into the window
+	\item IPCBIWindow.GetStepList() - Getter for all steps of the window
+	\item IStep.GetNets() - Getter for all nets of a step
+	\item IStep.GetAllLayerNames() - Getter for all layer names of a step
+	\item IStep.GetLayer(string layerName) - Getter for a layer in dependency on the layer name
+	\item ILayer.GetAllLayerObjects() - Getter for all objects which are located on a specific layer
+\end{itemize}
+After the functions to be used are identified then the structure itself of the received objects need to be analyzed more in detail:
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=1.00\textwidth]{figures/PCB Investigator class diagram.png}
+	\caption{Class diagram of the PCB-Investigator objects of interest}
+	\label{fig:PCB Investigator class diagram}
+\end{figure}
+As shown within \ref{fig:PCB Investigator class diagram} you can see that the very first class is the IPCBIWindow which contains a various amount of IStep objects. Within this IStep objects there are many INet objects and ICMPObjects.
 
 	\section{ODB++ project format}
+The \ac{ODB}++ format is a de facto standard format for creation of \ac{CAD} related projects\cite{ODB++Design.5182020} within the circuit board industry. It hierarchically contains all necessary information about the circuit diagram in detail:
 
-	\section{JTAG device}
+\begin{figure}[h]
+	\centering
+		\includegraphics[scale=0.8]{figures/odb++_hierarchy_tree.png}
+	\caption{ODB++ format content\cite{.252019}}
+	\label{fig:odb++_hierarchy_tree}
+\end{figure}
+
+As shown in \ref{fig:odb++_hierarchy_tree} you can see that this format contains all necessary components, net lists and attribute lists which are necessary for later determination of the test coverage of the circuit diagrams. These data will give detailed information regarding the placed components, their names, positions, sizes and connection to all nets. In dependency on the net connection the connected components could then be determined
+
+	\section{JTAG interface}
+The \ac{JTAG} interface is a debug related serial interface consisting of the following components in general:
+\begin{itemize}
+	\item Pin TDI - data in
+	\item Pin TDO - data out
+	\item Pin TMS - control
+	\item Pin TCK - clock
+	\item Pin TRST - test reset
+	\item Boundary scan registers
+	\item Boundary scan cells
+	\item External connection pins
+	\item Core logic
+	\item Debug and programming registers
+\end{itemize}
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[scale=0.40]{figures/jtag-registers.jpg}
+	\caption{JTAG interface in detail\cite{XJTAG.8272020}}
+	\label{fig:jtag-registers}
+\end{figure}
+
+As shown in \ref{fig:jtag-registers} you can see that that the \ac{JTAG} device itself already contains some addition core logic for being able to perform different kind of test-debugging functions. 
 
 	\section{Boundary scan}
+The main idea of the boundary scan is the purpose of ensuring that every component is mounted correctly in physically way as described within the circuit diagram\cite{HarryBleeker.1993}. In detail that means that according to each external pin connection you are in general able to set any value to high or low and read back the physically present value of wiring. So if you know for example that on a specific pin position an according pull down resistor is being connected then you further know that in every case the read back value should be low. Additionally you can assume that if a pull up resistor is being connected to a pin independently on the set value the read back value should be high. Finally you can accept the fact that if some other components are connected to the pin which are not belonging to the pull down nor the pull up resistors then the read back value should be that one which was previously set. To perform a complete test of a device you must follow the steps:
+\begin{enumerate}
+	\item The clock rate must be triggered as long as the complete boundary scan register length totally is\cite{R.C.CoferandBenjaminF.Harding.2006}
+	\item During that time the TDI data will be forwarded into each boundary scan cell
+	\item If all cells are covered by a value then the TMS pin should be triggered for passing all read values into the connected pins
+	\item The clock rate must be triggered again for the total length of the boundary scan register
+	\item During that time all values from the external pins are being read out and transmitted into the TDO
+	\item Now the read out values could be compared with some expected values to detect differences
+\end{enumerate}
 
 	\section{SVF file format}
+	
+	\section{Model-view-viewModel}
 
 	\section{GRPC}
 

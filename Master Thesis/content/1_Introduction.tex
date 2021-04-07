@@ -2,18 +2,19 @@
 Within this chapter i will describe the motivation, the requirements, the used programming language and operating system for creation of the whole project. All these aspects where previously discussed with the company to make sure to create a most valuable software for them.
 
 	\section{Motivation}
-As our company is already providing programmers for being able to write date into different \ac{MCU}s now there came up the requirement, in dependency on customer demands, to perform boundary scan chains on \ac{JTAG} devices. For being able to perform these kind of tests there should be a software available which allows to determine first the test coverage parameters in dependency on the boundary scan mechanism and create such \ac{SVF} files for playing them with the programmer. This software should be provided as a complex framework where the opportunity is given to extend it in the future in elementary way by using much interfaces.
+As the company ProMik GmbH is already providing programmers for being able to write date into different \ac{MCU}s now there came up the requirement, in dependency on customer demands, to perform boundary scan chains on \ac{JTAG} devices. For being able to perform these kind of tests there should be a software available which allows to determine first the test coverage parameters in dependency on the boundary scan mechanism and create such \ac{SVF} files for playing them with the programmer. This software should be provided as a complex framework where the opportunity is given to extend it in the future in elementary way by using much interfaces within the \ac{MVVM} pattern.
 
 	\section{Requirements}
 In order to provide all features as needed there were a couple of requirements which popped up at the very beginning of the conceptual design and during the implementation of the software:
 \begin{itemize}
 	\item The software itself should consist of a \ac{GUI} application and a separate \ac{GRPC} server for using the \ac{PCB}-Investigator API
-	\item There should be the possibility of opening \ac{ODB}++ project folders and display the result of circuit diagram in a pretty way
+	\item There should be the possibility of opening \ac{ODB}++ project folders and display the result of circuit diagram in a useful way
 	\begin{itemize}
 		\item There should be the possibility of moving the visible area by mouse movement and zooming in and out of the visible area
 		\item The visibility of each component should be settable
 		\item All connections of one component to the others should be displayable
 		\item The whole view of all components could be mirrorable along both axes
+		\item The net names should be settable to visible and hidden
 	\end{itemize}
 	\item An export mechanism of an opened project into \ac{JSON} file for later usage should be available as an according import mechanism to be independent from the \ac{PCB}-Investigator API as this requires a separate license for usage
 	\item Settings should be available, exportable and importable
@@ -24,8 +25,16 @@ In order to provide all features as needed there were a couple of requirements w
 		\item Test coverage related settings for determining all components for the boundary scan chain
 		\item \ac{SVF} related settings according the programmer connection parameters to use
 	\end{itemize}
-	\item Determination of test coverage using the boundary scan mechanism
+	\item Determination of test coverage parameters using the boundary scan mechanism
+	\item Export of a file containing all pin information of all \ac{JTAG} devices
 	\item Creation of \ac{SVF} files containing all instructions to be performed by the programmer while playing the boundary scan chain on a \ac{JTAG} compatible device
+	\item In order to create an extended-friendly framework there was furthermore the need of usage of company internal libraries instead of creating complete new ones
+	\begin{itemize}
+		\item The usage of log panel was required
+		\item The usage of setting panel was required
+		\item The usage of \ac{SVF} player was required
+	\end{itemize}
 \end{itemize}
 
 	\section{Programming language and operating system}
+The whole project was implemented with the software development environment called \textbf{Microsoft Visual Studio 2019} and the programming language \textbf{C\#}. This is a quit powerful and modern language for creation of different desktop applications. The developer environment is really comfortable too, as it provides a NuGet package manager for organizing all external included libraries. Furthermore the whole project was created on a operating system \textbf{Windows 10 Professional x64} using a \ac{CPU} of type \textbf{Intel(R)Xeon(R) E3-1240 v6 @ 3.70 GHz} and a total amount of \ac{RAM} of \textbf{16 \ac{GB}}. This system makes sure to be able to implement without any delays of waiting for background processes at all and ensures to be able to run the developed software almost immediately without any delay times.
