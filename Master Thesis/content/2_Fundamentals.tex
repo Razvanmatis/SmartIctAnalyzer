@@ -1,7 +1,21 @@
 \chapter{Fundamentals}
 Within this chapter the fundamentals regarding the later usage for implementation of the project is being described.
+
+	\section{ODB++ project format}
+The \ac{ODB}++ format is a de facto standard format for creation of \ac{CAD} related projects\cite{ODB++Design.5182020} within the circuit board industry. This format itself was released in 1995 and after the component names were added then the suffix ++ was added in 1997. It hierarchically contains all necessary information about the digital circuit diagram in detail:
+
+\begin{center}
+	\includegraphics[scale=0.70]{figures/odb++_hierarchy_tree.png}
+	\begin{figure}[!h]
+	\caption{ODB++ project structure\cite{.252019}}
+	\label{fig:odb++_hierarchy_tree}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:odb++_hierarchy_tree} it is clear that this format contains all necessary components, net lists and attribute lists which are necessary for later determination of the test coverage of the circuit diagrams. These data will give detailed information regarding the placed components, their names, positions, sizes and connection to all nets. In dependency on the net connection the connected components could then be determined
+
 	\section{PCB-Investigator}
-The \ac{PCB}-Investigator is a software provided by EasyLogix \ac{aka} Schindler \& Schill GmbH and provides many functionality regarding the opening, viewing and measuring of different kind of \ac{CAD} related project files\cite{.472021}:
+The \ac{PCB}-Investigator is a software provided by EasyLogix also known as Schindler \& Schill GmbH and provides many functionality regarding the opening, viewing and measuring of different kind of \ac{CAD} related project files of digital circuit diagrams\cite{.472021}:
 \begin{itemize}
 	\item \ac{ODB}++
 	\item Gerber 274x
@@ -14,54 +28,37 @@ The \ac{PCB}-Investigator is a software provided by EasyLogix \ac{aka} Schindler
 	\item IPC356 files
 	\item PDF
 \end{itemize} 
-Further the \ac{EXE} file application itself provides different public functions which are accessible by adding the \textbf{PCB-Investigator.exe} as a reference to the project. As ProMik GmbH is just interested in extracting all relevant information from any \ac{ODB}++ related projects the following public functions where used by the created software\cite{.472021b}:
-\begin{itemize}
-	\item IAutomation.IAutomationInit() - Initialization of the \ac{API}
-	\item IAutomation.CreateNewPCBIWindow(bool visible) - Creates the base window
-	\item IPCBIWindow.LoadData(string path) - Loads a specific project into the window
-	\item IPCBIWindow.GetStepList() - Getter for all steps of the window
-	\item IStep.GetNets() - Getter for all nets of a step
-	\item IStep.GetAllLayerNames() - Getter for all layer names of a step
-	\item IStep.GetLayer(string layerName) - Getter for a layer in dependency on the layer name from a step
-	\item ILayer.GetAllLayerObjects() - Getter for all objects which are located on a specific layer within a step
-\end{itemize}
-After the functions to be used are identified then the structure itself of the received objects needs to be analyzed more in detail:
+It is a quit powerful tool which further provides the possibility to export almost all project types into another one and generate different kind of lists containing component relevant information as the component name and its pin information.
+Further the executable file application itself provides different public functions which are accessible by adding the \textbf{PCB-Investigator.exe} as a reference to the project.
 
-\begin{figure}[h]
-	\centering
-		\includegraphics[width=1.00\textwidth]{figures/PCB Investigator class diagram.png}
-	\caption{Class diagram of the PCB-Investigator objects of interest}
-	\label{fig:PCB Investigator class diagram}
-\end{figure}
-As shown within \ref{fig:PCB Investigator class diagram} there could be seen that the very first class is the IPCBIWindow which contains a various amount of IStep objects. Within this IStep objects there are many INet objects and ICMPObjects.
+\begin{center}
+	\includegraphics[width=1.0\textwidth]{figures/pcbInvestigator.png}
+	\begin{figure}[!h]
+	\caption{PCB-Investigator overview}
+	\label{fig:pcbInvestigator}
+	\end{figure}
+\end{center}
 
-	\section{ODB++ project format}
-The \ac{ODB}++ format is a de facto standard format for creation of \ac{CAD} related projects\cite{ODB++Design.5182020} within the circuit board industry. It hierarchically contains all necessary information about the circuit diagram in detail:
-
-\begin{figure}[h]
-	\centering
-		\includegraphics[scale=0.8]{figures/odb++_hierarchy_tree.png}
-	\caption{ODB++ format content\cite{.252019}}
-	\label{fig:odb++_hierarchy_tree}
-\end{figure}
-
-As shown in \ref{fig:odb++_hierarchy_tree} it is clear that this format contains all necessary components, net lists and attribute lists which are necessary for later determination of the test coverage of the circuit diagrams. These data will give detailed information regarding the placed components, their names, positions, sizes and connection to all nets. In dependency on the net connection the connected components could then be determined
+As pictured in \ref{fig:pcbInvestigator} it can be seen that there are many possibilities of taking action with a loaded project. For verification purposes the most important feature was the CMPs tab where it is possible to search for any specific component in dependency on its name and to have a closer look in its consisting pins.
 
 	\section{JTAG interface}
-The \ac{JTAG} interface is a debug related serial interface consisting of the following components in general:
+The \ac{JTAG} is a serial interface which is widely used for different field programmable gate arrays, complex programmable logic device configurations, the programming and debugging of different micro controllers. It consists of the following components in general:
 \begin{itemize}
-	\item Pin TDI - data in
-	\item Pin TDO - data out
-	\item Pin TMS - control
-	\item Pin TCK - clock
-	\item Pin TRST - test reset
-	\item Boundary scan registers
-	\item Boundary scan cells
-	\item External connection pins
-	\item Core logic
-	\item Debug and programming registers
+	\item Test access port
+	\begin{itemize}
+		\item Pin TDI - data in
+		\item Pin TDO - data out
+		\item Pin TMS - control
+		\item Pin TCK - clock
+		\item Pin TRST - test reset
+	\end{itemize}
+	\item Instruction register
+	\item Data register
+	\item TAP controller
 \end{itemize}
 
+The TAP controller is a state machine which could take in six valid different states\cite{.3252021}. \newline
+This standard established within 1985/1986 and is being normed by IEEE 1149.1–1990. Later on by the overworked norm IEEE 1149.1–1994 the \ac{BSDL} was considered as a default feature. The most actual version of the norm is IEEE 1149.1-2001. If there are more TAPs connected together then it will be called a scan chain in general.\\
 \begin{figure}[h]
 	\centering
 		\includegraphics[scale=0.40]{figures/jtag-registers.jpg}
@@ -69,7 +66,7 @@ The \ac{JTAG} interface is a debug related serial interface consisting of the fo
 	\label{fig:jtag-registers}
 \end{figure}
 
-As shown in \ref{fig:jtag-registers} it can be seen that that the \ac{JTAG} device itself already contains some addition core logic for being able to perform different kind of test-debugging functions. 
+As shown in \ref{fig:jtag-registers} it can be seen that that the \ac{JTAG} device itself already contains some addition core logic for being able to perform different kind of test-debugging functions. The boundary scan register itself contains a various amount of boundary scan cells which could be used for the testing logic.
 
 	\section{Boundary scan}
 The main idea of the boundary scan is the purpose of ensuring that every component is mounted correctly in physically way as described within the circuit diagram\cite{HarryBleeker.1993}. In detail that means that according to each external pin connection there is in general the possibility to set any value to high or low and read back the physically present value of wiring. So if it is known for example that on a specific pin position an according pull down resistor is being connected then the further knowledge is that in every case the read back value should be low. Additionally there can be assumed that if a pull up resistor is being connected to a pin independently on the set value the read back value should be high. Finally the fact can be accepted that if some other components are connected to any pin which are not belonging to the pull down nor the pull up resistors then the read back value should be that one which was previously set. To perform a complete test of a device the following steps must be followed:
@@ -82,10 +79,95 @@ The main idea of the boundary scan is the purpose of ensuring that every compone
 	\item Now the read out values could be compared with some expected values to detect differences
 \end{enumerate}
 
+	\section{Boundary scan description language}
+The boundary scan description language is a language for describing the boundary scan test ability of different \ac{JTAG} compatible devices. It is based on the very high speed integrated circuit hardware description language and normed with IEEE 1149.1-2001. Typically these information are being provided by the manufacturer of the devices in a .bsdl file for each component\cite{.3252021b}. The files themselves are usually containing the following sections:
+\begin{itemize}
+	\item port - the information about all pins and their usage mode (in, out, inout, linkage...)
+	\item attribute PIN\_MAP - the mapping from the used names within the port section to the real pin names used within the \ac{ODB}++ project (position is important for later usage)
+	\item attribute INSTRUCTION\_LENGTH - instruction register length
+	\item attribute BOUNDARY\_REGISTER - all boundary scan compatible pins and their functionality (control, bidirectional, observe\_only, output2)
+	\item attribute BOUNDARY\_LENGTH - the amount of boundary scan cells
+\end{itemize}
+
 	\section{SVF file format}
+The serial vector format is a format for communication with boundary scan compatible test vectors. It was introduced by Texas Instruments in 1991. The main purpose of the format is to ensure that independently on the used \ac{JTAG} device different test operations could be performed successfully\cite{.3252021c}. The format contains a couple of different instructions which could be performed by the boundary scan logic. The most important one according to this project is the \textbf{SDR length [TDI (tdi)] [TDO (tdo)][MASK (mask)] [SMASK (smask)];}. SDR means scan data register and tells the test to test all data register cells. The TDI is the data which should be passed into the registers\cite{TEXASINSTRUMENTS.2013}. TDO is the expected data to be read back from the data registers. And the MASK is the information about the positions of interest which should be considered. A valid instruction example is \\ 
+\textbf{SDR 24 TDI(000010) TDO(818181) MASK(FFFFFF);} \\
+In that specific example we have a total length of boundary scan cells of 24 and therefore the amount of passed hexadecimal coded values is 3 (24 / 8) -> 00 00 10 and 81 81 81 and FF FF FF. Further the TDI value 000010\textsubscript{16} means that only on position 16 the value should be set to high (10\textsubscript{16} -> 16\textsubscript{10}). The TDO value 818181\textsubscript{16} gives the information about the expected positions to be high after read back the data (818181\textsubscript{16} -> 100000011000000110000001\textsubscript{2}). That signifies only the positions 1, 8, 9, 16, 17 and 24 (read from right to left) should be set to high as the needed result. Finally the MASK value FFFFFF \textsubscript{16} shows that all positions of the 24 bit register should be considered.
 	
 	\section{Model-view-viewModel}
+The Model-view-viewModel pattern came up with the introduction of the \ac{WPF} framework from Microsoft and is designed for loose coupling programming with different components which are working together at the final stage. It could be seen as a enhancement of the model view controller pattern from JAVA programming language \cite{NorbertEder.2010}. \\
+
+\begin{figure}[h]
+	\centering
+		\includegraphics[scale=0.50]{figures/mvvm.png}
+	\caption{MVVM structure\cite{Wikipedia.2021}}
+	\label{fig:mvvm}
+\end{figure}
+
+As shown in \ref{fig:mvvm} there are the three main components involved:
+\begin{itemize}
+	\item View - the graphical representation form typically created in \ac{XAML} code
+	\item Model - content of all data to be used and business logic for it
+	\item ViewModel - the connection layer to the view and contains representation logic
+\end{itemize}
+Typically there will be defined a various amount of data bindings in the view to the viewmodel. Further the view model itself informs the view about happened changes of values to be displayed by using the INotifyPropertyChanged event. Onward it is responsible for the connection to the data of any model and controls the function sequence to be performed in dependency on the user inputs which are being forwarded as ICommand objects. Finally the view should contain as less behind code as possible to make sure a high loose coupling is being ensured. The looser the coupling the easier it is to switch between new implementations of different components and replace them by others. In that way it should be quit easy possible to work on all three component types separately, without having to know of each others and finally connect them together.
 
 	\section{GRPC}
+\ac{GRPC} is a modern open source way for performing remote procedure calls independently on the programming language used for a specific program and works as a client-server structure\cite{gRPC.482021}. That means in detail to use this protocol there is the need first of defining a specific service file using the interface definition language. By using this language there is no need to consider programming language specific dependencies. Afterward by using protoc compiler there is the possibility of automated creation of the source code for a specific programming language which could then be included to finalize the communication work. Finally on one side there should be defined the logic for being a server by additionally defining a specific port to be used and on the other there needs to be defined the logic for being the client with considering the IP address of the server and the port. Using \ac{GRPC} ensures bidirectional streaming possibilities and passes all object related data as a auto serialized stream in the \ac{JSON} format. Further it can communicate through complex networks without having the challenge of defining more complex code for it. To define the service file there are many of elementary data types available, the possibility of defining object structures, functions and parameters or return values. A valid example of such a definition could be:
+
+\begin{lstlisting}[language=protobuf2,style=protobuf,caption={Interface definition of GRPC exchange},captionpos=b,label=lst:grpc]{search.proto}
+syntax = "proto3";
+
+service PcbInvestigatorService {
+	// Gets all objects
+	rpc GetConvertedObjects(Request) returns (Result) {};
+}
+
+message Request {
+	int32 requestNumber = 1;
+	ComponentTypeGrpc type = 2;
+}
+
+message Result {
+	bool status = 1;
+}
+
+enum ComponentTypeGrpc {
+	UnknownComponentType = 0;
+	Arc = 1;
+}
+\end{lstlisting}
+
+As shown in \ref{lst:grpc} there are all necessary values defined in structured and easy understandable way. Typically the auto generated code contains new classes which must be inherited for adding customized logic.
 
 	\section{JSON format}
+The java script object notation is a serialized form of data output in textual form\cite{.29.03.2021}. It is widely used where it could be necessary to understand and maybe modify data manually in an easy way. To work with that specific data format each programming language provides different kind of external libraries for parsing the information from objects into \ac{JSON} and back from \ac{JSON} to object. A valid \ac{JSON} formatted text could like like:
+
+\begin{lstlisting}[language=json,caption={JSON formatted content},captionpos=b,label=lst:json]
+{
+  "Pins": [
+    {
+      "Nets": [
+        0
+      ],
+      "Geometrics": {
+        "Bounds": {
+          "X": -1459,
+          "Y": 286,
+          "Width": 35,
+          "Height": 35
+        },
+        "CenterPoint": {
+          "X": 0.0,
+          "Y": 0.0
+        },
+        "Rotation": 0.0
+      },
+      "PinType": 2,
+      "PinNumber": "1"
+    }
+	]
+}
+\end{lstlisting}
+
+As shown in \ref{lst:json} the format is highly structured and build in hierarchical way.
