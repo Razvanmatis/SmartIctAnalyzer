@@ -57,7 +57,6 @@ The \ac{JTAG} is a serial interface which is widely used for different field pro
 	\item TAP controller
 \end{itemize}
 
-The TAP controller is a state machine which could take in six valid different states\cite{.3252021}. \newline
 This standard established within 1985/1986 and is being normed by IEEE 1149.1–1990. Later on by the overworked norm IEEE 1149.1–1994 the \ac{BSDL} was considered as a default feature. The most actual version of the norm is IEEE 1149.1-2001. If there are more TAPs connected together then it will be called a scan chain in general.\\
 \begin{figure}[h]
 	\centering
@@ -68,8 +67,27 @@ This standard established within 1985/1986 and is being normed by IEEE 1149.1–
 
 As shown in \ref{fig:jtag-registers} it can be seen that that the \ac{JTAG} device itself already contains some addition core logic for being able to perform different kind of test-debugging functions. The boundary scan register itself contains a various amount of boundary scan cells which could be used for the testing logic.
 
+The TAP controller is a state machine which could take in six valid different states\cite{.3252021}. \newline
+\begin{center}
+	\includegraphics[scale=0.7]{figures/tap_state_machine.png}
+	\begin{figure}[!h]
+	\caption{State machine of the TAP controller\cite{XJTAG.13.03.2020}}
+	\label{fig:tapControllerStateMachine}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:tapControllerStateMachine} is will be clear that the transitions of each states are being controlled mainly by the TMS signal. Every state has two outgoings to make sure that just by one TMS step the condition could be set. The both main paths allow reading out data from the data register or the instruction register.
+
 	\section{Boundary scan}
-The main idea of the boundary scan is the purpose of ensuring that every component is mounted correctly in physically way as described within the circuit diagram\cite{HarryBleeker.1993}. In detail that means that according to each external pin connection there is in general the possibility to set any value to high or low and read back the physically present value of wiring. So if it is known for example that on a specific pin position an according pull down resistor is being connected then the further knowledge is that in every case the read back value should be low. Additionally there can be assumed that if a pull up resistor is being connected to a pin independently on the set value the read back value should be high. Finally the fact can be accepted that if some other components are connected to any pin which are not belonging to the pull down nor the pull up resistors then the read back value should be that one which was previously set. To perform a complete test of a device the following steps must be followed:
+The main idea of the boundary scan is the purpose of ensuring that every component is mounted correctly in physically way as described within the circuit diagram\cite{HarryBleeker.1993}. First of all according to IEEE 1149.1 an \ac{JTAG} device needs to have the possibility of performing the following instructions to be a really boundary scan compatible device\cite{XJTAG.13.03.2020}:
+
+\begin{itemize}
+	\item BYPASS - this instruction ensures that the TDI and TDO connections are connected by a one bit register and makes possible to save time during the operation
+	\item EXTEST - this instruction makes sure that the TDI and TDO are connected with the boundary scan registers by providing functions to write values into the cells
+	\item SAMPLE/PRELOAD - this instruction ensures that the TDI and TDO are connected with the boundary scan while operating in usual mode. within this mode the data could be read out
+\end{itemize}
+
+In detail that means that according to each external pin connection there is in general the possibility to set any value to high or low and read back the physically present value of wiring. So if it is known for example that on a specific pin position an according pull down resistor is being connected then the further knowledge is that in every case the read back value should be low. Additionally there can be assumed that if a pull up resistor is being connected to a pin independently on the set value the read back value should be high. Finally the fact can be accepted that if some other components are connected to any pin which are not belonging to the pull down nor the pull up resistors then the read back value should be that one which was previously set. To perform a complete test of a device the following steps must be followed:
 \begin{enumerate}
 	\item The clock rate must be triggered as long as the complete boundary scan register length totally is\cite{R.C.CoferandBenjaminF.Harding.2006}
 	\item During that time the TDI data will be forwarded into each boundary scan cell
