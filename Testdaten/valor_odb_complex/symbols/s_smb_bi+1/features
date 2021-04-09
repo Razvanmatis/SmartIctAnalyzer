@@ -1,0 +1,19 @@
+UNITS=MM
+ID=111619
+#
+#Num Features
+#
+F 1
+
+#
+#Layer features
+#
+S P 0;;ID=111621
+OB 1.2 0.95 I
+OS 1.2 -0.25
+OS 0 -0.95
+OS -1.2 -0.25
+OS -1.2 0.95
+OS 1.2 0.95
+OE
+SE

@@ -42,7 +42,7 @@ Further the executable file application itself provides different public functio
 As pictured in \ref{fig:pcbInvestigator} it can be seen that there are many possibilities of taking action with a loaded project. For verification purposes the most important feature was the CMPs tab where it is possible to search for any specific component in dependency on its name and to have a closer look in its consisting pins.
 
 	\section{JTAG interface}
-The \ac{JTAG} is a serial interface which is widely used for different field programmable gate arrays, complex programmable logic device configurations, the programming and debugging of different micro controllers. It consists of the following components in general:
+The \ac{JTAG} is a serial interface which is widely used for different field programmable gate arrays, complex programmable logic device configurations, the programming and debugging of different micro controllers. It is usually operating within the voltage range of 1.8V - 6V and consists of the following components in general:
 \begin{itemize}
 	\item Test access port
 	\begin{itemize}
@@ -92,7 +92,7 @@ The boundary scan description language is a language for describing the boundary
 	\section{SVF file format}
 The serial vector format is a format for communication with boundary scan compatible test vectors. It was introduced by Texas Instruments in 1991. The main purpose of the format is to ensure that independently on the used \ac{JTAG} device different test operations could be performed successfully\cite{.3252021c}. The format contains a couple of different instructions which could be performed by the boundary scan logic. The most important one according to this project is the \textbf{SDR length [TDI (tdi)] [TDO (tdo)][MASK (mask)] [SMASK (smask)];}. SDR means scan data register and tells the test to test all data register cells. The TDI is the data which should be passed into the registers\cite{TEXASINSTRUMENTS.2013}. TDO is the expected data to be read back from the data registers. And the MASK is the information about the positions of interest which should be considered. A valid instruction example is \\ 
 \textbf{SDR 24 TDI(000010) TDO(818181) MASK(FFFFFF);} \\
-In that specific example we have a total length of boundary scan cells of 24 and therefore the amount of passed hexadecimal coded values is 3 (24 / 8) -> 00 00 10 and 81 81 81 and FF FF FF. Further the TDI value 000010\textsubscript{16} means that only on position 16 the value should be set to high (10\textsubscript{16} -> 16\textsubscript{10}). The TDO value 818181\textsubscript{16} gives the information about the expected positions to be high after read back the data (818181\textsubscript{16} -> 100000011000000110000001\textsubscript{2}). That signifies only the positions 1, 8, 9, 16, 17 and 24 (read from right to left) should be set to high as the needed result. Finally the MASK value FFFFFF \textsubscript{16} shows that all positions of the 24 bit register should be considered.
+In that specific example we have a total length of boundary scan cells of 24 and therefore the amount of passed hexadecimal coded byte values is 3 (24 bits / 8 bits/byte) -> 0x00 0x00 0x10 and 0x81 0x81 0x81 and 0xFF 0xFF 0xFF. Further the TDI value 000010\textsubscript{16} means that only on position 5 the value should be set to high (10\textsubscript{16} -> 00010000\textsubscript{2}, counted from right to left). The TDO value 818181\textsubscript{16} gives the information about the expected positions to be high after read back the data (818181\textsubscript{16} -> 100000011000000110000001\textsubscript{2}). That signifies only the positions 1, 8, 9, 16, 17 and 24 (read from right to left) should be set to high as the needed result. Finally the MASK value FFFFFF \textsubscript{16} shows that all positions of the 24 bit register should be considered.
 	
 	\section{Model-view-viewModel}
 The Model-view-viewModel pattern came up with the introduction of the \ac{WPF} framework from Microsoft and is designed for loose coupling programming with different components which are working together at the final stage. It could be seen as a enhancement of the model view controller pattern from JAVA programming language \cite{NorbertEder.2010}. \\
@@ -154,20 +154,14 @@ The java script object notation is a serialized form of data output in textual f
         "Bounds": {
           "X": -1459,
           "Y": 286,
-          "Width": 35,
-          "Height": 35
         },
-        "CenterPoint": {
-          "X": 0.0,
-          "Y": 0.0
-        },
-        "Rotation": 0.0
+        "UseRotation": true
       },
       "PinType": 2,
-      "PinNumber": "1"
+      "PinNumber": "Pin1"
     }
 	]
 }
 \end{lstlisting}
 
-As shown in \ref{lst:json} the format is highly structured and build in hierarchical way.
+As shown in \ref{lst:json} the format is highly structured and build in hierarchical way. Further it is clear that the curly brackets are being used for defining an object instance, the square brackets are being used for identifying an array of instances and the double quotes are describing a string value. With that quit simple format is is possible to represent just any Boolean, number or string value of objects where the requirement comes up either to use serializable or plain object structures.

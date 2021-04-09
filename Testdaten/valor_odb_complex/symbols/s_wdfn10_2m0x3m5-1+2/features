@@ -1,0 +1,20 @@
+UNITS=MM
+ID=73256
+#
+#Num Features
+#
+F 1
+
+#
+#Layer features
+#
+S P 0;;ID=73258
+OB -0.375 0.5 I
+OS 0.375 0.5
+OS 0.375 0.25
+OS -0.075 0.25
+OS -0.075 -0.5
+OS -0.375 -0.5
+OS -0.375 0.5
+OE
+SE

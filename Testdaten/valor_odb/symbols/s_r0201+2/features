@@ -1,0 +1,19 @@
+UNITS=MM
+ID=3229
+#
+#Num Features
+#
+F 1
+
+#
+#Layer features
+#
+S P 0;;ID=3231
+OB 0.0675 -0.155 I
+OS -0.145 -0.155
+OS -0.145 0.155
+OS 0.0675 0.155
+OS 0.145 0
+OS 0.0675 -0.155
+OE
+SE

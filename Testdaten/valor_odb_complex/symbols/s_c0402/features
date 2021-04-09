@@ -1,0 +1,19 @@
+UNITS=MM
+ID=19894
+#
+#Num Features
+#
+F 1
+
+#
+#Layer features
+#
+S P 0;;ID=19896
+OB -0.25 0.0841 I
+OS 0 0.175
+OS 0.25 0.0841
+OS 0.25 -0.175
+OS -0.25 -0.175
+OS -0.25 0.0841
+OE
+SE

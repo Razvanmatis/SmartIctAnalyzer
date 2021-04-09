@@ -1,0 +1,19 @@
+UNITS=MM
+ID=35359
+#
+#Num Features
+#
+F 1
+
+#
+#Layer features
+#
+S P 0;;ID=35361
+OB 1.25 -0.55 I
+OS -1.25 -0.55
+OS -1.25 0.183
+OS 0 0.55
+OS 1.25 0.183
+OS 1.25 -0.55
+OE
+SE

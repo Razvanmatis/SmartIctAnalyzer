@@ -1,0 +1,22 @@
+UNITS=MM
+ID=75389
+#
+#Num Features
+#
+F 1
+
+#
+#Layer features
+#
+S P 0;;ID=75391
+OB 1.875 2.55 I
+OS 1.875 -1.95
+OS 1.2 -1.95
+OS 1.2 -2.55
+OS -1.2 -2.55
+OS -1.2 -1.95
+OS -1.875 -1.95
+OS -1.875 2.55
+OS 1.875 2.55
+OE
+SE

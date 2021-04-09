@@ -11,8 +11,6 @@ namespace Ui.Modules.ModuleName.Interfaces
 
         void ExportJsonProjectFileContent(byte[] data, string fileName);
 
-        Task<string> GetOdbProjectFolder();
-
         string GetBomData();
 
         BomSettings GetBomSettings();

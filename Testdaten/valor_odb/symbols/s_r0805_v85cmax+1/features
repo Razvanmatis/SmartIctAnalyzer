@@ -1,0 +1,19 @@
+UNITS=MM
+ID=6101
+#
+#Num Features
+#
+F 1
+
+#
+#Layer features
+#
+S P 0;;ID=6103
+OB -0.625 0.0971 I
+OS 0 0.3375
+OS 0.625 0.0971
+OS 0.625 -0.3375
+OS -0.625 -0.3375
+OS -0.625 0.0971
+OE
+SE

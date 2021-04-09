@@ -1,5 +1,80 @@
 \chapter{Conceptual design}
-First of all the structure itself of the received objects needs to be analyzed more in detail which are being provided by the \textbf{PCB-Investigator.exe}:\\
+Within this chapter all thoughts and decisions which were made according the completion of the whole project are being pointed out in detail
+	\section{Programming language to use}
+First of all there has been reflected which programming language to use for creating the new software. As there are many different languages available the following table shows the resulting advantages of two compared languages:
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{p{0.15\linewidth} | p{0.5\linewidth} | p{0.35\linewidth}}
+      Programming language  & Benefits & Disadvantages \\ \hline
+      C\# & modern GUI applications possible, powerful, knowledge already available, already being used at ProMik & - \\
+      Java Swing & GUI applications possible & no loose coupling available, just little knowledge available, not modern and powerful \\ 
+			Java FX & modern GUI applications possible, powerful & no knowledge available, not being used at all at ProMik \\ 
+    \end{tabular}
+    \caption{Programming languages comparison}
+    \label{tab:programmingLanguages}
+\end{table}
+
+As stated in \ref{tab:programmingLanguages} it will be clear that the choice of the programming language to use finally turned into C\# as the advantages convinced.
+
+	\section{Integrated development environment to choose}
+Now there should be chosen an \ac{IDE} for creating the software with the previously concluded programming language as well:
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{p{0.25\linewidth} | p{0.4\linewidth} | p{0.35\linewidth}}
+      \ac{IDE}  & Benefits & Disadvantages \\ \hline
+      JetBrains Rider & powerful & not for free available \\
+      Visual Studio Code & for free available & no nuget package manager available \\ 
+			Visual Studio 2019 & powerful, for free available, already being used within ProMik & - \\ 
+    \end{tabular}
+    \caption{IDE comparison}
+    \label{tab:ides}
+\end{table}
+
+As compared in \ref{tab:ides} it sticks out that Visual Studio 2019 will be the choice for creating the new software as it's benefits are overbalanced. \newline
+
+	\section{Application structure to consider}
+Regarding the application structure there was the deliberation about how to use the \ac{PCB}-Investigator API as efficient as possible without having the need of installing it on every machine which runs the new tool as there is the requirement of having a valid license for using it. The idea came up to provide on one side a stand alone application which uses the \ac{PCB}-Investigator API as a server and on the other side the \ac{GUI} application as client software which is possible to connect to the server. In that case this server could potentially run just on one machine and would be available for all other clients which are in the same network.
+
+\begin{center}
+	\includegraphics[scale=0.70]{figures/client server structure.pdf}
+	\begin{figure}[!h]
+	\caption{Client-server structure of the planned software}
+	\label{fig:clientServerStructure}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:clientServerStructure} it is clear that following that idea a most flexible solution with as less restrictions as possible could be created. To make sure that the clients are able to communicate with the server the decision was made to use the \ac{GRPC} protocol for data exchange as it is already known within the company as a reliably protocol and could be used independently on the used programming languages or target frameworks of the projects.
+
+	\section{Target frameworks to use}
+After the programming language, the \ac{IDE} are selected and the application structure itself was defined, now there should be decided which target frameworks to use for all projects:
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{p{0.2\linewidth} | p{0.45\linewidth} | p{0.35\linewidth}}
+      Framework & Benefits & Disadvantages \\ \hline
+      .NET framework & the only compatible one for using the \ac{PCB}-Investigator API & not fully compatible with all provided nuget packages, no longer support \\
+      .NET standard & compatible to be included in .NET framework and .NET core applications & no graphical components available \\ 
+			.NET core & all modern graphical components available, all nuget packages compatible & graphical components included even if not used \\ 
+    \end{tabular}
+    \caption{Framework comparison}
+    \label{tab:frameworks}
+\end{table}
+
+As shown in \ref{tab:frameworks} each available framework has some advantages which makes it worth to use. So after thinking about it more in detail the following project structure came out to use:
+\begin{center}
+	\includegraphics[scale=0.70]{figures/frameworks used.pdf}
+	\begin{figure}[!h]
+	\caption{Frameworks used within the project}
+	\label{fig:frameWorksUsed}
+	\end{figure}
+\end{center}
+
+The reason why to use .NET framework 4.72 for the server side is the fact that the provided API was created with that target framework (see \ref{fig:frameWorksUsed}). On the client side the reflection was considered to create a modern software as possible by using as much useful frameworks for it as available and so the .NET core 3.1 has been chosen as target framework. To make sure finally that each project are able to use the common interfaces which should be created the target framework .NET standard 2.0 was used for it.
+
+	\section{Analyzing the structure of PCB-Investigator API}
+Of course the structure of the \ac{PCB}-Investigator API itself regarding the received objects needs to be analyzed more in detail which are being provided by the \textbf{PCB-Investigator.exe}:\\
 
 \begin{figure}[h]
 	\centering
@@ -20,3 +95,38 @@ As ProMik GmbH is just interested in extracting all relevant information from an
 	\item IStep.GetLayer(string layerName) - Getter for a layer in dependency on the layer name from a step
 	\item ILayer.GetAllLayerObjects() - Getter for all objects which are located on a specific layer within a step
 \end{itemize}
+
+\section{Converted class structures of objects of interest}
+After knowing what kind of functions to be used and which structures are available within the \ac{PCB}-Investigator API the goal was to provide as simple new structures as possible containing all relevant information for later usage:
+
+\begin{center}
+	\includegraphics[width=1.00\linewidth]{figures/classStructureConverted.png}
+	\begin{figure}[!h]
+	\caption{Class structure after convertion}
+	\label{fig:classStructureAfterConvertion}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:classStructureAfterConvertion} it will be clear that the new object structure just contains five main components
+\begin{itemize}
+	\item PCBComponent - the main component of interest containing further objects with information about their geometric, functional attributes and connection pins
+	\item Pin - the connection component of a PCBComponent which contains net objects and information about the pin name and its type
+	\item Net - the net component containing the net name, information about all pins and components which are included 
+	\item GeometricAttributes - an object for holding all information regarding the position and size of any object
+	\item FunctionalAttributes - an object for having all information regarding the functionality of one component (type and names)
+\end{itemize}
+
+To make sure for having a highest level on flexibility of course as top level objects there should be interfaces introduced which then will be implemented for later usage. 
+
+\begin{center}
+	\includegraphics[scale=0.7]{figures/componentStructureClassDiagram.pdf}
+	\begin{figure}[!h]
+	\caption{Physical object dependencies}
+	\label{fig:PhysicalObjectDependencies}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:PhysicalObjectDependencies} it is possible to map all physical existing objects easily in complete way into the object orientation which is used by the programming language by using this class structure.
+
+	\section{Frameworks and patterns to use}
+To enure a modern, loose coupled appearance of the whole application where it is quit easy possible to build in different kind of extensions there was made the decision of using the \textbf{PRISM framework} for referencing a template as an empty new project. This framework allows to use predefined services as EventAggregator, the composite commands and dependency injection in a quit easy way\cite{.452021}. The \textbf{dependency injection framework} provides the possibility of registering interfaces by their implementations at some main points and being able to inject them directly in constructors of others classes without handling the creation of objects manually in background\cite{Augsten.492021}. It can use further the \textbf{singleton pattern} for making sure just to work with a single instance of a class project wide. Further PRISM makes possible to use the modern appearance style from the \textbf{material design framework} where the possibility is given to use many predefined view components in a pretty and comfortable way\cite{.111980}. To ensure creation of different implementations of interfaces within just one method\cite{JAXenter.2012} there was additionally the need of using the \textbf{factory pattern} at some points. Next there should be used the \textbf{command pattern} to make sure that a loose coupling between views and view-models could be established without any code behind in the views. Finally for being able to work with as many interfaces as possible to ensure easy change of implementations there should be used the \textbf{strategy pattern} which exactly means that there are many implementations of interfaces available\cite{Wikipedia.2021d}.

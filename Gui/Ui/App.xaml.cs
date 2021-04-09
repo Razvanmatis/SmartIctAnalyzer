@@ -48,13 +48,23 @@ namespace Ui
             containerRegistry.RegisterSingleton<IBomDataModel, BomDataModel>();
             containerRegistry.RegisterSingleton<ISettingsService, ProMik.Core.Services.Settings.LiteDBSettingsService>();
             containerRegistry.RegisterSingleton<IGrpcClientParserHandler, GrpcClientParserHandler>();
-            containerRegistry.RegisterSingleton<ITestCoverageDeterminer, TestCoverageDeterminer>();
+            containerRegistry.RegisterSingleton<ITestCoverageDeterminer, TestCoverageBoundaryScanDeterminer>();
             containerRegistry.RegisterSingleton<IPinInformationExtractor, PinInformationExtractor.Implementations.PinInformationExtractor>();
             containerRegistry.RegisterSingleton<ILogger, Logger>();
             containerRegistry.RegisterSingleton<ISVFHelper, SVFHelper.Implementations.SVFHelper>();
             containerRegistry.RegisterSingleton<ISvfPlayer, SvfPlayer>();
             containerRegistry.RegisterSingleton<IPackageService, PackageService>();
             containerRegistry.RegisterSingleton<IBSDLProcessor, BSDLProcessor>();
+            containerRegistry.RegisterSingleton<ISettingsHandler, SettingsHandler>();
+            containerRegistry.RegisterSingleton<IResultModel, ResultModel>();
+            containerRegistry.RegisterSingleton<IProjectLoadHandler, ProjectLoadHandler>();
+            containerRegistry.RegisterSingleton<ISvfHandler, SvfHandler>();
+            containerRegistry.RegisterSingleton<ITestCoverageDataModel, TestCoverageDataModel>();
+            containerRegistry.RegisterSingleton<IBomHandler, BomHandler>();
+            containerRegistry.RegisterSingleton<IProjectFileHandler, ProjectFileHandler>();
+            containerRegistry.RegisterSingleton<IDropHandler, DropHandler>();
+            containerRegistry.RegisterSingleton<IPinInformationExtractorHandler, PinInformationExtractorHandler>();
+            containerRegistry.RegisterSingleton<ITestCoverageHandler, TestCoverageHandler>();
         }
     }
 }

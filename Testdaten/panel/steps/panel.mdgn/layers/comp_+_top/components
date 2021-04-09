@@ -1,0 +1,7 @@
+#
+#Attribute Table
+#
+@0 .comp_height
+
+CMP 0 0.03543307 -4.52362205 0.00000000 N 0 spec_TitleBlock_Gerber_PCB ;0=0.00000000
+CMP 1 11.45275591 -6.04724409 0.00000000 N 1 spec_FrameDrw_A3_Panel ;0=0.00000000

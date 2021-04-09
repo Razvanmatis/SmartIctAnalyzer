@@ -1,0 +1,33 @@
+UNITS=MM
+ID=253
+#
+#Num Features
+#
+F 1
+
+#
+#Feature attribute names
+#
+@0 .comp_height_area
+@1 .drc_max_height
+
+
+#
+#Layer features
+#
+S P 0;0=132,1=1.100000;ID=890
+OB -20.59 3.3186 I
+OS -20.59 4.4936
+OS -17.99 4.4936
+OS -17.99 3.3186
+OS -17.54 3.3186
+OS -17.54 -0.1814
+OS -17.99 -0.1814
+OS -17.99 -1.3564
+OS -20.59 -1.3564
+OS -20.59 -0.1814
+OS -21.04 -0.1814
+OS -21.04 3.3186
+OS -20.59 3.3186
+OE
+SE

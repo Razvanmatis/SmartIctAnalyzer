@@ -148,7 +148,7 @@ namespace Ui.ViewModels
 
         private bool HandleEnabledStateOfContextMenu(LogWrapper arg)
         {
-            return string.Compare(arg.Message, TestCoverageDeterminer.ErrorMessageDoublesFound, StringComparison.InvariantCulture) == 0;
+            return string.Compare(arg.Message, TestCoverageBoundaryScanDeterminer.ErrorMessageDoublesFound, StringComparison.InvariantCulture) == 0;
         }
 
         private void HandleLogContext(LogWrapper obj)
