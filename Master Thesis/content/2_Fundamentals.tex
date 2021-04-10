@@ -130,6 +130,41 @@ As shown in \ref{fig:mvvm} there are the three main components involved:
 \end{itemize}
 Typically there will be defined a various amount of data bindings in the view to the viewmodel. Further the view model itself informs the view about happened changes of values to be displayed by using the INotifyPropertyChanged event. Onward it is responsible for the connection to the data of any model and controls the function sequence to be performed in dependency on the user inputs which are being forwarded as ICommand objects. Finally the view should contain as less behind code as possible to make sure a high loose coupling is being ensured. The looser the coupling the easier it is to switch between new implementations of different components and replace them by others. In that way it should be quit easy possible to work on all three component types separately, without having to know of each others and finally connect them together.
 
+	\section{PRISM framework}
+This framework is made for creation of louse coupled \ac{MVVM} projects and allows to use predefined services as EventAggregator, the composite commands and dependency injection in a quit easy way\cite{.452021}. Further it provides different project templates which could be used as start point of implementation.
+
+	\section{Dependency injection framework}
+The \textbf{dependency injection framework} provides the possibility of registering interfaces by their implementations at some main points and being able to inject them directly in constructors of others classes without managing the creation of objects manually in background\cite{Augsten.492021}. It can use further the \textbf{singleton pattern} for making sure just to work with a single instance of a class project wide.
+
+	\section{Material design framework}
+The material design framework is a view orientated framework where the options are given to use many predefined components in a pretty and comfortable way\cite{.111980}. Further it ensures a quit modern look and feel and will be used per default in many actual software implementations as in web design.
+
+	\section{JSON format}
+The java script object notation is a serialized form of data output in textual form\cite{.29.03.2021}. It is widely used where it could be necessary to understand and maybe modify data manually in an easy way. To work with that specific data format each programming language provides different kind of external libraries for parsing the information from objects into \ac{JSON} and back from \ac{JSON} to object. A valid \ac{JSON} formatted text could like like:
+
+\begin{lstlisting}[language=json,caption={JSON formatted content},captionpos=b,label=lst:json]
+{
+  "Pins": [
+    {
+      "Nets": [
+        0
+      ],
+      "Geometrics": {
+        "Bounds": {
+          "X": -1459,
+          "Y": 286,
+        },
+        "UseRotation": true
+      },
+      "PinType": 2,
+      "PinNumber": "Pin1"
+    }
+	]
+}
+\end{lstlisting}
+
+As shown in \ref{lst:json} the format is highly structured and build in hierarchical way. Further it is clear that the curly brackets are being used for defining an object instance, the square brackets are being used for identifying an array of instances and the double quotes are describing a string value. With that quit simple format is is possible to represent just any Boolean, number or string value of objects where the requirement comes up either to use serializable or plain object structures.
+
 	\section{GRPC}
 \ac{GRPC} is a modern open source way for performing remote procedure calls independently on the programming language used for a specific program and works as a client-server structure\cite{gRPC.482021}. That means in detail to use this protocol there is the need first of defining a specific service file using the interface definition language. By using this language there is no need to consider programming language specific dependencies. Afterward by using protoc compiler there is the possibility of automated creation of the source code for a specific programming language which could then be included to finalize the communication work. Finally on one side there should be defined the logic for being a server by additionally defining a specific port to be used and on the other there needs to be defined the logic for being the client with considering the IP address of the server and the port. Using \ac{GRPC} ensures bidirectional streaming possibilities and passes all object related data as a auto serialized stream in the \ac{JSON} format. Further it can communicate through complex networks without having the challenge of defining more complex code for it. To define the service file there are many of elementary data types available, the possibility of defining object structures, functions and parameters or return values. A valid example of such a definition could be:
 
@@ -158,28 +193,3 @@ enum ComponentTypeGrpc {
 
 As shown in \ref{lst:grpc} there are all necessary values defined in structured and easy understandable way. Typically the auto generated code contains new classes which must be inherited for adding customized logic.
 
-	\section{JSON format}
-The java script object notation is a serialized form of data output in textual form\cite{.29.03.2021}. It is widely used where it could be necessary to understand and maybe modify data manually in an easy way. To work with that specific data format each programming language provides different kind of external libraries for parsing the information from objects into \ac{JSON} and back from \ac{JSON} to object. A valid \ac{JSON} formatted text could like like:
-
-\begin{lstlisting}[language=json,caption={JSON formatted content},captionpos=b,label=lst:json]
-{
-  "Pins": [
-    {
-      "Nets": [
-        0
-      ],
-      "Geometrics": {
-        "Bounds": {
-          "X": -1459,
-          "Y": 286,
-        },
-        "UseRotation": true
-      },
-      "PinType": 2,
-      "PinNumber": "Pin1"
-    }
-	]
-}
-\end{lstlisting}
-
-As shown in \ref{lst:json} the format is highly structured and build in hierarchical way. Further it is clear that the curly brackets are being used for defining an object instance, the square brackets are being used for identifying an array of instances and the double quotes are describing a string value. With that quit simple format is is possible to represent just any Boolean, number or string value of objects where the requirement comes up either to use serializable or plain object structures.
