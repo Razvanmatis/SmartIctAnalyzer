@@ -421,6 +421,33 @@ The \textbf{TestCoverage} project which was implemented using the .NET Standard 
 	\item Implementations - within that folder are actually just boundary scan related implementations of the interfaces to be used
 \end{itemize}
 
+Actually there is just been provided the possibility of determining boundary scan related values according the following sequence:
+\begin{enumerate}
+	\item Define the settings for general identifying the ICs within the tool
+	\item Define the test coverage related settings within the tool
+	\begin{itemize}
+		\item ground nets related identifier
+		\item ground nets related blacklist
+		\item power nets related identifier
+		\item power nets related blacklist
+	  \item jtag nets related identifier
+		\item jtag nets related blacklist
+	\end{itemize}
+	\item Load a \ac{ODB}++ project into the tool
+	\item Perform the function \textbf{Determine all boundary scan objects} by menu item
+	\item Perform the test coverage determination for at least one of the following values by clicking the according menu item:
+	\begin{itemize}
+		\item Determine test coverage for JTAGs - the amount of all \ac{JTAG} devices / amount of total pins of all \ac{JTAG} devices
+		\item Determine test coverage for all PullUps - the amount of totally connected power nets of all \ac{JTAG} devices / amount of total pins of all \ac{JTAG} devices
+		\item Determine test coverage for all PullDowns - the amount of totally connected ground nets of all \ac{JTAG} devices / amount of total pins of all \ac{JTAG} devices
+		\item Determine test coverage for all PullUps and PullDowns - (the amount of totally connected ground nets + power nets of all \ac{JTAG} devices) / amount of total pins of all \ac{JTAG} devices
+		\item Determine test coverage for all other components - the amount of totally connected nets which are neither ground nor power nets of all \ac{JTAG} devices / amount of total pins of all \ac{JTAG} devices
+		\item Determine complete test coverage of boundary scan - (the amount of totally connected nets which are neither ground nor power nets + connected ground + connected power nets of all \ac{JTAG} devices) / amount of total pins of all \ac{JTAG} devices
+	\end{itemize}
+	\item Finally the determined value will be updated and visible as textual representation at the bottom of the tool
+\end{enumerate}
+
+Next there are some code snippets presented to have a closer look into the implementation of background logic:
 \begin{lstlisting}[language={[Sharp]C},caption={ITestCoverageDeterminer},captionpos=b,label=lst:ITestCoverageDeterminer]
 public interface ITestCoverageDeterminer
 {
