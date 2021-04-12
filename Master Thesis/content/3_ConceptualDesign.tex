@@ -86,14 +86,14 @@ As shown within \ref{fig:PCB Investigator class diagram} there could be seen tha
 As ProMik GmbH is just interested in extracting all relevant information from any \ac{ODB}++ related projects the following public functions of the \textbf{PCB-Investigator.exe} where used by the created software\cite{.472021b} to extract all INet and ICMPObjects:
 
 \begin{itemize}
-	\item IAutomation.IAutomationInit() - Initialization of the \ac{API}
-	\item IAutomation.CreateNewPCBIWindow(bool visible) - Creates the base window
-	\item IPCBIWindow.LoadData(string path) - Loads a specific project into the window
-	\item IPCBIWindow.GetStepList() - Getter for all steps of the window
-	\item IStep.GetNets() - Getter for all nets of a step
-	\item IStep.GetAllLayerNames() - Getter for all layer names of a step
-	\item IStep.GetLayer(string layerName) - Getter for a layer in dependency on the layer name from a step
-	\item ILayer.GetAllLayerObjects() - Getter for all objects which are located on a specific layer within a step
+	\item IAutomation.IAutomationInit() - initialization of the \ac{API}
+	\item IAutomation.CreateNewPCBIWindow(bool visible) - creates the base window
+	\item IPCBIWindow.LoadData(string path) - loads a specific project into the window
+	\item IPCBIWindow.GetStepList() - getter for all steps of the window
+	\item IStep.GetNets() - getter for all nets of a step
+	\item IStep.GetAllLayerNames() - getter for all layer names of a step
+	\item IStep.GetLayer(string layerName) - getter for a layer in dependency on the layer name from a step
+	\item ILayer.GetAllLayerObjects() - getter for all objects which are located on a specific layer within a step
 \end{itemize}
 
 \section{Converted class structures of objects of interest}
