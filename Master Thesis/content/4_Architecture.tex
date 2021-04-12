@@ -108,7 +108,7 @@ As shown in \ref{fig:grpcApiPap} it will be clear that the program schedule ends
 As described in \ref{lst:GetPinsGrpc} there could be seen that for creation of the serialized objects there were a couple of helper methods used to ensure a structured way of working. Further it will be clear that working with a list containing just int objects for referencing the net objects was necessary.
 
 	\section{Grpc Client for connecting to the Server and parsing all objects}
-For being able to request all objects within a \ac{ODB}++ project there is the GrpcClientParser project available which was introduced as a .NET standard 2.1 project for making sure to be able to include it in as many other projects as possible. That means in detail that this whole project, which is being provided as a \ac{GRPC} client project, could also be included just as a dynamic link library file within other projects to be able to handle the requests in most flexible way. 
+For being able to request all objects within a \ac{ODB}++ project there is the GrpcClientParser project available which was introduced as a .NET standard 2.1 project for making sure to be able to include it in as many other projects as possible. That means in detail that this whole project, which is being provided as a \ac{GRPC} client project, could also be included just as a dynamic link library file within other projects to be able to handle the requests in most flexible way. The functionality of this project will be automatically be called by clicking on the menu item \textbf{Open ODB project folder}
 
 \begin{center}
 	\includegraphics[scale=0.7]{figures/IGrpcClientParserHandler.png}
@@ -435,7 +435,7 @@ Actually there is just been provided the possibility of determining boundary sca
 	\end{itemize}
 	\item Load a \ac{ODB}++ project into the tool
 	\item Perform the function \textbf{Determine all boundary scan objects} by menu item
-	\item Perform the test coverage determination for at least one of the following values by clicking the according menu item:
+	\item Perform the test coverage determination for at least one of the following values by clicking the according menu item within the \textbf{Test coverage -> Boundary scan test} menu item group:
 	\begin{itemize}
 		\item Determine test coverage for JTAGs - the amount of all \ac{JTAG} devices / amount of total pins of all \ac{JTAG} devices
 		\item Determine test coverage for all PullUps - the amount of totally connected power nets of all \ac{JTAG} devices / amount of total pins of all \ac{JTAG} devices
@@ -511,7 +511,7 @@ public TestCoverageItems DetermineTestCoverageRelatedObjects(
 As shown in \ref{lst:DetermineTestCoverageRelatedObjects} there are first of all within the function of defining all test coverage related objects, the nets are being defined before then all test coverage related objets are being determined. Finally a dictionary containing all objects in relation to a test coverage object type is being filled and send by an event to be filled within the LayerRegion for providing the user the possibility of selecting them to be showed. As a feature there will be checked additionally if some components were detected being more than one test coverage related object. If this is the case then some logging output as a warning category will be performed to inform the user about settings to be adapted in case of improving the identifier or blacklist of specific object types.
 
 	\section{Pin information extraction}
-To be able to extract all pin information of all \ac{JTAG} related devices of any \ac{ODB}++ project into separate files to be created there is the project \textbf{PinInformationExtractor} available which was created using the .NET standard 2.1 framework as well. It contains the following sub folders with the specific content:
+To be able to extract all pin information of all \ac{JTAG} related devices of any \ac{ODB}++ project into separate files to be created there is the project \textbf{PinInformationExtractor} available which was created using the .NET standard 2.1 framework as well. It contains the following sub folders with the specific content and will be used by clicking on the menu item \textbf{Test coverage -> Export PIN connection information into file}:
 \begin{itemize}
 	\item Interfaces - this folder contains all interfaces which could be used for performing actions of this project
 	\item Implementations - within that folder are the implementation of the interface could be found
@@ -541,7 +541,7 @@ public interface IPinInformationExtractor
 As shown in \ref{lst:IPinInformationExtractor} there are much of the passed parameters for creation of the pin information file set per default to a specific value which is being used by the main routine actually. By preallocation of parameters the user does not have to exclusively define them manually when calling that specific method which leads to a more comfortable way of working.
 
 	\section{SVF file generator}
-Now for being able to create \ac{SVF} files with all specific commands needed for being able to be played with a programmer by ProMik there is the \textbf{SVFHelper} project been provided using as well the .NET Standard 2.1 framework. 
+Now for being able to create \ac{SVF} files with all specific commands needed for being able to be played with a programmer by ProMik there is the \textbf{SVFHelper} project been provided using as well the .NET Standard 2.1 framework. This project will be used if the user clicks on the menu item \textbf{Test coverage -> Generate SVF data files}
 
 \begin{center}
 	\includegraphics[scale=0.7]{figures/svfSequence.pdf}
