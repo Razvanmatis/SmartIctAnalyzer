@@ -672,3 +672,68 @@ public void TestParsingFromApi()
 \end{lstlisting}
 
 As stated in \ref{lst:TestParsingFromApi} there first of all will be asserted that the received objects by the \ac{GRPC} API is not null and the read out content from the \ac{JSON} formatted file contains some objects. Finally there will be called the TestContent function to make sure that all objects equals the necessary information. Further it can be seen that for testing purposes a DebugLogger was generated which implements the ILogger interface in that way that all messages are just being forwarded to the debug line as no other objects are available running this sequence. The -1 parameter within the GetParsedObjectsFromGrpc method tells the API to check for all available steps within the \ac{ODB}++ project as there is the possibility to define specific ones to be considered by using a semicolon separated string.
+
+	\section{Pipeline configuration}
+The company ProMik GmbH uses gitlab as their internal continuous integration system which is a open source software and provides the possibility of performing different kind of scripts after the build process\cite{.3222021}. According to that fact their was additionally the need of providing a specific \ac{YML} file to make sure that the whole project will be build as executable files in the correct destination folders. The \ac{YML} itself contains different associated lists and scalars which could be performed by the system which reads its statements out\cite{Wikipedia.2021b}. 
+
+\begin{lstlisting}[language=yaml,caption={YML file for pipeline},captionpos=b,label=lst:ymlFile]
+stages:
+  - build
+  - staging
+  - deploy
+  
+build_win32:
+  stage: build
+  tags:
+    - host-windows
+  script: 
+...
+
+build_win64:
+  stage: build
+  tags:
+    - host-windows
+  script: 
+   ...
+
+build_docs:
+  stage: build
+  tags:
+  - host-linux
+  script:
+   ...
+  artifacts:
+   ...
+  timeout: 4 minutes
+  retry: 2
+
+staging:
+  stage: staging
+  tags:
+    - host-linux
+  script:
+   ...
+    
+  dependencies:
+    - build_win32
+    - build_win64
+    - build_docs
+  only:
+    - branches
+
+deploy:
+  stage: deploy
+  tags:
+    - host-linux
+  script:
+    ...
+
+  dependencies:
+    - build_win32
+    - build_win64
+    - build_docs
+  only:
+    - tags
+\end{lstlisting}
+
+As shown in \ref{lst:ymlFile} the whole file describes the different stages to be performed sequentially. In detail that means first the build process for the x86 and x64 architecture will be performed. If succeeded then the staging process and finally the deploy process will be triggered. Within the staging process all relevant files of the build process including the documentation will be copied to a specified path in dependency on the branch name of the project. The deploy process will only be triggered if a new tag was created to specify accordingly a new version which could potentially be delivered.

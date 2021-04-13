@@ -2,7 +2,7 @@
 Within this chapter the motivation will be described, the requirements, the used programming language and operating system for creation of the whole project. All these aspects where previously discussed with the company to make sure to create a most valuable software for them.
 
 	\section{Motivation}
-As the company ProMik GmbH is already providing programmers for being able to write date into different \ac{MCU}s now there came up the requirement, in dependency on customer demands, to perform boundary scan test chains on \ac{JTAG} devices. For being able to perform these kind of tests there should be a software available which allows to determine first the test coverage parameters in dependency on the boundary scan mechanism and create such \ac{SVF} files for playing them with the programmer. This software should be provided as a complex framework where the opportunity is given to extend it in the future in elementary way by using much interfaces within the \ac{MVVM} pattern.
+As the company ProMik GmbH is already providing programmers for being able to write date into different \ac{MCU}s\cite{.4132021} now there came up the requirement, in dependency on customer demands, to perform boundary scan test chains on \ac{JTAG} devices. For being able to perform these kind of tests there should be a software available which allows to determine first the test coverage parameters in dependency on the boundary scan mechanism and create such \ac{SVF} files for playing them with the programmer. This software should be provided as a complex framework where the opportunity is given to extend it in the future in elementary way by using much interfaces within the \ac{MVVM} pattern.
 
 	\section{Requirements}
 In order to provide all features as needed there were a couple of requirements which popped up at the very beginning of the conceptual design and during the implementation of the software:
@@ -39,6 +39,7 @@ In order to provide all features as needed there were a couple of requirements w
 		\item The usage of \ac{SVF} player was required
 	\end{itemize}
 \end{itemize}
+\label{items:req}
 
 	\section{Programming language and operating system}
 The whole project was implemented with the software development environment called \textbf{Microsoft Visual Studio 2019} and the programming language \textbf{C\#}. This is a quit powerful and modern language for creation of different desktop applications. The developer environment is really comfortable too, as it provides a NuGet package manager for organizing all external included libraries. Furthermore the whole project was created on a operating system \textbf{Windows 10 Professional x64} using a \ac{CPU} of type \textbf{Intel(R)Xeon(R) E3-1240 v6 @ 3.70 GHz} and a total amount of \ac{RAM} of \textbf{16 \ac{GB}}. This system makes sure to be able to implement without any delays of waiting for background processes at all and ensures to be able to run the developed software almost immediately without any delay times.

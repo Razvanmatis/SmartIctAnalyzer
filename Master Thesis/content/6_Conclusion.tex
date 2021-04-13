@@ -1,1 +1,21 @@
 \chapter{Conclusion}
+As a conclusion of the creation of the requested tool there could be definitely held that in dependency on all requirements which were communicated by ProMik GmbH and the software developer a quit powerful and feature rich software was provided according to \ref{fig:projectOverview}. All at the beginning requested requirements from \ref{items:req} were successfully implemented. Further there were provided the following features as bonus content:
+\begin{itemize}
+	\item Mirroring of the whole rendered project across the x and y axis is possible
+	\item Defining of steps to be considered at read out from \ac{PCB}-Investigator could be defined within settings
+	\item Coloring of all components independently is possible by changing the settings
+	\item An coordinates origin is being placed
+	\item The actual mouse position is being shown at the bottom of the tool by providing the x and y coordinate
+\end{itemize}
+
+As potential extensions or improvements there could be considered the following point in the view of the developer:
+\begin{itemize}
+	\item Inclusion of \ac{SVF} player for being able to perform \ac{SVF} files by the tool directly
+	\item Tracing of the \ac{SVF} results (comparison between TDI and TDO values) and detailed logging about the detected differences
+	\item Usage of other API for gathering information from \ac{ODB}++ related projects than just the \ac{PCB}-Investigator
+	\item Provide drag \& drop possibility of rendered components for being able to classify directly as blacklist component for the test coverage determination
+	\item Provide more test coverage determination methods than just the boundary scan ones
+	\item Usage of decryption \& encryption of exported data files to avoid manipulation of it
+\end{itemize}
+
+At the beginning already the need was discussed to be able to work with that whole created project as comfortable as possible for being able to integrate such extensions. The developer is of the opinion that especially by usage of all requested frameworks, patterns and integration of as much interfaces as possible this requirement was satisfied. Further there were kept a highly structured way of creation of different independent projects which leads to the possibility of using them stand alone or even as a nuget package within the intranet of the company.
