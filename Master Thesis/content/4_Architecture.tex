@@ -20,7 +20,7 @@ On the other side there is the \textbf{Net472} folder with the project GrpcApi w
 \begin{itemize}
 	\item GrpcClientParser - the \ac{GRPC} client project for communicating with the GrpcApi project for getting all parsed objects by the \ac{PCB}-Investigator API
 	\item PinInformationExtractor - this project is being used for creation of textfiles in \ac{JSON} format containing all pin information of all \ac{JTAG} devices of one project.
-	\item SVFHelper - this project is needed for creation of \ac{SVF} files in dependency on \ac{BSDL} files which should be referenced for \ac{JTAG} devices. Further it could play \ac{SVF} files with a programmer from ProMik which is connected to a boundary scan compatible \ac{JTAG} device
+	\item SVFHelper - this project is needed for creation of \ac{SVF} files in dependency on \ac{BSDL} files which should be referenced for \ac{JTAG} devices. Further it could play \ac{SVF} files with a programmer from ProMik GmbH which is connected to a boundary scan compatible \ac{JTAG} device
 \end{itemize}
 The \textbf{Tests} folder consists of the following projects:
 \begin{itemize}
@@ -28,7 +28,7 @@ The \textbf{Tests} folder consists of the following projects:
 	\item TestDotNetCore - here there can be found different unit tests for the parser logic of the GrpcClientParser project
 	\item TestDotNetFramework - this project contains unit tests to be performed using the GrpcApi project
 \end{itemize}
-Finally there were different \textbf{ProMik} related projects included by the nuget package manager of visual studio:
+Finally there were different \textbf{ProMik GmbH} related projects included by the NuGet package manager of visual studio:
 \begin{itemize}
 	\item ProMik.BSDL.Interfaces - contains all interfaces regarding the BSDL handling
 	\item ProMik.BSDL-Processor - contains the implementations regarding the BSDL processor
@@ -180,12 +180,12 @@ As shown in \ref{fig:mainView} there are some regions defined which are implemen
 	\item MenuRegion - contains all menu items which could be clicked by the user for interaction with the software (importing, exporting of data, showing all settings, \ac{etc.})
 	\item LayerRegion - this region contains on one side all received layers and its objects which can be shown by the \ac{PCB}-Investigator API and on the other side all test coverage related object types which could be selected to be shown (pull down resistors, ics, pull up resistors, \ac{etc.})
 	\item ContentRegion - that region contains all objects which should be displayed after there were some layers or object types selected within the LayerRegion. Further it provides the possibility of component specific actions by the context menu of the right mouse (toggle visibility, show connections, \ac{etc.})
-	\item Expander containing the LogPanel - here the Expander object is being used which contains the ProMik.UI.WPF.LogPanel object by the nuget package manager for displaying all logged messages of the whole application considering each log category for defining the display style
+	\item Expander containing the LogPanel - here the Expander object is being used which contains the ProMik.UI.WPF.LogPanel object by the NuGet package manager for displaying all logged messages of the whole application considering each log category for defining the display style
 \end{itemize}
 
 		
 		\subsection{Events}
-For being able to interact project wide with different classes within different projects without having the need always to reference directly a object of class of interest there was used a general event handling by using the ProMik.Core.Services.EventService.PrismEventService which is based on the PRISM event service as a nuget referenced package. In general the event handling works on one side by subscribing to any event type and on the other by publishing that specific event. To specify an event which could use by this service it was necessary to inherit from the class EventPayload. The following events are being specified within the Gui project itself:
+For being able to interact project wide with different classes within different projects without having the need always to reference directly a object of class of interest there was used a general event handling by using the ProMik.Core.Services.EventService.PrismEventService which is based on the PRISM event service as a NuGet referenced package. In general the event handling works on one side by subscribing to any event type and on the other by publishing that specific event. To specify an event which could use by this service it was necessary to inherit from the class EventPayload. The following events are being specified within the Gui project itself:
 \begin{itemize}
 	\item AddPcbObjectsEvent - this event occurs when the importing of objects from the \ac{PCB}-Investigator API has been finished
 	\item ChangeExportMenuItemEnabledStateEvent - will be created to toggle the enabled states of menu items for exporting data into file
@@ -322,7 +322,7 @@ public bool OpenGenericDialog(DialogType dialogType, string title, string errorM
 		...
 \end{lstlisting}
 
-As stated in \ref{lst:OpenGenericDialog} there was used the VistaOpenFileDialog and VistaSaveFileDialog from an external library used by the nuget package manager for handling the path selection within a dialog. If needed just by using another implementation of this interface the complete handling and used packages for it could be easily changed.
+As stated in \ref{lst:OpenGenericDialog} there was used the VistaOpenFileDialog and VistaSaveFileDialog from an external library used by the NuGet package manager for handling the path selection within a dialog. If needed just by using another implementation of this interface the complete handling and used packages for it could be easily changed.
 
 		\subsection{Model}
 To be able to hold different kind of data project wide and access it by dependency injection in comfortable way there are some models been defined:
@@ -376,7 +376,7 @@ As shown in \ref{fig:uiModulesViewModels} there were used the following main typ
 		\subsection{Views}
 That folder contains all views for representation of specific regions of the mainView or components to be rendered:
 \begin{itemize}
-	\item AllSettingsView - this view contains all settings of the software by using the ProMik.UI.WPF.SettingsPanel which was included as a nuget package
+	\item AllSettingsView - this view contains all settings of the software by using the ProMik.UI.WPF.SettingsPanel which was included as a NuGet package
 	\item ComponentView - that view contains all necessary appearance settings for displaying all objects to be rendered within the mainView region
 	\item CoordinatesOrigin - within that view just the representation form of the origin of the coordinate system is defined
 	\item LayerView - the view for showing all received layers from \ac{PCB}-Investigator API which is been included in a region of the mainView
@@ -540,8 +540,27 @@ public interface IPinInformationExtractor
 
 As shown in \ref{lst:IPinInformationExtractor} there are much of the passed parameters for creation of the pin information file set per default to a specific value which is being used by the main routine actually. By preallocation of parameters the user does not have to exclusively define them manually when calling that specific method which leads to a more comfortable way of working.
 
+\begin{center}
+	\includegraphics[scale=0.8]{figures/pinTypes.pdf}
+	\begin{figure}[!h]
+	\caption{The determined pin types of interest}
+	\label{fig:pinTypes}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:pinTypes} there will be determined a couple of different pin types for consideration within the exported \ac{JSON} text file of all \ac{JTAG} devices:
+\begin{enumerate}\addtocounter{enumi}{-1}
+	\item A pin which is connected to an unknown component
+	\item A pin which is connected to a pull up resistor
+	\item A pin which is connected to a pull down resistor
+	\item A pin which is not connected to anything
+	\item A pin which is connected to another IC component
+	\item A pin which is connected to another \ac{JTAG} device
+	\item A pin which is directly a \ac{JTAG} control pin (TDI, TDO, TMS, TCK)
+\end{enumerate}
+
 	\section{SVF file generator}
-Now for being able to create \ac{SVF} files with all specific commands needed for being able to be played with a programmer by ProMik there is the \textbf{SVFHelper} project been provided using as well the .NET Standard 2.1 framework. This project will be used if the user clicks on the menu item \textbf{Test coverage -> Generate SVF data files}
+Now for being able to create \ac{SVF} files with all specific commands needed for being able to be played with a programmer by ProMik GmbH there is the \textbf{SVFHelper} project been provided using as well the .NET Standard 2.1 framework. This project will be used if the user clicks on the menu item \textbf{Test coverage -> Generate SVF data files}
 
 \begin{center}
 	\includegraphics[scale=0.7]{figures/svfSequence.pdf}
@@ -671,7 +690,7 @@ public void TestParsingFromApi()
 }
 \end{lstlisting}
 
-As stated in \ref{lst:TestParsingFromApi} there first of all will be asserted that the received objects by the \ac{GRPC} API is not null and the read out content from the \ac{JSON} formatted file contains some objects. Finally there will be called the TestContent function to make sure that all objects equals the necessary information. Further it can be seen that for testing purposes a DebugLogger was generated which implements the ILogger interface in that way that all messages are just being forwarded to the debug line as no other objects are available running this sequence. The -1 parameter within the GetParsedObjectsFromGrpc method tells the API to check for all available steps within the \ac{ODB}++ project as there is the possibility to define specific ones to be considered by using a semicolon separated string.
+As stated in \ref{lst:TestParsingFromApi} there first of all will be asserted that the received objects by the \ac{GRPC} API is not null and the read out content from the \ac{JSON} formatted file contains some objects. Finally there will be called the TestContent function to make sure that all objects equals the necessary information. Further it can be seen that for testing purposes a DebugLogger was generated which implements the ILogger interface in that way that all messages are just being forwarded to the debug line as no other objects are available running this sequence. The -1 parameter within the GetParsedObjectsFromGrpc method defines at the API to check for all available steps within the \ac{ODB}++ project as there is the possibility to define specific ones to be considered by using a semicolon separated string.
 
 	\section{Pipeline configuration}
 The company ProMik GmbH uses gitlab as their internal continuous integration system which is a open source software and provides the possibility of performing different kind of scripts after the build process\cite{.3222021}. According to that fact their was additionally the need of providing a specific \ac{YML} file to make sure that the whole project will be build as executable files in the correct destination folders. The \ac{YML} itself contains different associated lists and scalars which could be performed by the system which reads its statements out\cite{Wikipedia.2021b}. 
