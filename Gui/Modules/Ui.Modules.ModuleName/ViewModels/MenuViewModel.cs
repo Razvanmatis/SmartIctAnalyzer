@@ -28,6 +28,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         private readonly IManifestHandler manifestHandler;
         private readonly IBomHandler bomHandler;
         private readonly IProjectLoadHandler projectLoadHandler;
+        private readonly ISvfHandler svfHandler;
         private IProjectHandler projectHandlerToUse;
         private bool exportEnabled;
         private string itemTestCoverageObjects;
@@ -64,6 +65,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             : base(regionManager)
         {
             this.bomHandler = bomHandler;
+            this.svfHandler = svfHandler;
             this.projectLoadHandler = projectLoadHandler;
             this.logger = logger;
             testCoverageVisibilty = Visibility.Hidden;
@@ -93,7 +95,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             AllSettingsCommand = new DelegateCommand(settingsHandler.OpenAllSettingsView);
             GetPinInformationJtags = new DelegateCommand(pinInformationExtractionHandler.GetPinInformationJtagsIntoFile);
             PlaySvfFile = new DelegateCommand(svfHandler.PlaySvfFileHandler);
-            GenerateSvfFiles = new DelegateCommand(() => svfHandler.HandleSvfFileGeneration(projectHandlerToUse));
+            GenerateSvfFiles = new DelegateCommand(async () => await HandleSfvFileCreation().ConfigureAwait(false));
             OpenProjectFileCommand = new DelegateCommand(async () => await projectFileHandler.OpenProjectFile(manifestHandler.GetProjectSelectionPath(), ResetAll, ResetTestCoverage, ActionOfItems).ConfigureAwait(false));
             CreateProjectFileCommand = new DelegateCommand(() => projectFileHandler.CreateProjectFile(ResetAll, ActionOfItems));
             ExportSettingsCommand = new DelegateCommand(() => settingsHandler.HandleExportSettings(projectHandlerToUse));
@@ -305,6 +307,13 @@ namespace Ui.Modules.ModuleName.ViewModels
             ResetAllMenuItems();
             TestCoverageMenuItemsEnabled = false;
             logger.LogMessage("All things are being resetted", LogCategory.INFO);
+        }
+
+        private async Task HandleSfvFileCreation()
+        {
+            eventService.Publish(new SetBusyEvent(true));
+            await Task.Run(() => svfHandler.HandleSvfFileGeneration(projectHandlerToUse)).ConfigureAwait(false);
+            eventService.Publish(new SetBusyEvent(false));
         }
 
         private void HandleChangeExportMenuItemState(ChangeExportMenuItemEnabledStateEvent obj)

@@ -1,7 +1,6 @@
-\chapter{Appendix}
-\section{User manual for working with the smart ICT analyzer tool}
+\chapter{User manual for working with the smart ICT analyzer tool}
 This document describes the way of handling the tool for determining the test coverage of different \ac{ODB}++ related projects.
-\subsection{Overview}
+\section{Overview}
 
 \begin{center}
 	\includegraphics[width=1.00\textwidth]{figures/attachments/overview.png}
@@ -22,7 +21,7 @@ As shown in \ref{fig:Tooloverview} the tool itself consits of seven different ar
 	\item The logging area
 \end{enumerate}
 
-\subsection{Settings}
+\section{Settings}
 
 \begin{center}
 	\includegraphics[scale=0.60]{figures/attachments/settingsOverview.png}
@@ -39,9 +38,9 @@ As shown in \ref{fig:Settingsoverview} there are the following three menu items 
 	\item Export settings file - a file chooser will pop up for selecting the target file where the settings database should be exported to
 \end{enumerate}
 
-\subsubsection{Show settings}
+\subsection{Show settings}
 After clicking on the menu item All settings a new window will be shown containing all setting pages.
-\paragraph{PCB Investigator API settings}
+\subsubsection{PCB Investigator API settings}
 
 \begin{center}
 \includegraphics[width=1.00\textwidth]{figures/attachments/pcbInvestigatorSettings.png}
@@ -53,7 +52,7 @@ After clicking on the menu item All settings a new window will be shown containi
 
 As shown in \ref{fig:pcbInvestigatorSettings} there is the possibility of changing the steps which should be considered for read out from the API. -1 means all steps should be read out. Other values could be defined semicolon separated
 
-\paragraph{GRPC server API connection settings}
+\subsubsection{GRPC server API connection settings}
 
 \begin{center}
 \includegraphics[width=1.00\textwidth]{figures/attachments/grpcServerSettings.png}
@@ -65,7 +64,7 @@ As shown in \ref{fig:pcbInvestigatorSettings} there is the possibility of changi
 
 As shown in \ref{fig:grpcServerSettings} there is the possibilty of changing the ip address of the GRPC server to connect to
 
-\paragraph{General settings}
+\subsubsection{General settings}
 
 \begin{center}
 \includegraphics[width=1.00\textwidth]{figures/attachments/generalSettings1.png}
@@ -107,7 +106,7 @@ Within the second part of the general settings (\ref{fig:generalSettings2}) ther
 	\item Testpoint
 \end{itemize}
 
-\paragraph{SVF Player settings}
+\subsubsection{SVF Player settings}
 
 \begin{center}
 \includegraphics[width=1.00\textwidth]{figures/attachments/svfPlayerSettings.png}
@@ -125,7 +124,7 @@ As shown in \ref{fig:svfPlayerSettings} there are the following settings availab
 	\item Supply Voltage in mv
 \end{itemize}
 
-\paragraph{Test Coverage settings}
+\subsubsection{Test Coverage settings}
 
 \begin{center}
 \includegraphics[width=1.00\textwidth]{figures/attachments/testCoverageSettings.png}
@@ -142,7 +141,10 @@ As shown in \ref{fig:testCoverageSettings} there are the following settings avai
 	\item Power
 \end{itemize}
 
-\subsection{Project file}
+\subsection{Import / Export settings file}
+By clicking on one of the menu items Settings -> Import settings file or Settings -> Export settings file afterward a new file selection dialog will be shown where to select the source / target file to be imported / exported. Further if the project file handling is enabled the settings file will automatically be stored within the project file and be loaded automatically on next opening of project file
+
+\section{Project file}
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/projectFile.png}
@@ -158,7 +160,7 @@ As shown in \ref{fig:projectFile} there is the possibility of choosing the follo
 	\item Create new project file
 \end{itemize}
 
-\subsection{Miscellaneous}
+\section{Miscellaneous}
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/fileMisc.png}
@@ -176,7 +178,7 @@ As shown in \ref{fig:fileMisc} there are the following menu items available at F
 	\item Export data into JSON file - after any project was loaded successfully then this item will be accessible. After choosing it a new dialog appears where you could select the target for creation of a valid JSON formatted file containing all data
 \end{itemize}
 
-\subsection{Creation of new project}
+\section{Creation of new project}
 To create a new project just first click on File -> Project file -> Create new project file. After ward there will be a dialog shown for selectin the target file to be saved at:
 
 \begin{center}
@@ -241,7 +243,7 @@ As shown in \ref{fig:layerSelected} there is the possibility of scrolling with t
 file as you are working within the project file mode. (Also all other project related data was automatically saved in the project file). Finally you should also 
 export your current made settings by Settings -> Export settings file to make sure that the settings file is also included in the project file for later loading
 
-\subsection{Working with the components view}
+\section{Working with the components view}
 By right clicking on any object within the components view there will be a context menu visible:
 
 \begin{center}
@@ -259,7 +261,7 @@ As shown at \ref{fig:contextMenu} you have the possibility of:
 	\item Toggle display of connections - if clicked then all connections of the component will be shown as plain lines
 \end{itemize}
 
-\subsubsection{Toggle visibility}
+\subsection{Toggle visibility}
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/toggleVis.png}
@@ -271,7 +273,7 @@ As shown at \ref{fig:contextMenu} you have the possibility of:
 
 As shown in \ref{fig:toggleVis} after the visibility was toggled then the underlining objects could be determined
 
-\subsubsection{Toggle visibility of all objects with the same type}
+\subsection{Toggle visibility of all objects with the same type}
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/toggleVisAll.png}
@@ -283,7 +285,7 @@ As shown in \ref{fig:toggleVis} after the visibility was toggled then the underl
 
 As shown in \ref{fig:toggleVis} after the visibility was toggled then the underlining objects of all toggled objects of the same type could be determined
 
-\subsubsection{Toggle display of connections}
+\subsection{Toggle display of connections}
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/toggleConnection.png}
@@ -312,7 +314,7 @@ As shown in \ref{fig:connectionLegend} there will be the following information a
 	\item Connected component by this line to the selected component
 \end{itemize}
 
-\subsection{Test coverage}
+\section{Test coverage}
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/testCoverage.png}
@@ -335,7 +337,7 @@ As shown in \ref{fig:testCoverage} within the Test coverage -> Boundary scan tes
 	\item Generate SVF data files
 \end{itemize}
 
-\subsubsection{Determine all boundary scan objects}
+\subsection{Determine all boundary scan objects}
 After you selected Test coverage -> Boundary scan test -> Determine all boundary scan objects then the objects list should be filled with new selection possibilities:
 
 \begin{center}
@@ -348,7 +350,7 @@ After you selected Test coverage -> Boundary scan test -> Determine all boundary
 
 Now you could (\ref{fig:dterminedTestCoverageObjects}) select just the test coverage related objects of interest to be shown within the component view.
 
-\subsubsection{Performing any test coverage of objects}
+\subsection{Performing any test coverage of objects}
 
 After you click for example on Test coverage -> Boundary scan test -> Determine test coverage for all PullUps then the calculated value will be shown as text and further more each connection to a according pull up resistor will be shown in green color:
 
@@ -362,11 +364,11 @@ After you click for example on Test coverage -> Boundary scan test -> Determine 
 
 If you click again on Test coverage -> Boundary scan test -> Determine test coverage for all PullUps then the according checkbox will be unchecked and every connection is been showed just in black color again. This kind of procedure is also available for all other operations to detect the test coverage.
 
-\subsubsection{Export PIN connection information into file}
+\subsection{Export PIN connection information into file}
 
 After you click on Test coverage -> Boundary scan test -> Export PIN connection information into file a new dialog should appear where you can select the destination of file saving. After you selected that then the according file should be generate containing all pin information of interest of all JTAG devices of the loaded project.
 
-\subsubsection{Generate SVF data files}
+\subsection{Generate SVF data files}
 If you click on Test coverage -> Boundary scan test -> Generate SVF data files then first a dialog will be shown to select the target folder where to save the created files at. This folder will only be considered if you are not working in the project file mode. If so the files will be automatically been saved within the project file. Afterward you will be asked for selecting the accoring BSDL file for all JTAG devices found. After you selected the BSDL file you will be informed about to make sure that the programmer is correctly connected to the JTAG device as the default vector first needs to be read out:
 
 \begin{center}
@@ -379,7 +381,7 @@ If you click on Test coverage -> Boundary scan test -> Generate SVF data files t
 
 After you confirmed the dialog \ref{fig:makeSureToConnect} then the read out will be performed and the according SVF files for playing the pull down and pull up resistors will be generated.
 
-\subsection{Log panel}
+\section{Log panel}
 
 By clicking on the expander which is located at the very bottom of the application the log panel will be visible. It contains every single message logged during the working with the tool:
 
@@ -391,5 +393,5 @@ By clicking on the expander which is located at the very bottom of the applicati
 	\end{figure}
 \end{center}
 
-\subsection{Drag and drop within the application}
+\section{Drag and drop within the application}
 You are further able to drag and drop directly files or folders to the application area. If something valid was dropped then it automatically should be opended or imported and if project mode is enabled saved further within the project file

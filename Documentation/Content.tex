@@ -1,277 +1,399 @@
-\section{Concept}
-The purpose of this tool is to determine the testcoverage of digital circuit diagrams which are being provided as the ODB++ format. Actually there is only the possibility to determine boundary scan related test coverage results. Furthermore it is possible to store and reaload as well imported data from the ODB++ files as settings files for later usage.
-
-\section{Components}
-The software itself is separated into two logic independent tools which need to be started in order to make working with it possible.
-\begin{itemize}
-	\item Smart ICT GUI - The graphical representation of the tool which provides the possibility of triggering different kind of actions to the user by mouse and keyboard
-	\item The GRPC server for getting all necessary components by using the PCB investigator - This is a GRPC server which could be started separately on each possible machine and uses the API of the PCB investigator for collecting all necessary objects out of the ODB++ project. This program has to be started on a PC where a valid license for using the PCB investigator is present.
-\end{itemize}
-In order for using the full power of the Smart ICT tool it is highly recommended to start and connect both tools together.
-
 \section{Overview}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=1\textwidth]{images/overview}
-	\end{center}
-	\caption{The overview of the application}
-	\label{fig:01}
-\end{figure}
+This document describes the way of handling the tool for determining the test coverage of different ODB++ related projects.
 
-The graphical Smart ICT tool itself consists of 6 different areas for different actions or representations
+\begin{center}
+	\includegraphics[width=1.00\textwidth]{figures/attachments/overview.png}
+	\begin{figure}[!h]
+	\caption{Tool overview}
+	\label{fig:Tooloverview}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:Tooloverview} the tool itself consits of seven different areas of interest:
 \begin{enumerate}
-	\item File menu item - Within this menu item you have the possibility to trigger actions related to ODB++ file data
-	\item Settings menu item - Within this menu item you have an overview of all available settings of the tool
-	\item Test coverage menu item - Within this menu item you have all test coverage related actions
-	\item Layers view - An overview of all available layers of the ODB++ project
-	\item Objects view - An overview of all available test related object groups
-	\item Painting area - The area where all electrical objects of the ODB++ project will be painted at
+	\item File menu group - performing actions regarding the opening of project files, ...
+	\item Settings - selection of settings, importing and exporting them
+	\item Test coverage - all test coverage related actions
+	\item Layers - the layers overview
+	\item Objects - the test coverage objects list
+	\item the rendered component view
+	\item The logging area
 \end{enumerate}
 
-\subsection{File menu item}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.4\textwidth]{images/file}
-	\end{center}
-	\caption{The file children menu items}
-	\label{fig:02}
-\end{figure}
-Within the file menu item you will find the following items in order from top to bottom
-\begin{itemize}
-	\item Open ODB project folder - By pressing this item a new folder selection dialog will appear to make the user select any folder containing valid ODB project files
-	\item Import BOM data file - This item will only be available after you have loaded a valid project into the tool and provides the possibiliy of reading out any BOM related files in order to add values to specific components
-	\item Import data from JSON file - If you have exported before some valid project data into a JSON file you can import it back by using this menu item. The big advantage of using this feature is the fact that the GRPC server API for the PCB investigator doesn't need to be connected
-	\item Export data into JSON file - By acting this item a new file selection dialog appears to give you the possibility of choosing a target destination for exporting all loaded data into one JSON file
-	\item Exit - Close the application (But just the graphical tool, the GRPC server itself will be still running in background as it is a separate tool)
-\end{itemize}
+\section{Settings}
 
-\subsection{Settings}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.4\textwidth]{images/settings}
-	\end{center}
-	\caption{The settings children menu items}
-	\label{fig:03}
-\end{figure}
-Within the settings menu item you will find the follwing children items:
-\begin{itemize}
-	\item GRPC Server connection settings - Within this settings page you are able to define the IP address of the GRPC server API for the PCB investigator to connect to and test the connection
-	\item General settings - Within this settings page you are able to define the general identifier and colors of all general components from the ODB++ project
-	\item Test coverage settings - Within this page you can define all test related identifier
-	\item Import settings file - The possibility of importing a previously exported settings file of this application
-	\item Export settings file - The opportunity of exporting all settings into a local file for later usage
-\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.60]{figures/attachments/settingsOverview.png}
+	\begin{figure}[!h]
+	\caption{Settings overview}
+	\label{fig:Settingsoverview}
+	\end{figure}
+\end{center}
 
-\subsection{Test coverage}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/testCoverage}
-	\end{center}
-	\caption{The test coverage children menu items}
-	\label{fig:04}
-\end{figure}
-Within this menu item you actually will just find the \textbf{Boundary scan test} menu item where you can see the following children items:
-\begin{itemize}
-	\item Determine all boundary scan objects - Determines in dependency on the settings from the page \textbf{Test coverage settings} all boundary scan related objects. This needs to be performed before all other operations are available
-	\item Determine test coverage for JTAGs - This determines the test coverage for all interconnections directly between JTAG devices
-	\item Determine test coverage for all PullUps - This determines the test coverage for all interconnections between JTAG devices and all pull up resistors
-	\item Determine test coverage for all PullDonws - This determines the test coverage for all interconnections between JTAG devices and all pull down resistors
-	\item Determine test coverage for all PullUps and PullDonws - This determines the test coverage for all interconnections between JTAG devices, all pull up resistors and all pull down resistors
-	\item Determine test coverage for all other components - This determines the test coverage between all JTAG devices and all other components which are neither pull up nor pull down resistors
-	\item Determine complete test coverage of boundary scan - This determines all previously explained tests in sum (JTAG, pull ups, pull downs and others)
-\end{itemize}
-
-\section{Working with the application}
-Now a complete sequence of working with the application will be explained
-\subsection{Setting up the GRPC server connection}
-First of all you should either manually start the GRPC server for API with the PCB investigator or at least know its IP address of the computer where its running at. After wards you open the \textbf{Settings -> GRPC Server connections settings}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/grpcServerConnectionsSettings}
-	\end{center}
-	\caption{The GRPC server connections settings}
-	\label{fig:05}
-\end{figure}
-
-Within this setting page you have the following possibilities:
+As shown in \ref{fig:Settingsoverview} there are the following three menu items available:
 \begin{enumerate}
-	\item IP address of GRPC server - Here you should type in the IP address of the computer where the server is running at
-	\item Save - By pressing this button the IP address will be saved and a connection try is being performed. If connection was successful then the painting area \textbf{3} will be painted in green otherwise in red
-	\item Close - Close this settings window without saving the changes made
-	\item Status - The connection status to the server (Green if successful otherwise red)
+	\item Show settings - opens the settings page for all settings
+	\item Import settings file - a file chooser will pop up for selecting a settings database file to be imported
+	\item Export settings file - a file chooser will pop up for selecting the target file where the settings database should be exported to
 \end{enumerate}
 
-\subsection{Setting up the general settings}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.7\textwidth]{images/generalSettings}
-	\end{center}
-	\caption{The general settings}
-	\label{fig:05}
-\end{figure}
-By opening next the \textbf{Settings -> General settings} you will have the possibility of defining the following values:
+\subsection{Show settings}
+After clicking on the menu item All settings a new window will be shown containing all setting pages.
+\subsubsection{PCB Investigator API settings}
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/pcbInvestigatorSettings.png}
+	\begin{figure}[!h]
+	\caption{PCB Investigator API settings}
+	\label{fig:pcbInvestigatorSettings}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:pcbInvestigatorSettings} there is the possibility of changing the steps which should be considered for read out from the API. -1 means all steps should be read out. Other values could be defined semicolon separated
+
+\subsubsection{GRPC server API connection settings}
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/grpcServerSettings.png}
+	\begin{figure}[!h]
+	\caption{GRPC server API connection settings}
+	\label{fig:grpcServerSettings}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:grpcServerSettings} there is the possibilty of changing the ip address of the GRPC server to connect to
+
+\subsubsection{General settings}
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/generalSettings1.png}
+	\begin{figure}[!h]
+	\caption{General settings 1}
+	\label{fig:generalSettings1}
+	\end{figure}
+\end{center}
+
+Within the first part of the general settings (\ref{fig:generalSettings1}) there are the following settings available (identifier, show names and the color):
 \begin{itemize}
-	\item Resistor identifier (a;b;c) - The semicolon separated identifier for detecting resistors by its name
-	\item Resistor color - The color to be used for painting resistors
-	\item Capacitor identifier (a;b;c) - The semicolon separated identifier for detecting capacitors by its name
-	\item Capacitor color - The color to be used for painting capacitors
-	\item Induction identifier (a;b;c) - The semicolon separated identifier for detecting inductions by its name
-	\item Induction color - The color to be used for painting inductions
-	\item Testpoint identifier (a;b;c) - The semicolon separated identifier for detecting testpoints by its name
-	\item Testpoint color - The color to be used for painting testpoints
-	\item IC identifier (a;b;c) - The semicolon separated identifier for detecting ICs by its name
-	\item IC color - The color to be used for painting ICs
-	\item Connector identifier (a;b;c) - The semicolon separated identifier for detecting connectors by its name
-	\item Connector color - The color to be used for painting connectors
-	\item Color of all other components - The color to be used for all other unidentified components
-	\item Fontsize of names - The font size to be used for displaying the names of components
-	\item Show all net names - If enabled then all net names will be displayed between active connections of components
-	\item Save - Save all changes and close the window
+	\item Capacitor
+	\item Other components
+	\item Connector
+	\item Ic
 \end{itemize}
-
-\subsection{Opening a ODB++ project}
-By clicking on \textbf{File -> Open ODB project folder} a new folder selection dialog will appear where you have the possibility of choosing any valid ODB++ project. After you selected one and confirmed the selection the following loading animation will be displayed for the time all data is being transferred by the GRPC server and parsed into that application:
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/loadingAnimation}
-	\end{center}
-	\caption{The loading animation}
-	\label{fig:06}
-\end{figure}
-
-\subsection{Import BOM data file}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/bomFile}
-	\end{center}
-	\caption{Import BOM data file}
-	\label{fig:06a}
-\end{figure}
-By clicking on the menu item \textbf{File -> Import BOM data file} a new window appears and allows you to define the following values:
+Fruthermore there are the following settings available:
 \begin{itemize}
-	\item Separator - As the BOM files are typically CSV files you have to define the separator here is being used within that file
-	\item Column number of REF - The column number (beginning with 0) where the REF, the component name is specified
-	\item Column number of VALUE - The column number (beginning with 0) where the according value to a components name is specified
-	\item Path to BOM file - The actual selected filepath to the file to be imported as BOM file
-	\item Select BOM file - By clicking on this button a new file open dialog will appear to give you the possibility of choosing any file which its location then will be displayed in the field above
-	\item Finish - Trigger the importing process of BOM data
-\end{itemize}
-
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/values}
-	\end{center}
-	\caption{Values of components by hovering over them with mouse}
-	\label{fig:06a}
-\end{figure}
-
-After successfully importing of a BOM file you should now be able to hover with the mouse over any component to see its value which was imported before. All components which does not have any values specified within the BOM file will be bordered in red color:
-
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/redBordered}
-	\end{center}
-	\caption{Red bordered components without any values from BOM file}
-	\label{fig:06a}
-\end{figure}
-
-\subsection{Selection of layers for representation}
-After a project was loaded successfully you should then see at least one entry within the layers section of the application. By selecting one or more layers the respective objects of these selected layers will be painted into the painting area:
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/paintedArea}
-	\end{center}
-	\caption{The area filled with selected layer objects}
-	\label{fig:06}
-\end{figure}
-
-Within this painting area you have now these possibilites of actions:
-\begin{itemize}
-	\item Mouse scrolling - By scrolling up the mouse wheel the zoom will be increased and by scrolling down the mouse wheel the zoom will be decreased
-	\item Right click on any object of representation
+	\item General appearance
 	\begin{itemize}
-		\item Toggle visibility - Shows any object in transparent or not transparent way
-		\item Toggle visibility of all objects with the same type - Shows all objects of the same type as selected in transparent way or not
-		\item Toggle display of connections - Shows all connections to other objects as lines or not
+		\item Fontsize of names
+		\item Show zoom and mirroring buttons
+		\item Show net names
 	\end{itemize}
 \end{itemize}
 
-\subsubsection{Toggle visibility}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/toggleVisibility}
-	\end{center}
-	\caption{Toggle visibility of one object}
-	\label{fig:07}
-\end{figure}
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/generalSettings2.png}
+	\begin{figure}[!h]
+	\caption{General settings 2}
+	\label{fig:generalSettings2}
+	\end{figure}
+\end{center}
 
-As shown only the selected object will be painted in transparent way if \textbf{Toggle visibility} was performed. In that way you are able to see all objects which were covered by that specific object before
-
-\subsubsection{Toggle visibility of all objects with the same type}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/toggleVisibilityAll}
-	\end{center}
-	\caption{Toggle visibility of all objects with the same type}
-	\label{fig:08}
-\end{figure}
-
-The same result as by performing the action \textbf{Toggle visibility} but just for every object of the same type
-
-\subsubsection{Toggle display of connections}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/connections}
-	\end{center}
-	\caption{Toggle display of connections}
-	\label{fig:09}
-\end{figure}
-
-By performing \textbf{Toggle display of connections} all availabe connections of that selected object will be displayed as lines. Furthermore you have the possibility of hovering over any line to get these information:
+Within the second part of the general settings (\ref{fig:generalSettings2}) there are the following settings available (identifier, show names and the color):
 \begin{itemize}
-	\item The netname of interconnections
-	\item The name of the first object (The selected one)
-	\item The name of the second object
+	\item Induction
+	\item Resistor
+	\item Testpoint
 \end{itemize}
 
-\subsubsection{Show net names}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/netnames}
-	\end{center}
-	\caption{Show net names}
-	\label{fig:10}
-\end{figure}
-If the option \textbf{Show net names} will be enabled then after toggling the visible connections furthermore all net names will be displayed
+\subsubsection{SVF Player settings}
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/svfPlayerSettings.png}
+	\begin{figure}[!h]
+	\caption{SVF Player settings}
+	\label{fig:svfPlayerSettings}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:svfPlayerSettings} there are the following settings available:
+\begin{itemize}
+	\item IO Voltage in mv
+	\item Programmer IP
+	\item Programmer Port
+	\item Supply Voltage in mv
+\end{itemize}
+
+\subsubsection{Test Coverage settings}
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/testCoverageSettings.png}
+	\begin{figure}[!h]
+	\caption{Test Coverage settings}
+	\label{fig:testCoverageSettings}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:testCoverageSettings} there are the following settings available (blacklist and identifier):
+\begin{itemize}
+	\item Ground
+	\item JTAG
+	\item Power
+\end{itemize}
+
+\subsection{Import / Export settings file}
+By clicking on one of the menu items Settings -> Import settings file or Settings -> Export settings file afterward a new file selection dialog will be shown where to select the source / target file to be imported / exported. Further if the project file handling is enabled the settings file will automatically be stored within the project file and be loaded automatically on next opening of project file
+
+\section{Project file}
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/projectFile.png}
+	\begin{figure}[!h]
+	\caption{Project file handling}
+	\label{fig:projectFile}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:projectFile} there is the possibility of choosing the following menu items within the File -> Project file group:
+\begin{itemize}
+	\item Open project file
+	\item Create new project file
+\end{itemize}
+
+\section{Miscellaneous}
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/fileMisc.png}
+	\begin{figure}[!h]
+	\caption{Miscellaneous menu items}
+	\label{fig:fileMisc}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:fileMisc} there are the following menu items available at File -> Miscellaneous:
+\begin{itemize}
+	\item Open ODB project folder - after choosing that action a new dialog appears to select the folder which should be transferred to the GRPC server as zipped content for read out by using the PCB-Investigator API
+	\item Import BOM data file - After any project was successfully loaded then the import of a valid bill of materials file will be available. After choosing this a new window appears where to set up all relevant settings for import
+	\item Import data from JSON file - a new dialog appears where you are able to select any JSON formatted file containing previously exported data of this application
+	\item Export data into JSON file - after any project was loaded successfully then this item will be accessible. After choosing it a new dialog appears where you could select the target for creation of a valid JSON formatted file containing all data
+\end{itemize}
+
+\section{Creation of new project}
+To create a new project just first click on File -> Project file -> Create new project file. After ward there will be a dialog shown for selectin the target file to be saved at:
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/projectFileCreationDialog.png}
+	\begin{figure}[!h]
+	\caption{Project file creation dialog}
+	\label{fig:projectFileCreationDialog}
+	\end{figure}
+\end{center}
+
+After you confirmed your target within the dialog (\ref{fig:projectFileCreationDialog}) then you could proceed to open a new project. For that make sure to have a valid connection to the GRPC server and click then File -> Miscellaneous -> Open ODB project folder. After you chose a program during the communication and parsing from the GRPC server there will be shown an animation:
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/pleaseWait.png}
+	\begin{figure}[!h]
+	\caption{Please wait animation}
+	\label{fig:pleaseWait}
+	\end{figure}
+\end{center}
+
+After the process finished then if no values are defined for that components received a new dialog should be visible where to select the BOM file for importing:
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/selectBom.png}
+	\begin{figure}[!h]
+	\caption{Select BOM file dialog}
+	\label{fig:selectBom}
+	\end{figure}
+\end{center}
+
+After you set up the settings:
+\begin{itemize}
+	\item Separator
+	\item Column number of REF
+	\item Column number of VALUE
+	\item Path to BOM file - could be set by clicking on Select BOM file where then a new dialog for selecting any file will be opened
+\end{itemize}
+
+within that dialog and selected a valid CSV file to be imported then proceed by clicking on finish. \newline
+
+After the process finished then on within the layers list there should be some layers available and the control buttons at the right bottom place will be visible:
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/loadedProject.png}
+	\begin{figure}[!h]
+	\caption{Loaded project view}
+	\label{fig:loadedProject}
+	\end{figure}
+\end{center}
+
+After selecting for example the first layer then all components which are included within that layer should be rendered within the component view.
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/layerSelected.png}
+	\begin{figure}[!h]
+	\caption{Compontens view for selected layer}
+	\label{fig:layerSelected}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:layerSelected} there is the possibility of scrolling with the mouse to move the whole view or just by clicking and dragging the whole content. Further there is the possibility of zooming in by pressing STRG and scrolling in or just by clicking on the zoom in button \textbf{1} and to zoom out by pressing STRG and scrolling out with the mouse or just by clicking the zoom out button \textbf{2}. Finally there is the possibility to mirror the whole view across the y axis \textbf{3} and the x axis \textbf{4}. Now to ensure not to have to use the GRPC server again the next time you will open this project click File -> Miscellaneous -> Export data into JSON file. After you chose it a new dialog will appear where you could type in just the name as the file itself will be stored within the project 
+file as you are working within the project file mode. (Also all other project related data was automatically saved in the project file). Finally you should also 
+export your current made settings by Settings -> Export settings file to make sure that the settings file is also included in the project file for later loading
+
+\section{Working with the components view}
+By right clicking on any object within the components view there will be a context menu visible:
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/contextMenu.png}
+	\begin{figure}[!h]
+	\caption{Context menu of right click on component}
+	\label{fig:contextMenu}
+	\end{figure}
+\end{center}
+
+As shown at \ref{fig:contextMenu} you have the possibility of:
+\begin{itemize}
+	\item Toggle visibility - if clicked then the according components transparency will be set to high
+	\item Toggle visibility of all objects with the same type - if clicked then all the according components which have the same type as the selected ones transparency will be set to high
+	\item Toggle display of connections - if clicked then all connections of the component will be shown as plain lines
+\end{itemize}
+
+\subsection{Toggle visibility}
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/toggleVis.png}
+	\begin{figure}[!h]
+	\caption{Toggle visibility}
+	\label{fig:toggleVis}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:toggleVis} after the visibility was toggled then the underlining objects could be determined
+
+\subsection{Toggle visibility of all objects with the same type}
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/toggleVisAll.png}
+	\begin{figure}[!h]
+	\caption{Toggle visibility of all objects with the same type}
+	\label{fig:toggleVisAll}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:toggleVis} after the visibility was toggled then the underlining objects of all toggled objects of the same type could be determined
+
+\subsection{Toggle display of connections}
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/toggleConnection.png}
+	\begin{figure}[!h]
+	\caption{Toggle display of connections}
+	\label{fig:toggleConnection}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:toggleConnection} after the connections were toggled then all lines will be drawn between the connecting objects.
+Further there is the possibility to hover over any connection to see the following information:
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/connectionLegend.png}
+	\begin{figure}[!h]
+	\caption{Legend of connection}
+	\label{fig:connectionLegend}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:connectionLegend} there will be the following information available:
+
+\begin{itemize}
+	\item Net name
+	\item Selected component for toggling the connections
+	\item Connected component by this line to the selected component
+\end{itemize}
+
+\subsection{Test coverage}
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/testCoverage.png}
+	\begin{figure}[!h]
+	\caption{Test coverage menu group}
+	\label{fig:testCoverage}
+	\end{figure}
+\end{center}
+
+As shown in \ref{fig:testCoverage} within the Test coverage -> Boundary scan test -> menu group there are the following menu items available:
+\begin{itemize}
+	\item Determine all boundary scan objects - before being able to perform any other test related action you have first to choose this one. (Settings will be considered)
+	\item Determine test coverage for JTAGs
+	\item Determine test coverage for all PullUps
+	\item Determine test coverage for all PullDowns
+	\item Determine test coverage for all PullUps and PullDowns
+	\item Determine test coverage for all other components
+	\item Determine complete test coverage of boundary scan
+	\item Export PIN connection information into file
+	\item Generate SVF data files
+\end{itemize}
 
 \subsection{Determine all boundary scan objects}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/determinigTestCoverageObjects}
-	\end{center}
-	\caption{Object types for boundary scan test}
-	\label{fig:11}
-\end{figure}
-After you performed the \textbf{Test coverage -> Boundary scan test -> Determine all boundary scan objects} action the following types will be selectable for being displayed within the painting area:
-\begin{itemize}
-	\item Pullups - All pull up resistors of the project
-	\item Pulldowns - All pull down resistors of the project
-	\item JTAG - All JTAG related devices of the project
-	\item Others - All other objects which are connected to the JTAG devices
-\end{itemize}
+After you selected Test coverage -> Boundary scan test -> Determine all boundary scan objects then the objects list should be filled with new selection possibilities:
 
-\subsubsection{Perform any test for determining the test coverage}
-\begin{figure}[H]
-	\begin{center}
-	\includegraphics[width=0.5\textwidth]{images/testCoverageOfAllPullUps}
-	\end{center}
-	\caption{Test coverage of all pull ups}
-	\label{fig:10}
-\end{figure}
-After you performed any test (in this example it was the test coverage for all pull ups) then the according check box to the menu item will be checked. That means if it was before unchecked then it will be checked and the other way around. Now for all components which check boxes are checked all connections of the JTAG devices will be painted in green. And finally a textual representation of the test coverage result is being displayed in the bottom area.
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/dterminedTestCoverageObjects.png}
+	\begin{figure}[!h]
+	\caption{Determine all boundary scan objects}
+	\label{fig:dterminedTestCoverageObjects}
+	\end{figure}
+\end{center}
 
-\subsection{Export data into JSON file}
-After or during work with the project you shouldn't forget to export all data into a JSON file to have the possibility of loading it much faster and without the dependency on setting up the GRPC server connection.
+Now you could (\ref{fig:dterminedTestCoverageObjects}) select just the test coverage related objects of interest to be shown within the component view.
+
+\subsection{Performing any test coverage of objects}
+
+After you click for example on Test coverage -> Boundary scan test -> Determine test coverage for all PullUps then the calculated value will be shown as text and further more each connection to a according pull up resistor will be shown in green color:
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/pullUpsTEstCoverage.png}
+	\begin{figure}[!h]
+	\caption{Determine test coverage for all PullUps}
+	\label{fig:pullUpsTEstCoverage}
+	\end{figure}
+\end{center}
+
+If you click again on Test coverage -> Boundary scan test -> Determine test coverage for all PullUps then the according checkbox will be unchecked and every connection is been showed just in black color again. This kind of procedure is also available for all other operations to detect the test coverage.
+
+\subsection{Export PIN connection information into file}
+
+After you click on Test coverage -> Boundary scan test -> Export PIN connection information into file a new dialog should appear where you can select the destination of file saving. After you selected that then the according file should be generate containing all pin information of interest of all JTAG devices of the loaded project.
+
+\subsection{Generate SVF data files}
+If you click on Test coverage -> Boundary scan test -> Generate SVF data files then first a dialog will be shown to select the target folder where to save the created files at. This folder will only be considered if you are not working in the project file mode. If so the files will be automatically been saved within the project file. Afterward you will be asked for selecting the accoring BSDL file for all JTAG devices found. After you selected the BSDL file you will be informed about to make sure that the programmer is correctly connected to the JTAG device as the default vector first needs to be read out:
+
+\begin{center}
+\includegraphics[scale=0.60]{figures/attachments/makeSureToConnect.png}
+	\begin{figure}[!h]
+	\caption{Make sure to have a programmer connected}
+	\label{fig:makeSureToConnect}
+	\end{figure}
+\end{center}
+
+After you confirmed the dialog \ref{fig:makeSureToConnect} then the read out will be performed and the according SVF files for playing the pull down and pull up resistors will be generated.
+
+\section{Log panel}
+
+By clicking on the expander which is located at the very bottom of the application the log panel will be visible. It contains every single message logged during the working with the tool:
+
+\begin{center}
+\includegraphics[width=1.00\textwidth]{figures/attachments/logging.png}
+	\begin{figure}[!h]
+	\caption{Logging area}
+	\label{fig:logging}
+	\end{figure}
+\end{center}
+
+\section{Drag and drop within the application}
+You are further able to drag and drop directly files or folders to the application area. If something valid was dropped then it automatically should be opended or imported and if project mode is enabled saved further within the project file
 
 \newpage
 \section{Acroyms}
