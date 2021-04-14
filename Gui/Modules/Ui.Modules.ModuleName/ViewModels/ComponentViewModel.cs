@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows;
@@ -275,6 +276,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             {
                 if (shouldShow)
                 {
+                    Stopwatch sw = Stopwatch.StartNew();
                     List<ViewModelLine> lines = new List<ViewModelLine>();
 
                     foreach (var net in allNets)
@@ -312,6 +314,9 @@ namespace Ui.Modules.ModuleName.ViewModels
                             logger.LogMessage("Show connections for component " + comp.BaseComponent.FunctionalAttributes.Ref + " with total amount: " + lines.Count, LogCategory.INFO);
                         });
                     }
+
+                    sw.Stop();
+                    Debug.WriteLine("Showed connections: {0}ms", sw.Elapsed.TotalMilliseconds);
                 }
                 else
                 {

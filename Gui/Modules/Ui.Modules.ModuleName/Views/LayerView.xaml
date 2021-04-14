@@ -15,6 +15,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Border BorderBrush="Black" BorderThickness="2" Grid.RowSpan="2" />
         <TextBlock Text="Layers:" HorizontalAlignment="Left" Margin="10, 0, 0, 0" FontSize="20" FontWeight="Bold" />
         <ListView x:Name="ListView" Grid.Row="1" ItemsSource="{Binding Layers}" SelectedItem="{Binding SelectedLayer, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
@@ -24,6 +25,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListView>
+        <Border Grid.Row="2" BorderBrush="Black" BorderThickness="2" Grid.RowSpan="2" />
         <TextBlock Text="Objects:" Grid.Row="2" HorizontalAlignment="Left" Margin="10, 0, 0, 0" FontSize="20" FontWeight="Bold" />
         <ListView x:Name="ListViewObjects" Grid.Row="3" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>

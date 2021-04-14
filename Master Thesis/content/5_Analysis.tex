@@ -6,7 +6,7 @@ First of all we have a closer look into the loading request of a \ac{ODB}++ proj
 \begin{enumerate}
 	\item Compress project as zip file and send it via \ac{GRPC} to the server (Stage 1)
 	\item Decompress the zipped project file (Stage 2)
-	\item Perform read out of the project by using the \ac{PCB}-Investigator API (Stage 3)
+	\item Perform read out of the project by using the \ac{PCB}-Investigator \ac{API} (Stage 3)
 	\item Parse all objects in serializable form and send it back via \ac{GRPC} (Stage 4)
 	\item Parse all received serialized objects into class objects of interest (Stage 5)
 \end{enumerate}

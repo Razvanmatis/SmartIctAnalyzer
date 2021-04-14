@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using GrpcApi.Interfaces;
 using Interfaces.Helper;
 using PCBI.Automation;
@@ -65,6 +66,7 @@ namespace GrpcApi.Implementations
         /// <returns>a list with the new converted components</returns>
         public IGrpcResult GetAllComponents(string steps)
         {
+            Stopwatch sw = Stopwatch.StartNew();
             IAutomation.IAutomationInit();
             using (var pcbWin = IAutomation.CreateNewPCBIWindow(false))
             {
@@ -103,9 +105,15 @@ namespace GrpcApi.Implementations
                     }
                 }
 
+                sw.Stop();
+                Console.WriteLine(LangRessource.ReadOutByPcbInvestigator, sw.Elapsed.TotalMilliseconds);
                 int countPin = GetCountOfDifferentPins(listOfObjects);
                 Console.WriteLine("Received objects from PCB Investigator API: ICMP objects: " + listOfObjects.Count + ", nets: " + allNets.Count + " and pins: " + countPin);
-                return converter.GetConvertedObjects(listOfObjects, allNets, DataProvider);
+                sw = Stopwatch.StartNew();
+                var result = converter.GetConvertedObjects(listOfObjects, allNets, DataProvider);
+                sw.Stop();
+                Console.WriteLine(LangRessource.ParseAllObjectsIntoSerializable, sw.Elapsed.TotalMilliseconds);
+                return result;
             }
         }
 

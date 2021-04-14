@@ -143,7 +143,7 @@ namespace Ui.Modules.ModuleName.Implementations
                 filePath += ".json";
             }
 
-            eventService.Publish<SetBusyEvent>(new SetBusyEvent(true));
+            eventService.Publish(new SetBusyEvent(true));
             await Task.Run(() =>
             {
                 byte[] data = Encoding.ASCII.GetBytes(grpcParser.GetDataAsString(resultModel.Result));

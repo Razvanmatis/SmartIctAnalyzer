@@ -46,7 +46,7 @@ namespace TestCoverage.Interfaces
 
         Task<TestCoverageItems> GetTestCoverage(TestCoverageItems items, TestCoverageType type);
 
-        TestCoverageItems DetermineBoundaryScanObjects(
+        TestCoverageItems DetermineTestCoverageRelatedObjects(
             IList<INetComponent> nets,
             IdentifierBlacklistContainer content,
             TestCoverageItems items);

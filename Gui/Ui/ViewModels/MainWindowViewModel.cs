@@ -153,7 +153,6 @@ namespace Ui.ViewModels
 
         private void HandleLogContext(LogWrapper obj)
         {
-            eventService.Publish(new ShowTestCoverageSettingsEvent());
         }
 
         private void HandleSetCoverageValuesEvent(SetCoverageValuesEvent obj)

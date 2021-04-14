@@ -35,7 +35,7 @@ Now there should be chosen an \ac{IDE} for creating the software with the previo
 As compared in \ref{tab:ides} it sticks out that Visual Studio 2019 will be the choice for creating the new software as it's benefits are overbalanced. \newline
 
 	\section{Application structure to consider}
-Regarding the application structure there was the deliberation about how to use the \ac{PCB}-Investigator API as efficient as possible without having the need of installing it on every machine which runs the new tool as there is the requirement of having a valid license for using it. The idea came up to provide on one side a stand alone application which uses the \ac{PCB}-Investigator API as a server and on the other side the \ac{GUI} application as client software which is possible to connect to the server. In that case this server could potentially run just on one machine and would be available for all other clients which are in the same network.
+Regarding the application structure there was the deliberation about how to use the \ac{PCB}-Investigator \ac{API} as efficient as possible without having the need of installing it on every machine which runs the new tool as there is the requirement of having a valid license for using it. The idea came up to provide on one side a stand alone application which uses the \ac{PCB}-Investigator \ac{API} as a server and on the other side the \ac{GUI} application as client software which is possible to connect to the server. In that case this server could potentially run just on one machine and would be available for all other clients which are in the same network.
 
 \begin{center}
 	\includegraphics[scale=0.70]{figures/client server structure.pdf}
@@ -54,7 +54,7 @@ After the programming language, the \ac{IDE} are selected and the application st
     \centering
     \begin{tabular}{p{0.2\linewidth} | p{0.45\linewidth} | p{0.35\linewidth}}
       Framework & Benefits & Disadvantages \\ \hline
-      .NET framework & the only compatible one for using the \ac{PCB}-Investigator API & not fully compatible with all provided NuGet packages, no longer support \\
+      .NET framework & the only compatible one for using the \ac{PCB}-Investigator \ac{API} & not fully compatible with all provided NuGet packages, no longer support \\
       .NET standard & compatible to be included in .NET framework and .NET core applications & no graphical components available \\ 
 			.NET core & all modern graphical components available, all NuGet packages compatible & graphical components included even if not used \\ 
     \end{tabular}
@@ -71,10 +71,10 @@ As shown in \ref{tab:frameworks} each available framework has some advantages wh
 	\end{figure}
 \end{center}
 
-The reason why to use .NET framework 4.72 for the server side is the fact that the provided API was created with that target framework (see \ref{fig:frameWorksUsed}). On the client side the reflection was considered to create a modern software as possible by using as much useful frameworks for it as available and so the .NET core 3.1 has been chosen as target framework. To make sure finally that each project are able to use the common interfaces which should be created the target framework .NET standard 2.0 was used for it.
+The reason why to use .NET framework 4.72 for the server side is the fact that the provided \ac{API} was created with that target framework (see \ref{fig:frameWorksUsed}). On the client side the reflection was considered to create a modern software as possible by using as much useful frameworks for it as available and so the .NET core 3.1 has been chosen as target framework. To make sure finally that each project are able to use the common interfaces which should be created the target framework .NET standard 2.0 was used for it.
 
 	\section{Analyzing the structure of PCB-Investigator API}
-Of course the structure of the \ac{PCB}-Investigator API itself regarding the received objects needs to be analyzed more in detail which are being provided by the \textbf{PCB-Investigator.exe}:\\
+Of course the structure of the \ac{PCB}-Investigator \ac{API} itself regarding the received objects needs to be analyzed more in detail which are being provided by the \textbf{PCB-Investigator.exe}:\\
 
 \begin{figure}[h]
 	\centering
@@ -97,7 +97,7 @@ As ProMik GmbH is just interested in extracting all relevant information from an
 \end{itemize}
 
 \section{Converted class structures of objects of interest}
-After knowing what kind of functions to be used and which structures are available within the \ac{PCB}-Investigator API the goal was to provide as simple new structures as possible containing all relevant information for later usage:
+After knowing what kind of functions to be used and which structures are available within the \ac{PCB}-Investigator \ac{API} the goal was to provide as simple new structures as possible containing all relevant information for later usage:
 
 \begin{center}
 	\includegraphics[width=1.00\linewidth]{figures/classStructureConverted.png}

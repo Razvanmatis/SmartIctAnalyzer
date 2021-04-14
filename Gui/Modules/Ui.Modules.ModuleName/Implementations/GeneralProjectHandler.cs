@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security;
 using System.Text;
@@ -159,10 +160,14 @@ namespace Ui.Modules.ModuleName.Implementations
 
         public void ExportJsonProjectFileContent(byte[] data, string fileName)
         {
+            Stopwatch sw = Stopwatch.StartNew();
             if (SaveContentIntoFile(data, fileName))
             {
                 Application.Current.Dispatcher.Invoke(() => logger.LogMessage("JSON project file was successfully exported to " + fileName, LogCategory.INFO));
             }
+
+            sw.Stop();
+            Debug.WriteLine(TextRessources.ExportIntoJsonFile, sw.Elapsed.TotalMilliseconds);
         }
 
         public byte[] GetJsonProjectContent()

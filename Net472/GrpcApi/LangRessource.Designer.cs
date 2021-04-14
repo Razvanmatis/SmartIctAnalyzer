@@ -61,6 +61,15 @@ namespace GrpcApi {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decompress the zipped content: {0}ms.
+        /// </summary>
+        internal static string DecompressZippedContent {
+            get {
+                return ResourceManager.GetString("DecompressZippedContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error by receiving empty zip folder data!.
         /// </summary>
         internal static string ErrorByReceivingEmptyZipFolder {
@@ -75,6 +84,24 @@ namespace GrpcApi {
         internal static string ErrorGettingParsedObjectsByFolder {
             get {
                 return ResourceManager.GetString("ErrorGettingParsedObjectsByFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parse all objects in serializable: {0}ms.
+        /// </summary>
+        internal static string ParseAllObjectsIntoSerializable {
+            get {
+                return ResourceManager.GetString("ParseAllObjectsIntoSerializable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read out by PCB Investigator: {0}ms.
+        /// </summary>
+        internal static string ReadOutByPcbInvestigator {
+            get {
+                return ResourceManager.GetString("ReadOutByPcbInvestigator", resourceCulture);
             }
         }
         

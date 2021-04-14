@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,35 +43,41 @@ namespace TestCoverage.Implementations
 
         public async Task<TestCoverageItems> GetTestCoverage(TestCoverageItems items, TestCoverageType type)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+            TestCoverageItems result = null;
             if (type == TestCoverageType.BOUNDARY_SCAN_ALL)
             {
-                return await GetCompleteTestCoverageOfAllJtags(items).ConfigureAwait(false);
+                result = await GetCompleteTestCoverageOfAllJtags(items).ConfigureAwait(false);
             }
             else if (type == TestCoverageType.BOUNDARY_SCAN_ICS)
             {
-                return await TestCoverageForIcs(items).ConfigureAwait(false);
+                result = await TestCoverageForIcs(items).ConfigureAwait(false);
             }
             else if (type == TestCoverageType.BOUNDARY_SCAN_OTHERS)
             {
-                return await TestCoverageForAllOthers(items).ConfigureAwait(false);
+                result = await TestCoverageForAllOthers(items).ConfigureAwait(false);
             }
             else if (type == TestCoverageType.BOUNDARY_SCAN_PULL_DOWNS)
             {
-                return await TestCoverageForPullDowns(items).ConfigureAwait(false);
+                result = await TestCoverageForPullDowns(items).ConfigureAwait(false);
             }
             else if (type == TestCoverageType.BOUNDARY_SCAN_PULL_UPS)
             {
-                return await TestCoverageForPullUps(items).ConfigureAwait(false);
+                result = await TestCoverageForPullUps(items).ConfigureAwait(false);
             }
             else if (type == TestCoverageType.BOUNDARY_SCAN_PULL_UPS_DOWNS)
             {
-                return await TestCoverageForPullUpsDowns(items).ConfigureAwait(false);
+                result = await TestCoverageForPullUpsDowns(items).ConfigureAwait(false);
             }
             else
             {
                 logger.LogMessage("Received invalid test type!", LogCategory.ERROR);
-                return items;
+                result = items;
             }
+
+            sw.Stop();
+            Debug.WriteLine("Test performed: " + type.ToString() + " {0}ms", sw.Elapsed.TotalMilliseconds);
+            return result;
         }
 
         public void ClearAllObjects()
@@ -131,7 +138,7 @@ namespace TestCoverage.Implementations
             return false;
         }
 
-        public TestCoverageItems DetermineBoundaryScanObjects(
+        public TestCoverageItems DetermineTestCoverageRelatedObjects(
             IList<INetComponent> nets,
             IdentifierBlacklistContainer content,
             TestCoverageItems items)
@@ -150,8 +157,8 @@ namespace TestCoverage.Implementations
                 mapObjects.Add(TestCoverageObject.JTAG, testCoverageDataModel.Ics);
                 mapObjects.Add(TestCoverageObject.OTHERS, DefineOthers());
                 LogTestCoverageObjects(mapObjects);
-                eventService.Publish<AddTestCoverageObjectsEvent>(new AddTestCoverageObjectsEvent(mapObjects));
-                eventService.Publish<TestCoverageForDeterminingObjectsPerformedEvent>(new TestCoverageForDeterminingObjectsPerformedEvent(TESTCOVERAGEOBJECTS.ToList()));
+                eventService.Publish(new AddTestCoverageObjectsEvent(mapObjects));
+                eventService.Publish(new TestCoverageForDeterminingObjectsPerformedEvent(TESTCOVERAGEOBJECTS.ToList()));
                 items.ItemTestCoverageObjects = TestCoverageBoundaryScanDeterminer.ITEMSELECTED;
                 if (mapObjects.Count > 0)
                 {
@@ -503,13 +510,13 @@ namespace TestCoverage.Implementations
 
         private IList<IPCBComponent> DefineOthers()
         {
-            others = TestCoverageObjectDeterminer.GetOthers(ics, pullDowns, pullUps);
+            others = TestCoverageBoundaryScanObjectDeterminer.GetOthers(ics, pullDowns, pullUps);
             return others;
         }
 
         private IList<INetComponent> DefineGndNets(IList<INetComponent> nets, string gndIdentifier, string gndBlacklist)
         {
-            gndNets = TestCoverageObjectDeterminer.GetGndNets(nets, gndIdentifier, gndBlacklist);
+            gndNets = TestCoverageBoundaryScanObjectDeterminer.GetGndNets(nets, gndIdentifier, gndBlacklist);
             return gndNets;
         }
 
@@ -520,19 +527,19 @@ namespace TestCoverage.Implementations
                 jtagNets = this.jtagNets;
             }
 
-            ics = TestCoverageObjectDeterminer.GetIcs(jtagNets);
+            ics = TestCoverageBoundaryScanObjectDeterminer.GetIcs(jtagNets);
             return ics;
         }
 
         private IList<INetComponent> DefineJtagNets(IList<INetComponent> nets, string jtagIdentifier, string jtagBlacklist)
         {
-            jtagNets = TestCoverageObjectDeterminer.GetJtagNets(nets, jtagIdentifier, jtagBlacklist);
+            jtagNets = TestCoverageBoundaryScanObjectDeterminer.GetJtagNets(nets, jtagIdentifier, jtagBlacklist);
             return jtagNets;
         }
 
         private IList<INetComponent> DefinePowerNets(IList<INetComponent> nets, string powerIdentifier, string powerBlacklist)
         {
-            powerNets = TestCoverageObjectDeterminer.GetPowerNets(nets, powerIdentifier, powerBlacklist);
+            powerNets = TestCoverageBoundaryScanObjectDeterminer.GetPowerNets(nets, powerIdentifier, powerBlacklist);
             return powerNets;
         }
 
@@ -543,7 +550,7 @@ namespace TestCoverage.Implementations
                 net = this.gndNets;
             }
 
-            pullDowns = TestCoverageObjectDeterminer.GetPullUpDownResistors(net);
+            pullDowns = TestCoverageBoundaryScanObjectDeterminer.GetPullUpDownResistors(net);
             return pullDowns;
         }
 
@@ -554,7 +561,7 @@ namespace TestCoverage.Implementations
                 powerNets = this.powerNets;
             }
 
-            pullUps = TestCoverageObjectDeterminer.GetPullUpDownResistors(powerNets);
+            pullUps = TestCoverageBoundaryScanObjectDeterminer.GetPullUpDownResistors(powerNets);
             return pullUps;
         }
 

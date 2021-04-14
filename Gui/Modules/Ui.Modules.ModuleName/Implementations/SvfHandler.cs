@@ -72,7 +72,7 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
-        public void HandleSvfFileGeneration(IProjectHandler projectHandlerToUse)
+        public void HandleSvfFileGeneration(ISvfExporter projectHandlerToUse)
         {
             if (!dialogSelector.OpenGenericDialog(DialogType.OPENFOLDER, TextRessources.SelectSvfFolder, "No valid path selected", out string fileName))
             {
@@ -86,7 +86,7 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
-        private void HandleSvfFileCreation(List<JtagConnectionInfo> result, string basePath, IProjectHandler projectHandlerToUse)
+        private void HandleSvfFileCreation(List<JtagConnectionInfo> result, string basePath, ISvfExporter projectHandlerToUse)
         {
             foreach (var jtag in result)
             {

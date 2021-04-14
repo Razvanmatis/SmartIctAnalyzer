@@ -1,4 +1,4 @@
-﻿using Interfaces.Gui;
+﻿using ProMik.BSDL.Interfaces.Entities;
 using SVFHelper.Interfaces;
 using System.Collections.Generic;
 
@@ -13,7 +13,7 @@ namespace SVFHelper.Implementations
             this.svfHelper = svfHelper;
         }
 
-        public List<ISvfData> GetSVFFiles(string basePath, string jtagName, List<string> pinLabel, ProMik.BSDL.Interfaces.Entities.IBSDLOutput bsdlOutput, byte[] defaultVector)
+        public List<ISvfData> GetSVFFiles(string basePath, string jtagName, List<string> pinLabel, IBSDLOutput bsdlOutput, byte[] defaultVector)
         {
             List<ISvfData> data = new List<ISvfData>();
             foreach (var pin in pinLabel)

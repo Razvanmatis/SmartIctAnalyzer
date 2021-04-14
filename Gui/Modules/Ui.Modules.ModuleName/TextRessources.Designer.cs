@@ -61,6 +61,15 @@ namespace Ui.Modules.ModuleName {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export into JSON file: {0}ms.
+        /// </summary>
+        internal static string ExportIntoJsonFile {
+            get {
+                return ResourceManager.GetString("ExportIntoJsonFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export object data.
         /// </summary>
         internal static string ExportObjectData {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
@@ -101,7 +102,8 @@ namespace GrpcClientParser.Implementations
                 isTestPoint = GetTpFunction(tpIdentifier);
             }
 
-            return JsonImportExportHelper.ImportComponentsFromFile(
+            Stopwatch sw = Stopwatch.StartNew();
+            var result = JsonImportExportHelper.ImportComponentsFromFile(
                 data,
                 rIdentifier,
                 cIdentifier,
@@ -110,11 +112,17 @@ namespace GrpcClientParser.Implementations
                 conIdentifier,
                 isTestPoint,
                 logger);
+            sw.Stop();
+            Debug.WriteLine("Stage IMPORT: {0}ms", sw.Elapsed.TotalMilliseconds);
+            return result;
         }
 
         public async Task<IParsedResult> GetParsedObjectsFromGrpcByZipFolder(string pathToOdb, string steps, IList<string> rIdentifier = null, IList<string> cIdentifier = null, IList<string> iIdentifier = null, IList<string> tpIdentifier = null, IList<string> icIdentifier = null, IList<string> conIdentifier = null)
         {
+            Stopwatch sw = Stopwatch.StartNew();
             byte[] data = GetZipFolderAsBytes(pathToOdb);
+            sw.Stop();
+            Debug.WriteLine("Compress all projectfiles into zip: {0}ms", sw.Elapsed.TotalMilliseconds);
             if (data == null || data.Length == 0)
             {
                 return null;
@@ -185,6 +193,7 @@ namespace GrpcClientParser.Implementations
 
         private IParsedResult FinalizeHandling(Result result, IList<string> rIdentifier, IList<string> cIdentifier, IList<string> iIdentifier, IList<string> tpIdentifier, IList<string> icIdentifier, IList<string> conIdentifier)
         {
+            Stopwatch sw = Stopwatch.StartNew();
             string message = "Received from GRPC amount PCB Components: " + result.Components.Count + ", nets: " + result.Nets.Count + " and pins: " + result.Pins.Count;
             Console.WriteLine(message);
             logger.LogMessage(message, LogCategory.INFO);
@@ -210,6 +219,8 @@ namespace GrpcClientParser.Implementations
             message = "After parsing creation of total objects PCB Components: " + components.Count + ", nets: " + nets.Count + " and pins: " + pinAmount;
             Console.WriteLine(message);
             logger.LogMessage(message, LogCategory.INFO);
+            sw.Stop();
+            Debug.WriteLine("Parse all received GRPC objects into class objects: {0}ms", sw.Elapsed.TotalMilliseconds);
             return new ParsedResult(components, nets);
         }
 

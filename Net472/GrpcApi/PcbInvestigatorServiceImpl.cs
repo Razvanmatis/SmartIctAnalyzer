@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
@@ -25,10 +26,24 @@ namespace GrpcApi
 
         public override async Task<Result> GetConvertedObjectsByZip(RequestZip request, ServerCallContext context)
         {
+            Stopwatch sw = Stopwatch.StartNew();
             if (request.ZipFolder == null || request.ZipFolder.Length == 0)
             {
                 Console.WriteLine(LangRessource.ErrorByReceivingEmptyZipFolder);
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+
+            if (File.Exists(FILEPATHREQUEST))
+            {
+                try
+                {
+                    File.Delete(FILEPATHREQUEST);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return await Task.FromResult(new Result()).ConfigureAwait(true);
+                }
             }
 
             byte[] data = request.ZipFolder.ToByteArray();
@@ -57,6 +72,18 @@ namespace GrpcApi
             {
                 Console.WriteLine(e.Message);
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
+            }
+
+            if (Directory.Exists(FILEPATHEXTRACT))
+            {
+                try
+                {
+                    Directory.Delete(FILEPATHEXTRACT, true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
 
             try
@@ -89,6 +116,8 @@ namespace GrpcApi
                 return await Task.FromResult(new Result()).ConfigureAwait(true);
             }
 
+            sw.Stop();
+            Console.WriteLine(LangRessource.DecompressZippedContent, sw.Elapsed.TotalMilliseconds);
             Result result = await FinishParsing(FILEPATHEXTRACT, request.Steps).ConfigureAwait(true);
             if (result != null)
             {

@@ -8,7 +8,8 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="true"
         mc:Ignorable="d"
-        Title="All settings" Height="900" Width="1200">
+        Title="Settings" Height="900" Width="1200"
+        Icon="/Ressources/start.png">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

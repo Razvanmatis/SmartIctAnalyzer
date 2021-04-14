@@ -8,7 +8,7 @@ namespace Ui.Modules.ModuleName.Implementations
     public class ProMikSettingsData : ISettingsData
     {
         private const string PAGEKEYGENERAL = "pageKeyGeneral";
-        private const string PAGENAMEGENERAL = "General settings";
+        private const string PAGENAMEGENERAL = "General";
         private const string SECTIONRKEY = "sectionRKey";
         private const string SECTIONRNAME = "Resistors settings";
         private const string RCHARSSETTINGKEY = "rCharsSettingKey";
@@ -66,19 +66,19 @@ namespace Ui.Modules.ModuleName.Implementations
         private const string SHOWBUTTONSSETTINGKEY = "showButtonsSettingKey";
         private const string SHOWBUTTONSSETTINGNAME = "Show zoom and mirroring buttons";
         private const string PAGEKEYAPI = "pageKeyApi";
-        private const string PAGENAMEAPI = "PCB Investigator API settings";
+        private const string PAGENAMEAPI = "PCB Investigator API";
         private const string SECTIONAPIKEY = "sectionApiKey";
         private const string SECTIONAPINAME = PAGENAMEAPI;
         private const string STEPSSETTINGKEY = "stepsSettingKey";
         private const string STEPSSETTINGNAME = "Steps to be read by PCB Investigator API (a;b;c)(Beginning with 1, -1 = all):";
         private const string PAGEKEYCONNECTION = "pageKeyConnection";
-        private const string PAGENAMECONNECTION = "GRPC server API connection settings";
+        private const string PAGENAMECONNECTION = "GRPC Server API Connection";
         private const string CONNECTIONSECTIONKEY = "connectionSectionKey";
         private const string IPSETTINGKEY = "ipSettingKey";
         private const string IPSETTINGNAME = "IP address of GRPC API server:";
         private const string CONNECTIONSECTIONNAME = PAGENAMECONNECTION;
         private const string PAGEKEYTESTCOVERAGE = "pageKeyTestCoverage";
-        private const string PAGENAMETESTCOVERAGE = "Test coverage settings";
+        private const string PAGENAMETESTCOVERAGE = "Test Coverage";
         private const string GNDSECTIONKEY = "gndSectionKey";
         private const string GNDSECTIONNAME = "GND nets settings";
         private const string GNDIDENTSETTINGKEY = "gndIdentSettingKey";
@@ -96,9 +96,9 @@ namespace Ui.Modules.ModuleName.Implementations
         private const string JTAGIDENTSETTINGNAME = "JTAG nets identifier (a;b;c):";
         private const string JTAGBLACKSETTINGKEY = "JTAGBlackSettingKey";
         private const string PAGEKEYSVF = "pageKeySvf";
-        private const string PAGENAMESVF = "SVF player settings";
+        private const string PAGENAMESVF = "SVF Player";
         private const string SECTIONSVFKEY = "sectionSvfProgrammerKey";
-        private const string SECTIONSVFNAME = "Programmer connection settings";
+        private const string SECTIONSVFNAME = "Programmer Connection";
         private const string SVFPGMSETTINGKEY = "svfPgmSettingKey";
         private const string SVFPGMNAME = "Programmer IP:";
         private const string SVFPORTSETTINGKEY = "svfPortSettingKey";

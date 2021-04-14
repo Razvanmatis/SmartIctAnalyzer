@@ -16,9 +16,9 @@ As shown in \ref{fig:projectOverview} it will be clear that the whole project is
 	\item Ui - within the project the mainView and mainViewModel could be found (Was initially created by the PRISM framework)
 	\item Ui.Modules.ModuleName - this project was basically created by the PRISM framework and contains all necessary events, interfaces, models, viewmodels and views for operating with all other referenced projects
 \end{itemize}
-On the other side there is the \textbf{Net472} folder with the project GrpcApi which contains the standalone software for referencing the \ac{PCB}-Investigator API and runs as a \ac{GRPC} server. Next the \textbf{NetStandard} folder contains the following projects:
+On the other side there is the \textbf{Net472} folder with the project GrpcApi which contains the standalone software for referencing the \ac{PCB}-Investigator \ac{API} and runs as a \ac{GRPC} server. Next the \textbf{NetStandard} folder contains the following projects:
 \begin{itemize}
-	\item GrpcClientParser - the \ac{GRPC} client project for communicating with the GrpcApi project for getting all parsed objects by the \ac{PCB}-Investigator API
+	\item GrpcClientParser - the \ac{GRPC} client project for communicating with the GrpcApi project for getting all parsed objects by the \ac{PCB}-Investigator \ac{API}
 	\item PinInformationExtractor - this project is being used for creation of textfiles in \ac{JSON} format containing all pin information of all \ac{JTAG} devices of one project.
 	\item SVFHelper - this project is needed for creation of \ac{SVF} files in dependency on \ac{BSDL} files which should be referenced for \ac{JTAG} devices. Further it could play \ac{SVF} files with a programmer from ProMik GmbH which is connected to a boundary scan compatible \ac{JTAG} device
 \end{itemize}
@@ -64,7 +64,7 @@ The Interfaces project was created as a .NET standard 2.0 project to make sure i
 \end{itemize}
 
 	\section{Grpc Server for using the PCB Investigator API}
-This project is responsible for using the \ac{PCB}-Investigator API which is being created using the .NET Framework and was created as a console application using the .NET Framework 4.72 as well. It further derives a service which was provided by a \ac{GRPC} auto code generation as a server. The proto file itself which was used for the code generation contains three functions:
+This project is responsible for using the \ac{PCB}-Investigator \ac{API} which is being created using the .NET Framework and was created as a console application using the .NET Framework 4.72 as well. It further derives a service which was provided by a \ac{GRPC} auto code generation as a server. The proto file itself which was used for the code generation contains three functions:
 \begin{itemize}
 	\item GetConvertedObjects(Request) returns (Result) - within this function all objects of a specific project could be determined using the location to the project
 	\item GetConvertedObjectsByZip(RequestZip) returns (Result) - that method obtains all objects by using the received project as zip file in bytes
@@ -159,7 +159,7 @@ As shown in \ref{fig:IGrpcClientParserHandler} the main interface of this projec
 	...
 \end{lstlisting}
 
-As stated within \ref{lst:GetComponentByType} this is one of the main \textbf{factory pattern} using functions as there will be generated different kind of implementations of one interface in dependency on input variables passed which are defining the object identifier. Further there is the possibility provided of using a CsvReader helper class for being able to read in comma separated values files which contain all values of the objects of one project in dependency on their \textbf{Ref} attribute.
+As stated within \ref{lst:GetComponentByType} this is one of the main \textbf{factory pattern} using functions as there will be generated different kind of implementations of one interface in dependency on input variables passed which are defining the object identifier. Further there is the possibility provided of using a CsvReader helper class for being able to read in \ac{CSV} files which contain all values of the objects of one project in dependency on their \textbf{Ref} attribute.
 
 	\section{GUI}
 Within this section the \textbf{Gui} folder and its project related contents which are all implemented using the .NET Core 3.1 framework will be described more in detail.
@@ -178,7 +178,7 @@ The mainView and mainViewModel are responsible for creation of the view to be st
 As shown in \ref{fig:mainView} there are some regions defined which are implemented at another project place and will be included dynamically during the software life cycle for having the maximum amount of loose coupling and the opportunity of changing templates to be used. The detailed content of each region are:
 \begin{itemize}
 	\item MenuRegion - contains all menu items which could be clicked by the user for interaction with the software (importing, exporting of data, showing all settings, \ac{etc.})
-	\item LayerRegion - this region contains on one side all received layers and its objects which can be shown by the \ac{PCB}-Investigator API and on the other side all test coverage related object types which could be selected to be shown (pull down resistors, ics, pull up resistors, \ac{etc.})
+	\item LayerRegion - this region contains on one side all received layers and its objects which can be shown by the \ac{PCB}-Investigator \ac{API} and on the other side all test coverage related object types which could be selected to be shown (pull down resistors, ics, pull up resistors, \ac{etc.})
 	\item ContentRegion - that region contains all objects which should be displayed after there were some layers or object types selected within the LayerRegion. Further it provides the possibility of component specific actions by the context menu of the right mouse (toggle visibility, show connections, \ac{etc.})
 	\item Expander containing the LogPanel - here the Expander object is being used which contains the ProMik.UI.WPF.LogPanel object by the NuGet package manager for displaying all logged messages of the whole application considering each log category for defining the display style
 \end{itemize}
@@ -187,19 +187,19 @@ As shown in \ref{fig:mainView} there are some regions defined which are implemen
 		\subsection{Events}
 For being able to interact project wide with different classes within different projects without having the need always to reference directly a object of class of interest there was used a general event handling by using the ProMik.Core.Services.EventService.PrismEventService which is based on the PRISM event service as a NuGet referenced package. In general the event handling works on one side by subscribing to any event type and on the other by publishing that specific event. To specify an event which could use by this service it was necessary to inherit from the class EventPayload. The following events are being specified within the Gui project itself:
 \begin{itemize}
-	\item AddPcbObjectsEvent - this event occurs when the importing of objects from the \ac{PCB}-Investigator API has been finished
+	\item AddPcbObjectsEvent - this event occurs when the importing of objects from the \ac{PCB}-Investigator \ac{API} has been finished
 	\item ChangeExportMenuItemEnabledStateEvent - will be created to toggle the enabled states of menu items for exporting data into file
 	\item CloseAllSettingsEvent - event which will be called if the settings page will be closed
 	\item ComponentsImportFinishedEvent - that event will be generated if the import of \ac{JSON} related data was finished
 	\item HandleDropEvent - an event which will be called if something was dropped my mouse into the tool
 	\item ResetLayersSelectionEvent - is being created to trigger the reset of all layers which will be shown within the view section
 	\item ResetViewEvent - if the whole view needs to be reset then this event is being called
-	\item SelectBomFinishEvent - after a bill of material file was successfully selected then this event will be created
-	\item SendLayersEvent - to send all created layers after the read out from \ac{PCB}-Investigator API to the view this event is needed
+	\item SelectBomFinishEvent - after a \ac{BOM} file was successfully selected then this event will be created
+	\item SendLayersEvent - to send all created layers after the read out from \ac{PCB}-Investigator \ac{API} to the view this event is needed
 	\item SetBusyEvent - for being able to set the state of the is busy animation of the application this event could be used
 	\item SetCoverageValuesEvent - in order to update all test coverage determined values of objects this event needs to be used
 	\item ShowObjectsEvent - showing of different kind of objects which are located in specific layers could be performed by using that event
-	\item UpdateBomDataEvent - updating all bill of materials related data of objects could be performed by using this event
+	\item UpdateBomDataEvent - updating all \ac{BOM} related data of objects could be performed by using this event
 \end{itemize}
 
 \begin{lstlisting}[language={[Sharp]C},caption={Subscribing to an event},captionpos=b,label=lst:Subscribingtoanevent]
@@ -217,8 +217,8 @@ As shown in \ref{lst:Publishingofanevent} publishing could be realized just by p
 		\subsection{Helper}
 Now for being able to perform different kind of additional work for finishing tasks there was the need of providing some helper classes which could be used for that:
 \begin{itemize}
-	\item AttributeList - a class which just contains all necessary identifier for the different kind of objects received by the \ac{PCB}-Investigator API
-	\item BomSettings - this class holds all bill of material related settings (separator, column number of ref and column number of value)
+	\item AttributeList - a class which just contains all necessary identifier for the different kind of objects received by the \ac{PCB}-Investigator \ac{API}
+	\item BomSettings - this class holds all \ac{BOM} related settings (separator, column number of ref and column number of value)
 	\item CustomCollectionException - that customized exception class was necessary for avoiding the \ac{IDE} to gripe about the catching of general exception types
 	\item DropFilesBehaviorExtension - within that class all the behavior regarding the drop mechanism into the application are defined
 	\item DummyDataHandler - to use a dummy data handler for testing purposes this class has been provided
@@ -257,8 +257,8 @@ As shown in \ref{lst:OnPropChanged} within the function for registering the drop
 		\subsection{Interfaces}
 To be able to work as flexible as possible with the used logic of course there was the need of providing several interfaces which could be used by different implementations to be registered:
 \begin{itemize}
-	\item IBomDataModel - interface for storing all bill of materials related data and modifying it
-	\item IBomHandler - the interface for handling all bill of materials related actions to be performed
+	\item IBomDataModel - interface for storing all \ac{BOM} related data and modifying it
+	\item IBomHandler - the interface for handling all \ac{BOM} related actions to be performed
 	\item IComponentViewModel - this interface is being used for defining the viewModel component related actions as toggling the visibility or showing all connections of it
 	\item IDataSourceProvider - that interface is being created for defining the different data sources of project loading
 	\item IDropHandler - an interface for defining the drop event handling
@@ -327,8 +327,8 @@ As stated in \ref{lst:OpenGenericDialog} there was used the VistaOpenFileDialog 
 		\subsection{Model}
 To be able to hold different kind of data project wide and access it by dependency injection in comfortable way there are some models been defined:
 \begin{itemize}
-	\item BomDataModel - the model for holding all bill of material related data
-	\item ResultModel - this model saves all object related results after requesting the \ac{PCB}-Investigator API
+	\item BomDataModel - the model for holding all \ac{BOM} related data
+	\item ResultModel - this model saves all object related results after requesting the \ac{PCB}-Investigator \ac{API}
 	\item SettingsStorageModel - that model is responsible for having all setting related data available
 	\item TestCoverageDataModel - a model for saving all test coverage related objects of interest for determination of it
 \end{itemize}
@@ -353,7 +353,7 @@ public class ResultModel : IResultModel
 }
 \end{lstlisting}
 
-As stated in \ref{lst:ResultModel} there was additionally to the property a helperfunction defined for being able to determine whether all values from bill of materials import should be considered or not. In dependency on that check later the logic is able to highlight all objects which have no valid value received.
+As stated in \ref{lst:ResultModel} there was additionally to the property a helperfunction defined for being able to determine whether all values from \ac{BOM} import should be considered or not. In dependency on that check later the logic is able to highlight all objects which have no valid value received.
 
 		\subsection{ViewModels}
 Within that folder are all necessary viewModels for that project are defined:
@@ -379,12 +379,12 @@ That folder contains all views for representation of specific regions of the mai
 	\item AllSettingsView - this view contains all settings of the software by using the ProMik.UI.WPF.SettingsPanel which was included as a NuGet package
 	\item ComponentView - that view contains all necessary appearance settings for displaying all objects to be rendered within the mainView region
 	\item CoordinatesOrigin - within that view just the representation form of the origin of the coordinate system is defined
-	\item LayerView - the view for showing all received layers from \ac{PCB}-Investigator API which is been included in a region of the mainView
+	\item LayerView - the view for showing all received layers from \ac{PCB}-Investigator \ac{API} which is been included in a region of the mainView
 	\item MenuView - all menu items which are accessible by the user are defined in that view
 	\item PCBComponentBaseDataTemplate - to render any received object from a \ac{ODB}++ project this template will be used
 	\item PCBLineDataTemplate - for being able to show connections between objects that view will be considered as template for drawing the lines
 	\item PCBTestpointDataTemplate - as the testpoint itself is not a rectangle but a circle it has it's own template defined in that view
-	\item SelectBomView - to make sure to display a window containing all bill of material related settings before importing any comma separated values file this view was provided
+	\item SelectBomView - to make sure to display a window containing all \ac{BOM} related settings before importing any \ac{CSV} file this view was provided
 \end{itemize}
 
 \begin{lstlisting}[language=XML,caption={PCBLineDataTemplate},captionpos=b,label=lst:PCBLineDataTemplate]
@@ -655,7 +655,7 @@ As unit tests are highly recommended for guaranteeing a high quality of software
 \begin{center}
 	\includegraphics[scale=0.7]{figures/testSequence.pdf}
 	\begin{figure}[!h]
-	\caption{The sequence for a complete test of parsing validation of objects received by \ac{PCB}-Investigator API}
+	\caption{The sequence for a complete test of parsing validation of objects received by \ac{PCB}-Investigator \ac{API}}
 	\label{fig:testSequence}
 	\end{figure}
 \end{center}
@@ -690,7 +690,7 @@ public void TestParsingFromApi()
 }
 \end{lstlisting}
 
-As stated in \ref{lst:TestParsingFromApi} there first of all will be asserted that the received objects by the \ac{GRPC} API is not null and the read out content from the \ac{JSON} formatted file contains some objects. Finally there will be called the TestContent function to make sure that all objects equals the necessary information. Further it can be seen that for testing purposes a DebugLogger was generated which implements the ILogger interface in that way that all messages are just being forwarded to the debug line as no other objects are available running this sequence. The -1 parameter within the GetParsedObjectsFromGrpc method defines at the API to check for all available steps within the \ac{ODB}++ project as there is the possibility to define specific ones to be considered by using a semicolon separated string.
+As stated in \ref{lst:TestParsingFromApi} there first of all will be asserted that the received objects by the \ac{GRPC} \ac{API} is not null and the read out content from the \ac{JSON} formatted file contains some objects. Finally there will be called the TestContent function to make sure that all objects equals the necessary information. Further it can be seen that for testing purposes a DebugLogger was generated which implements the ILogger interface in that way that all messages are just being forwarded to the debug line as no other objects are available running this sequence. The -1 parameter within the GetParsedObjectsFromGrpc method defines at the \ac{API} to check for all available steps within the \ac{ODB}++ project as there is the possibility to define specific ones to be considered by using a semicolon separated string.
 
 	\section{Pipeline configuration}
 The company ProMik GmbH uses gitlab as their internal continuous integration system which is a open source software and provides the possibility of performing different kind of scripts after the build process\cite{.3222021}. According to that fact their was additionally the need of providing a specific \ac{YML} file to make sure that the whole project will be build as executable files in the correct destination folders. The \ac{YML} itself contains different associated lists and scalars which could be performed by the system which reads its statements out\cite{Wikipedia.2021b}. 

@@ -14,7 +14,8 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="{Binding Title}" Height="1000" Width="1920" >
+        Title="{Binding Title}" Height="1000" Width="1920" 
+        Icon="/Ressources/start.png">
     <beh:Interaction.Triggers>
         <beh:EventTrigger EventName="Closing">
             <beh:InvokeCommandAction Command="{Binding WindowClosingCommand}" PassEventArgsToCommand="True" />
@@ -38,7 +39,7 @@
             <Run Text="Test coverage: "/>
             <Run Text="{Binding TestCoverage, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,0.00}}"/>
         </TextBlock>
-        <Expander Grid.Column="1" Grid.Row="2" Header="Logging area">
+        <Expander Grid.Column="1" Grid.Row="2" Header="Logging area" BorderBrush="Black" BorderThickness="2">
             <logPanel:LogPanel EventService="{Binding EventService}" LogService="{Binding LogService}" Height="300px" ContextMenuActions="{Binding LogContext}">
                 <beh:Interaction.Triggers>
                     <beh:EventTrigger EventName="Loaded">

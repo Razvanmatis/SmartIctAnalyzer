@@ -30,7 +30,7 @@ namespace Ui.Modules.ModuleName.Implementations
             if (resultModel.Result != null && resultModel.Result.Nets != null && resultModel.Result.Nets.Count > 0)
             {
                 var content = settingsStorageManager.GetStorageContent();
-                setItemsObjectsAction(testCoverageDeterminer.DetermineBoundaryScanObjects(
+                setItemsObjectsAction(testCoverageDeterminer.DetermineTestCoverageRelatedObjects(
                     resultModel.Result.Nets,
                     new IdentifierBlacklistContainer(
                         content.GndNetIdentifier,
