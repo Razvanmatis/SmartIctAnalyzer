@@ -218,6 +218,7 @@ As shown in \ref{lst:Publishingofanevent} publishing could be realized just by p
 Now for being able to perform different kind of additional work for finishing tasks there was the need of providing some helper classes which could be used for that:
 \begin{itemize}
 	\item AttributeList - a class which just contains all necessary identifier for the different kind of objects received by the \ac{PCB}-Investigator \ac{API}
+	\item ComponentAttributes - contains all relevant binding attributes from the ComponentViewModel which is mainly responsible for drawing all objects into the area
 	\item BomSettings - this class holds all \ac{BOM} related settings (separator, column number of ref and column number of value)
 	\item CustomCollectionException - that customized exception class was necessary for avoiding the \ac{IDE} to gripe about the catching of general exception types
 	\item DropFilesBehaviorExtension - within that class all the behavior regarding the drop mechanism into the application are defined
@@ -259,7 +260,7 @@ To be able to work as flexible as possible with the used logic of course there w
 \begin{itemize}
 	\item IBomDataModel - interface for storing all \ac{BOM} related data and modifying it
 	\item IBomHandler - the interface for handling all \ac{BOM} related actions to be performed
-	\item IComponentViewModel - this interface is being used for defining the viewModel component related actions as toggling the visibility or showing all connections of it
+	\item IComponentHandler - this interface is being used for defining the ComponentViewModel related actions as toggling the visibility or showing all connections of it
 	\item IDataSourceProvider - that interface is being created for defining the different data sources of project loading
 	\item IDropHandler - an interface for defining the drop event handling
 	\item IFilesDropped - one interface for specifying the action to be performed on multiple files dropped

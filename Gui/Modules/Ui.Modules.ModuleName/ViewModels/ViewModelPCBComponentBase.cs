@@ -17,7 +17,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         private readonly ISettingsData settingsVm;
         private readonly IPCBComponent component;
         private readonly ObservableCollection<ViewModelLine> lines = new ObservableCollection<ViewModelLine>();
-        private readonly IComponentViewModel componentVm;
+        private readonly IComponentHandler componentVm;
         private bool connectionsShowed;
         private string name;
         private SolidColorBrush brush;
@@ -26,7 +26,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         private int borderThickness;
         private Visibility toolTipVisible;
 
-        public ViewModelPCBComponentBase(IPCBComponent component, ISettingsData settingsVm, IComponentViewModel componentVm)
+        public ViewModelPCBComponentBase(IPCBComponent component, ISettingsData settingsVm, IComponentHandler componentVm)
             : base(component.GeometricAttributes.Bounds.X, component.GeometricAttributes.Bounds.Y)
         {
             this.componentVm = componentVm;

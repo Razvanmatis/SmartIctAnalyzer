@@ -8,7 +8,7 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         private readonly ISettingsData settingsVm;
 
-        public ViewModelCapacitor(IPCBComponent component, ISettingsData settingsVm, IComponentViewModel componentVm)
+        public ViewModelCapacitor(IPCBComponent component, ISettingsData settingsVm, IComponentHandler componentVm)
             : base(component, settingsVm, componentVm)
         {
             this.settingsVm = settingsVm;

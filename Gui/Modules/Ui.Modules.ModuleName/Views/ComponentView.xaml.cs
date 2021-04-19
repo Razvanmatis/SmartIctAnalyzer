@@ -9,9 +9,8 @@ namespace Ui.Modules.ModuleName.Views
     /// </summary>
     public partial class ComponentView : UserControl
     {
-        public ComponentView(IComponentViewModel componentVm)
+        public ComponentView()
         {
-            DataContext = componentVm;
             InitializeComponent();
             ((ComponentViewModel)DataContext).Scrollviewer = Scrollviewer;
         }

@@ -16,7 +16,7 @@ namespace Ui.Modules.ModuleName.ViewModels
     public class LayerViewModel : RegionViewModelBase
     {
         private readonly IEventService eventService;
-        private readonly IComponentViewModel componentVm;
+        private readonly IComponentHandler componentHandler;
         private ObservableCollection<string> layers = new ObservableCollection<string>();
         private ICommand selectionChanged;
         private ObservableCollection<string> objects = new ObservableCollection<string>();
@@ -24,10 +24,10 @@ namespace Ui.Modules.ModuleName.ViewModels
         private string selectedLayer;
         private string selectedObject;
 
-        public LayerViewModel(IRegionManager regionManager, IEventService eventService, IComponentViewModel componentVm)
+        public LayerViewModel(IRegionManager regionManager, IEventService eventService, IComponentHandler componentHandler)
             : base(regionManager)
         {
-            this.componentVm = componentVm;
+            this.componentHandler = componentHandler;
             this.eventService = eventService;
             eventService.Subscribe<SendLayersEvent>(GetLayers);
             SelectionChanged = new DelegateCommand<IList>(async (x) => await ChangedTheSelection(x).ConfigureAwait(true));
@@ -131,7 +131,8 @@ namespace Ui.Modules.ModuleName.ViewModels
                 list.Add(item.ToString());
             }
 
-            await componentVm.ShowLayerObjects(list).ConfigureAwait(false);
+            await componentHandler.ShowLayerObjects(list).ConfigureAwait(false);
+            eventService.Publish(new UpdateComponentsViewEvent());
         }
 
         private async Task ChangedTheSelectionObjects(IList obj)
@@ -145,6 +146,7 @@ namespace Ui.Modules.ModuleName.ViewModels
                 }
 
                 eventService.Publish<ShowObjectsEvent>(new ShowObjectsEvent(list));
+                eventService.Publish(new UpdateComponentsViewEvent());
             }).ConfigureAwait(true);
         }
 

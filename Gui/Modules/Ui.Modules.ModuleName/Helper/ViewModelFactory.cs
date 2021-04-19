@@ -7,7 +7,7 @@ namespace Ui.Modules.ModuleName.Helper
 {
     public static class ViewModelFactory
     {
-        public static ViewModelPCBComponentBase GetViewModelObject(IPCBComponent component, ISettingsData settingsVm, IComponentViewModel componentVm)
+        public static ViewModelPCBComponentBase GetViewModelObject(IPCBComponent component, ISettingsData settingsVm, IComponentHandler componentVm)
         {
             if (component is PCBResistor)
             {

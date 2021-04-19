@@ -6,7 +6,7 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             prism:ViewModelLocator.AutoWireViewModel="false" >
+             prism:ViewModelLocator.AutoWireViewModel="true" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

@@ -29,7 +29,6 @@ namespace Ui.Modules.ModuleName
             containerRegistry.RegisterForNavigation<ComponentView>();
             containerRegistry.RegisterForNavigation<LayerView>();
             containerRegistry.RegisterForNavigation<MenuView>();
-            containerRegistry.RegisterSingleton<IComponentViewModel, ComponentViewModel>();
         }
     }
 }

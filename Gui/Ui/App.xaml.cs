@@ -65,6 +65,7 @@ namespace Ui
             containerRegistry.RegisterSingleton<IDropHandler, DropHandler>();
             containerRegistry.RegisterSingleton<IPinInformationExtractorHandler, PinInformationExtractorHandler>();
             containerRegistry.RegisterSingleton<ITestCoverageHandler, TestCoverageHandler>();
+            containerRegistry.RegisterSingleton<IComponentHandler, ComponentHandler>();
         }
     }
 }
