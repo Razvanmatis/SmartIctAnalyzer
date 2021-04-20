@@ -3,6 +3,7 @@ using ProMik.SfvPlayer_sharp;
 using SVFHelper.Helper;
 using SVFHelper.Interfaces;
 using System;
+using System.Diagnostics;
 
 namespace SVFHelper.Implementations
 {
@@ -17,6 +18,10 @@ namespace SVFHelper.Implementations
 
         public byte[] GetDefaultVector(uint scanChainLength, uint instructionRegisterLength, string pgmIp, uint pgmPort, uint supplyVoltageMv, uint ioVoltageMv)
         {
+            scanChainLength = 1077;
+            instructionRegisterLength = 6;
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             byte[] defEmptyVector = GetDefEmptyVector(scanChainLength);
             byte[] realData = defEmptyVector;
             try
@@ -49,6 +54,8 @@ namespace SVFHelper.Implementations
                 logger.LogMessage(e.Message, LogCategory.ERROR);
             }
 
+            watch.Stop();
+            Debug.WriteLine("SVF getDefaultVector: " + watch.ElapsedMilliseconds + " ms");
             return realData;
         }
 
@@ -175,6 +182,8 @@ namespace SVFHelper.Implementations
 
         public bool PlaySvfFile(uint scanChainLength, uint instructionRegisterLength, string svfFilePath, string logFilePath, string pgmIp, uint pgmPort, uint supplyVoltageMv, uint ioVoltageMv)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             bool state = false;
             try
             {
@@ -207,6 +216,8 @@ namespace SVFHelper.Implementations
                 }
 
                 EndSvfSequence(target);
+                watch.Stop();
+                Debug.WriteLine("SVF PlaySvfFile: " + watch.ElapsedMilliseconds + " ms");
                 return state;
             }
             catch (Exception e)
