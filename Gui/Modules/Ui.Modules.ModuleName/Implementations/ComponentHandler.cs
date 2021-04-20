@@ -152,6 +152,8 @@ namespace Ui.Modules.ModuleName.Implementations
             attributes.OriginalWidth = 0;
             attributes.OriginalHeight = 0;
             attributes.OverallWidth = 0;
+            ViewModelPCBBase.SetOffsets(0, 0);
+            ViewModelLine.SetOffsets(0, 0);
             componentViews?.Clear();
             actualLayers?.Clear();
             allNets?.Clear();
@@ -466,11 +468,11 @@ namespace Ui.Modules.ModuleName.Implementations
                 x *= -1;
                 if (bounds.X < 0)
                 {
-                    y += bounds.Width;
+                    x += bounds.Width;
                 }
                 else
                 {
-                    y -= bounds.Width;
+                    x -= bounds.Width;
                 }
             }
 

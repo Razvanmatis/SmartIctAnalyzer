@@ -206,6 +206,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         private void ResetView(ResetViewEvent obj)
         {
             SetComponentAttributes(componentHandler.ResetView(obj, GetComponentAttributes(), SetShowButtonsVisibility));
+            ComponentViews = componentHandler.GetComponentsView();
         }
 
         private void MoveMouseHandler(MouseEventArgs obj)
