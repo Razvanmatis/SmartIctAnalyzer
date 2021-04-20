@@ -38,7 +38,6 @@ namespace Ui.Modules.ModuleName.Implementations
             this.logger = logger;
             this.resultModel = resultModel;
             this.generalProjectHandler = generalProjectHandler;
-            eventService.Subscribe<SelectBomFinishEvent>(PerformAfterBomAction);
         }
 
         public bool CheckAndPerformBomParsing()
@@ -97,7 +96,7 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
-        private void PerformAfterBomAction(SelectBomFinishEvent eventData)
+        public void PerformAfterBomAction(SelectBomFinishEvent eventData)
         {
             if (bomView != null && (eventData == null || !eventData.WasManuallyClosed))
             {

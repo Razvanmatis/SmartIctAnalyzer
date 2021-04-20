@@ -111,6 +111,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             eventService.Subscribe<HandleDropEvent>(async (x) => await dropHandler.HandleDropEventMethod(x, ResetAll, ResetTestCoverage, ActionOfItems).ConfigureAwait(false));
             eventService.Subscribe<ChangeExportMenuItemEnabledStateEvent>(HandleChangeExportMenuItemState);
             eventService.Subscribe<ComponentsImportFinishedEvent>(HandleComponentImportFinishedEvent);
+            eventService.Subscribe<SelectBomFinishEvent>(PerformAfterBomAction);
             grpcParser.ChangeIpAdressOfClient(settingsData.IPAddress);
             ResetAllMenuItems();
         }
@@ -314,6 +315,11 @@ namespace Ui.Modules.ModuleName.ViewModels
             eventService.Publish(new SetBusyEvent(true));
             await Task.Run(() => svfHandler.HandleSvfFileGeneration(projectHandlerToUse)).ConfigureAwait(false);
             eventService.Publish(new SetBusyEvent(false));
+        }
+
+        private void PerformAfterBomAction(SelectBomFinishEvent obj)
+        {
+            bomHandler.PerformAfterBomAction(obj);
         }
 
         private void HandleChangeExportMenuItemState(ChangeExportMenuItemEnabledStateEvent obj)

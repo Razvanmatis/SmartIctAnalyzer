@@ -32,7 +32,6 @@ namespace Ui.Modules.ModuleName.Implementations
             this.manifestHandler = manifestHandler;
             this.logger = logger;
             this.dialogSelector = dialogSelector;
-            eventService.Subscribe<CloseAllSettingsEvent>(CloseAllSettingsView);
         }
 
         public void OpenAllSettingsView()
@@ -78,7 +77,7 @@ namespace Ui.Modules.ModuleName.Implementations
             projectHandlerToUse.ExportSettingsFileContent(data, fileName);
         }
 
-        private void CloseAllSettingsView(CloseAllSettingsEvent obj)
+        public void CloseAllSettingsView(CloseAllSettingsEvent obj)
         {
             if (allSettingsView != null)
             {

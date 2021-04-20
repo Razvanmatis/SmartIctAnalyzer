@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Ui.Modules.ModuleName.Events;
 
 namespace Ui.Modules.ModuleName.Interfaces
 {
@@ -11,5 +12,7 @@ namespace Ui.Modules.ModuleName.Interfaces
         void ResetBomView();
 
         void OpenBomView(bool autoMode = false);
+
+        void PerformAfterBomAction(SelectBomFinishEvent eventData);
     }
 }

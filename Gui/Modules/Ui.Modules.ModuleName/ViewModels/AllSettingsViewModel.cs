@@ -14,6 +14,7 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         private readonly IEventService eventService;
         private readonly ISettingsData settingData;
+        private ISettingsHandler settingsHandler;
         private readonly IGrpcClientParserHandler grpcParser;
         private readonly ILogger logger;
 
@@ -22,13 +23,16 @@ namespace Ui.Modules.ModuleName.ViewModels
             IEventService eventService,
             ISettingsData settingData,
             IGrpcClientParserHandler grpcParser,
-            ILogger logger)
+            ILogger logger,
+            ISettingsHandler settingsHandler)
         {
             SettingsService = settingsService;
             this.eventService = eventService;
+            this.settingsHandler = settingsHandler;
             this.logger = logger;
             this.grpcParser = grpcParser;
             this.settingData = settingData;
+            eventService.Subscribe<CloseAllSettingsEvent>(CloseAllSettingsView);
             AfterSaveAction = async () => await HandleAfterSave().ConfigureAwait(false);
         }
 
@@ -41,6 +45,11 @@ namespace Ui.Modules.ModuleName.ViewModels
             settingData.InitContent();
             eventService.Publish(new CloseAllSettingsEvent(false));
             await TryGrpcConnection().ConfigureAwait(false);
+        }
+
+        private void CloseAllSettingsView(CloseAllSettingsEvent obj)
+        {
+            settingsHandler.CloseAllSettingsView(obj);
         }
 
         private async Task TryGrpcConnection()
