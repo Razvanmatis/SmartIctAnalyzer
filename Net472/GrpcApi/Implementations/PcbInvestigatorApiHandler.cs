@@ -60,10 +60,6 @@ namespace GrpcApi.Implementations
             return listResults;
         }
 
-        /// <summary>
-        /// Get all components of the PCB investigator API
-        /// </summary>
-        /// <returns>a list with the new converted components</returns>
         public IGrpcResult GetAllComponents(string steps)
         {
             Stopwatch sw = Stopwatch.StartNew();
@@ -130,8 +126,7 @@ namespace GrpcApi.Implementations
                 string[] stepsArray = steps.Split(';');
                 foreach (var st in stepsArray)
                 {
-                    int value = 0;
-                    if (int.TryParse(st, out value))
+                    if (int.TryParse(st, out int value))
                     {
                         stepsToConsider.Add(value);
                     }

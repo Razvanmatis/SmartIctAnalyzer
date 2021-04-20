@@ -14,9 +14,9 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         private readonly IEventService eventService;
         private readonly ISettingsData settingData;
-        private ISettingsHandler settingsHandler;
         private readonly IGrpcClientParserHandler grpcParser;
         private readonly ILogger logger;
+        private readonly ISettingsHandler settingsHandler;
 
         public AllSettingsViewModel(
             ISettingsService settingsService,
