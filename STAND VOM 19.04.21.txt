@@ -1,3 +1,0 @@
-ram_added_component_interface :
-introduced interface for component view handling:
-1812addc291644de055981f060d6c2e8373ac92b
