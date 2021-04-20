@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.17-beta" />
+    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.20-beta" />
   </ItemGroup>
 
   <ItemGroup>

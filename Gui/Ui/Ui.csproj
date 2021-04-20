@@ -17,8 +17,8 @@
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
     <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.3-beta" />
     <PackageReference Include="ProMik.BSDL.Processor" Version="1.0.3-beta" />
-    <PackageReference Include="ProMik.Core" Version="1.0.17-beta" />
-    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.17-beta" />
+    <PackageReference Include="ProMik.Core" Version="1.0.20-beta" />
+    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.20-beta" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ui.Core\Ui.Core.csproj" />

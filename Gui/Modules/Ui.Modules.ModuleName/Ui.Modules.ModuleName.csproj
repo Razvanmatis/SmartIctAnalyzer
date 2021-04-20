@@ -15,7 +15,7 @@
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="3.1.0" />
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
     <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.3-beta" />
-    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.17-beta" />
+    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.20-beta" />
     <PackageReference Include="ProMik.UI.WPF" Version="1.0.15-beta" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.ObjectModel" Version="4.3.0" />
