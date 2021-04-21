@@ -7,15 +7,15 @@ First of all there has been reflected which programming language to use for crea
     \centering
     \begin{tabular}{p{0.15\linewidth} | p{0.5\linewidth} | p{0.35\linewidth}}
       Programming language  & Benefits & Disadvantages \\ \hline
-      C\# & modern GUI applications possible, powerful, knowledge already available, already being used at ProMik GmbH & - \\
-      Java Swing & GUI applications possible & no loose coupling available, just little knowledge available, not modern and powerful \\ 
+      C\# & modern GUI applications possible, powerful, knowledge already available, already being used at ProMik GmbH & - \\ \hline
+      Java Swing & GUI applications possible & no loose coupling available, just little knowledge available, not modern and powerful \\ \hline
 			Java FX & modern GUI applications possible, powerful & no knowledge available, not being used at all at ProMik GmbH \\ 
     \end{tabular}
     \caption{Programming languages comparison}
     \label{tab:programmingLanguages}
 \end{table}
 
-As stated in \ref{tab:programmingLanguages} it will be clear that the choice of the programming language to use finally turned into C\# as the advantages convinced.
+As stated in table \ref{tab:programmingLanguages} it will be clear that the choice of the programming language to use finally turned into C\# as the advantages convinced.
 
 	\section{Integrated development environment to choose}
 Now there should be chosen an \ac{IDE} for creating the software with the previously concluded programming language as well:
@@ -24,15 +24,15 @@ Now there should be chosen an \ac{IDE} for creating the software with the previo
     \centering
     \begin{tabular}{p{0.25\linewidth} | p{0.4\linewidth} | p{0.35\linewidth}}
       \ac{IDE}  & Benefits & Disadvantages \\ \hline
-      JetBrains Rider & powerful & not for free available \\
-      Visual Studio Code & for free available & no NuGet package manager available \\ 
+      JetBrains Rider & powerful & not for free available \\ \hline
+      Visual Studio Code & for free available & no NuGet package manager available \\ \hline
 			Visual Studio 2019 & powerful, for free available, already being used within ProMik GmbH & - \\ 
     \end{tabular}
     \caption{IDE comparison}
     \label{tab:ides}
 \end{table}
 
-As compared in \ref{tab:ides} it sticks out that Visual Studio 2019 will be the choice for creating the new software as it's benefits are overbalanced. \newline
+As compared in table \ref{tab:ides} it sticks out that Visual Studio 2019 will be the choice for creating the new software as it's benefits are overbalanced. \newline
 
 	\section{Application structure to consider}
 Regarding the application structure there was the deliberation about how to use the \ac{PCB}-Investigator \ac{API} as efficient as possible without having the need of installing it on every machine which runs the new tool as there is the requirement of having a valid license for using it. The idea came up to provide on one side a stand alone application which uses the \ac{PCB}-Investigator \ac{API} as a server and on the other side the \ac{GUI} application as client software which is possible to connect to the server. In that case this server could potentially run just on one machine and would be available for all other clients which are in the same network.
@@ -45,7 +45,7 @@ Regarding the application structure there was the deliberation about how to use 
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:clientServerStructure} it is clear that following that idea a most flexible solution with as less restrictions as possible could be created. To make sure that the clients are able to communicate with the server the decision was made to use the \ac{GRPC} protocol for data exchange as it is already known within the company as a reliably protocol and could be used independently on the used programming languages or target frameworks of the projects.
+As shown in figure \ref{fig:clientServerStructure} it is clear that following that idea a most flexible solution with as less restrictions as possible could be created. To make sure that the clients are able to communicate with the server the decision was made to use the \ac{GRPC} protocol for data exchange as it is already known within the company as a reliably protocol and could be used independently on the used programming languages or target frameworks of the projects.
 
 	\section{Target frameworks to use}
 After the programming language, the \ac{IDE} are selected and the application structure itself was defined, now there should be decided which target frameworks to use for all projects:
@@ -54,15 +54,15 @@ After the programming language, the \ac{IDE} are selected and the application st
     \centering
     \begin{tabular}{p{0.2\linewidth} | p{0.45\linewidth} | p{0.35\linewidth}}
       Framework & Benefits & Disadvantages \\ \hline
-      .NET framework & the only compatible one for using the \ac{PCB}-Investigator \ac{API} & not fully compatible with all provided NuGet packages, no longer support \\
-      .NET standard & compatible to be included in .NET framework and .NET core applications & no graphical components available \\ 
+      .NET framework & the only compatible one for using the \ac{PCB}-Investigator \ac{API} & not fully compatible with all provided NuGet packages, no longer support \\ \hline
+      .NET standard & compatible to be included in .NET framework and .NET core applications & no graphical components available \\ \hline
 			.NET core & all modern graphical components available, all NuGet packages compatible & graphical components included even if not used \\ 
     \end{tabular}
     \caption{Framework comparison}
     \label{tab:frameworks}
 \end{table}
 
-As shown in \ref{tab:frameworks} each available framework has some advantages which makes it worth to use. So after thinking about it more in detail the following project structure came out to use:
+As shown in table \ref{tab:frameworks} each available framework has some advantages which makes it worth to use. So after thinking about it more in detail the following project structure came out to use:
 \begin{center}
 	\includegraphics[scale=0.70]{figures/frameworks used.pdf}
 	\begin{figure}[!h]
@@ -82,8 +82,8 @@ Of course the structure of the \ac{PCB}-Investigator \ac{API} itself regarding t
 	\caption{Class diagram of the PCB-Investigator objects of interest}
 	\label{fig:PCB Investigator class diagram}
 \end{figure}
-As shown within \ref{fig:PCB Investigator class diagram} there could be seen that the very first class is the IPCBIWindow which contains a various amount of IStep objects. Within this IStep objects there are many INet objects and ICMPObjects. \newline
-As ProMik GmbH is just interested in extracting all relevant information from any \ac{ODB}++ related projects the following public functions of the \textbf{PCB-Investigator.exe} where used by the created software\cite{.472021b} to extract all INet and ICMPObjects:
+As shown within figure \ref{fig:PCB Investigator class diagram} there could be seen that the very first class is the IPCBIWindow which contains a various amount of IStep objects. Within this IStep objects there are many INet objects and ICMPObjects. \newline
+As ProMik GmbH is just interested in extracting all relevant information from any \ac{ODB}++ related projects the following public functions of the \textbf{PCB-Investigator.exe} where used by the created software to extract all INet and ICMPObjects:\cite{.472021b} \newpage
 
 \begin{itemize}
 	\item IAutomation.IAutomationInit() - initialization of the \ac{API}
@@ -107,7 +107,7 @@ After knowing what kind of functions to be used and which structures are availab
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:classStructureAfterConvertion} it will be clear that the new object structure just contains five main components
+As shown in figure \ref{fig:classStructureAfterConvertion} it will be clear that the new object structure just contains five main components
 \begin{itemize}
 	\item PCBComponent - the main component of interest containing further objects with information about their geometric, functional attributes and connection pins
 	\item Pin - the connection component of a PCBComponent which contains net objects and information about the pin name and its type
@@ -126,7 +126,7 @@ To make sure for having a highest level on flexibility of course as top level ob
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:PhysicalObjectDependencies} it is possible to map all physical existing objects easily in complete way into the object orientation which is used by the programming language by using this class structure.
+As shown in figure \ref{fig:PhysicalObjectDependencies} it is possible to map all physical existing objects easily in complete way into the object orientation which is used by the programming language by using this class structure.
 
 	\section{Frameworks and patterns to use}
-To enure a modern, loose coupled appearance of the whole application where it is quit easy possible to build in different kind of extensions there was made the decision of using the \textbf{PRISM framework} for referencing a template as an empty new project. Within that framework already the possibility of using the \textbf{dependency injection framework} is given which should be used as well to make sure to be flexible in changing the implementations used for different interfaces. Further PRISM makes possible to use the modern appearance style from the \textbf{material design framework} which should be used as well to make sure the software looks modern and pretty. To ensure creation of different implementations of interfaces within just one method\cite{JAXenter.2012} there was additionally the need of using the \textbf{factory pattern} at some points. Next there should be used the \textbf{command pattern} to make sure that a loose coupling between views and view-models could be established without any code behind in the views. Finally for being able to work with as many interfaces as possible to ensure easy change of implementations there should be used the \textbf{strategy pattern} which exactly means that there are many implementations of interfaces available\cite{Wikipedia.2021d}.
+To enure a modern, loose coupled appearance of the whole application where it is quit easy possible to build in different kind of extensions there was made the decision of using the \textbf{PRISM framework} for referencing a template as an empty new project. Within that framework already the possibility of using the \textbf{dependency injection framework} is given which should be used as well to make sure to be flexible in changing the implementations used for different interfaces. Further PRISM makes possible to use the modern appearance style from the \textbf{material design framework} which should be used as well to make sure the software looks modern and pretty. To ensure creation of different implementations of interfaces within just one method there was additionally the need of using the \textbf{factory pattern} at some points.\cite{JAXenter.2012} Next there should be used the \textbf{command pattern} to make sure that a loose coupling between views and view-models could be established without any code behind in the views. Finally for being able to work with as many interfaces as possible to ensure easy change of implementations there should be used the \textbf{strategy pattern} which exactly means that there are many implementations of interfaces available.\cite{Wikipedia.2021d}

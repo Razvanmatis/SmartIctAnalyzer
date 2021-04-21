@@ -1,16 +1,5 @@
 \chapter{Conclusion}
 As a conclusion of the creation of the requested tool there could be definitely held that in dependency on all requirements which were communicated by ProMik GmbH and the software developer a quit powerful and feature rich software was provided according to \ref{fig:projectOverview}. 
-
-\begin{center}
-	\includegraphics[width=1.00\linewidth]{figures/poster.pdf}
-	\begin{figure}[!h]
-	\caption{Overview of the whole software usage}
-	\label{fig:poster}
-	\end{figure}
-\end{center}
-
-As shown in \ref{fig:poster} there was provided a software which is able to communicate to a stand alone \ac{GRPC} server which uses the \ac{PCB}-Investigator \ac{API} for reading out all components of a \ac{ODB}++ project. Then first all elements will be rendered in plain way. After the user then specified the test coverage related settings and performs the determination of all test coverage related objects of the boundary scan mechanism then the objects will be classified in different groups. Next using all identified \ac{JTAG} devices the user is possible to include a \ac{BSDL} file for gathering the pin information and considering them for the creation of \ac{SVF} files which requires the default vector that further will be read out by a connected programmer from ProMik GmbH. These created files finally could be played for determining all mismatches between the TDI and TDO vectors.
-
 All at the beginning requested requirements from \ref{items:req} were successfully implemented. Further there were provided the following features as bonus content:
 \begin{itemize}
 	\item Mirroring of the whole rendered project across the x and y axis is possible

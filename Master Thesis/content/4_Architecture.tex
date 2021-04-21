@@ -10,7 +10,7 @@ Within this chapter the realized architecture of the implemented software will b
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:projectOverview} it will be clear that the whole project is organized in different kind of folders which contain C\# projects. On one side there is the \textbf{Gui} folder containing the following projects:
+As shown in figure \ref{fig:projectOverview} it will be clear that the whole project is organized in different kind of folders which contain C\# projects. On one side there is the \textbf{Gui} folder containing the following projects:
 \begin{itemize}
 	\item Ui.Core - this project contains the region names and the view model bases which should be inherited and was provided by the PRISM framework.
 	\item Ui - within the project the mainView and mainViewModel could be found (Was initially created by the PRISM framework)
@@ -81,7 +81,7 @@ To make sure that the server itself knows which data it has to open actually onl
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:grpcApiPap} it will be clear that the program schedule ends with the serialization of all objects. To be able to do that in background there were created a couple of lists containing each new element to be saved. Finally only the index from the list according an object is being used for referencing it.
+As shown in figure \ref{fig:grpcApiPap} it will be clear that the program schedule ends with the serialization of all objects. To be able to do that in background there were created a couple of lists containing each new element to be saved. Finally only the index from the list according an object is being used for referencing it.
 
 \begin{lstlisting}[language={[Sharp]C},caption={GetPinsGrpc},captionpos=b,label=lst:GetPinsGrpc]
 	public IList<PinGrpc> GetPinsGrpc(IList<IPinComponent> allPins, IList<INetComponent> allNets)
@@ -105,7 +105,7 @@ As shown in \ref{fig:grpcApiPap} it will be clear that the program schedule ends
 	}
 \end{lstlisting}
 
-As described in \ref{lst:GetPinsGrpc} there could be seen that for creation of the serialized objects there were a couple of helper methods used to ensure a structured way of working. Further it will be clear that working with a list containing just int objects for referencing the net objects was necessary.
+As described in listing \ref{lst:GetPinsGrpc} there could be seen that for creation of the serialized objects there were a couple of helper methods used to ensure a structured way of working. Further it will be clear that working with a list containing just int objects for referencing the net objects was necessary.
 
 	\section{Grpc Client for connecting to the Server and parsing all objects}
 For being able to request all objects within a \ac{ODB}++ project there is the GrpcClientParser project available which was introduced as a .NET standard 2.1 project for making sure to be able to include it in as many other projects as possible. That means in detail that this whole project, which is being provided as a \ac{GRPC} client project, could also be included just as a dynamic link library file within other projects to be able to handle the requests in most flexible way. The functionality of this project will be automatically be called by clicking on the menu item \textbf{Open ODB project folder}
@@ -118,7 +118,7 @@ For being able to request all objects within a \ac{ODB}++ project there is the G
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:IGrpcClientParserHandler} the main interface of this project provides functions for being able to request all objects just by passing one path, by passing one path and using its zip content as well as the functionality of being able to import data from a \ac{JSON} formatted file. Further it has some functions regarding the connection state of the server availability. The IParsedResult interface is a model holding all necessary data of interests. It contains all pins, nets and components of one project.
+As shown in figure \ref{fig:IGrpcClientParserHandler} the main interface of this project provides functions for being able to request all objects just by passing one path, by passing one path and using its zip content as well as the functionality of being able to import data from a \ac{JSON} formatted file. Further it has some functions regarding the connection state of the server availability. The IParsedResult interface is a model holding all necessary data of interests. It contains all pins, nets and components of one project. \newpage
 
 \begin{lstlisting}[language={[Sharp]C},caption={GetComponentByType},captionpos=b,label=lst:GetComponentByType]
 	public static IPCBComponent GetComponentByType(
@@ -151,15 +151,12 @@ As shown in \ref{fig:IGrpcClientParserHandler} the main interface of this projec
 				{
 						return new PCBIc(geometricAttributes, functionalAttributes, connections);
 				}
-				else if (MatchesType(conDef, beginPartName, beginRef, false))
-				{
-						return new PCBConnector(geometricAttributes, functionalAttributes, connections);
-				}
+				...
 	}
 	...
 \end{lstlisting}
 
-As stated within \ref{lst:GetComponentByType} this is one of the main \textbf{factory pattern} using functions as there will be generated different kind of implementations of one interface in dependency on input variables passed which are defining the object identifier. Further there is the possibility provided of using a CsvReader helper class for being able to read in \ac{CSV} files which contain all values of the objects of one project in dependency on their \textbf{Ref} attribute.
+As stated within listing \ref{lst:GetComponentByType} this is one of the main \textbf{factory pattern} using functions as there will be generated different kind of implementations of one interface in dependency on input variables passed which are defining the object identifier. Further there is the possibility provided of using a CsvReader helper class for being able to read in \ac{CSV} files which contain all values of the objects of one project in dependency on their \textbf{Ref} attribute.
 
 	\section{GUI}
 Within this section the \textbf{Gui} folder and its project related contents which are all implemented using the .NET Core 3.1 framework will be described more in detail.
@@ -175,7 +172,7 @@ The mainView and mainViewModel are responsible for creation of the view to be st
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:mainView} there are some regions defined which are implemented at another project place and will be included dynamically during the software life cycle for having the maximum amount of loose coupling and the opportunity of changing templates to be used. The detailed content of each region are:
+As shown in figure \ref{fig:mainView} there are some regions defined which are implemented at another project place and will be included dynamically during the software life cycle for having the maximum amount of loose coupling and the opportunity of changing templates to be used. The detailed content of each region are:
 \begin{itemize}
 	\item MenuRegion - contains all menu items which could be clicked by the user for interaction with the software (importing, exporting of data, showing all settings, \ac{etc.})
 	\item LayerRegion - this region contains on one side all received layers and its objects which can be shown by the \ac{PCB}-Investigator \ac{API} and on the other side all test coverage related object types which could be selected to be shown (pull down resistors, ics, pull up resistors, \ac{etc.})
@@ -185,7 +182,8 @@ As shown in \ref{fig:mainView} there are some regions defined which are implemen
 
 		
 		\subsection{Events}
-For being able to interact project wide with different classes within different projects without having the need always to reference directly a object of class of interest there was used a general event handling by using the ProMik.Core.Services.EventService.PrismEventService which is based on the PRISM event service as a NuGet referenced package. In general the event handling works on one side by subscribing to any event type and on the other by publishing that specific event. To specify an event which could use by this service it was necessary to inherit from the class EventPayload. The following events are being specified within the Gui project itself:
+For being able to interact project wide with different classes within different projects without having the need always to reference directly a object of class of interest there was used a general event handling by using the ProMik.Core.Services.EventService.PrismEvent\linebreak
+Service which is based on the PRISM event service as a NuGet referenced package. In general the event handling works on one side by subscribing to any event type and on the other by publishing that specific event. To specify an event which could use by this service it was necessary to inherit from the class EventPayload. The following events are being specified within the Gui project itself:
 \begin{itemize}
 	\item AddPcbObjectsEvent - this event occurs when the importing of objects from the \ac{PCB}-Investigator \ac{API} has been finished
 	\item ChangeExportMenuItemEnabledStateEvent - will be created to toggle the enabled states of menu items for exporting data into file
@@ -206,13 +204,13 @@ For being able to interact project wide with different classes within different 
 eventService.Subscribe<SetBusyEvent>(HandleIsBusyEvent, ThreadOption.UIThread);
 \end{lstlisting}
 
-As presented in \ref{lst:Subscribingtoanevent} there further could be specified some thread options to be considered at subscribing to an event. In most cases there was just the thread option UIThread necessary.
+As presented in listing \ref{lst:Subscribingtoanevent} there further could be specified some thread options to be considered at subscribing to an event. In most cases there was just the thread option UIThread necessary.
 
 \begin{lstlisting}[language={[Sharp]C},caption={Publishing of an event},captionpos=b,label=lst:Publishingofanevent]
 eventService.Publish(new SetBusyEvent(true));
 \end{lstlisting}
 
-As shown in \ref{lst:Publishingofanevent} publishing could be realized just by passing a constructor of the event of interest containing all necessary parameters for it.
+As shown in listing \ref{lst:Publishingofanevent} publishing could be realized just by passing a constructor of the event of interest containing all necessary parameters for it.
 
 		\subsection{Helper}
 Now for being able to perform different kind of additional work for finishing tasks there was the need of providing some helper classes which could be used for that:
@@ -237,7 +235,6 @@ Now for being able to perform different kind of additional work for finishing ta
 		{
 				return;
 		}
-
 		if ((bool)e.NewValue)
 		{
 				fe.AllowDrop = true;
@@ -245,15 +242,11 @@ Now for being able to perform different kind of additional work for finishing ta
 				fe.PreviewDragOver += OnPreviewDragOver;
 		}
 		else
-		{
-				fe.AllowDrop = false;
-				fe.Drop -= OnDrop;
-				fe.PreviewDragOver -= OnPreviewDragOver;
-		}
+		...
 }
 \end{lstlisting}
 
-As shown in \ref{lst:OnPropChanged} within the function for registering the drop mechanism there will be added specific methods to be called when the Drop or PreviewDragOver event occur of any rendered object.
+As shown in listing \ref{lst:OnPropChanged} within the function for registering the drop mechanism there will be added specific methods to be called when the Drop or PreviewDragOver event occur of any rendered object.
 
 		\subsection{Interfaces}
 To be able to work as flexible as possible with the used logic of course there was the need of providing several interfaces which could be used by different implementations to be registered:
@@ -285,20 +278,20 @@ public interface IComponentViewModel
 		Task ShowLayerObjects(IList<string> layersToShow);
 }
 \end{lstlisting}
-As shown in \ref{lst:IComponentViewModel} there were Task objects used for being able to work with the async await operations to make sure not to block the Gui while operation is running\cite{BillWagner.4122021}.
+As shown in listing \ref{lst:IComponentViewModel} there were Task objects used for being able to work with the async await operations to make sure not to block the Gui while operation is running.\cite{BillWagner.4122021}
 
 		\subsection{Implementations}
 As there were previously many interfaces introduced of course there should be as many implementations for usage provided:
 
 \begin{center}
-	\includegraphics[scale=0.7]{figures/modulesImplementations.png}
+	\includegraphics[scale=0.55]{figures/modulesImplementations.png}
 	\begin{figure}[!h]
 	\caption{All implementations within the Ui.Modules.ModuleName project}
 	\label{fig:modulesImplementations}
 	\end{figure}
 \end{center}
 
-As displayed in \ref{fig:modulesImplementations} there are more implementations available as predefined before within the Interfaces section. That comes from the fact that there are much more interfaces available in other projects which needs to be considered on that place as the main sequences are all being triggered from that project.
+As displayed in figure \ref{fig:modulesImplementations} there are more implementations available as predefined before within the Interfaces section. That comes from the fact that there are much more interfaces available in other projects which needs to be considered on that place as the main sequences are all being triggered from that project.
 
 \begin{lstlisting}[language={[Sharp]C},caption={OpenGenericDialog method of IDialogSelector implementation},captionpos=b,label=lst:OpenGenericDialog]
 public bool OpenGenericDialog(DialogType dialogType, string title, string errorMessage, out string selectedTarget, string filter = "")
@@ -323,7 +316,7 @@ public bool OpenGenericDialog(DialogType dialogType, string title, string errorM
 		...
 \end{lstlisting}
 
-As stated in \ref{lst:OpenGenericDialog} there was used the VistaOpenFileDialog and VistaSaveFileDialog from an external library used by the NuGet package manager for handling the path selection within a dialog. If needed just by using another implementation of this interface the complete handling and used packages for it could be easily changed.
+As stated in listing \ref{lst:OpenGenericDialog} there was used the VistaOpenFileDialog and VistaSaveFileDialog from an external library used by the NuGet package manager for handling the path selection within a dialog. If needed just by using another implementation of this interface the complete handling and used packages for it could be easily changed.\newpage
 
 		\subsection{Model}
 To be able to hold different kind of data project wide and access it by dependency injection in comfortable way there are some models been defined:
@@ -343,7 +336,8 @@ public class ResultModel : IResultModel
 		{
 				foreach (var comp in Result.Components)
 				{
-						if (!string.IsNullOrEmpty(comp.FunctionalAttributes.Value))
+						if (!string.IsNullOrEmpty(comp.
+							FunctionalAttributes.Value))
 						{
 								return true;
 						}
@@ -354,7 +348,7 @@ public class ResultModel : IResultModel
 }
 \end{lstlisting}
 
-As stated in \ref{lst:ResultModel} there was additionally to the property a helperfunction defined for being able to determine whether all values from \ac{BOM} import should be considered or not. In dependency on that check later the logic is able to highlight all objects which have no valid value received.
+As stated in listing \ref{lst:ResultModel} there was additionally to the property a helperfunction defined for being able to determine whether all values from \ac{BOM} import should be considered or not. In dependency on that check later the logic is able to highlight all objects which have no valid value received.
 
 		\subsection{ViewModels}
 Within that folder are all necessary viewModels for that project are defined:
@@ -367,7 +361,7 @@ Within that folder are all necessary viewModels for that project are defined:
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:uiModulesViewModels} there were used the following main types of viewModels:
+As shown in figure \ref{fig:uiModulesViewModels} there were used the following main types of viewModels:
 \begin{itemize}
 	\item Gui related viewModels which are necessary to provide functionality for visible and click able content by the user within the main view
 	\item A helper viewModel for representation of the origin of the coordinate system
@@ -386,7 +380,7 @@ That folder contains all views for representation of specific regions of the mai
 	\item PCBLineDataTemplate - for being able to show connections between objects that view will be considered as template for drawing the lines
 	\item PCBTestpointDataTemplate - as the testpoint itself is not a rectangle but a circle it has it's own template defined in that view
 	\item SelectBomView - to make sure to display a window containing all \ac{BOM} related settings before importing any \ac{CSV} file this view was provided
-\end{itemize}
+\end{itemize}\newpage
 
 \begin{lstlisting}[language=XML,caption={PCBLineDataTemplate},captionpos=b,label=lst:PCBLineDataTemplate]
 ...
@@ -411,7 +405,7 @@ That folder contains all views for representation of specific regions of the mai
 ...
 \end{lstlisting}
 
-As shown in \ref{lst:PCBLineDataTemplate} there could be seen that to ensure a loose coupling implementation there are being used many bindings to values and commands. Further it will be clear that this template should only be used if the representative object type is a ViewModelLine. By using the command Hide it will be possible to hide any rendered line completely by choosing the action within the context menu of the right mouse button click.
+As shown in listing \ref{lst:PCBLineDataTemplate} there could be seen that to ensure a loose coupling implementation there are being used many bindings to values and commands. Further it will be clear that this template should only be used if the representative object type is a ViewModelLine. By using the command Hide it will be possible to hide any rendered line completely by choosing the action within the context menu of the right mouse button click.
 
 	\section{Test coverage determination of loaded project}
 The \textbf{TestCoverage} project which was implemented using the .NET Standard 2.1 framework is responsible for determining all test related objects and different kind of test coverage results to be displayed within the application as plain text. It consists of the following sub folders and content:
@@ -465,51 +459,40 @@ public interface ITestCoverageDeterminer
 }
 \end{lstlisting}
 
-As stated in \ref{lst:ITestCoverageDeterminer} it is clear that for being able to perform any GetTestCoverage function there will be used a enum type of TestCoverageType which could be easily extended for future purposes. Next in dependency on two received objects its possible to detect whether any test coverage is available or not to decide later on whether to draw the connection lines between objects in green color or just black.
+As stated in listing \ref{lst:ITestCoverageDeterminer} it is clear that for being able to perform any GetTestCoverage function there will be used a enum type of TestCoverageType which could be easily extended for future purposes. Next in dependency on two received objects its possible to detect whether any test coverage is available or not to decide later on whether to draw the connection lines between objects in green color or just black.
 
-\begin{lstlisting}[language={[Sharp]C},caption={DetermineTestCoverageRelatedObjects of TestCoverageBoundaryScanDeterminer},captionpos=b,label=lst:DetermineTestCoverageRelatedObjects]
-public TestCoverageItems DetermineTestCoverageRelatedObjects(
-		IList<INetComponent> nets,
-		IdentifierBlacklistContainer content,
+\begin{lstlisting}[language={[Sharp]C},caption={DetermineTestCoverageRelatedObjects},captionpos=b,label=lst:DetermineTestCoverageRelatedObjects]
+public TestCoverageItems DetermineTestCoverageRelatedObjects(IList<INetComponent> nets, IdentifierBlacklistContainer content,
 		TestCoverageItems items)
 {
-		if (nets != null && nets.Count > 0)
-		{
-				DefineGndNets(nets, content.GndNetIdentifier, content.GndNetBlacklist);
-				DefinePowerNets(nets, content.PowerNetIdentifier, content.PowerNetBlacklist);
-				DefineJtagNets(nets, content.JTAGNetIdentifier, content.JTAGNetBlacklist);
-				Dictionary<TestCoverageObject, IList<IPCBComponent>> mapObjects = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
-				testCoverageDataModel.Ics = DefineIcs();
-				testCoverageDataModel.PullUps = DefinePullUpResistors();
-				testCoverageDataModel.PullDowns = DefinePullDownResistors();
-				mapObjects.Add(TestCoverageObject.PULLUP, testCoverageDataModel.PullUps);
-				mapObjects.Add(TestCoverageObject.PULLDOWN, testCoverageDataModel.PullDowns);
-				mapObjects.Add(TestCoverageObject.JTAG, testCoverageDataModel.Ics);
-				mapObjects.Add(TestCoverageObject.OTHERS, DefineOthers());
-				LogTestCoverageObjects(mapObjects);
-				eventService.Publish(new AddTestCoverageObjectsEvent(mapObjects));
-				eventService.Publish(new 
-					TestCoverageForDeterminingObjectsPerformedEvent(
-					TESTCOVERAGEOBJECTS.ToList()));
-				items.ItemTestCoverageObjects = TestCoverageBoundaryScanDeterminer.ITEMSELECTED;
-				if (mapObjects.Count > 0)
-				{
-						items.TestCoverageMenuItemsEnabled = true;
-				}
-
-				CheckDoubleMatching(testCoverageDataModel.PullDowns, testCoverageDataModel.PullUps);
-				LogResults();
-		}
-		else
-		{
-				items.ItemTestCoverageObjects = TestCoverageBoundaryScanDeterminer.ITEMNOTSELECTED;
-		}
-
-		return items;
+  if (nets != null && nets.Count > 0)
+	{
+	 DefineGndNets(nets, content.GndNetIdentifier, content.GndNetBlacklist);
+	 ...
+	 Dictionary<TestCoverageObject, IList<IPCBComponent>> mapObjects = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
+	 testCoverageDataModel.Ics = DefineIcs();
+	 ...
+	 mapObjects.Add(TestCoverageObject.PULLUP, testCoverageDataModel.PullUps);
+	 ...
+	 LogTestCoverageObjects(mapObjects);
+	 ...
+	 eventService.Publish(new 
+	 TestCoverageForDeterminingObjectsPerformedEvent(
+	 TESTCOVERAGEOBJECTS.ToList()));
+	 items.ItemTestCoverageObjects = TestCoverageBoundaryScanDeterminer.ITEMSELECTED;
+	 ...
+	 CheckDoubleMatching(testCoverageDataModel.PullDowns, testCoverageDataModel.PullUps);
+	 LogResults();
+	}
+	else
+	{
+	 items.ItemTestCoverageObjects = TestCoverageBoundaryScanDeterminer.ITEMNOTSELECTED;
+	}
+	return items;
 }
 \end{lstlisting}
 
-As shown in \ref{lst:DetermineTestCoverageRelatedObjects} there are first of all within the function of defining all test coverage related objects, the nets are being defined before then all test coverage related objets are being determined. Finally a dictionary containing all objects in relation to a test coverage object type is being filled and send by an event to be filled within the LayerRegion for providing the user the possibility of selecting them to be showed. As a feature there will be checked additionally if some components were detected being more than one test coverage related object. If this is the case then some logging output as a warning category will be performed to inform the user about settings to be adapted in case of improving the identifier or blacklist of specific object types.
+As shown in listing \ref{lst:DetermineTestCoverageRelatedObjects} there are first of all within the function of defining all test coverage related objects, the nets are being defined before then all test coverage related objects are being determined. Finally a dictionary containing all objects in relation to a test coverage object type is being filled and send by an event to be filled within the LayerRegion for providing the user the possibility of selecting them to be showed. As a feature there will be checked additionally if some components were detected being more than one test coverage related object. If this is the case then some logging output as a warning category will be performed to inform the user about settings to be adapted in case of improving the identifier or blacklist of specific object types.
 
 	\section{Pin information extraction}
 To be able to extract all pin information of all \ac{JTAG} related devices of any \ac{ODB}++ project into separate files to be created there is the project \textbf{PinInformationExtractor} available which was created using the .NET standard 2.1 framework as well. It contains the following sub folders with the specific content and will be used by clicking on the menu item \textbf{Test coverage -> Export PIN connection information into file}:
@@ -528,18 +511,11 @@ public interface IPinInformationExtractor
 			tdiIdentifier = "tdi", string tdoIdentifier = "tdo",
 			string tckIdentifier = "tck", string tmsIdentifier
 			= "tms");
-		List<string> GetAllGroundPins(List<PinConnectionInfo> pins);
-		List<string> GetAllPowerPins(List<PinConnectionInfo> pins);
-		List<JtagConnectionInfo> GetAllPinInformation(IList
-			<IPCBComponent> ics, IList<IPCBComponent> pullUps, IList
-			<IPCBComponent> pullDowns, string tdiIdentifier = "tdi",
-			string tdoIdentifier = "tdo", string tckIdentifier
-			= "tck", 
-			string tmsIdentifier = "tms");
+		...
 }
 \end{lstlisting}
 
-As shown in \ref{lst:IPinInformationExtractor} there are much of the passed parameters for creation of the pin information file set per default to a specific value which is being used by the main routine actually. By preallocation of parameters the user does not have to exclusively define them manually when calling that specific method which leads to a more comfortable way of working.
+As shown in listing \ref{lst:IPinInformationExtractor} there are much of the passed parameters for creation of the pin information file set per default to a specific value which is being used by the main routine actually. By preallocation of parameters the user does not have to exclusively define them manually when calling that specific method which leads to a more comfortable way of working.
 
 \begin{center}
 	\includegraphics[scale=0.8]{figures/pinTypes.pdf}
@@ -549,7 +525,7 @@ As shown in \ref{lst:IPinInformationExtractor} there are much of the passed para
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:pinTypes} there will be determined a couple of different pin types for consideration within the exported \ac{JSON} text file of all \ac{JTAG} devices:
+As shown in figure \ref{fig:pinTypes} there will be determined a couple of different pin types for consideration within the exported \ac{JSON} text file of all \ac{JTAG} devices:
 \begin{enumerate}\addtocounter{enumi}{-1}
 	\item A pin which is connected to an unknown component
 	\item A pin which is connected to a pull up resistor
@@ -571,23 +547,21 @@ Now for being able to create \ac{SVF} files with all specific commands needed fo
 	\end{figure}
 \end{center}
 
-As shown within \ref{fig:svfSequence} there is the need of selecting manually all \ac{BSDL} files for all \ac{JTAG} devices in order to get all pin information regarding their boundary scan compatibility and position within the \ac{SVF} test vector to be generated. To provide all necessary functionality to be able to perform that steps the project consists of the following sub folders and classes:
+As shown within figure \ref{fig:svfSequence} there is the need of selecting manually all \ac{BSDL} files for all \ac{JTAG} devices in order to get all pin information regarding their boundary scan compatibility and position within the \ac{SVF} test vector to be generated. To provide all necessary functionality to be able to perform that steps the project consists of the following sub folders and classes:
 \begin{itemize}
 	\item Interfaces - within that folder all interfaces which are available located at
 	\item Implementations - all implementations of the interfaces are placed within that folder
 	\item Helper - in that folder an exception helper class could be found which was necessary to avoid the \ac{IDE} complaining about catching an general exception
-\end{itemize}
+\end{itemize}\newpage
 
 \begin{lstlisting}[language={[Sharp]C},caption={PullDownSvfWriter},captionpos=b,label=lst:PullDownSvfWriter]
 public class PullDownSvfWriter : ISvfWriter
 {
 		private readonly ISVFHelper svfHelper;
-
 		public PullDownSvfWriter(ISVFHelper svfHelper) 
 		{
 				this.svfHelper = svfHelper;
 		}
-
 		public List<ISvfData> GetSVFFiles(string basePath, string
 			jtagName, List<string> pinLabel, IBSDLOutput bsdlOutput,
 			byte[] defaultVector)
@@ -598,19 +572,17 @@ public class PullDownSvfWriter : ISvfWriter
 						data.Add(svfHelper.GetSvfContent(basePath, jtagName,
 						pin, bsdlOutput, false, false, defaultVector));
 				}
-
 				foreach (var pin in pinLabel)
 				{
 						data.Add(svfHelper.GetSvfContent(basePath, jtagName,
 						pin, bsdlOutput, true, false, defaultVector));
 				}
-
 				return data;
 		}
 }
 \end{lstlisting}
 
-As shown in \ref{lst:PullDownSvfWriter} it will be clear that there is being a ISvfData model used for collecting all necessary information about one \ac{SVF} file. Next as the logic for the pull down resistors is being shown it could be seen that passing on the one side false and on the other side true within the GetSvfContent function means that this is the TDI value to be used. 
+As shown in listing \ref{lst:PullDownSvfWriter} it will be clear that there is being a ISvfData model used for collecting all necessary information about one \ac{SVF} file. Next as the logic for the pull down resistors is being shown it could be seen that passing on the one side false and on the other side true within the GetSvfContent function means that this is the TDI value to be used.\newpage 
 
 \begin{lstlisting}[language={[Sharp]C},caption={GenerateNewVector of SVFHelper},captionpos=b,label=lst:GenerateNewVector]
 private string GenerateNewVector(string pinLabel, bool value, Dictionary<int, IBoundaryCell> boundaryCells, ref int position, byte[] defaultVector)
@@ -625,12 +597,10 @@ private string GenerateNewVector(string pinLabel, bool value, Dictionary<int, IB
 						break;
 				}
 		}
-
 		if (index == 0)
 		{
 				return string.Empty;
 		}
-
 		var vectorArray = new BitArray(defaultVector);
 		try
 		{
@@ -640,7 +610,6 @@ private string GenerateNewVector(string pinLabel, bool value, Dictionary<int, IB
 		{
 				logger.LogMessage(e.Message, LogCategory.ERROR);
 		}
-
 		byte[] resultBytes = new byte[((vectorArray.Length - 1) / 8) + 1];
 		vectorArray.CopyTo(resultBytes, 0);
 		Array.Reverse(resultBytes, 0, resultBytes.Length);
@@ -648,10 +617,10 @@ private string GenerateNewVector(string pinLabel, bool value, Dictionary<int, IB
 }
 \end{lstlisting}
 
-As shown in \ref{lst:GenerateNewVector} there will be first searched after the pin label within the dictionary recevied by the \ac{BSDL} file. If a valid index was found then the default vector will be converted into a bit array and the specific index of the pin will be set to the requested value. Finally the bit array will be converted back to a hexadecimal representation. If there was no index found at all just an empty string will be returned to trigger the logging of missing pin information within the \ac{BSDL} file. The default vector must be read out directly before creation of \ac{SVF} files and contains all actual states of pins in a hexadecimal representation.
+As shown in listing \ref{lst:GenerateNewVector} there will be first searched after the pin label within the dictionary recevied by the \ac{BSDL} file. If a valid index was found then the default vector will be converted into a bit array and the specific index of the pin will be set to the requested value. Finally the bit array will be converted back to a hexadecimal representation. If there was no index found at all just an empty string will be returned to trigger the logging of missing pin information within the \ac{BSDL} file. The default vector must be read out directly before creation of \ac{SVF} files and contains all actual states of pins in a hexadecimal representation.
 
 	\section{Unit tests}
-As unit tests are highly recommended for guaranteeing a high quality of software logic\cite{Udemy.4122021} of course this solution also contains some unit tests which are separated in the \textbf{TestDotNetCore} project which was created using the .NET Core 3.1 framework and the \textbf{TestDotNetFramework} project which was implemented using the .NET Framework 4.72.
+As unit tests are highly recommended for guaranteeing a high quality of software logic of course this solution also contains some unit tests which are separated in the \textbf{TestDotNetCore} project which was created using the .NET Core 3.1 framework and the \textbf{TestDotNetFramework} project which was implemented using the .NET Framework 4.72.\cite{Udemy.4122021}
 
 \begin{center}
 	\includegraphics[scale=0.7]{figures/testSequence.pdf}
@@ -661,7 +630,7 @@ As unit tests are highly recommended for guaranteeing a high quality of software
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:testSequence} there was the need of exporting test related data into a local file which could be read in later for finalizing the tests as the usage of two different \ac{GRPC} related frameworks of project creation made it impossible to test everything just within one test. For that purpose there was introduced the helper class PcbTestObject to provide the following information:
+As shown in figure \ref{fig:testSequence} there was the need of exporting test related data into a local file which could be read in later for finalizing the tests as the usage of two different \ac{GRPC} related frameworks of project creation made it impossible to test everything just within one test. For that purpose there was introduced the helper class PcbTestObject to provide the following information:
 \begin{itemize}
 	\item Name - the name of a component
 	\item TotalAmountOfPins - the total amount of connected pins
@@ -691,69 +660,54 @@ public void TestParsingFromApi()
 }
 \end{lstlisting}
 
-As stated in \ref{lst:TestParsingFromApi} there first of all will be asserted that the received objects by the \ac{GRPC} \ac{API} is not null and the read out content from the \ac{JSON} formatted file contains some objects. Finally there will be called the TestContent function to make sure that all objects equals the necessary information. Further it can be seen that for testing purposes a DebugLogger was generated which implements the ILogger interface in that way that all messages are just being forwarded to the debug line as no other objects are available running this sequence. The -1 parameter within the GetParsedObjectsFromGrpc method defines at the \ac{API} to check for all available steps within the \ac{ODB}++ project as there is the possibility to define specific ones to be considered by using a semicolon separated string.
+As stated in listing \ref{lst:TestParsingFromApi} there first of all will be asserted that the received objects by the \ac{GRPC} \ac{API} is not null and the read out content from the \ac{JSON} formatted file contains some objects. Finally there will be called the TestContent function to make sure that all objects equals the necessary information. Further it can be seen that for testing purposes a DebugLogger was generated which implements the ILogger interface in that way that all messages are just being forwarded to the debug line as no other objects are available running this sequence. The -1 parameter within the GetParsedObjectsFromGrpc method defines at the \ac{API} to check for all available steps within the \ac{ODB}++ project as there is the possibility to define specific ones to be considered by using a semicolon separated string.
 
 	\section{Pipeline configuration}
-The company ProMik GmbH uses gitlab as their internal continuous integration system which is a open source software and provides the possibility of performing different kind of scripts after the build process\cite{.3222021}. According to that fact their was additionally the need of providing a specific \ac{YML} file to make sure that the whole project will be build as executable files in the correct destination folders. The \ac{YML} itself contains different associated lists and scalars which could be performed by the system which reads its statements out\cite{Wikipedia.2021b}. 
+The company ProMik GmbH uses gitlab as their internal continuous integration system which is a open source software and provides the possibility of performing different kind of scripts after the build process.\cite{.3222021} According to that fact their was additionally the need of providing a specific \ac{YML} file to make sure that the whole project will be build as executable files in the correct destination folders. The \ac{YML} itself contains different associated lists and scalars which could be performed by the system which reads its statements out.\cite{Wikipedia.2021b} 
 
 \begin{lstlisting}[language=yaml,caption={YML file for pipeline},captionpos=b,label=lst:ymlFile]
 stages:
   - build
   - staging
   - deploy
-  
 build_win32:
   stage: build
-  tags:
-    - host-windows
-  script: 
-...
-
+	...
 build_win64:
   stage: build
-  tags:
-    - host-windows
-  script: 
-   ...
-
+	...
 build_docs:
   stage: build
-  tags:
-  - host-linux
-  script:
-   ...
+	...
   artifacts:
-   ...
-  timeout: 4 minutes
-  retry: 2
-
+	...
 staging:
   stage: staging
-  tags:
-    - host-linux
-  script:
-   ...
-    
+	...
   dependencies:
     - build_win32
     - build_win64
     - build_docs
-  only:
-    - branches
-
+	...
 deploy:
   stage: deploy
-  tags:
-    - host-linux
-  script:
-    ...
-
+	...
   dependencies:
     - build_win32
     - build_win64
     - build_docs
-  only:
-    - tags
+	...
 \end{lstlisting}
 
-As shown in \ref{lst:ymlFile} the whole file describes the different stages to be performed sequentially. In detail that means first the build process for the x86 and x64 architecture will be performed. If succeeded then the staging process and finally the deploy process will be triggered. Within the staging process all relevant files of the build process including the documentation will be copied to a specified path in dependency on the branch name of the project. The deploy process will only be triggered if a new tag was created to specify accordingly a new version which could potentially be delivered.
+As shown in listing \ref{lst:ymlFile} the whole file describes the different stages to be performed sequentially. In detail that means first the build process for the x86 and x64 architecture will be performed. If succeeded then the staging process and finally the deploy process will be triggered. Within the staging process all relevant files of the build process including the documentation will be copied to a specified path in dependency on the branch name of the project. The deploy process will only be triggered if a new tag was created to specify accordingly a new version which could potentially be delivered.
+
+	\section{Overview of provided features}
+\begin{center}
+	\includegraphics[width=1.00\linewidth]{figures/poster.pdf}
+	\begin{figure}[!h]
+	\caption{Overview of the whole software usage}
+	\label{fig:poster}
+	\end{figure}
+\end{center}
+
+As shown in figure \ref{fig:poster} the used architecture of the software makes sure to provide a software which is able to communicate to a stand alone \ac{GRPC} server which uses the \ac{PCB}-Investigator \ac{API} for reading out all components of a \ac{ODB}++ project. Then first all elements will be rendered in plain way. After the user then specified the test coverage related settings and performs the determination of all test coverage related objects of the boundary scan mechanism then the objects will be classified in different groups. Next using all identified \ac{JTAG} devices the user is possible to include a \ac{BSDL} file for gathering the pin information and considering them for the creation of \ac{SVF} files which requires the default vector that further will be read out by a connected programmer from ProMik GmbH. These created files finally could be played for determining all mismatches between the TDI and TDO vectors.

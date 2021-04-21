@@ -2,20 +2,20 @@
 Within this chapter the fundamentals regarding the later usage for implementation of the project is being described.
 
 	\section{ODB++ project format}
-The \ac{ODB}++ format is a de facto standard format for creation of \ac{CAD} related projects\cite{ODB++Design.5182020} within the circuit board industry. This format itself was released in 1995 and after the component names were added then the suffix ++ was added in 1997. It hierarchically contains all necessary information about the digital circuit diagram in detail:
+The \ac{ODB}++ format is a de facto standard format for creation of \ac{CAD} related projects within the circuit board industry.\cite{ODB++Design.5182020} This format itself was released in 1995 and after the component names were added then the suffix ++ was added in 1997. It hierarchically contains all necessary information about the digital circuit diagram in detail:
 
 \begin{center}
-	\includegraphics[scale=0.70]{figures/odb++_hierarchy_tree.png}
+	\includegraphics[scale=0.65]{figures/odb++_hierarchy_tree.png}
 	\begin{figure}[!h]
 	\caption{ODB++ project structure\cite{.252019}}
 	\label{fig:odb++_hierarchy_tree}
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:odb++_hierarchy_tree} it is clear that this format contains all necessary components, net lists and attribute lists which are necessary for later determination of the test coverage of the circuit diagrams. These data will give detailed information regarding the placed components, their names, positions, sizes and connection to all nets. In dependency on the net connection the connected components could then be determined
+As shown in figure \ref{fig:odb++_hierarchy_tree} it is clear that this format contains all necessary components, net lists and attribute lists which are necessary for later determination of the test coverage of the circuit diagrams. These data will give detailed information regarding the placed components, their names, positions, sizes and connection to all nets. In dependency on the net connection the connected components could then be determined.
 
 	\section{PCB-Investigator}
-The \ac{PCB}-Investigator is a software provided by EasyLogix also known as Schindler \& Schill GmbH and provides many functionality regarding the opening, viewing and measuring of different kind of \ac{CAD} related project files of digital circuit diagrams\cite{.472021}:
+The \ac{PCB}-Investigator is a software provided by EasyLogix also known as Schindler \& Schill GmbH and provides many functionality regarding the opening, viewing and measuring of different kind of \ac{CAD} related project files of digital circuit diagrams:\cite{.472021}
 \begin{itemize}
 	\item \ac{ODB}++
 	\item Gerber 274x
@@ -39,10 +39,11 @@ Further the executable file application itself provides different public functio
 	\end{figure}
 \end{center}
 
-As pictured in \ref{fig:pcbInvestigator} it can be seen that there are many possibilities of taking action with a loaded project. For verification purposes the most important feature was the CMPs tab where it is possible to search for any specific component in dependency on its name and to have a closer look in its consisting pins.
+As pictured in figure \ref{fig:pcbInvestigator} it can be seen that there are many possibilities of taking action with a loaded project. For verification purposes the most important feature was the CMPs tab where it is possible to search for any specific component in dependency on its name and to have a closer look in its consisting pins.
 
 	\section{JTAG interface}
-The \ac{JTAG} is a serial interface which is widely used for different field programmable gate arrays, complex programmable logic device configurations, the programming and debugging of different micro controllers. It is usually operating within the voltage range of 1.8V - 6V and consists of the following components in general:
+The \ac{JTAG} is a serial interface which is widely used for different field programmable gate arrays, complex programmable logic device configurations, the programming and debugging of different micro controllers. \newpage
+It is usually operating within the voltage range of 1.8V - 6V and consists of the following components in general:
 \begin{itemize}
 	\item Test access port
 	\begin{itemize}
@@ -57,7 +58,7 @@ The \ac{JTAG} is a serial interface which is widely used for different field pro
 	\item TAP controller
 \end{itemize}
 
-This standard established within 1985/1986 and is being normed by IEEE 1149.1–1990. Later on by the overworked norm IEEE 1149.1–1994 the \ac{BSDL} was considered as a default feature. The most actual version of the norm is IEEE 1149.1-2001. If there are more TAPs connected together then it will be called a scan chain in general.\\
+This standard established within 1985/1986 and is being normed by IEEE 1149.1-1990. Later on by the overworked norm IEEE 1149.1-1994 the \ac{BSDL} was considered as a default feature. The most actual version of the norm is IEEE 1149.1-2001. If there are more TAPs connected together then it will be called a scan chain in general.\\
 \begin{figure}[h]
 	\centering
 		\includegraphics[scale=0.40]{figures/jtag-registers.jpg}
@@ -65,9 +66,9 @@ This standard established within 1985/1986 and is being normed by IEEE 1149.1–
 	\label{fig:jtag-registers}
 \end{figure}
 
-As shown in \ref{fig:jtag-registers} it can be seen that that the \ac{JTAG} device itself already contains some addition core logic for being able to perform different kind of test-debugging functions. The boundary scan register itself contains a various amount of boundary scan cells which could be used for the testing logic.
+As shown in figure \ref{fig:jtag-registers} it can be seen that that the \ac{JTAG} device itself already contains some addition core logic for being able to perform different kind of test-debugging functions. The boundary scan register itself contains a various amount of boundary scan cells which could be used for the testing logic.
 
-The TAP controller is a state machine which could take in six valid different states\cite{.3252021}. \newline
+The TAP controller is a state machine which could take in six valid different states.\cite{.3252021} \newline
 \begin{center}
 	\includegraphics[scale=0.7]{figures/tap_state_machine.png}
 	\begin{figure}[!h]
@@ -76,10 +77,10 @@ The TAP controller is a state machine which could take in six valid different st
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:tapControllerStateMachine} is will be clear that the transitions of each states are being controlled mainly by the TMS signal. Every state has two outgoings to make sure that just by one TMS step the condition could be set. The both main paths allow reading out data from the data register or the instruction register.
+As shown in figure \ref{fig:tapControllerStateMachine} is will be clear that the transitions of each states are being controlled mainly by the TMS signal. Every state has two outgoings to make sure that just by one TMS step the condition could be set. The both main paths allow reading out data from the data register or the instruction register.
 
-	\section{Boundary scan}
-The main idea of the boundary scan is the purpose of ensuring that every component is mounted correctly in physically way as described within the circuit diagram\cite{HarryBleeker.1993}. First of all according to IEEE 1149.1 an \ac{JTAG} device needs to have the possibility of performing the following instructions to be a really boundary scan compatible device\cite{XJTAG.13.03.2020}:
+	\section{Boundary Scan}
+The main idea of the boundary scan is the purpose of ensuring that every component is mounted correctly in physically way as described within the circuit diagram.\cite{HarryBleeker.1993} First of all according to IEEE 1149.1 an \ac{JTAG} device needs to have the possibility of performing the following instructions to be a really boundary scan compatible device:\cite{XJTAG.13.03.2020}
 
 \begin{itemize}
 	\item BYPASS - this instruction ensures that the TDI and TDO connections are connected by a one bit register and makes possible to save time during the operation
@@ -98,7 +99,7 @@ In detail that means that according to each external pin connection there is in 
 \end{enumerate}
 
 	\section{Boundary scan description language}
-The boundary scan description language is a language for describing the boundary scan test ability of different \ac{JTAG} compatible devices. It is based on the very high speed integrated circuit hardware description language and normed with IEEE 1149.1-2001. Typically these information are being provided by the manufacturer of the devices in a .bsdl file for each component\cite{.3252021b}. The files themselves are usually containing the following sections:
+The boundary scan description language is a language for describing the boundary scan test ability of different \ac{JTAG} compatible devices. It is based on the very high speed integrated circuit hardware description language and normed with IEEE 1149.1-2001. Typically these information are being provided by the manufacturer of the devices in a .bsdl file for each component.\cite{.3252021b} The files themselves are usually containing the following sections:
 \begin{itemize}
 	\item port - the information about all pins and their usage mode (in, out, inout, linkage...)
 	\item attribute PIN\_MAP - the mapping from the used names within the port section to the real pin names used within the \ac{ODB}++ project (position is important for later usage)
@@ -108,12 +109,14 @@ The boundary scan description language is a language for describing the boundary
 \end{itemize}
 
 	\section{SVF file format}
-The serial vector format is a format for communication with boundary scan compatible test vectors. It was introduced by Texas Instruments in 1991. The main purpose of the format is to ensure that independently on the used \ac{JTAG} device different test operations could be performed successfully\cite{.3252021c}. The format contains a couple of different instructions which could be performed by the boundary scan logic. The most important one according to this project is the \textbf{SDR length [TDI (tdi)] [TDO (tdo)][MASK (mask)] [SMASK (smask)];}. SDR means scan data register and tells the test to test all data register cells. The TDI is the data which should be passed into the registers\cite{TEXASINSTRUMENTS.2013}. TDO is the expected data to be read back from the data registers. And the MASK is the information about the positions of interest which should be considered. A valid instruction example is \\ 
+The serial vector format is a format for communication with boundary scan compatible test vectors. It was introduced by Texas Instruments in 1991. The main purpose of the format is to ensure that independently on the used \ac{JTAG} device different test operations could be performed successfully.\cite{.3252021c} The format contains a couple of different instructions which could be performed by the boundary scan logic. The most important one according to this project is the \newline
+\textbf{SDR length [TDI (tdi)] [TDO (tdo)][MASK (mask)] [SMASK (smask)];}. \newline
+SDR means scan data register and tells the test to test all data register cells. The TDI is the data which should be passed into the registers.\cite{TEXASINSTRUMENTS.2013} TDO is the expected data to be read back from the data registers. And the MASK is the information about the positions of interest which should be considered. A valid instruction example is \\ 
 \textbf{SDR 24 TDI(000010) TDO(818181) MASK(FFFFFF);} \\
 In that specific example we have a total length of boundary scan cells of 24 and therefore the amount of passed hexadecimal coded byte values is 3 (24 bits / 8 bits/byte) -> 0x00 0x00 0x10 and 0x81 0x81 0x81 and 0xFF 0xFF 0xFF. Further the TDI value 000010\textsubscript{16} means that only on position 5 the value should be set to high (10\textsubscript{16} -> 00010000\textsubscript{2}, counted from right to left). The TDO value 818181\textsubscript{16} gives the information about the expected positions to be high after read back the data (818181\textsubscript{16} -> 100000011000000110000001\textsubscript{2}). That signifies only the positions 1, 8, 9, 16, 17 and 24 (read from right to left) should be set to high as the needed result. Finally the MASK value FFFFFF \textsubscript{16} shows that all positions of the 24 bit register should be considered.
 	
-	\section{Model-view-viewModel}
-The Model-view-viewModel pattern came up with the introduction of the \ac{WPF} framework from Microsoft and is designed for loose coupling programming with different components which are working together at the final stage. It could be seen as a enhancement of the model view controller pattern from JAVA programming language \cite{NorbertEder.2010}. \\
+	\section{Model-View-ViewModel}
+The Model-view-viewModel pattern came up with the introduction of the \ac{WPF} framework from Microsoft and is designed for loose coupling programming with different components which are working together at the final stage. It could be seen as a enhancement of the model view controller pattern from JAVA programming language.\cite{NorbertEder.2010} \\
 
 \begin{figure}[h]
 	\centering
@@ -122,7 +125,7 @@ The Model-view-viewModel pattern came up with the introduction of the \ac{WPF} f
 	\label{fig:mvvm}
 \end{figure}
 
-As shown in \ref{fig:mvvm} there are the three main components involved:
+As shown in figure \ref{fig:mvvm} there are the three main components involved:
 \begin{itemize}
 	\item View - the graphical representation form typically created in \ac{XAML} code
 	\item Model - content of all data to be used and business logic for it
@@ -131,16 +134,26 @@ As shown in \ref{fig:mvvm} there are the three main components involved:
 Typically there will be defined a various amount of data bindings in the view to the viewmodel. Further the view model itself informs the view about happened changes of values to be displayed by using the INotifyPropertyChanged event. Onward it is responsible for the connection to the data of any model and controls the function sequence to be performed in dependency on the user inputs which are being forwarded as ICommand objects. Finally the view should contain as less behind code as possible to make sure a high loose coupling is being ensured. The looser the coupling the easier it is to switch between new implementations of different components and replace them by others. In that way it should be quit easy possible to work on all three component types separately, without having to know of each others and finally connect them together.
 
 	\section{PRISM framework}
-This framework is made for creation of louse coupled \ac{MVVM} projects and allows to use predefined services as EventAggregator, the composite commands and dependency injection in a quit easy way\cite{.452021}. Further it provides different project templates which could be used as start point of implementation.
+This framework is made for creation of louse coupled \ac{MVVM} projects and allows to use predefined services as EventAggregator, the composite commands and dependency injection in a quit easy way.\cite{.452021} Further it provides different project templates which could be used as start point of implementation.
 
 	\section{Dependency injection framework}
-The \textbf{dependency injection framework} provides the possibility of registering interfaces by their implementations at some main points and being able to inject them directly in constructors of others classes without managing the creation of objects manually in background\cite{Augsten.492021}. It can use further the \textbf{singleton pattern} for making sure just to work with a single instance of a class project wide.
+The \textbf{dependency injection framework} provides the possibility of registering interfaces by their implementations at some main points and being able to inject them directly in constructors of others classes without managing the creation of objects manually in background.\cite{Augsten.492021} It can use further the \textbf{singleton pattern} for making sure just to work with a single instance of a class project wide. 
+
+\begin{center}
+	\includegraphics[scale=0.7]{figures/Dependency Injection_forbidden.png}
+	\begin{figure}[!h]
+	\caption{Forbidden circular dependency}
+	\label{fig:circularDependency}
+	\end{figure}
+\end{center}
+
+One important thing to consider while working with that framework is the fact that, as shown in figure \ref{fig:circularDependency}, it's not possible to use circular dependencies. As a common work around there is the best practice to introduce more interfaces for referencing and outsourcing logic.
 
 	\section{Material design framework}
-The material design framework is a view orientated framework where the options are given to use many predefined components in a pretty and comfortable way\cite{.111980}. Further it ensures a quit modern look and feel and will be used per default in many actual software implementations as in web design.
+The material design framework is a view orientated framework where the options are given to use many predefined components in a pretty and comfortable way.\cite{.111980} Further it ensures a quit modern look and feel and will be used per default in many actual software implementations as in web design.
 
 	\section{JSON format}
-The java script object notation is a serialized form of data output in textual form\cite{.29.03.2021}. It is widely used where it could be necessary to understand and maybe modify data manually in an easy way. To work with that specific data format each programming language provides different kind of external libraries for parsing the information from objects into \ac{JSON} and back from \ac{JSON} to object. A valid \ac{JSON} formatted text could like like:
+The java script object notation is a serialized form of data output in textual form.\cite{.29.03.2021} It is widely used where it could be necessary to understand and maybe modify data manually in an easy way. To work with that specific data format each programming language provides different kind of external libraries for parsing the information from objects into \ac{JSON} and back from \ac{JSON} to object. A valid \ac{JSON} formatted text could like like:
 
 \begin{lstlisting}[language=json,caption={JSON formatted content},captionpos=b,label=lst:json]
 {
@@ -163,10 +176,10 @@ The java script object notation is a serialized form of data output in textual f
 }
 \end{lstlisting}
 
-As shown in \ref{lst:json} the format is highly structured and build in hierarchical way. Further it is clear that the curly brackets are being used for defining an object instance, the square brackets are being used for identifying an array of instances and the double quotes are describing a string value. With that quit simple format is is possible to represent just any Boolean, number or string value of objects where the requirement comes up either to use serializable or plain object structures.
+As shown in listing \ref{lst:json} the format is highly structured and build in hierarchical way. Further it is clear that the curly brackets are being used for defining an object instance, the square brackets are being used for identifying an array of instances and the double quotes are describing a string value. With that quit simple format is is possible to represent just any Boolean, number or string value of objects where the requirement comes up either to use serializable or plain object structures.
 
 	\section{GRPC}
-\ac{GRPC} is a modern open source way for performing remote procedure calls independently on the programming language used for a specific program and works as a client-server structure\cite{gRPC.482021}. That means in detail to use this protocol there is the need first of defining a specific service file using the interface definition language. By using this language there is no need to consider programming language specific dependencies. Afterward by using protoc compiler there is the possibility of automated creation of the source code for a specific programming language which could then be included to finalize the communication work. Finally on one side there should be defined the logic for being a server by additionally defining a specific port to be used and on the other there needs to be defined the logic for being the client with considering the IP address of the server and the port. Using \ac{GRPC} ensures bidirectional streaming possibilities and passes all object related data as a auto serialized stream in the \ac{JSON} format. Further it can communicate through complex networks without having the challenge of defining more complex code for it. To define the service file there are many of elementary data types available, the possibility of defining object structures, functions and parameters or return values. A valid example of such a definition could be:
+\ac{GRPC} is a modern open source way for performing remote procedure calls independently on the programming language used for a specific program and works as a client-server structure.\cite{gRPC.482021} That means in detail to use this protocol there is the need first of defining a specific service file using the interface definition language. By using this language there is no need to consider programming language specific dependencies. Afterward by using protoc compiler there is the possibility of automated creation of the source code for a specific programming language which could then be included to finalize the communication work. Finally on one side there should be defined the logic for being a server by additionally defining a specific port to be used and on the other there needs to be defined the logic for being the client with considering the IP address of the server and the port. Using \ac{GRPC} ensures bidirectional streaming possibilities and passes all object related data as a auto serialized stream in the \ac{JSON} format. Further it can communicate through complex networks without having the challenge of defining more complex code for it. To define the service file there are many of elementary data types available, the possibility of defining object structures, functions and parameters or return values. A valid example of such a definition could be:
 
 \begin{lstlisting}[language=protobuf2,style=protobuf,caption={Interface definition of GRPC exchange},captionpos=b,label=lst:grpc]{search.proto}
 syntax = "proto3";
@@ -191,7 +204,7 @@ enum ComponentTypeGrpc {
 }
 \end{lstlisting}
 
-As shown in \ref{lst:grpc} there are all necessary values defined in structured and easy understandable way. Typically the auto generated code contains new classes which must be inherited for adding customized logic.
+As shown in listing \ref{lst:grpc} there are all necessary values defined in structured and easy understandable way. Typically the auto generated code contains new classes which must be inherited for adding customized logic.
 
 	\section{Bill of materials}
-As \ac{BOM} file is a list which contains all necessary information about components of a \ac{CAD} project in structured way\cite{Wikipedia.2021c}. Often they are provided as \ac{CSV}file where the separator of usage could be randomly defined and the amount of totally provided columns could various as well. But at least one column for identifying the component must be available.
+As \ac{BOM} file is a list which contains all necessary information about components of a \ac{CAD} project in structured way.\cite{Wikipedia.2021c} Often they are provided as \ac{CSV}file where the separator of usage could be randomly defined and the amount of totally provided columns could various as well. But at least one column for identifying the component must be available.

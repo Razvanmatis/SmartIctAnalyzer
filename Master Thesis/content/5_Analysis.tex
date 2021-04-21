@@ -16,80 +16,80 @@ To be able for capturing the time consumption of course there was the need of ad
 \begin{table}[!h]
     \centering
     \begin{tabular}{p{0.1\linewidth} | p{0.2\linewidth} | p{0.1\linewidth}| p{0.1\linewidth}| p{0.1\linewidth}| p{0.1\linewidth}| p{0.1\linewidth}| p{0.1\linewidth}}
-      Project size in MB & Total amount of PcbObjects, nets and pins & Stage 1 time in ms &  Stage 2 time in ms &  Stage 3 time in ms &  Stage 4 time in ms &  Stage 5 time in ms & Total time consumption \\ \hline
-      25,7 & 1822, 1241, 2239 & 791,02 & 1357,44 & 3949,28 & 274,71 & 238,86 & 6611,31 \\
+      Project size in MB & Total amount of PcbObjects, nets and pins & Stage 1 time in ms &  Stage 2 time in ms &  Stage 3 time in ms &  Stage 4 time in ms &  Stage 5 time in ms & Total time consumption in ms \\ \hline
+      25,7 & 1822, 1241, 2239 & 791,02 & 1357,44 & 3949,28 & 274,71 & 238,86 & 6611,31 \\ \hline
       1,81 & 239, 80, 186 & 108,81 & 215,10 & 1086,14 & 3,42 & 7,20 & 1420,67 \\ 
     \end{tabular}
     \caption{Time consumption for loading a \ac{ODB}++ project}
     \label{tab:timeOdb}
 \end{table}
 
-As shown in \ref{tab:timeOdb} it will be clear that the \ac{PCB}-Investigator needs the most time for performing its work where no possibility of improvement was possible as no source code was available.
+As shown in table \ref{tab:timeOdb} it will be clear that the \ac{PCB}-Investigator needs the most time for performing its work where no possibility of improvement was possible as no source code was available.
 
 	\section{Performance of loading projects by importing JSON formatted files}
 \begin{table}[!h]
     \centering
      \begin{tabular}{p{0.33\linewidth} | p{0.34\linewidth} | p{0.33\linewidth}}
-      Project size in MB & Total amount of PcbObjects, nets and pins & Total time consumption \\ \hline
-      25,7 & 1822, 1241, 2239 & 439,52 \\
+      Project size in MB & Total amount of PcbObjects, nets and pins & Total time consumption in ms \\ \hline
+      25,7 & 1822, 1241, 2239 & 439,52 \\ \hline
       1,81 & 239, 80, 186 & 26,97 \\ 
     \end{tabular}
     \caption{Time consumption for importing a \ac{ODB}++ project from \ac{JSON} file}
     \label{tab:timeImport}
 \end{table}
 	
-As stated in \ref{tab:timeImport} it will be clear that the time consumption in general is really low as it depends only on the working mechanism of the external library \textbf{Newtonsoft.Json} which is quit fast in performing its parsing work.
+As stated in table \ref{tab:timeImport} it will be clear that the time consumption in general is really low as it depends only on the working mechanism of the external library \textbf{Newtonsoft.Json} which is quit fast in performing its parsing work.
 
 	\section{Performance of exporting projects into JSON format}
 
 \begin{table}[!h]
     \centering
     \begin{tabular}{p{0.33\linewidth} | p{0.34\linewidth} | p{0.33\linewidth}}
-      Project size in MB & Total amount of PcbObjects, nets and pins & Total time consumption \\ \hline
-      25,7 & 1822, 1241, 2239 & 2,88 \\
+      Project size in MB & Total amount of PcbObjects, nets and pins & Total time consumption in ms \\ \hline
+      25,7 & 1822, 1241, 2239 & 2,88 \\ \hline
       1,81 & 239, 80, 186 & 0,97 \\ 
     \end{tabular}
     \caption{Time consumption for exporting a \ac{ODB}++ project as \ac{JSON} file}
     \label{tab:timeExport}
 \end{table}
 
-As stated in \ref{tab:timeExport} it will be clear that again the time consumption in general is really low as it depends only on the working mechanism of the external library \textbf{Newtonsoft.Json} which is really fast in acting.
+As stated in table \ref{tab:timeExport} it will be clear that again the time consumption in general is really low as it depends only on the working mechanism of the external library \textbf{Newtonsoft.Json} which is really fast in acting.
 
 	\section{Performance of showing connections of components}
 
 \begin{table}[!h]
     \centering
     \begin{tabular}{p{0.50\linewidth} | p{0.50\linewidth}}
-      Total amount of connected PcbObjects & Total time consumption \\ \hline
-      991 & 323,90 \\
-      1285 & 444,59 \\
-			3 & 4,46 \\
-			13 & 5,72 \\
+      Total amount of connected PcbObjects & Total time consumption in ms \\ \hline
+      991 & 323,90 \\ \hline
+      1285 & 444,59 \\ \hline
+			3 & 4,46 \\ \hline
+			13 & 5,72 \\ \hline
 			90 & 28,87 \\
     \end{tabular}
     \caption{Time consumption for showing connections between components}
     \label{tab:timeConnections}
 \end{table}
 
-As shown in \ref{tab:timeConnections} the time consumption is not really linear but it definitely increases in dependency on the amount of lines to be drawn.
+As shown in table \ref{tab:timeConnections} the time consumption is not really linear but it definitely increases in dependency on the amount of lines to be drawn.
 
 	\section{Performance of determination of test coverage values}
 \begin{table}[!h]
     \centering
     \begin{tabular}{p{0.25\linewidth} | p{0.25\linewidth} | p{0.25\linewidth} | p{0.25\linewidth}}
-      Test type & Affected components to consider & Base amount as divider & Total time consumption \\ \hline
-      JTAGs & 2 & 1014 & 38,34 \\
-      Pull ups & 68 & 1014 & 39,89 \\
-			Pull downs & 122 & 1014 & 244,64 \\
-			Pull ups + Pull downs & 159 & 1014 & 297,87 \\
-			Others & 352 & 1014 & 23,46 \\
+      Test type & Affected components to consider & Base amount as divider & Total time consumption in ms \\ \hline
+      JTAGs & 2 & 1014 & 38,34 \\ \hline
+      Pull ups & 68 & 1014 & 39,89 \\ \hline
+			Pull downs & 122 & 1014 & 244,64 \\ \hline
+			Pull ups + Pull downs & 159 & 1014 & 297,87 \\ \hline
+			Others & 352 & 1014 & 23,46 \\ \hline
 			Pull ups + Pull downs + JTAGs + Others & 511 & 1014 & 355,08 \\
     \end{tabular}
     \caption{Time consumption for performing test coverage determination}
     \label{tab:timeTestCoverage}
 \end{table}
 
-As shown in \ref{tab:timeTestCoverage} there rises the time consumption in dependency on the amount of determined objects to be considered for the test coverage determination.
+As shown in table \ref{tab:timeTestCoverage} there rises the time consumption in dependency on the amount of determined objects to be considered for the test coverage determination.
 
 \begin{lstlisting}[language={[Sharp]C},caption={GetTestCoverage with time measurement},captionpos=b,label=lst:GetTestCoverageTime]
 public async Task<TestCoverageItems> GetTestCoverage(TestCoverageItems items, TestCoverageType type)
@@ -100,19 +100,15 @@ public async Task<TestCoverageItems> GetTestCoverage(TestCoverageItems items, Te
 	{
 			result = await GetCompleteTestCoverageOfAllJtags(items).ConfigureAwait(false);
 	}
-	else if (type == TestCoverageType.BOUNDARY_SCAN_ICS)
-	{
-			result = await TestCoverageForIcs(items).ConfigureAwait(false);
-	}
 	...
 
 	sw.Stop();
 	Debug.WriteLine("Test performed: " + type.ToString() + " {0}ms", sw.Elapsed.TotalMilliseconds);
 	return result;
-        }
+}
 \end{lstlisting}
 
-As stated in \ref{lst:GetTestCoverageTime} it will be visible that using of the StopWatch class which is being provided by the System.Diagnostics package is a pretty good choice as its handling is quit comfortable. Further there is being shown that the calling of Debug.WriteLine function only is visible for debugging purposes within the \ac{IDE}
+As stated in listing \ref{lst:GetTestCoverageTime} it will be visible that using of the StopWatch class which is being provided by the System.Diagnostics package is a pretty good choice as its handling is quit comfortable. Further there is being shown that the calling of Debug.WriteLine function only is visible for debugging purposes within the \ac{IDE}
 
 	\section{Validation of test coverage values}
-To ensure that the software determines correct values there was made the assumption that comparing the gathered results to that ones which were determined by using a third party tool named XJTAG. It provides the possibility of determining such specific values in dependency on considered settings\cite{XJTAG.492021}. Comparing the results for the test coverage of pull down resistors led to a really small difference (12,8 \% from XJTAG - 12,03 \% from the created tool = 0,77 \%) which could be explained by the settings mismatch which were used.
+To ensure that the software determines correct values there was made the assumption that comparing the gathered results to that ones which were determined by using a third party tool named XJTAG. It provides the possibility of determining such specific values in dependency on considered settings.\cite{XJTAG.492021} Comparing the results for the test coverage of pull down resistors led to a really small difference (12,8 \% from XJTAG - 12,03 \% from the created tool = 0,77 \%) which could be explained by the settings mismatch which were used.
