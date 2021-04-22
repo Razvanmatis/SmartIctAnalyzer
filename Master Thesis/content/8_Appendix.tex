@@ -1,4 +1,4 @@
-\chapter{User manual for working with the smart ICT analyzer tool}
+\chapter{User manual for working with the smart Inter Circuit Tests (ICT) analyzer tool}
 This document describes the way of handling the tool for determining the test coverage of different \ac{ODB}++ related projects.
 \section{Overview}
 
@@ -10,7 +10,7 @@ This document describes the way of handling the tool for determining the test co
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:Tooloverview} the tool itself consits of seven different areas of interest:
+As shown in \ref{fig:Tooloverview} the tool itself consists of seven different areas of interest:
 \begin{enumerate}
 	\item File menu group - performing actions regarding the opening of project files, ...
 	\item Settings - selection of settings, importing and exporting them
@@ -40,29 +40,29 @@ As shown in \ref{fig:Settingsoverview} there are the following three menu items 
 
 \subsection{Show settings}
 After clicking on the menu item All settings a new window will be shown containing all setting pages.
-\subsubsection{PCB Investigator API settings}
+\subsubsection{PCB Investigator \ac{API} settings}
 
 \begin{center}
 \includegraphics[width=1.00\textwidth]{figures/attachments/pcbInvestigatorSettings.png}
 	\begin{figure}[!h]
-	\caption{PCB Investigator API settings}
+	\caption{PCB Investigator \ac{API} settings}
 	\label{fig:pcbInvestigatorSettings}
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:pcbInvestigatorSettings} there is the possibility of changing the steps which should be considered for read out from the API. -1 means all steps should be read out. Other values could be defined semicolon separated
+As shown in \ref{fig:pcbInvestigatorSettings} there is the possibility of changing the steps which should be considered for read out from the \ac{API}. -1 means all steps should be read out. Other values could be defined semicolon separated
 
-\subsubsection{GRPC server API connection settings}
+\subsubsection{GRPC server \ac{API} connection settings}
 
 \begin{center}
 \includegraphics[width=1.00\textwidth]{figures/attachments/grpcServerSettings.png}
 	\begin{figure}[!h]
-	\caption{GRPC server API connection settings}
+	\caption{\ac{GRPC} server \ac{API} connection settings}
 	\label{fig:grpcServerSettings}
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:grpcServerSettings} there is the possibilty of changing the ip address of the GRPC server to connect to
+As shown in \ref{fig:grpcServerSettings} there is the possibilty of changing the ip address of the \ac{GRPC} server to connect to
 
 \subsubsection{General settings}
 
@@ -111,7 +111,7 @@ Within the second part of the general settings (\ref{fig:generalSettings2}) ther
 \begin{center}
 \includegraphics[width=1.00\textwidth]{figures/attachments/svfPlayerSettings.png}
 	\begin{figure}[!h]
-	\caption{SVF Player settings}
+	\caption{\ac{SVF} Player settings}
 	\label{fig:svfPlayerSettings}
 	\end{figure}
 \end{center}
@@ -137,7 +137,7 @@ As shown in \ref{fig:svfPlayerSettings} there are the following settings availab
 As shown in \ref{fig:testCoverageSettings} there are the following settings available (blacklist and identifier):
 \begin{itemize}
 	\item Ground
-	\item JTAG
+	\item \ac{JTAG}
 	\item Power
 \end{itemize}
 
@@ -172,14 +172,14 @@ As shown in \ref{fig:projectFile} there is the possibility of choosing the follo
 
 As shown in \ref{fig:fileMisc} there are the following menu items available at File -> Miscellaneous:
 \begin{itemize}
-	\item Open ODB project folder - after choosing that action a new dialog appears to select the folder which should be transferred to the GRPC server as zipped content for read out by using the PCB-Investigator API
-	\item Import BOM data file - After any project was successfully loaded then the import of a valid bill of materials file will be available. After choosing this a new window appears where to set up all relevant settings for import
-	\item Import data from JSON file - a new dialog appears where you are able to select any JSON formatted file containing previously exported data of this application
-	\item Export data into JSON file - after any project was loaded successfully then this item will be accessible. After choosing it a new dialog appears where you could select the target for creation of a valid JSON formatted file containing all data
+	\item Open \ac{ODB} project folder - after choosing that action a new dialog appears to select the folder which should be transferred to the \ac{GRPC} server as zipped content for read out by using the PCB-Investigator \ac{API}
+	\item Import \ac{BOM} data file - After any project was successfully loaded then the import of a valid bill of materials file will be available. After choosing this a new window appears where to set up all relevant settings for import
+	\item Import data from \ac{JSON} file - a new dialog appears where you are able to select any \ac{JSON} formatted file containing previously exported data of this application
+	\item Export data into \ac{JSON} file - after any project was loaded successfully then this item will be accessible. After choosing it a new dialog appears where you could select the target for creation of a valid \ac{JSON} formatted file containing all data
 \end{itemize}
 
 \section{Creation of new project}
-To create a new project just first click on File -> Project file -> Create new project file. After ward there will be a dialog shown for selectin the target file to be saved at:
+To create a new project just first click on File -> Project file -> Create new project file. After ward there will be a dialog shown for selecting the target file to be saved at:
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/projectFileCreationDialog.png}
@@ -189,7 +189,7 @@ To create a new project just first click on File -> Project file -> Create new p
 	\end{figure}
 \end{center}
 
-After you confirmed your target within the dialog (\ref{fig:projectFileCreationDialog}) then you could proceed to open a new project. For that make sure to have a valid connection to the GRPC server and click then File -> Miscellaneous -> Open ODB project folder. After you chose a program during the communication and parsing from the GRPC server there will be shown an animation:
+After you confirmed your target within the dialog (\ref{fig:projectFileCreationDialog}) then you could proceed to open a new project. For that make sure to have a valid connection to the \ac{GRPC} server and click then File -> Miscellaneous -> Open \ac{ODB} project folder. After you chose a program during the communication and parsing from the \ac{GRPC} server there will be shown an animation:
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/pleaseWait.png}
@@ -199,12 +199,12 @@ After you confirmed your target within the dialog (\ref{fig:projectFileCreationD
 	\end{figure}
 \end{center}
 
-After the process finished then if no values are defined for that components received a new dialog should be visible where to select the BOM file for importing:
+After the process finished then if no values are defined for that components received a new dialog should be visible where to select the \ac{BOM} file for importing:
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/selectBom.png}
 	\begin{figure}[!h]
-	\caption{Select BOM file dialog}
+	\caption{Select \ac{BOM} file dialog}
 	\label{fig:selectBom}
 	\end{figure}
 \end{center}
@@ -214,10 +214,10 @@ After you set up the settings:
 	\item Separator
 	\item Column number of REF
 	\item Column number of VALUE
-	\item Path to BOM file - could be set by clicking on Select BOM file where then a new dialog for selecting any file will be opened
+	\item Path to \ac{BOM} file - could be set by clicking on Select \ac{BOM} file where then a new dialog for selecting any file will be opened
 \end{itemize}
 
-within that dialog and selected a valid CSV file to be imported then proceed by clicking on finish. \newline
+within that dialog and selected a valid \ac{CSV} file to be imported then proceed by clicking on finish. \newline
 
 After the process finished then on within the layers list there should be some layers available and the control buttons at the right bottom place will be visible:
 
@@ -239,7 +239,7 @@ After selecting for example the first layer then all components which are includ
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:layerSelected} there is the possibility of scrolling with the mouse to move the whole view or just by clicking and dragging the whole content. Further there is the possibility of zooming in by pressing STRG and scrolling in or just by clicking on the zoom in button \textbf{1} and to zoom out by pressing STRG and scrolling out with the mouse or just by clicking the zoom out button \textbf{2}. Finally there is the possibility to mirror the whole view across the y axis \textbf{3} and the x axis \textbf{4}. Now to ensure not to have to use the GRPC server again the next time you will open this project click File -> Miscellaneous -> Export data into JSON file. After you chose it a new dialog will appear where you could type in just the name as the file itself will be stored within the project 
+As shown in \ref{fig:layerSelected} there is the possibility of scrolling with the mouse to move the whole view or just by clicking and dragging the whole content. Further there is the possibility of zooming in by pressing STRG and scrolling in or just by clicking on the zoom in button \textbf{1} and to zoom out by pressing STRG and scrolling out with the mouse or just by clicking the zoom out button \textbf{2}. Finally there is the possibility to mirror the whole view across the y axis \textbf{3} and the x axis \textbf{4}. Now to ensure not to have to use the \ac{GRPC} server again the next time you will open this project click File -> Miscellaneous -> Export data into \ac{JSON} file. After you chose it a new dialog will appear where you could type in just the name as the file itself will be stored within the project 
 file as you are working within the project file mode. (Also all other project related data was automatically saved in the project file). Finally you should also 
 export your current made settings by Settings -> Export settings file to make sure that the settings file is also included in the project file for later loading
 
@@ -327,14 +327,14 @@ As shown in \ref{fig:connectionLegend} there will be the following information a
 As shown in \ref{fig:testCoverage} within the Test coverage -> Boundary scan test -> menu group there are the following menu items available:
 \begin{itemize}
 	\item Determine all boundary scan objects - before being able to perform any other test related action you have first to choose this one. (Settings will be considered)
-	\item Determine test coverage for JTAGs
+	\item Determine test coverage for \ac{JTAG}s
 	\item Determine test coverage for all PullUps
 	\item Determine test coverage for all PullDowns
 	\item Determine test coverage for all PullUps and PullDowns
 	\item Determine test coverage for all other components
 	\item Determine complete test coverage of boundary scan
 	\item Export PIN connection information into file
-	\item Generate SVF data files
+	\item Generate \ac{SVF} data files
 \end{itemize}
 
 \subsection{Determine all boundary scan objects}
@@ -362,14 +362,14 @@ After you click for example on Test coverage -> Boundary scan test -> Determine 
 	\end{figure}
 \end{center}
 
-If you click again on Test coverage -> Boundary scan test -> Determine test coverage for all PullUps then the according checkbox will be unchecked and every connection is been showed just in black color again. This kind of procedure is also available for all other operations to detect the test coverage.
+If you click again on Test coverage -> Boundary scan test -> Determine test coverage for all PullUps then the according check box will be unchecked and every connection is been showed just in black color again. This kind of procedure is also available for all other operations to detect the test coverage.
 
 \subsection{Export PIN connection information into file}
 
-After you click on Test coverage -> Boundary scan test -> Export PIN connection information into file a new dialog should appear where you can select the destination of file saving. After you selected that then the according file should be generate containing all pin information of interest of all JTAG devices of the loaded project.
+After you click on Test coverage -> Boundary scan test -> Export PIN connection information into file a new dialog should appear where you can select the destination of file saving. After you selected that then the according file should be generate containing all pin information of interest of all \ac{JTAG} devices of the loaded project.
 
 \subsection{Generate SVF data files}
-If you click on Test coverage -> Boundary scan test -> Generate SVF data files then first a dialog will be shown to select the target folder where to save the created files at. This folder will only be considered if you are not working in the project file mode. If so the files will be automatically been saved within the project file. Afterward you will be asked for selecting the accoring BSDL file for all JTAG devices found. After you selected the BSDL file you will be informed about to make sure that the programmer is correctly connected to the JTAG device as the default vector first needs to be read out:
+If you click on Test coverage -> Boundary scan test -> Generate \ac{SVF} data files then first a dialog will be shown to select the target folder where to save the created files at. This folder will only be considered if you are not working in the project file mode. If so the files will be automatically been saved within the project file. Afterward you will be asked for selecting the according \ac{BSDL} file for all \ac{JTAG} devices found. After you selected the \ac{BSDL} file you will be informed about to make sure that the programmer is correctly connected to the \ac{JTAG} device as the default vector first needs to be read out:
 
 \begin{center}
 \includegraphics[scale=0.60]{figures/attachments/makeSureToConnect.png}
@@ -379,7 +379,7 @@ If you click on Test coverage -> Boundary scan test -> Generate SVF data files t
 	\end{figure}
 \end{center}
 
-After you confirmed the dialog \ref{fig:makeSureToConnect} then the read out will be performed and the according SVF files for playing the pull down and pull up resistors will be generated.
+After you confirmed the dialog \ref{fig:makeSureToConnect} then the read out will be performed and the according \ac{SVF} files for playing the pull down and pull up resistors will be generated.
 
 \section{Log panel}
 
@@ -394,4 +394,4 @@ By clicking on the expander which is located at the very bottom of the applicati
 \end{center}
 
 \section{Drag and drop within the application}
-You are further able to drag and drop directly files or folders to the application area. If something valid was dropped then it automatically should be opended or imported and if project mode is enabled saved further within the project file
+You are further able to drag and drop directly files or folders to the application area. If something valid was dropped then it automatically should be opened or imported and if project mode is enabled saved further within the project file
