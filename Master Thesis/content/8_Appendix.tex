@@ -79,7 +79,7 @@ Within the first part of the general settings (\ref{fig:generalSettings1}) there
 	\item Capacitor
 	\item Other components
 	\item Connector
-	\item Ic
+	\item \ac{IC}
 \end{itemize}
 Fruthermore there are the following settings available:
 \begin{itemize}
@@ -134,12 +134,18 @@ As shown in \ref{fig:svfPlayerSettings} there are the following settings availab
 	\end{figure}
 \end{center}
 
-As shown in \ref{fig:testCoverageSettings} there are the following settings available (blacklist and identifier):
+As shown in \ref{fig:testCoverageSettings} there are the following settings available (blacklist of nets and net identifier):
 \begin{itemize}
 	\item Ground
 	\item \ac{JTAG}
 	\item Power
 \end{itemize}
+Further more there is the possibility of defining the \ac{JTAG} pin identifier for making sure being able to use not just the default values \textbf{TMS, TDI, TDO, TCK}. That means in detail for correctly determining a \ac{JTAG} device there should be the following requirements accomplished:
+\begin{enumerate}
+	\item Set up the \textbf{\ac{IC} identifier} setting from general settings in that way that the \ac{JTAG} device is being recognized correctly as an \ac{IC} component
+	\item Set up the \textbf{\ac{JTAG} nets identifier} from the test coverage settings in that way that the \ac{JTAG} device is correctly being recognized within a corresponding net
+	\item Set up the \textbf{\ac{JTAG} pin identifier} setting from the test coverage settings in that way that the \ac{JTAG} device is correctly being recognized by its pins
+\end{enumerate}
 
 \subsection{Import / Export settings file}
 By clicking on one of the menu items Settings -> Import settings file or Settings -> Export settings file afterward a new file selection dialog will be shown where to select the source / target file to be imported / exported. Further if the project file handling is enabled the settings file will automatically be stored within the project file and be loaded automatically on next opening of project file
