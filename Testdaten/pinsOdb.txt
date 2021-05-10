@@ -1,0 +1,2703 @@
+PinConnectionType:
+UNKNOWN = 0,
+PULLUP = 1,
+PULLDOWN = 2,
+NOTCONNECTED = 3,
+TOIC = 4,
+TOJTAG = 5,
+JTAG = 6
+[
+  {
+    "ComponentName": "U201: ",
+    "TotalAmountOfPins": 292,
+    "TotalAmountOfNets": 228,
+    "TotalAmountOfUnknownComponents": 217,
+    "TotalAmountOfPullUpComponents": 70,
+    "TotalAmountOfPullDownComponents": 55,
+    "TotalAmountOfNotConnectedComponents": 0,
+    "TotalAmountOfToIcComponents": 0,
+    "TotalAmountOfToJTAGComponents": 0,
+    "TotalAmountOfJTAGComponents": 1,
+    "Pins": [
+      {
+        "PinNumber": "A1",
+        "NetNames": [
+          "$NONE$"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "U4",
+        "NetNames": [
+          "$NONE$"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "Y1",
+        "NetNames": [
+          "$NONE$"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "R19",
+        "NetNames": [
+          "TXD1_P"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "R20",
+        "NetNames": [
+          "TXD1_N"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D10",
+        "NetNames": [
+          "TXCLK"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E10",
+        "NetNames": [
+          "TDX3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E9",
+        "NetNames": [
+          "TDX2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A10",
+        "NetNames": [
+          "TDX1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B10",
+        "NetNames": [
+          "TDX0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D9",
+        "NetNames": [
+          "TCTL"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "J17",
+        "NetNames": [
+          "RXD1_P"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K17",
+        "NetNames": [
+          "RXD1_N"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B8",
+        "NetNames": [
+          "RXCLK"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D8",
+        "NetNames": [
+          "REFCLK"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E8",
+        "NetNames": [
+          "RDX3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E7",
+        "NetNames": [
+          "RDX2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A9",
+        "NetNames": [
+          "RDX1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B9",
+        "NetNames": [
+          "RDX0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A8",
+        "NetNames": [
+          "RCTL"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U13",
+        "NetNames": [
+          "P34.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T13",
+        "NetNames": [
+          "P34.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U12",
+        "NetNames": [
+          "P34.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T12",
+        "NetNames": [
+          "P34.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U11",
+        "NetNames": [
+          "P34.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "L17",
+        "NetNames": [
+          "P22.11"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "L16",
+        "NetNames": [
+          "P22.10"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "M17",
+        "NetNames": [
+          "P22.9"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "M16",
+        "NetNames": [
+          "P22.8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "N17",
+        "NetNames": [
+          "P22.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "N16",
+        "NetNames": [
+          "P22.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P17",
+        "NetNames": [
+          "P22.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P16",
+        "NetNames": [
+          "P22.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A18",
+        "NetNames": [
+          "P15.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B13",
+        "NetNames": [
+          "P14.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A14",
+        "NetNames": [
+          "P14.5"
+        ],
+        "PinConnectionType": [
+          2
+        ]
+      },
+      {
+        "PinNumber": "B15",
+        "NetNames": [
+          "P14.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "J5",
+        "NetNames": [
+          "P01.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "H4",
+        "NetNames": [
+          "P01.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "H5",
+        "NetNames": [
+          "P01.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G4",
+        "NetNames": [
+          "P01.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G5",
+        "NetNames": [
+          "P01.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K14",
+        "NetNames": [
+          "DAPE0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T11",
+        "NetNames": [
+          "NetCB510_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G8",
+        "NetNames": [
+          "VDDSB"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "H7",
+        "NetNames": [
+          "VDDSB"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "L4",
+        "NetNames": [
+          "AN43"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "L5",
+        "NetNames": [
+          "AN42"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "M4",
+        "NetNames": [
+          "AN41"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "M5",
+        "NetNames": [
+          "AN40"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P5",
+        "NetNames": [
+          "AN34"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T4",
+        "NetNames": [
+          "AN30"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "R5",
+        "NetNames": [
+          "AN23"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T5",
+        "NetNames": [
+          "AN22"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T6",
+        "NetNames": [
+          "AN15"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U6",
+        "NetNames": [
+          "AN14"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U7",
+        "NetNames": [
+          "AN9"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U14",
+        "NetNames": [
+          "P33.15"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T14",
+        "NetNames": [
+          "P33.14"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U16",
+        "NetNames": [
+          "P32.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U15",
+        "NetNames": [
+          "P32.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T15",
+        "NetNames": [
+          "P32.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "R16",
+        "NetNames": [
+          "P23.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "R17",
+        "NetNames": [
+          "P23.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E11",
+        "NetNames": [
+          "P12.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E12",
+        "NetNames": [
+          "P12.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D6",
+        "NetNames": [
+          "P11.15"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D7",
+        "NetNames": [
+          "P11.14"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E6",
+        "NetNames": [
+          "P11.13"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "F4",
+        "NetNames": [
+          "P02.11"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "F5",
+        "NetNames": [
+          "P02.10"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E4",
+        "NetNames": [
+          "P02.9"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "N19",
+        "NetNames": [
+          "VDDOSC"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "N20",
+        "NetNames": [
+          "VEXTOSC"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "H16",
+        "NetNames": [
+          "NetR213_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "F2",
+        "NetNames": [
+          "P02.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E1",
+        "NetNames": [
+          "P02.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E2",
+        "NetNames": [
+          "P02.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D1",
+        "NetNames": [
+          "P02.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B20",
+        "NetNames": [
+          "P15.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B16",
+        "NetNames": [
+          "P14.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A4",
+        "NetNames": [
+          "P10.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B5",
+        "NetNames": [
+          "P10.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B4",
+        "NetNames": [
+          "P10.8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A3",
+        "NetNames": [
+          "P10.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A7",
+        "NetNames": [
+          "P10.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D11",
+        "NetNames": [
+          "P14.10"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D13",
+        "NetNames": [
+          "P14.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y10",
+        "NetNames": [
+          "P33.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D2",
+        "NetNames": [
+          "P02.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B7",
+        "NetNames": [
+          "P10.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D12",
+        "NetNames": [
+          "P14.9"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A13",
+        "NetNames": [
+          "P14.8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "C1",
+        "NetNames": [
+          "P02.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A12",
+        "NetNames": [
+          "P13.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "J16",
+        "NetNames": [
+          "DAP0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B14",
+        "NetNames": [
+          "P14.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "F1",
+        "NetNames": [
+          "P02.8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K4",
+        "NetNames": [
+          "P00.8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K1",
+        "NetNames": [
+          "P00.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "J4",
+        "NetNames": [
+          "P00.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B6",
+        "NetNames": [
+          "P10.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y15",
+        "NetNames": [
+          "P33.11"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W15",
+        "NetNames": [
+          "P33.10"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y14",
+        "NetNames": [
+          "P33.9"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W14",
+        "NetNames": [
+          "P33.8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y13",
+        "NetNames": [
+          "P33.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W13",
+        "NetNames": [
+          "P33.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W12",
+        "NetNames": [
+          "P33.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "F16",
+        "NetNames": [
+          "/ESR0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "H1",
+        "NetNames": [
+          "P00.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "H2",
+        "NetNames": [
+          "P00.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "J1",
+        "NetNames": [
+          "P00.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W18",
+        "NetNames": [
+          "P32.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y19",
+        "NetNames": [
+          "P32.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y18",
+        "NetNames": [
+          "P32.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P19",
+        "NetNames": [
+          "P22.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P20",
+        "NetNames": [
+          "P22.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T17",
+        "NetNames": [
+          "P23.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "J19",
+        "NetNames": [
+          "RXD0_P"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K19",
+        "NetNames": [
+          "RXD0_N"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "J20",
+        "NetNames": [
+          "TXD0_P"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A15",
+        "NetNames": [
+          "P14.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T20",
+        "NetNames": [
+          "P23.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G20",
+        "NetNames": [
+          "P20.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E17",
+        "NetNames": [
+          "P20.9"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "F20",
+        "NetNames": [
+          "P20.8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "C20",
+        "NetNames": [
+          "P20.14"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D19",
+        "NetNames": [
+          "P20.12"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E20",
+        "NetNames": [
+          "P20.11"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "C19",
+        "NetNames": [
+          "P15.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B17",
+        "NetNames": [
+          "P15.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B11",
+        "NetNames": [
+          "P13.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A11",
+        "NetNames": [
+          "P13.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B12",
+        "NetNames": [
+          "P13.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G16",
+        "NetNames": [
+          "/ESR1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P1",
+        "NetNames": [
+          "AN39"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "N5",
+        "NetNames": [
+          "AN38"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P2",
+        "NetNames": [
+          "AN37"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "N4",
+        "NetNames": [
+          "AN36"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "R1",
+        "NetNames": [
+          "AN33"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P4",
+        "NetNames": [
+          "AN32"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U1",
+        "NetNames": [
+          "AN29"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U2",
+        "NetNames": [
+          "AN28"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "V1",
+        "NetNames": [
+          "AN27"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "V2",
+        "NetNames": [
+          "AN26"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W1",
+        "NetNames": [
+          "AN25"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W2",
+        "NetNames": [
+          "AN24"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W3",
+        "NetNames": [
+          "AN19"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W4",
+        "NetNames": [
+          "AN18"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W11",
+        "NetNames": [
+          "P33.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y11",
+        "NetNames": [
+          "P33.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "M2",
+        "NetNames": [
+          "AN47"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "M1",
+        "NetNames": [
+          "AN46"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y5",
+        "NetNames": [
+          "VDDM"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "U5",
+        "NetNames": [
+          "AN17"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W5",
+        "NetNames": [
+          "AN16"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W6",
+        "NetNames": [
+          "AN13"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T7",
+        "NetNames": [
+          "AN12"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W7",
+        "NetNames": [
+          "AN11"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y8",
+        "NetNames": [
+          "AN10"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W8",
+        "NetNames": [
+          "AN8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "R2",
+        "NetNames": [
+          "AN35"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T8",
+        "NetNames": [
+          "AN6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y9",
+        "NetNames": [
+          "AN5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T9",
+        "NetNames": [
+          "AN4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U9",
+        "NetNames": [
+          "AN3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W9",
+        "NetNames": [
+          "AN2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U10",
+        "NetNames": [
+          "AN1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T10",
+        "NetNames": [
+          "AN0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U19",
+        "NetNames": [
+          "P23.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E19",
+        "NetNames": [
+          "P20.10"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y12",
+        "NetNames": [
+          "P33.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D20",
+        "NetNames": [
+          "P20.13"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "L1",
+        "NetNames": [
+          "P00.11"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "L2",
+        "NetNames": [
+          "P00.12"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "C2",
+        "NetNames": [
+          "P02.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G19",
+        "NetNames": [
+          "P20.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "L19",
+        "NetNames": [
+          "/TRST"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E13",
+        "NetNames": [
+          "P14.2"
+        ],
+        "PinConnectionType": [
+          2
+        ]
+      },
+      {
+        "PinNumber": "A17",
+        "NetNames": [
+          "P15.4"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "J2",
+        "NetNames": [
+          "P00.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "E14",
+        "NetNames": [
+          "P15.5"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B1",
+        "NetNames": [
+          "P02.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "H19",
+        "NetNames": [
+          "P20.2"
+        ],
+        "PinConnectionType": [
+          2
+        ]
+      },
+      {
+        "PinNumber": "A20",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "B2",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "B19",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "D4",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "D17",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "E5",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "E16",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "G9",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "G12",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "H9",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "H10",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "H11",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "H12",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "J7",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "J8",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "J10",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "J11",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "J13",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "J14",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "K8",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "K9",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "K10",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "K11",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "K12",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "K13",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "L8",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "L9",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "L10",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "L11",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "L12",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "L13",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "L20",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "M7",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "M8",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "M10",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "M11",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "M13",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "M14",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "N9",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "N10",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "N11",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "N12",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "P9",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "P12",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "T2",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "T16",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "U17",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "W19",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "Y4",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "Y7",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "Y20",
+        "NetNames": [
+          "GND"
+        ],
+        "PinConnectionType": [
+          2,
+          1
+        ]
+      },
+      {
+        "PinNumber": "D14",
+        "NetNames": [
+          "P15.8"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D15",
+        "NetNames": [
+          "P15.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A16",
+        "NetNames": [
+          "P15.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "F17",
+        "NetNames": [
+          "P20.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W16",
+        "NetNames": [
+          "P33.12"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y16",
+        "NetNames": [
+          "P33.13"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "V20",
+        "NetNames": [
+          "P23.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U20",
+        "NetNames": [
+          "P23.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "T19",
+        "NetNames": [
+          "P23.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "F19",
+        "NetNames": [
+          "P20.7"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G2",
+        "NetNames": [
+          "P00.1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A5",
+        "NetNames": [
+          "P10.2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "A6",
+        "NetNames": [
+          "P10.3"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "L14",
+        "NetNames": [
+          "AGBT_ERR"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "L7",
+        "NetNames": [
+          "AGBT_CLK_N"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K7",
+        "NetNames": [
+          "AGBT_CLK_P"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G1",
+        "NetNames": [
+          "P00.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K2",
+        "NetNames": [
+          "P00.9"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K5",
+        "NetNames": [
+          "P00.10"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K20",
+        "NetNames": [
+          "TXD0_N"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "H17",
+        "NetNames": [
+          "P21.6"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W10",
+        "NetNames": [
+          "P33.0"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "P10",
+        "NetNames": [
+          "AGBT_TX0_N"
+        ],
+        "PinConnectionType": [
+          6
+        ]
+      },
+      {
+        "PinNumber": "P11",
+        "NetNames": [
+          "AGBT_TX0_P"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y6",
+        "NetNames": [
+          "VAREF1"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "T1",
+        "NetNames": [
+          "VAREF2"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "A19",
+        "NetNames": [
+          "VDDP3"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "B18",
+        "NetNames": [
+          "VDDP3"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "D16",
+        "NetNames": [
+          "VDD"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "E15",
+        "NetNames": [
+          "VDD"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "G13",
+        "NetNames": [
+          "VDD"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "H14",
+        "NetNames": [
+          "VDD"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "N7",
+        "NetNames": [
+          "VDD"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "N14",
+        "NetNames": [
+          "VDD"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "P8",
+        "NetNames": [
+          "VDD"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "P13",
+        "NetNames": [
+          "VDD"
+        ],
+        "PinConnectionType": [
+          1
+        ]
+      },
+      {
+        "PinNumber": "A2",
+        "NetNames": [
+          "NetCB512_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "B3",
+        "NetNames": [
+          "NetCB512_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "V19",
+        "NetNames": [
+          "NetCB512_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W20",
+        "NetNames": [
+          "NetCB512_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "D5",
+        "NetNames": [
+          "VFLEX"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "W17",
+        "NetNames": [
+          "VGATE1P"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "M20",
+        "NetNames": [
+          "NetC201_1"
+        ],
+        "PinConnectionType": [
+          2
+        ]
+      },
+      {
+        "PinNumber": "M19",
+        "NetNames": [
+          "NetR207_2"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "H20",
+        "NetNames": [
+          "SYSCLK"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G17",
+        "NetNames": [
+          "/PORST"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y17",
+        "NetNames": [
+          "VGATE1N"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "K16",
+        "NetNames": [
+          "NetR212_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G11",
+        "NetNames": [
+          "NetR225_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "G10",
+        "NetNames": [
+          "NetR226_1"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "U8",
+        "NetNames": [
+          "AN7_I"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y3",
+        "NetNames": [
+          "AN20_I"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "Y2",
+        "NetNames": [
+          "AN21_I"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "R4",
+        "NetNames": [
+          "AN31_I"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "N1",
+        "NetNames": [
+          "AN44_I"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      },
+      {
+        "PinNumber": "N2",
+        "NetNames": [
+          "AN45_I"
+        ],
+        "PinConnectionType": [
+          0
+        ]
+      }
+    ]
+  }
+]
