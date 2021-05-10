@@ -203,6 +203,8 @@ namespace SVFHelper.Implementations
                     logger.LogMessage("Error at InitializeSvfPlayer: " + errorMessage + " with id code: " + idCode + " Using empty default vector...", LogCategory.ERROR);
                     return false;
                 }
+                Stopwatch watchPlay = new Stopwatch();
+                watchPlay.Start();
 
                 result = SfvPlayer.SvfPlayer_ExecuteSvfSequence(target, svfFilePath, logFilePath);
                 if (result != (int)ResultEnum.OK)
@@ -217,7 +219,8 @@ namespace SVFHelper.Implementations
 
                 EndSvfSequence(target);
                 watch.Stop();
-                Debug.WriteLine("SVF PlaySvfFile: " + watch.ElapsedMilliseconds + " ms");
+                Debug.WriteLine("SVF PlaySvfFile with read defaultVector: " + watch.ElapsedMilliseconds + " ms");
+                Debug.WriteLine("SVF PlaySvfFile: " + watchPlay.ElapsedMilliseconds + " ms");
                 return state;
             }
             catch (Exception e)
