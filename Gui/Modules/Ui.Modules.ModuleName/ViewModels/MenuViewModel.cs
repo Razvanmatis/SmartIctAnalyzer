@@ -93,7 +93,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             RunTestCoverageForPullDowns = new DelegateCommand(async () => await TestCoverageForPullDowns().ConfigureAwait(false));
             CloseProjectFileCommand = new DelegateCommand(() => projectFileHandler.CloseProjectAction(ResetAll, ActionOfItems));
             AllSettingsCommand = new DelegateCommand(settingsHandler.OpenAllSettingsView);
-            GetPinInformationJtags = new DelegateCommand(pinInformationExtractionHandler.GetPinInformationJtagsIntoFile);
+            GetPinInformationJtags = new DelegateCommand(() => pinInformationExtractionHandler.GetPinInformationJtagsIntoFile(settingsData.JTAGPinIdentifier));
             PlaySvfFile = new DelegateCommand(svfHandler.PlaySvfFileHandler);
             GenerateSvfFiles = new DelegateCommand(async () => await HandleSfvFileCreation().ConfigureAwait(false));
             OpenProjectFileCommand = new DelegateCommand(async () => await projectFileHandler.OpenProjectFile(manifestHandler.GetProjectSelectionPath(), ResetAll, ResetTestCoverage, ActionOfItems).ConfigureAwait(false));
@@ -313,7 +313,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         private async Task HandleSfvFileCreation()
         {
             eventService.Publish(new SetBusyEvent(true));
-            await Task.Run(() => svfHandler.HandleSvfFileGeneration(projectHandlerToUse)).ConfigureAwait(false);
+            await Task.Run(() => svfHandler.HandleSvfFileGeneration(projectHandlerToUse, settingsData.JTAGPinIdentifier)).ConfigureAwait(false);
             eventService.Publish(new SetBusyEvent(false));
         }
 

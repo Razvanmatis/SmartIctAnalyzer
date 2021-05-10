@@ -88,6 +88,7 @@ namespace Ui.Modules.ModuleName.Implementations
         public uint IoVoltageMv { get; set; }
 
         public string Steps { get; set; }
+        public string JTAGPinIdentifier { get; set; }
 
         public void InitContent()
         {
@@ -166,7 +167,8 @@ namespace Ui.Modules.ModuleName.Implementations
                 PgmPort,
                 SupplyVoltageMv,
                 IoVoltageMv,
-                Steps);
+                Steps,
+                string.Empty);
             storageManager.SaveStorageContent(content);
         }
 

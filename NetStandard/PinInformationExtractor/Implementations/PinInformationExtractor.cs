@@ -6,11 +6,14 @@ using PinInformationExtractor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace PinInformationExtractor.Implementations
 {
     public class PinInformationExtractor : IPinInformationExtractor
     {
+        public const string DEFJTAGPINIDENTIFIER = "tdi;tdo;tck;tms";
+
         private readonly ILogger logger;
 
         public PinInformationExtractor(ILogger logger)
@@ -22,8 +25,14 @@ namespace PinInformationExtractor.Implementations
         {
         }
 
-        public List<JtagConnectionInfo> GetAllPinInformation(IList<IPCBComponent> ics, IList<IPCBComponent> pullUps, IList<IPCBComponent> pullDowns, string tdiIdentifier = "tdi", string tdoIdentifier = "tdo", string tckIdentifier = "tck", string tmsIdentifier = "tms")
+        public List<JtagConnectionInfo> GetAllPinInformation(IList<IPCBComponent> ics, IList<IPCBComponent> pullUps, IList<IPCBComponent> pullDowns, string jtagPinIdentifier = DEFJTAGPINIDENTIFIER)
         {
+            if (string.IsNullOrEmpty(jtagPinIdentifier))
+            {
+                jtagPinIdentifier = DEFJTAGPINIDENTIFIER;
+                logger.LogMessage("No JTAG pin identifiers were defined! Taking the default value: " + DEFJTAGPINIDENTIFIER, LogCategory.WARNING);
+            }
+
             if (ics == null || ics.Count == 0)
             {
                 logger.LogMessage("No ICs defined for getting PIN information from!", LogCategory.WARNING);
@@ -31,11 +40,23 @@ namespace PinInformationExtractor.Implementations
             }
 
             List<JtagConnectionInfo> results = new List<JtagConnectionInfo>();
-            List<IPCBComponent> jtags = GetJtags(ics, tdiIdentifier, tdoIdentifier, tckIdentifier, tmsIdentifier);
+            List<IPCBComponent> jtags = GetJtags(ics, jtagPinIdentifier);
             List<IPCBComponent> plainIcs = GetIcs(jtags, ics);
+            if (jtags == null || jtags.Count == 0)
+            {
+                logger.LogMessage("No JTAG devices found considering the actual identifiers!", LogCategory.WARNING);
+                return results;
+            }
 
             foreach (var jtag in jtags)
             {
+                int amountUnknown = 0;
+                int amountPullUp = 0;
+                int amountPullDown = 0;
+                int amountNotConnected = 0;
+                int amountToIc = 0;
+                int amountToJtag = 0;
+                int amountJtag = 0;
                 List<IPCBComponent> otherJtags = GetAllOtherJtags(jtag, jtags);
                 List<PinConnectionInfo> pins = new List<PinConnectionInfo>();
                 foreach (var pin in jtag.Connections)
@@ -51,6 +72,7 @@ namespace PinInformationExtractor.Implementations
                     List<PinConnectionType> pinConnectionTypes = new List<PinConnectionType>();
                     if (pin.Nets.Count == 0)
                     {
+                        amountNotConnected++;
                         pinConnectionTypes.Add(PinConnectionType.NOTCONNECTED);
                         pins.Add(new PinConnectionInfo(pin.PinNumber, pinConnectionTypes, netNames));
                         continue;
@@ -60,7 +82,7 @@ namespace PinInformationExtractor.Implementations
                     IList<INetComponent> netsToCheck = new List<INetComponent>();
                     foreach (var net in pin.Nets)
                     {
-                        if (!foundJtagPin && IsJtagIdentifier(net, tdiIdentifier, tdoIdentifier, tckIdentifier, tmsIdentifier))
+                        if (!foundJtagPin && IsJtagIdentifier(net, jtagPinIdentifier))
                         {
                             foundJtagPin = true;
                         }
@@ -73,32 +95,38 @@ namespace PinInformationExtractor.Implementations
                     List<ConnectedJtagDevice> jtagDevice = null;
                     if (foundJtagPin)
                     {
+                        amountJtag++;
                         pinConnectionTypes.Add(PinConnectionType.JTAG);
                     }
 
                     if (IncludesTheObject(netsToCheck, pullDowns))
                     {
+                        amountPullDown++;
                         pinConnectionTypes.Add(PinConnectionType.PULLDOWN);
                     }
 
                     if (IncludesTheObject(netsToCheck, plainIcs))
                     {
+                        amountToIc++;
                         pinConnectionTypes.Add(PinConnectionType.TOIC);
                     }
 
                     if (IncludesTheObject(netsToCheck, pullUps))
                     {
+                        amountPullUp++;
                         pinConnectionTypes.Add(PinConnectionType.PULLUP);
                     }
 
                     if (IncludesTheObject(netsToCheck, otherJtags))
                     {
+                        amountToJtag++;
                         jtagDevice = GetConnectedJtagDevices(netsToCheck, otherJtags);
                         pinConnectionTypes.Add(PinConnectionType.TOJTAG);
                     }
 
                     if (pinConnectionTypes.Count == 0)
                     {
+                        amountUnknown++;
                         pinConnectionTypes.Add(PinConnectionType.UNKNOWN);
                     }
 
@@ -117,16 +145,26 @@ namespace PinInformationExtractor.Implementations
                     }
                 }
 
-                results.Add(new JtagConnectionInfo(jtag.FunctionalAttributes.Ref + ": " + jtag.FunctionalAttributes.Value, pins, totalAmountOfNetsOfComp.Count));
+                results.Add(new JtagConnectionInfo(
+                    jtag.FunctionalAttributes.Ref + ": " + jtag.FunctionalAttributes.Value, 
+                    pins, 
+                    totalAmountOfNetsOfComp.Count,
+                    amountUnknown,
+                    amountPullUp,
+                    amountPullDown,
+                    amountNotConnected,
+                    amountToIc,
+                    amountToJtag,
+                    amountJtag));
             }
 
             return results;
         }
 
         public List<JtagConnectionInfo> CreatePinInformationFile(string fileName, IList<IPCBComponent> ics, IList<IPCBComponent> pullUps, IList<IPCBComponent> pullDowns,
-            string tdiIdentifier = "tdi", string tdoIdentifier = "tdo", string tckIdentifier = "tck", string tmsIdentifier = "tms")
+            string jtagPinIdentifier = DEFJTAGPINIDENTIFIER)
         {
-            List<JtagConnectionInfo> results = GetAllPinInformation(ics, pullUps, pullDowns, tdiIdentifier, tdoIdentifier, tckIdentifier, tmsIdentifier);
+            List<JtagConnectionInfo> results = GetAllPinInformation(ics, pullUps, pullDowns, jtagPinIdentifier);
             if (results == null || results.Count == 0)
             {
                 return null;
@@ -177,7 +215,7 @@ namespace PinInformationExtractor.Implementations
             return names;
         }
 
-        private List<IPCBComponent> GetJtags(IList<IPCBComponent> ics, string tdiIdentifier, string tdoIdentifier, string tckIdentifier, string tmsIdentifier)
+        private List<IPCBComponent> GetJtags(IList<IPCBComponent> ics, string jtagPinIdentifier)
         {
             List<IPCBComponent> list = new List<IPCBComponent>();
             foreach (var comp in ics)
@@ -187,7 +225,7 @@ namespace PinInformationExtractor.Implementations
                 {
                     foreach (var net in pin.Nets)
                     {
-                        if (IsJtagIdentifier(net, tdiIdentifier, tdoIdentifier, tckIdentifier, tmsIdentifier) && !list.Contains(comp))
+                        if (IsJtagIdentifier(net, jtagPinIdentifier) && !list.Contains(comp))
                         {
                             list.Add(comp);
                             found = true;
@@ -297,10 +335,9 @@ namespace PinInformationExtractor.Implementations
                 "TOIC = 4,\n" + "TOJTAG = 5,\n" + "JTAG = 6\n";
         }
 
-        private static bool IsJtagIdentifier(INetComponent net, string tdiIdentifier, string tdoIdentifier, string tckIdentifier, string tmsIdentifier)
+        private static bool IsJtagIdentifier(INetComponent net, string jtagPinIdentifier)
         {
-            return net.NetName.ToLower().Contains(tdiIdentifier) || net.NetName.ToLower().Contains(tdoIdentifier)
-                || net.NetName.ToLower().Contains(tckIdentifier) || net.NetName.ToLower().Contains(tmsIdentifier);
+            return jtagPinIdentifier.Split(";").ToList().FirstOrDefault(x => net.NetName.ToLower().Contains(x.ToLower())) != null;
         }
 
         private List<IPCBComponent> GetIcs(List<IPCBComponent> jtags, IList<IPCBComponent> ics)

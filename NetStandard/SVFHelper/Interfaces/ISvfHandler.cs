@@ -2,7 +2,7 @@
 {
     public interface ISvfHandler
     {
-        void HandleSvfFileGeneration(ISvfExporter projectHandlerToUse);
+        void HandleSvfFileGeneration(ISvfExporter projectHandlerToUse, string jtagPinInformation = "");
 
         void PlaySvfFileHandler();
     }

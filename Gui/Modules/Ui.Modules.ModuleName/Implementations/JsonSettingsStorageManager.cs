@@ -139,7 +139,8 @@ namespace Ui.Modules.ModuleName.Implementations
                 PgmPortDef,
                 SupplyVoltageMvDef,
                 IoVoltageMvDef,
-                StepsDef);
+                StepsDef,
+                string.Empty);
         }
 
         private byte[] GetBytesOfFile(string fileToUse)

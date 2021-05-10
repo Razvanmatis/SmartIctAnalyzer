@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media;
+using Interfaces.Gui;
 using ProMik.Core.Interfaces.Settings;
 using Ui.Modules.ModuleName.Interfaces;
 
@@ -95,6 +97,9 @@ namespace Ui.Modules.ModuleName.Implementations
         private const string JTAGIDENTSETTINGKEY = "JTAGIdentSettingKey";
         private const string JTAGIDENTSETTINGNAME = "JTAG nets identifier (a;b;c):";
         private const string JTAGBLACKSETTINGKEY = "JTAGBlackSettingKey";
+        private const string JTAGPINSNAME = "Extended JTAG pin identifier (a;b;c)";
+        private const string JTAGPINSKEY = "JTAGExtendedPinsSettingKey";
+        private const string DEFJTAGPINSVALUE = PinInformationExtractor.Implementations.PinInformationExtractor.DEFJTAGPINIDENTIFIER;
         private const string PAGEKEYSVF = "pageKeySvf";
         private const string PAGENAMESVF = "SVF Player";
         private const string SECTIONSVFKEY = "sectionSvfProgrammerKey";
@@ -108,6 +113,7 @@ namespace Ui.Modules.ModuleName.Implementations
         private const string SVFIOVOLTAGESETTINGKEY = "svfIoVoltageSettingKey";
         private const string SVFIOVOLTAGENAME = "IO Voltage in mv:";
         private readonly ISettingsService settingsService;
+        private readonly ILogger logger;
         private IList<string> resistorChars;
         private Color resistorColor;
         private bool resistorNamesChecked;
@@ -133,6 +139,7 @@ namespace Ui.Modules.ModuleName.Implementations
         private bool showButtons;
         private string steps;
         private string ipAddress;
+        private string jtagPinIdentifier;
         private string jtagNetIdentifier;
         private string jtagNetBlacklist;
         private string powerNetIdentifier;
@@ -144,9 +151,10 @@ namespace Ui.Modules.ModuleName.Implementations
         private uint supplyVoltageMv;
         private uint ioVoltageMv;
 
-        public ProMikSettingsData(ISettingsService settingsService)
+        public ProMikSettingsData(ISettingsService settingsService, ILogger logger)
         {
             this.settingsService = settingsService;
+            this.logger = logger;
             DefineSettings();
             InitContent();
         }
@@ -573,44 +581,57 @@ namespace Ui.Modules.ModuleName.Implementations
 
         public bool UseValues { get; set; }
 
+        public string JTAGPinIdentifier
+        {
+            get
+            {
+                return jtagPinIdentifier;
+            }
+
+            set
+            {
+            }
+        }
+
         public void InitContent()
         {
             settingsService.Reinitialize();
-            resistorChars = GetListContent(settingsService.GetSettingValue<string>(RCHARSSETTINGKEY));
-            resistorColor = (Color)ColorConverter.ConvertFromString(settingsService.GetSettingValue<string>(RCOLORSETTINGKEY));
-            resistorNamesChecked = settingsService.GetSettingValue<bool>(RCHECKNAMESETTINGKEY);
-            capacitorChars = GetListContent(settingsService.GetSettingValue<string>(CCHARSSETTINGKEY));
-            capacitorColor = (Color)ColorConverter.ConvertFromString(settingsService.GetSettingValue<string>(CCOLORSETTINGKEY));
-            capacitorNamesChecked = settingsService.GetSettingValue<bool>(CCHECKNAMESETTINGKEY);
-            inductionChars = GetListContent(settingsService.GetSettingValue<string>(ICHARSSETTINGKEY));
-            inductionColor = (Color)ColorConverter.ConvertFromString(settingsService.GetSettingValue<string>(ICOLORSETTINGKEY));
-            inductionNamesChecked = settingsService.GetSettingValue<bool>(ICHECKNAMESETTINGKEY);
-            icChars = GetListContent(settingsService.GetSettingValue<string>(ICCHARSSETTINGKEY));
-            icColor = (Color)ColorConverter.ConvertFromString(settingsService.GetSettingValue<string>(ICCOLORSETTINGKEY));
-            icNamesChecked = settingsService.GetSettingValue<bool>(ICCHECKNAMESETTINGKEY);
-            connectorChars = GetListContent(settingsService.GetSettingValue<string>(CONCHARSSETTINGKEY));
-            connectorColor = (Color)ColorConverter.ConvertFromString(settingsService.GetSettingValue<string>(CONCOLORSETTINGKEY));
-            connectorNamesChecked = settingsService.GetSettingValue<bool>(CONCHECKNAMESETTINGKEY);
-            testpointChars = GetListContent(settingsService.GetSettingValue<string>(TPCHARSSETTINGKEY));
-            testpointColor = (Color)ColorConverter.ConvertFromString(settingsService.GetSettingValue<string>(TPCOLORSETTINGKEY));
-            testpointNamesChecked = settingsService.GetSettingValue<bool>(TPCHECKNAMESETTINGKEY);
-            compColor = (Color)ColorConverter.ConvertFromString(settingsService.GetSettingValue<string>(COMPCOLORSETTINGKEY));
-            compNamesChecked = settingsService.GetSettingValue<bool>(COMPCHECKNAMESETTINGKEY);
-            fontSizeNames = settingsService.GetSettingValue<int>(FONTSIZESETTINGKEY);
-            netNamesChecked = settingsService.GetSettingValue<bool>(SHOWNETNAMESSETTINGKEY);
-            showButtons = settingsService.GetSettingValue<bool>(SHOWBUTTONSSETTINGKEY);
-            steps = settingsService.GetSettingValue<string>(STEPSSETTINGKEY);
-            ipAddress = settingsService.GetSettingValue<string>(IPSETTINGKEY);
-            jtagNetIdentifier = settingsService.GetSettingValue<string>(JTAGIDENTSETTINGKEY);
-            jtagNetBlacklist = settingsService.GetSettingValue<string>(JTAGBLACKSETTINGKEY);
-            powerNetIdentifier = settingsService.GetSettingValue<string>(POWERIDENTSETTINGKEY);
-            powerNetBlacklist = settingsService.GetSettingValue<string>(POWERBLACKSETTINGKEY);
-            gndNetIdentifier = settingsService.GetSettingValue<string>(GNDIDENTSETTINGKEY);
-            gndNetBlacklist = settingsService.GetSettingValue<string>(GNDBLACKSETTINGKEY);
-            pgmIp = settingsService.GetSettingValue<string>(SVFPGMSETTINGKEY);
-            pgmPort = (uint)settingsService.GetSettingValue<int>(SVFPORTSETTINGKEY);
-            supplyVoltageMv = (uint)settingsService.GetSettingValue<int>(SVFSUPPLYVSETTINGKEY);
-            ioVoltageMv = (uint)settingsService.GetSettingValue<int>(SVFIOVOLTAGESETTINGKEY);
+            resistorChars = GetListContent(GetSettingValue<string>(RCHARSSETTINGKEY));
+            resistorColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(RCOLORSETTINGKEY));
+            resistorNamesChecked = GetSettingValue<bool>(RCHECKNAMESETTINGKEY);
+            capacitorChars = GetListContent(GetSettingValue<string>(CCHARSSETTINGKEY));
+            capacitorColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(CCOLORSETTINGKEY));
+            capacitorNamesChecked = GetSettingValue<bool>(CCHECKNAMESETTINGKEY);
+            inductionChars = GetListContent(GetSettingValue<string>(ICHARSSETTINGKEY));
+            inductionColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(ICOLORSETTINGKEY));
+            inductionNamesChecked = GetSettingValue<bool>(ICHECKNAMESETTINGKEY);
+            icChars = GetListContent(GetSettingValue<string>(ICCHARSSETTINGKEY));
+            icColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(ICCOLORSETTINGKEY));
+            icNamesChecked = GetSettingValue<bool>(ICCHECKNAMESETTINGKEY);
+            connectorChars = GetListContent(GetSettingValue<string>(CONCHARSSETTINGKEY));
+            connectorColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(CONCOLORSETTINGKEY));
+            connectorNamesChecked = GetSettingValue<bool>(CONCHECKNAMESETTINGKEY);
+            testpointChars = GetListContent(GetSettingValue<string>(TPCHARSSETTINGKEY));
+            testpointColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(TPCOLORSETTINGKEY));
+            testpointNamesChecked = GetSettingValue<bool>(TPCHECKNAMESETTINGKEY);
+            compColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(COMPCOLORSETTINGKEY));
+            compNamesChecked = GetSettingValue<bool>(COMPCHECKNAMESETTINGKEY);
+            fontSizeNames = GetSettingValue<int>(FONTSIZESETTINGKEY);
+            netNamesChecked = GetSettingValue<bool>(SHOWNETNAMESSETTINGKEY);
+            showButtons = GetSettingValue<bool>(SHOWBUTTONSSETTINGKEY);
+            steps = GetSettingValue<string>(STEPSSETTINGKEY);
+            ipAddress = GetSettingValue<string>(IPSETTINGKEY);
+            jtagPinIdentifier = GetSettingValue<string>(JTAGPINSKEY);
+            jtagNetIdentifier = GetSettingValue<string>(JTAGIDENTSETTINGKEY);
+            jtagNetBlacklist = GetSettingValue<string>(JTAGBLACKSETTINGKEY);
+            powerNetIdentifier = GetSettingValue<string>(POWERIDENTSETTINGKEY);
+            powerNetBlacklist = GetSettingValue<string>(POWERBLACKSETTINGKEY);
+            gndNetIdentifier = GetSettingValue<string>(GNDIDENTSETTINGKEY);
+            gndNetBlacklist = GetSettingValue<string>(GNDBLACKSETTINGKEY);
+            pgmIp = GetSettingValue<string>(SVFPGMSETTINGKEY);
+            pgmPort = (uint)GetSettingValue<int>(SVFPORTSETTINGKEY);
+            supplyVoltageMv = (uint)GetSettingValue<int>(SVFSUPPLYVSETTINGKEY);
+            ioVoltageMv = (uint)GetSettingValue<int>(SVFIOVOLTAGESETTINGKEY);
             CheckForNullvalue(ref steps);
             CheckForNullvalue(ref ipAddress);
             CheckForNullvalue(ref jtagNetIdentifier);
@@ -620,6 +641,31 @@ namespace Ui.Modules.ModuleName.Implementations
             CheckForNullvalue(ref gndNetIdentifier);
             CheckForNullvalue(ref gndNetBlacklist);
             CheckForNullvalue(ref pgmIp);
+            CheckForNullvalue(ref jtagPinIdentifier);
+        }
+
+        public T GetSettingValue<T>(string key)
+        {
+            try
+            {
+                return settingsService.GetSettingValue<T>(key);
+            }
+            catch (Exception e)
+            {
+                logger.LogMessage("Setting for key not found: " + key + ": " + e.Message, LogCategory.WARNING);
+                if (typeof(T) == typeof(string))
+                {
+                    return ((T)(object)string.Empty);
+                }
+                else if (typeof(T) == typeof(int))
+                {
+                    return ((T)(object)0);
+                }
+                else
+                {
+                    return ((T)(object)false);
+                }
+            }
         }
 
         public void SaveValues()
@@ -671,6 +717,7 @@ namespace Ui.Modules.ModuleName.Implementations
             var jtagSection = pageTestCoverage.AddSection(JTAGSECTIONKEY, JTAGSECTIONNAME);
             jtagSection.AddSetting(JTAGIDENTSETTINGKEY, JTAGIDENTSETTINGNAME, SettingType.String, JsonSettingsStorageManager.JtagDef);
             jtagSection.AddSetting(JTAGBLACKSETTINGKEY, BLACKLISTNAME, SettingType.String, string.Empty);
+            jtagSection.AddSetting(JTAGPINSKEY, JTAGPINSNAME, SettingType.String, DEFJTAGPINSVALUE);
         }
 
         private static void DefineConnectionSettings(IPage pageConnection)

@@ -72,14 +72,14 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
-        public void HandleSvfFileGeneration(ISvfExporter projectHandlerToUse)
+        public void HandleSvfFileGeneration(ISvfExporter projectHandlerToUse, string jtagPinInformation = PinInformationExtractor.Implementations.PinInformationExtractor.DEFJTAGPINIDENTIFIER)
         {
             if (!dialogSelector.OpenGenericDialog(DialogType.OPENFOLDER, TextRessources.SelectSvfFolder, "No valid path selected", out string fileName))
             {
                 return;
             }
 
-            List<JtagConnectionInfo> result = pinInformationExtractor.GetAllPinInformation(testCoverageDataModel.Ics, testCoverageDataModel.PullUps, testCoverageDataModel.PullDowns);
+            List<JtagConnectionInfo> result = pinInformationExtractor.GetAllPinInformation(testCoverageDataModel.Ics, testCoverageDataModel.PullUps, testCoverageDataModel.PullDowns, jtagPinInformation);
             if (result != null)
             {
                 HandleSvfFileCreation(result, fileName, projectHandlerToUse);

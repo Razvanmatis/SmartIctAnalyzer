@@ -73,5 +73,7 @@ namespace Ui.Modules.ModuleName.Interfaces
         uint IoVoltageMv { get; set; }
 
         string Steps { get; set; }
+
+        string JTAGPinIdentifier { get; set; }
     }
 }

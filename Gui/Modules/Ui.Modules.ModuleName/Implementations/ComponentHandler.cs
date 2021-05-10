@@ -217,6 +217,11 @@ namespace Ui.Modules.ModuleName.Implementations
                 if (comp is ViewModelPCBComponentBase baseVm)
                 {
                     baseVm.Value = baseVm.BaseComponent.FunctionalAttributes.Value;
+                    if (string.IsNullOrEmpty(baseVm.Value))
+                    {
+                        baseVm.Value = baseVm.BaseComponent.FunctionalAttributes.PartName;
+                    }
+
                     baseVm.InitValues(true);
                 }
             }

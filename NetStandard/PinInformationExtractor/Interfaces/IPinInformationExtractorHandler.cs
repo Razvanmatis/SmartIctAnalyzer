@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PinInformationExtractor.Interfaces
+﻿namespace PinInformationExtractor.Interfaces
 {
     public interface IPinInformationExtractorHandler
     {
-        void GetPinInformationJtagsIntoFile();
+        void GetPinInformationJtagsIntoFile(string jtagPinInformation = PinInformationExtractor.Implementations.PinInformationExtractor.DEFJTAGPINIDENTIFIER);
     }
 }

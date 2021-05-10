@@ -201,7 +201,7 @@ namespace SVFHelper.Implementations
         /// <exception cref="Exception">Ignore.</exception>
         private string GenerateNewVector(string pinLabel, bool value, Dictionary<int, IBoundaryCell> boundaryCells, ref int position, byte[] defaultVector)
         {
-            var index = 0;
+            var index = -1;
             foreach (var cell in boundaryCells)
             {
                 if (cell.Value.Port.Equals(pinLabel))
@@ -212,7 +212,7 @@ namespace SVFHelper.Implementations
                 }
             }
 
-            if (index == 0)
+            if (index == -1)
             {
                 return string.Empty;
             }
@@ -246,7 +246,7 @@ namespace SVFHelper.Implementations
         private string GenerateNewVector(List<string> pinLabels, bool value, Dictionary<int, IBoundaryCell> boundaryCells, byte[] defaultVector, List<int> positions = null)
         {
             var vectorArray = new BitArray(defaultVector);
-            var index = 0;
+            var index = -1;
             foreach (var pin in pinLabels)
             {
                 foreach (var cell in boundaryCells)
@@ -269,7 +269,7 @@ namespace SVFHelper.Implementations
                 }
             }
 
-            if (index == 0)
+            if (index == -1)
             {
                 return string.Empty;
             }

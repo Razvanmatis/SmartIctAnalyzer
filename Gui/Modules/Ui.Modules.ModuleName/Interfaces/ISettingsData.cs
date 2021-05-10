@@ -53,6 +53,8 @@ namespace Ui.Modules.ModuleName.Interfaces
 
         bool UseValues { get; set; }
 
+        public string JTAGPinIdentifier { get; set; }
+
         public string JTAGNetIdentifier { get; set; }
 
         public string JTAGNetBlacklist { get; set; }

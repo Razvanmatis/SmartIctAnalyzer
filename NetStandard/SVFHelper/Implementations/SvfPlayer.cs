@@ -18,8 +18,8 @@ namespace SVFHelper.Implementations
 
         public byte[] GetDefaultVector(uint scanChainLength, uint instructionRegisterLength, string pgmIp, uint pgmPort, uint supplyVoltageMv, uint ioVoltageMv)
         {
-            scanChainLength = 1077;
-            instructionRegisterLength = 6;
+            // scanChainLength = 1077;
+            // instructionRegisterLength = 6;
             Stopwatch watch = new Stopwatch();
             watch.Start();
             byte[] defEmptyVector = GetDefEmptyVector(scanChainLength);

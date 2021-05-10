@@ -74,7 +74,8 @@ namespace Ui.Modules.ModuleName.Implementations
                 settingsData.PgmPort,
                 settingsData.SupplyVoltageMv,
                 settingsData.IoVoltageMv,
-                settingsData.Steps);
+                settingsData.Steps,
+                settingsData.JTAGPinIdentifier);
         }
 
         public void ImportStorageContent(byte[] data)

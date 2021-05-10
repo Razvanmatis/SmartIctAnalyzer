@@ -26,7 +26,7 @@ namespace Ui.Modules.ModuleName.Implementations
             this.pinInformationExtractor = pinInformationExtractor;
         }
 
-        public void GetPinInformationJtagsIntoFile()
+        public void GetPinInformationJtagsIntoFile(string jtagPinInformation = PinInformationExtractor.Implementations.PinInformationExtractor.DEFJTAGPINIDENTIFIER)
         {
             string fileName = string.Empty;
             if (!dialogSelector.OpenGenericDialog(DialogType.SAVEFILE, TextRessources.PinExportTitle, "No valid target to save selected!", out fileName))
@@ -39,8 +39,15 @@ namespace Ui.Modules.ModuleName.Implementations
                 fileName += ".txt";
             }
 
-            pinInformationExtractor.CreatePinInformationFile(fileName, testCoverageDataModel.Ics, testCoverageDataModel.PullUps, testCoverageDataModel.PullDowns);
-            logger.LogMessage("PIN information exported into file " + fileName, LogCategory.INFO);
+            var result = pinInformationExtractor.CreatePinInformationFile(fileName, testCoverageDataModel.Ics, testCoverageDataModel.PullUps, testCoverageDataModel.PullDowns, jtagPinInformation);
+            if (result != null && result.Count > 0)
+            {
+                logger.LogMessage("PIN information exported into file " + fileName, LogCategory.INFO);
+            }
+            else
+            {
+                logger.LogMessage("No PIN information exported into file performed for: " + fileName, LogCategory.WARNING);
+            }
         }
     }
 }

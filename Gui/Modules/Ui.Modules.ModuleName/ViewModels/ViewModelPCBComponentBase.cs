@@ -37,6 +37,11 @@ namespace Ui.Modules.ModuleName.ViewModels
             ToggleConnections = new DelegateCommand(async () => await ToggleConnectionsShowing().ConfigureAwait(false));
             Name = component?.FunctionalAttributes?.Ref;
             Value = component?.FunctionalAttributes?.Value;
+            if (string.IsNullOrEmpty(Value))
+            {
+                Value = component?.FunctionalAttributes?.PartName;
+            }
+
             InitValues(false);
         }
 

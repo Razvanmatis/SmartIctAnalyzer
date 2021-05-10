@@ -40,7 +40,8 @@ namespace Ui.Modules.ModuleName.Model
             uint pgmPort,
             uint supplyVoltageMv,
             uint ioVoltageMv,
-            string steps)
+            string steps,
+            string jTAGPinIdentifier)
         {
             RIdentifier = r;
             RColor = rc;
@@ -77,6 +78,7 @@ namespace Ui.Modules.ModuleName.Model
             SupplyVoltageMv = supplyVoltageMv;
             IoVoltageMv = ioVoltageMv;
             Steps = steps;
+            JTAGPinIdentifier = jTAGPinIdentifier;
         }
 
         public bool RShow { get; set; }
@@ -148,5 +150,7 @@ namespace Ui.Modules.ModuleName.Model
         public uint IoVoltageMv { get; set; }
 
         public string Steps { get; set; }
+
+        public string JTAGPinIdentifier { get; set; }
     }
 }
