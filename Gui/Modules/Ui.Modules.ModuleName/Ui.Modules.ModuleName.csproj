@@ -10,11 +10,12 @@
     <None Remove="Ressources\start.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Essy.Tools.InputBox" Version="1.0.0" />
     <PackageReference Include="log4net" Version="2.0.12" />
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="Ookii.Dialogs.Wpf" Version="3.1.0" />
     <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
-    <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.3-beta" />
+    <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.5" />
     <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.20-beta" />
     <PackageReference Include="ProMik.UI.WPF" Version="1.0.15-beta" />
     <PackageReference Include="System.Collections" Version="4.3.0" />

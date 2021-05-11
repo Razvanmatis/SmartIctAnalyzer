@@ -12,5 +12,6 @@ namespace PinInformationExtractor.Interfaces
         List<string> GetAllPowerPins(List<PinConnectionInfo> pins);
         List<JtagConnectionInfo> GetAllPinInformation(IList<IPCBComponent> ics, IList<IPCBComponent> pullUps, IList<IPCBComponent> pullDowns,
             string jtagPinIdentifier = PinInformationExtractor.Implementations.PinInformationExtractor.DEFJTAGPINIDENTIFIER);
+        List<string> GetAllUnknownPins(List<PinConnectionInfo> pins);
     }
 }

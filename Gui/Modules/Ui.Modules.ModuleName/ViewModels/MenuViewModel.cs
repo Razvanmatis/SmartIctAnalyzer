@@ -94,7 +94,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             CloseProjectFileCommand = new DelegateCommand(() => projectFileHandler.CloseProjectAction(ResetAll, ActionOfItems));
             AllSettingsCommand = new DelegateCommand(settingsHandler.OpenAllSettingsView);
             GetPinInformationJtags = new DelegateCommand(() => pinInformationExtractionHandler.GetPinInformationJtagsIntoFile(settingsData.JTAGPinIdentifier));
-            PlaySvfFile = new DelegateCommand(svfHandler.PlaySvfFileHandler);
+            PlaySvfFile = new DelegateCommand(async () => await HandlerPlaySvfFile().ConfigureAwait(false));
             GenerateSvfFiles = new DelegateCommand(async () => await HandleSfvFileCreation().ConfigureAwait(false));
             OpenProjectFileCommand = new DelegateCommand(async () => await projectFileHandler.OpenProjectFile(manifestHandler.GetProjectSelectionPath(), ResetAll, ResetTestCoverage, ActionOfItems).ConfigureAwait(false));
             CreateProjectFileCommand = new DelegateCommand(() => projectFileHandler.CreateProjectFile(ResetAll, ActionOfItems));
@@ -314,6 +314,13 @@ namespace Ui.Modules.ModuleName.ViewModels
         {
             eventService.Publish(new SetBusyEvent(true));
             await Task.Run(() => svfHandler.HandleSvfFileGeneration(projectHandlerToUse, settingsData.JTAGPinIdentifier)).ConfigureAwait(false);
+            eventService.Publish(new SetBusyEvent(false));
+        }
+
+        private async Task HandlerPlaySvfFile()
+        {
+            eventService.Publish(new SetBusyEvent(true));
+            await Task.Run(() => svfHandler.PlaySvfFileHandler()).ConfigureAwait(false);
             eventService.Publish(new SetBusyEvent(false));
         }
 

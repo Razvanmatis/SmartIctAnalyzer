@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.3-beta" />
+    <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.5" />
     <PackageReference Include="ProMik.SvfPlayer" Version="1.0.5-beta" />
   </ItemGroup>
 

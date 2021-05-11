@@ -119,7 +119,7 @@ namespace TestCoverage.Helper
 
         private static bool ContainsIdentifier(string netName, List<string> identifierList)
         {
-            return identifierList.Any(x => netName.ToLower(CultureInfo.CurrentCulture).Contains(x));
+            return identifierList.Any(x => netName.ToLower(CultureInfo.CurrentCulture).Contains(x.ToLower(CultureInfo.CurrentCulture)));
         }
 
         private static List<string> GetListFromString(string identifier)

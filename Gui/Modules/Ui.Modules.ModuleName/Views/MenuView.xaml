@@ -151,7 +151,7 @@
                         </MenuItem>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Visibility="Hidden" Header="Play SVF data file" Command="{Binding PlaySvfFile}" />
+                <MenuItem Visibility="Visible" Header="Play SVF data file" Command="{Binding PlaySvfFile}" />
             </Menu>
         </DockPanel>
     </Grid>

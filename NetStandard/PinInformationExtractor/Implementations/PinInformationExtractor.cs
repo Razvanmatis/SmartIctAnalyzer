@@ -201,6 +201,11 @@ namespace PinInformationExtractor.Implementations
             return GetAllPinsOfType(pins, PinConnectionType.PULLUP);
         }
 
+        public List<string> GetAllUnknownPins(List<PinConnectionInfo> pins)
+        {
+            return GetAllPinsOfType(pins, PinConnectionType.UNKNOWN);
+        }
+
         private static List<string> GetAllPinsOfType(List<PinConnectionInfo> pins, PinConnectionType type)
         {
             List<string> names = new List<string>();

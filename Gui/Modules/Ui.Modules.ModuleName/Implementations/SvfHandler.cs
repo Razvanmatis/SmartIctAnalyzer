@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Windows;
 using Interfaces.Gui;
 using PinInformationExtractor.Helper;
@@ -12,6 +13,7 @@ namespace Ui.Modules.ModuleName.Implementations
 {
     public class SvfHandler : ISvfHandler
     {
+        private const string BOUNDARYSCANCHAINLENGTH = "BOUNDARY_LENGTH";
         private readonly IDialogSelector dialogSelector;
         private readonly ILogger logger;
         private readonly ISettingsStorageManager settingsStorageManager;
@@ -43,16 +45,46 @@ namespace Ui.Modules.ModuleName.Implementations
 
         public void PlaySvfFileHandler()
         {
+            uint irLength = 0;
+            uint scanChainLength = 0;
             if (!dialogSelector.OpenGenericDialog(DialogType.OPENFILE, TextRessources.SelectBsdlFile, "No valid BSDL file selected!", out string bsdlFile))
             {
-                return;
-            }
+                string value = Essy.Tools.InputBox.InputBox.ShowInputBox("Instruction register length;scan chain length");
+                if (string.IsNullOrEmpty(value) || value.Split(";").Length != 2)
+                {
+                    return;
+                }
 
-            var package = packageService.GetPackage(bsdlFile);
-            if (package == null || package.BoundaryCells == null || package.BoundaryCells.Count == 0)
+                string[] result = value.Split(";");
+
+                if (!uint.TryParse(result[0], out irLength))
+                {
+                    logger.LogMessage("Error parsing number: " + result[0], LogCategory.ERROR);
+                    return;
+                }
+
+                if (!uint.TryParse(result[1], out scanChainLength))
+                {
+                    logger.LogMessage("Error parsing number: " + result[1], LogCategory.ERROR);
+                    return;
+                }
+            }
+            else
             {
-                logger.LogMessage("Received invalid BSDL package out of BSDL file!", LogCategory.ERROR);
-                return;
+                var package = packageService.GetPackage(bsdlFile);
+                if (package == null || package.BoundaryCells == null || package.PinCount == 0)
+                {
+                    logger.LogMessage("Received invalid BSDL package out of BSDL file!", LogCategory.ERROR);
+                    return;
+                }
+
+                irLength = package.InstructionLength;
+                scanChainLength = GetBoundaryScanChainLength(package.Attributes);
+                if (scanChainLength == 0)
+                {
+                    logger.LogMessage("No valid scan chain length of BSDL package found!", LogCategory.ERROR);
+                    return;
+                }
             }
 
             if (!dialogSelector.OpenGenericDialog(DialogType.OPENFILE, TextRessources.SelectVsfFile, "No valid SVF file selected", out string selectedSvf))
@@ -66,7 +98,7 @@ namespace Ui.Modules.ModuleName.Implementations
             }
 
             var settingsContent = settingsStorageManager.GetStorageContent();
-            if (svfPlayer.PlaySvfFile((uint)package.PinMap.Count, package.InstructionLength, selectedSvf, logPath, settingsContent.PgmIp, settingsContent.PgmPort, settingsContent.SupplyVoltageMv, settingsContent.IoVoltageMv))
+            if (svfPlayer.PlaySvfFile(scanChainLength, irLength, selectedSvf, logPath, settingsContent.PgmIp, settingsContent.PgmPort, settingsContent.SupplyVoltageMv, settingsContent.IoVoltageMv))
             {
                 logger.LogMessage("Successfully played the SVF file: " + selectedSvf, LogCategory.INFO);
             }
@@ -84,6 +116,31 @@ namespace Ui.Modules.ModuleName.Implementations
             {
                 HandleSvfFileCreation(result, fileName, projectHandlerToUse);
             }
+        }
+
+        private uint GetBoundaryScanChainLength(List<ProMik.BSDL.Interfaces.Entities.IBSDLAttribute> attributes)
+        {
+            uint intVal = 0;
+            foreach (var attr in attributes)
+            {
+                if (attr.Name.Equals(BOUNDARYSCANCHAINLENGTH))
+                {
+                    string value = attr.Values[0];
+                    value = value.Replace(" ", string.Empty).Trim();
+                    value = value.ToLower(CultureInfo.CurrentCulture).Replace("entity", string.Empty);
+                    value = value.ToLower(CultureInfo.CurrentCulture).Replace("is", string.Empty);
+                    if (!uint.TryParse(value, out intVal))
+                    {
+                        logger.LogMessage("Error parsing value: " + value, LogCategory.ERROR);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return intVal;
         }
 
         private void HandleSvfFileCreation(List<JtagConnectionInfo> result, string basePath, ISvfExporter projectHandlerToUse)
@@ -104,15 +161,22 @@ namespace Ui.Modules.ModuleName.Implementations
 
                 MessageBox.Show("Please make sure to have a programmer connected to the according JTAG device: " + jtag.ComponentName + " for being able to read out the default vector");
                 var settingsContent = settingsStorageManager.GetStorageContent();
-                byte[] defaultVector = svfPlayer.GetDefaultVector((uint)package.PinMap.Count, package.InstructionLength, settingsContent.PgmIp, settingsContent.PgmPort, settingsContent.SupplyVoltageMv, settingsContent.IoVoltageMv);
+                uint boundaryScanLength = GetBoundaryScanChainLength(package.Attributes);
+                if (boundaryScanLength == 0)
+                {
+                    logger.LogMessage("No valid scan chain length of BSDL package found!", LogCategory.ERROR);
+                    return;
+                }
+
+                byte[] defaultVector = svfPlayer.GetDefaultVector(boundaryScanLength, package.InstructionLength, settingsContent.PgmIp, settingsContent.PgmPort, settingsContent.SupplyVoltageMv, settingsContent.IoVoltageMv);
                 if (defaultVector == null || defaultVector.Length == 0)
                 {
                     logger.LogMessage("Were not able to get a valid default vector for target: " + jtag.ComponentName, LogCategory.ERROR);
                     continue;
                 }
 
-                int realLength = package.PinMap.Count / 8;
-                if (package.PinMap.Count % 8 > 0)
+                uint realLength = boundaryScanLength / 8;
+                if (boundaryScanLength % 8 > 0)
                 {
                     realLength++;
                 }
@@ -127,6 +191,8 @@ namespace Ui.Modules.ModuleName.Implementations
                 svfDataResult.AddRange(writer.GetSVFFiles(basePath, jtag.ComponentName, pinInformationExtractor.GetAllGroundPins(jtag.Pins), package, defaultVector));
                 writer = new PullUpSvfWriter(svfHelper);
                 svfDataResult.AddRange(writer.GetSVFFiles(basePath, jtag.ComponentName, pinInformationExtractor.GetAllPowerPins(jtag.Pins), package, defaultVector));
+                writer = new UnknownComponentsSvfWriter(svfHelper);
+                svfDataResult.AddRange(writer.GetSVFFiles(basePath, jtag.ComponentName, pinInformationExtractor.GetAllUnknownPins(jtag.Pins), package, defaultVector));
                 projectHandlerToUse.ExportSvfFiles(svfDataResult);
             }
         }

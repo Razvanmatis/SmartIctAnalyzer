@@ -3,6 +3,9 @@
                     xmlns:if="clr-namespace:Ui.Modules.ModuleName.ViewModels">
     <DataTemplate DataType="{x:Type if:ViewModelTestpoint}">
         <Grid>
+            <Grid.ToolTip>
+                <ToolTip Visibility="{Binding ToolTipVisible}" Content="{Binding Value}" Placement="MousePoint"/>
+            </Grid.ToolTip>
             <Grid.RenderTransform>
                 <TranslateTransform X="{Binding PosXWithOffset}" Y="{Binding PosYWithOffset}"/>
             </Grid.RenderTransform>

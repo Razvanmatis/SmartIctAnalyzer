@@ -239,7 +239,7 @@ namespace Ui.Modules.ModuleName.ViewModels
 
         public void InitValues(bool useValue)
         {
-            if ((useValue || settingsVm.UseValues) && string.IsNullOrEmpty(Value))
+            if ((useValue || settingsVm.UseValues) && string.IsNullOrEmpty(BaseComponent.FunctionalAttributes.Value))
             {
                 BorderColor = new SolidColorBrush(Color.FromRgb(255, 0, 0));
                 BorderThickness = 3;
