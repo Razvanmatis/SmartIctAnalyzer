@@ -7,12 +7,16 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.20-beta" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\NetStandard\GrpcClientParser\GrpcClientParser.csproj" />
     <ProjectReference Include="..\..\SmartIct.Interfaces\Interfaces.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ProMik.Core.Interfaces">
+      <HintPath>..\..\External DLLs\ProMik.Core.Interfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
