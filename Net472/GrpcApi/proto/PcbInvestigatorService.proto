@@ -47,6 +47,7 @@ message GeometricsGrpc {
 	RectangleGrpc bounds = 1;
 	PointGrpc centerPoint = 2;
 	float rotation = 3;
+	double compHeight = 4;
 }
 
 message RectangleGrpc {

@@ -196,6 +196,7 @@ namespace GrpcApi.Implementations
                 Bounds = GetRectangleGrpc(geometricAttributes.Bounds),
                 CenterPoint = GetPointGrpc(geometricAttributes.CenterPoint),
                 Rotation = geometricAttributes.Rotation,
+                CompHeight = geometricAttributes.CompHeight,
             };
         }
     }

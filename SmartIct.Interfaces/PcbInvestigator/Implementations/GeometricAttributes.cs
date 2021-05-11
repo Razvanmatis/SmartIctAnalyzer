@@ -7,12 +7,14 @@ namespace Interfaces.PcbInvestigator.Implementations
         private readonly Rectangle bounds;
         private readonly PointF centerPoint;
         private readonly float rotation;
+        private readonly double compHeight;
 
-        public GeometricAttributes(Rectangle bounds, PointF centerPoint, float rotation)
+        public GeometricAttributes(Rectangle bounds, PointF centerPoint, float rotation, double compHeight)
         {
             this.bounds = bounds;
             this.centerPoint = centerPoint;
             this.rotation = rotation;
+            this.compHeight = compHeight;
         }
 
         public Rectangle Bounds
@@ -36,6 +38,14 @@ namespace Interfaces.PcbInvestigator.Implementations
             get
             {
                 return rotation;
+            }
+        }
+
+        public double CompHeight
+        {
+            get
+            {
+                return compHeight;
             }
         }
     }

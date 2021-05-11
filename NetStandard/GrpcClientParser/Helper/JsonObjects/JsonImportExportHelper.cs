@@ -217,7 +217,7 @@ namespace GrpcClientParser.Helper.JsonObjects
 
         private static GeometricJson GetGeometricsJson(IGeometricAttributes geometricAttributes)
         {
-            return new GeometricJson(GetRectangleJson(geometricAttributes.Bounds), GetPointJson(geometricAttributes.CenterPoint), geometricAttributes.Rotation);
+            return new GeometricJson(GetRectangleJson(geometricAttributes.Bounds), GetPointJson(geometricAttributes.CenterPoint), geometricAttributes.Rotation, geometricAttributes.CompHeight);
         }
 
         private static PointJson GetPointJson(PointF centerPoint)
@@ -294,7 +294,8 @@ namespace GrpcClientParser.Helper.JsonObjects
             return new GeometricAttributes(
                 new System.Drawing.Rectangle(geometrics.Bounds.X, geometrics.Bounds.Y, geometrics.Bounds.Width, geometrics.Bounds.Height),
                 new System.Drawing.PointF(geometrics.CenterPoint.X, geometrics.CenterPoint.Y),
-                geometrics.Rotation);
+                geometrics.Rotation,
+                geometrics.CompHeight);
         }
 
         private static IList<IPinComponent> GetParsedPins(IList<PinJson> pins)

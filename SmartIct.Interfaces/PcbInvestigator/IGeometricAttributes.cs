@@ -9,5 +9,7 @@ namespace Interfaces.PcbInvestigator
         PointF CenterPoint { get; }
 
         float Rotation { get; }
+
+        double CompHeight { get; }
     }
 }

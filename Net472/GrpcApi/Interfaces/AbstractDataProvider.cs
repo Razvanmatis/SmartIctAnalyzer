@@ -30,7 +30,7 @@ namespace GrpcApi.Interfaces
                 (int)component.Bounds.Height);
             PointF centerPoint = component.Position;
             float rotation = component.Rotation;
-            return new GeometricAttributes(bounds, centerPoint, rotation);
+            return new GeometricAttributes(bounds, centerPoint, rotation, component.CompHEIGHT);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace GrpcApi.Interfaces
                 (int)rectangleF.Width,
                 (int)rectangleF.Height);
             float rotation = 0f;
-            return new GeometricAttributes(bounds, centerPoint, rotation);
+            return new GeometricAttributes(bounds, centerPoint, rotation, 0);
         }
 
         /// <summary>

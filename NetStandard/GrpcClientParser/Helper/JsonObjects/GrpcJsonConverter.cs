@@ -119,7 +119,7 @@ namespace GrpcClientParser.Helper.JsonObjects
 
         private static GeometricJson GetGeometricJson(GeometricsGrpc geometrics)
         {
-            return new GeometricJson(GetRectangleJson(geometrics.Bounds), GetPointJson(geometrics.CenterPoint), geometrics.Rotation);
+            return new GeometricJson(GetRectangleJson(geometrics.Bounds), GetPointJson(geometrics.CenterPoint), geometrics.Rotation, geometrics.CompHeight);
         }
 
         private static PointJson GetPointJson(PointGrpc centerPoint)
