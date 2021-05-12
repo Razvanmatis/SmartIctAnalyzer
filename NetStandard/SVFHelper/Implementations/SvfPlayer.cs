@@ -55,7 +55,7 @@ namespace SVFHelper.Implementations
             }
 
             watch.Stop();
-            Debug.WriteLine("SVF getDefaultVector: " + watch.ElapsedMilliseconds + " ms");
+            logger.LogMessage("SVF getDefaultVector time: " + watch.ElapsedMilliseconds + " ms", LogCategory.INFO);
             return realData;
         }
 
@@ -204,7 +204,7 @@ namespace SVFHelper.Implementations
                     return false;
                 }
 
-                Debug.WriteLine("SVF read default vector: " + watch.ElapsedMilliseconds + " ms");
+                logger.LogMessage("SVF read default vector time: " + watch.ElapsedMilliseconds + " ms", LogCategory.INFO);
                 if (!logFilePath.EndsWith("\\"))
                 {
                     logFilePath += "\\";
@@ -224,12 +224,12 @@ namespace SVFHelper.Implementations
                         state = false;
                     }
 
-                    Debug.WriteLine("SVF PlaySvfFile: " + watchPlay.ElapsedMilliseconds + " ms");
+                    logger.LogMessage("SVF PlaySvfFile time for file " + file + ":" + watchPlay.ElapsedMilliseconds + " ms", LogCategory.INFO);
                 }
                 
                 EndSvfSequence(target);
                 watch.Stop();
-                Debug.WriteLine("SVF PlaySvfFile with read defaultVector: " + watch.ElapsedMilliseconds + " ms");
+                logger.LogMessage("SVF PlaySvfFiles with read defaultVector time: " + watch.ElapsedMilliseconds + " ms", LogCategory.INFO);
                 return state;
             }
             catch (Exception e)
