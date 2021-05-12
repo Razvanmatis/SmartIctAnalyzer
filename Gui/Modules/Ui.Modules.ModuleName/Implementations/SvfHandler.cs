@@ -100,7 +100,7 @@ namespace Ui.Modules.ModuleName.Implementations
             var settingsContent = settingsStorageManager.GetStorageContent();
             if (svfPlayer.PlaySvfFile(scanChainLength, irLength, selectedSvfs, logPath, settingsContent.PgmIp, settingsContent.PgmPort, settingsContent.SupplyVoltageMv, settingsContent.IoVoltageMv))
             {
-                logger.LogMessage("Successfully played the SVF file: " + selectedSvfs, LogCategory.INFO);
+                logger.LogMessage("Successfully played the SVF file(s): " + selectedSvfs.Length, LogCategory.INFO);
             }
         }
 
