@@ -180,7 +180,7 @@ namespace SVFHelper.Implementations
             }
         }
 
-        public bool PlaySvfFile(uint scanChainLength, uint instructionRegisterLength, string svfFilePath, string logFilePath, string pgmIp, uint pgmPort, uint supplyVoltageMv, uint ioVoltageMv)
+        public bool PlaySvfFile(uint scanChainLength, uint instructionRegisterLength, string[] svfFilePath, string logFilePath, string pgmIp, uint pgmPort, uint supplyVoltageMv, uint ioVoltageMv)
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
@@ -203,24 +203,33 @@ namespace SVFHelper.Implementations
                     logger.LogMessage("Error at InitializeSvfPlayer: " + errorMessage + " with id code: " + idCode + " Using empty default vector...", LogCategory.ERROR);
                     return false;
                 }
-                Stopwatch watchPlay = new Stopwatch();
-                watchPlay.Start();
 
-                result = SfvPlayer.SvfPlayer_ExecuteSvfSequence(target, svfFilePath, logFilePath);
-                if (result != (int)ResultEnum.OK)
+                Debug.WriteLine("SVF read default vector: " + watch.ElapsedMilliseconds + " ms");
+                if (!logFilePath.EndsWith("\\"))
                 {
-                    errorMessage = SfvPlayer.SvfPlayer_ParseResult((int)result);
-                    logger.LogMessage("Error at ExecuteSvfSequence: " + errorMessage, LogCategory.ERROR);
-                }
-                else
-                {
-                    state = true;
+                    logFilePath += "\\";
                 }
 
+                state = true;
+                foreach (var file in svfFilePath)
+                {
+                    Stopwatch watchPlay = new Stopwatch();
+                    watchPlay.Start();
+                    string logPath = logFilePath + file.Substring(file.LastIndexOf("\\") + 1) + "_log";
+                    result = SfvPlayer.SvfPlayer_ExecuteSvfSequence(target, file, logPath);
+                    if (result != (int)ResultEnum.OK)
+                    {
+                        errorMessage = SfvPlayer.SvfPlayer_ParseResult((int)result);
+                        logger.LogMessage("Error at ExecuteSvfSequence: " + errorMessage, LogCategory.ERROR);
+                        state = false;
+                    }
+
+                    Debug.WriteLine("SVF PlaySvfFile: " + watchPlay.ElapsedMilliseconds + " ms");
+                }
+                
                 EndSvfSequence(target);
                 watch.Stop();
                 Debug.WriteLine("SVF PlaySvfFile with read defaultVector: " + watch.ElapsedMilliseconds + " ms");
-                Debug.WriteLine("SVF PlaySvfFile: " + watchPlay.ElapsedMilliseconds + " ms");
                 return state;
             }
             catch (Exception e)

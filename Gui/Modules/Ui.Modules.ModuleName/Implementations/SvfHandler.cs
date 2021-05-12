@@ -87,20 +87,20 @@ namespace Ui.Modules.ModuleName.Implementations
                 }
             }
 
-            if (!dialogSelector.OpenGenericDialog(DialogType.OPENFILE, TextRessources.SelectVsfFile, "No valid SVF file selected", out string selectedSvf))
+            if (!dialogSelector.OpenGenericDialogForMultipleFileSelection(TextRessources.SelectVsfFile, "No valid SVF file selected", out string[] selectedSvfs))
             {
                 return;
             }
 
-            if (!dialogSelector.OpenGenericDialog(DialogType.SAVEFILE, TextRessources.SvfLogPath, "No valid SVF log output path selected", out string logPath))
+            if (!dialogSelector.OpenGenericDialog(DialogType.OPENFOLDER, TextRessources.SvfLogPath, "No valid SVF log output path selected", out string logPath))
             {
                 return;
             }
 
             var settingsContent = settingsStorageManager.GetStorageContent();
-            if (svfPlayer.PlaySvfFile(scanChainLength, irLength, selectedSvf, logPath, settingsContent.PgmIp, settingsContent.PgmPort, settingsContent.SupplyVoltageMv, settingsContent.IoVoltageMv))
+            if (svfPlayer.PlaySvfFile(scanChainLength, irLength, selectedSvfs, logPath, settingsContent.PgmIp, settingsContent.PgmPort, settingsContent.SupplyVoltageMv, settingsContent.IoVoltageMv))
             {
-                logger.LogMessage("Successfully played the SVF file: " + selectedSvf, LogCategory.INFO);
+                logger.LogMessage("Successfully played the SVF file: " + selectedSvfs, LogCategory.INFO);
             }
         }
 

@@ -157,12 +157,12 @@
     <value>Select the ODB project path</value>
   </data>
   <data name="SelectVsfFile" xml:space="preserve">
-    <value>Please select VSF file to be played with the programmer</value>
+    <value>Please select VSF file(s) to be played with the programmer</value>
   </data>
   <data name="SettingsFilter" xml:space="preserve">
     <value>database files (*.db)|*.db|All files (*.*)|*.*</value>
   </data>
   <data name="SvfLogPath" xml:space="preserve">
-    <value>Select the output folder path for the logfiles</value>
+    <value>Select the output logfolder</value>
   </data>
 </root>

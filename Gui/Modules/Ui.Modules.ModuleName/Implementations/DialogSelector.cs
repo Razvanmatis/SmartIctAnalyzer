@@ -12,6 +12,8 @@ namespace Ui.Modules.ModuleName.Implementations
             this.logger = logger;
         }
 
+
+
         public bool OpenGenericDialog(DialogType dialogType, string title, string errorMessage, out string selectedTarget, string filter = "")
         {
             string content = string.Empty;
@@ -53,6 +55,23 @@ namespace Ui.Modules.ModuleName.Implementations
 
             selectedTarget = content;
             return true;
+        }
+
+        public bool OpenGenericDialogForMultipleFileSelection(string title, string errorMessage, out string[] selectedTargets, string filter = "")
+        {
+            VistaOpenFileDialog openDialog = new VistaOpenFileDialog() { Title = title, Filter = filter, Multiselect = true };
+            openDialog.ShowDialog();
+            selectedTargets = openDialog.FileNames;
+            if (selectedTargets == null || selectedTargets.Length == 0)
+            {
+                logger.LogMessage(errorMessage, LogCategory.WARNING);
+                selectedTargets = System.Array.Empty<string>();
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

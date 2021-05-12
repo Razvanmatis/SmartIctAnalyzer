@@ -20,7 +20,7 @@ namespace SVFHelper.Implementations
             return currentVectorNew;
         }
 
-        public bool PlaySvfFile(uint scanChainLength, uint instructionRegisterLength, string svfFilePath, string logFilePath, string pgmIp, uint pgmPort, uint supplyVoltageMv, uint ioVoltageMv)
+        public bool PlaySvfFile(uint scanChainLength, uint instructionRegisterLength, string[] svfFilePath, string logFilePath, string pgmIp, uint pgmPort, uint supplyVoltageMv, uint ioVoltageMv)
         {
             return true;
         }

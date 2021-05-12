@@ -178,7 +178,7 @@ namespace Ui.Modules.ModuleName {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select VSF file to be played with the programmer.
+        ///   Looks up a localized string similar to Please select VSF file(s) to be played with the programmer.
         /// </summary>
         internal static string SelectVsfFile {
             get {
@@ -196,7 +196,7 @@ namespace Ui.Modules.ModuleName {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the output folder path for the logfiles.
+        ///   Looks up a localized string similar to Select the output logfolder.
         /// </summary>
         internal static string SvfLogPath {
             get {
