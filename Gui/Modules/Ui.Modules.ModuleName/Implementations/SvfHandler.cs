@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.Windows;
 using Interfaces.Gui;
 using PinInformationExtractor.Helper;
@@ -13,7 +12,6 @@ namespace Ui.Modules.ModuleName.Implementations
 {
     public class SvfHandler : ISvfHandler
     {
-        private const string BOUNDARYSCANCHAINLENGTH = "BOUNDARY_LENGTH";
         private readonly IDialogSelector dialogSelector;
         private readonly ILogger logger;
         private readonly ISettingsStorageManager settingsStorageManager;
@@ -45,8 +43,8 @@ namespace Ui.Modules.ModuleName.Implementations
 
         public void PlaySvfFileHandler()
         {
-            uint irLength = 0;
-            uint scanChainLength = 0;
+            uint irLength;
+            uint scanChainLength;
             if (!dialogSelector.OpenGenericDialog(DialogType.OPENFILE, TextRessources.SelectBsdlFile, "No valid BSDL file selected!", out string bsdlFile))
             {
                 string value = Essy.Tools.InputBox.InputBox.ShowInputBox("Instruction register length;scan chain length");
@@ -79,7 +77,7 @@ namespace Ui.Modules.ModuleName.Implementations
                 }
 
                 irLength = package.InstructionLength;
-                scanChainLength = GetBoundaryScanChainLength(package.Attributes);
+                scanChainLength = svfHelper.GetBoundaryScanChainLength(package.Attributes);
                 if (scanChainLength == 0)
                 {
                     logger.LogMessage("No valid scan chain length of BSDL package found!", LogCategory.ERROR);
@@ -118,31 +116,6 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
-        private uint GetBoundaryScanChainLength(List<ProMik.BSDL.Interfaces.Entities.IBSDLAttribute> attributes)
-        {
-            uint intVal = 0;
-            foreach (var attr in attributes)
-            {
-                if (attr.Name.Equals(BOUNDARYSCANCHAINLENGTH))
-                {
-                    string value = attr.Values[0];
-                    value = value.Replace(" ", string.Empty).Trim();
-                    value = value.ToLower(CultureInfo.CurrentCulture).Replace("entity", string.Empty);
-                    value = value.ToLower(CultureInfo.CurrentCulture).Replace("is", string.Empty);
-                    if (!uint.TryParse(value, out intVal))
-                    {
-                        logger.LogMessage("Error parsing value: " + value, LogCategory.ERROR);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            return intVal;
-        }
-
         private void HandleSvfFileCreation(List<JtagConnectionInfo> result, string basePath, ISvfExporter projectHandlerToUse)
         {
             foreach (var jtag in result)
@@ -161,7 +134,7 @@ namespace Ui.Modules.ModuleName.Implementations
 
                 MessageBox.Show("Please make sure to have a programmer connected to the according JTAG device: " + jtag.ComponentName + " for being able to read out the default vector");
                 var settingsContent = settingsStorageManager.GetStorageContent();
-                uint boundaryScanLength = GetBoundaryScanChainLength(package.Attributes);
+                uint boundaryScanLength = svfHelper.GetBoundaryScanChainLength(package.Attributes);
                 if (boundaryScanLength == 0)
                 {
                     logger.LogMessage("No valid scan chain length of BSDL package found!", LogCategory.ERROR);

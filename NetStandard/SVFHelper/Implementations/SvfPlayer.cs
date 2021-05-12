@@ -184,7 +184,7 @@ namespace SVFHelper.Implementations
         {
             Stopwatch watch = new Stopwatch();
             watch.Start();
-            bool state = false;
+            bool state;
             try
             {
                 string errorMessage = string.Empty;
@@ -215,7 +215,7 @@ namespace SVFHelper.Implementations
                 {
                     Stopwatch watchPlay = new Stopwatch();
                     watchPlay.Start();
-                    string logPath = logFilePath + file.Substring(file.LastIndexOf("\\") + 1) + "_log";
+                    string logPath = logFilePath + file[(file.LastIndexOf("\\") + 1)..] + "_log";
                     result = SfvPlayer.SvfPlayer_ExecuteSvfSequence(target, file, logPath);
                     if (result != (int)ResultEnum.OK)
                     {
@@ -252,7 +252,14 @@ namespace SVFHelper.Implementations
 
         private void LogResult(string x)
         {
-            logger.LogMessage(x, LogCategory.ERROR);
+            if (x.ToLower().Contains("info"))
+            {
+                logger.LogMessage(x, LogCategory.INFO);
+            }
+            else
+            {
+                logger.LogMessage(x, LogCategory.ERROR);
+            }
         }
     }
 }

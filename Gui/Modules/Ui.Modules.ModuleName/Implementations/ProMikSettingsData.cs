@@ -655,15 +655,15 @@ namespace Ui.Modules.ModuleName.Implementations
                 logger.LogMessage("Setting for key not found: " + key + ": " + e.Message, LogCategory.WARNING);
                 if (typeof(T) == typeof(string))
                 {
-                    return ((T)(object)string.Empty);
+                    return (T)(object)string.Empty;
                 }
                 else if (typeof(T) == typeof(int))
                 {
-                    return ((T)(object)0);
+                    return (T)(object)0;
                 }
                 else
                 {
-                    return ((T)(object)false);
+                    return (T)(object)false;
                 }
             }
         }

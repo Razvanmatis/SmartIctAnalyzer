@@ -5,18 +5,16 @@ namespace Ui.Modules.ModuleName.Implementations
 {
     public class DialogSelector : IDialogSelector
     {
-        private ILogger logger;
+        private readonly ILogger logger;
 
         public DialogSelector(ILogger logger)
         {
             this.logger = logger;
         }
 
-
-
         public bool OpenGenericDialog(DialogType dialogType, string title, string errorMessage, out string selectedTarget, string filter = "")
         {
-            string content = string.Empty;
+            string content;
             if (dialogType == DialogType.OPENFILE)
             {
                 VistaOpenFileDialog openDialog = new VistaOpenFileDialog() { Title = title, Filter = filter };

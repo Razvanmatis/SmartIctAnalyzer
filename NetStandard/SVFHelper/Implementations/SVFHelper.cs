@@ -4,6 +4,7 @@ using SVFHelper.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -11,6 +12,7 @@ namespace SVFHelper.Implementations
 {
     public class SVFHelper : ISVFHelper
     {
+        private const string BOUNDARYSCANCHAINLENGTH = "BOUNDARY_LENGTH";
         private const string Frequency = "10E6";
         private readonly ILogger logger;
 
@@ -68,6 +70,31 @@ namespace SVFHelper.Implementations
                 logger.LogMessage(e.Message, LogCategory.ERROR);
                 return new SvfData(jtagName, pinLabel, basePath, string.Empty, string.Empty, string.Empty, string.Empty, requestValue, expectedValue, string.Empty);
             }
+        }
+
+        public uint GetBoundaryScanChainLength(List<ProMik.BSDL.Interfaces.Entities.IBSDLAttribute> attributes)
+        {
+            uint intVal = 0;
+            foreach (var attr in attributes)
+            {
+                if (attr.Name.Equals(BOUNDARYSCANCHAINLENGTH))
+                {
+                    string value = attr.Values[0];
+                    value = value.Replace(" ", string.Empty).Trim();
+                    value = value.ToLower(CultureInfo.CurrentCulture).Replace("entity", string.Empty);
+                    value = value.ToLower(CultureInfo.CurrentCulture).Replace("is", string.Empty);
+                    if (!uint.TryParse(value, out intVal))
+                    {
+                        logger.LogMessage("Error parsing value: " + value, LogCategory.ERROR);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return intVal;
         }
 
         public ISvfData GetSvfContent(string basePath, string jtagName, List<string> pinLabels, ProMik.BSDL.Interfaces.Entities.IBSDLOutput bsdlOutput, bool requestValue, bool expectedValue, byte[] defaultVector, List<string> notFoundPins = null, List<string> foundPins = null)
