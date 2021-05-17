@@ -28,7 +28,7 @@ The \ac{PCB}-Investigator is a software provided by EasyLogix also known as Schi
 	\item IPC356 files
 	\item PDF
 \end{itemize} 
-It is a quit powerful tool which further provides the possibility to export almost all project types into another one and generate different kind of lists containing component relevant information as the component name and its pin information.
+It is a quite powerful tool which further provides the possibility to export almost all project types into another one and generate different kind of lists containing component relevant information as the component name and its pin information.
 Further the executable file application itself provides different public functions which are accessible by adding the \textbf{PCB-Investigator.exe} as a reference to the project.
 
 \begin{center}
@@ -42,7 +42,7 @@ Further the executable file application itself provides different public functio
 As pictured in figure \ref{fig:pcbInvestigator} it can be seen that there are many possibilities of taking action with a loaded project. For verification purposes the most important feature was the \textbf{CMPs} tab where it is possible to search for any specific component in dependency on its name and to have a closer look in its consisting pins.
 
 	\section{JTAG interface}
-The \ac{JTAG} is a serial interface which is widely used for different field programmable gate arrays, complex programmable logic device configurations, the programming and debugging of different micro controllers. \newpage
+The \ac{JTAG} is a serial interface, which is widely used for different field programmable gate arrays, complex programmable logic device configurations, the programming and debugging of different micro controllers. \newpage
 It is usually operating within the voltage range of 1.8V - 6V and consists of the following components in general:
 \begin{itemize}
 	\item Test access port
@@ -109,9 +109,9 @@ The boundary scan description language is a language for describing the boundary
 \end{itemize}
 
 	\section{SVF file format}
-The serial vector format is a format for communication with boundary scan compatible test vectors. It was introduced by Texas Instruments in 1991. The main purpose of the format is to ensure that independently on the used \ac{JTAG} device different test operations could be performed successfully.\cite{.3252021c} The format contains a couple of different instructions which could be performed by the boundary scan logic. The most important one according to this project is the \newline
+The serial vector format is a format for communication with boundary scan compatible test vectors. It was introduced by Texas Instruments in 1991. The main purpose of the format is to ensure that independently on the used \ac{JTAG} device different test operations could be performed successfully.\cite{.3252021c} The format contains a couple of different instructions, which could be performed by the boundary scan logic. The most important one according to this project is the \newline
 \textbf{SDR length [TDI (tdi)] [TDO (tdo)][MASK (mask)] [SMASK (smask)];}. \newline
-SDR means scan data register and tells the test to test all data register cells. The TDI is the data which should be passed into the registers.\cite{TEXASINSTRUMENTS.2013} TDO is the expected data to be read back from the data registers. And the MASK is the information about the positions of interest which should be considered. A valid instruction example is \\ 
+SDR means scan data register and tells the test to test all data register cells. The TDI is the data which should be passed into the registers.\cite{TEXASINSTRUMENTS.2013} TDO is the expected data to be read back from the data registers. And the MASK is the information about the positions of interest, which should be considered. A valid instruction example is \\ 
 \textbf{SDR 24 TDI(000010) TDO(818181) MASK(FFFFFF);} \\
 In that specific example we have a total length of boundary scan cells of 24 and therefore the amount of passed hexadecimal coded byte values is 3 (24 bits / 8 bits/byte) -> 0x00 0x00 0x10 and 0x81 0x81 0x81 and 0xFF 0xFF 0xFF. Further the TDI value 000010\textsubscript{16} means that only on position 5 the value should be set to high (10\textsubscript{16} -> 00010000\textsubscript{2}, counted from right to left). The TDO value 818181\textsubscript{16} gives the information about the expected positions to be high after read back the data (818181\textsubscript{16} -> 100000011000000110000001\textsubscript{2}). That signifies only the positions 1, 8, 9, 16, 17 and 24 (read from right to left) should be set to high as the needed result. Finally the MASK value FFFFFF \textsubscript{16} shows that all positions of the 24 bit register should be considered.
 	
@@ -131,13 +131,13 @@ As shown in figure \ref{fig:mvvm} there are the three main components involved:
 	\item Model - content of all data to be used and business logic for it
 	\item ViewModel - the connection layer to the view and contains representation logic
 \end{itemize}
-Typically there will be defined a various amount of data bindings in the view to the ViewModel. Further the view model itself informs the view about happened changes of values to be displayed by using the INotifyPropertyChanged event. Onward it is responsible for the connection to the data of any model and controls the function sequence to be performed in dependency on the user inputs which are being forwarded as ICommand objects. Finally the view should contain as less behind code as possible to make sure a high loose coupling is being ensured. The looser the coupling the easier it is to switch between new implementations of different components and replace them by others. In that way it should be quit easy possible to work on all three component types separately, without having to know of each others and finally connect them together.
+Typically there will be defined a various amount of data bindings in the view to the ViewModel. Further the view model itself informs the view about happened changes of values to be displayed by using the INotifyPropertyChanged event. Onward it is responsible for the connection to the data of any model and controls the function sequence to be performed in dependency on the user inputs which are being forwarded as ICommand objects. Finally the view should contain as less behind code as possible to make sure a high loose coupling is being ensured. The looser the coupling the easier it is to switch between new implementations of different components and replace them by others. In that way it should be quite easy possible to work on all three component types separately, without having to know of each others and finally connect them together.
 
 	\section{PRISM framework}
-This framework is made for creation of louse coupled \ac{MVVM} projects and allows to use predefined services as EventAggregator, the composite commands and dependency injection in a quit easy way.\cite{.452021} Further it provides different project templates which could be used as start point of implementation.
+This framework is made for creation of louse coupled \ac{MVVM} projects and allows to use predefined services as EventAggregator, the composite commands and dependency injection in a quite easy way.\cite{.452021} Further it provides different project templates which could be used as start point of implementation.
 
 	\section{Dependency injection framework}
-The \textbf{dependency injection framework} provides the possibility of registering interfaces by their implementations at some main points and being able to inject them directly in constructors of others classes without managing the creation of objects manually in background.\cite{Augsten.492021} It can use further the \textbf{singleton pattern} for making sure just to work with a single instance of a class project wide. 
+The \textbf{dependency injection framework} provides the possibility of registering interfaces by their implementations at some main points and being able to inject them directly in constructors of others classes, without managing the creation of objects manually in background.\cite{Augsten.492021} It can use further the \textbf{singleton pattern} for making sure just to work with a single instance of a class project wide. 
 
 \begin{center}
 	\includegraphics[scale=0.7]{figures/Dependency Injection_forbidden.png}
@@ -150,7 +150,7 @@ The \textbf{dependency injection framework} provides the possibility of register
 One important thing to consider while working with that framework is the fact that, as shown in figure \ref{fig:circularDependency}, it's not possible to use circular dependencies. As a common work around there is the best practice to introduce more interfaces for referencing and outsourcing logic.
 
 	\section{Material design framework}
-The material design framework is a view orientated framework where the options are given to use many predefined components in a pretty and comfortable way.\cite{.111980} Further it ensures a quit modern look and feel and will be used per default in many actual software implementations as in web design.
+The material design framework is a view orientated framework where the options are given to use many predefined components in a pretty and easy way.\cite{.111980} Further it ensures a quite modern look and feel and will be used per default in many actual software implementations as in web design.
 
 	\section{JSON format}
 The java script object notation is a serialized form of data output in textual form.\cite{.29.03.2021} It is widely used where it could be necessary to understand and maybe modify data manually in an easy way. To work with that specific data format each programming language provides different kind of external libraries for parsing the information from objects into \ac{JSON} and back from \ac{JSON} to object. A valid \ac{JSON} formatted text could like like:
@@ -176,7 +176,7 @@ The java script object notation is a serialized form of data output in textual f
 }
 \end{lstlisting}
 
-As shown in listing \ref{lst:json} the format is highly structured and build in hierarchical way. Further it is clear that the curly brackets are being used for defining an object instance, the square brackets are being used for identifying an array of instances and the double quotes are describing a string value. With that quit simple format is is possible to represent just any Boolean, number or string value of objects where the requirement comes up either to use serializable or plain object structures.
+As shown in listing \ref{lst:json} the format is highly structured and build in hierarchical way. Further it is clear that the curly brackets are being used for defining an object instance, the square brackets are being used for identifying an array of instances and the double quotes are describing a string value. With that quite simple format is is possible to represent just any Boolean, number or string value of objects where the requirement comes up either to use serializable or plain object structures.
 
 	\section{GRPC}
 \ac{GRPC} is a modern open source way for performing remote procedure calls independently on the programming language used for a specific program and works as a client-server structure.\cite{gRPC.482021} That means in detail to use this protocol there is the need first of defining a specific service file using the interface definition language. By using this language there is no need to consider programming language specific dependencies. Afterward by using protoc compiler there is the possibility of automated creation of the source code for a specific programming language which could then be included to finalize the communication work. Finally on one side there should be defined the logic for being a server by additionally defining a specific port to be used and on the other there needs to be defined the logic for being the client with considering the IP address of the server and the port. Using \ac{GRPC} ensures bidirectional streaming possibilities and passes all object related data as a auto serialized stream in the \ac{JSON} format. Further it can communicate through complex networks without having the challenge of defining more complex code for it. To define the service file there are many of elementary data types available, the possibility of defining object structures, functions and parameters or return values. A valid example of such a definition could be:

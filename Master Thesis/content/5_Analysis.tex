@@ -1,5 +1,5 @@
 \chapter{Analysis}
-This chapter will analyze the consumption of time of different kind of processes which are being performed by the created tool using a various amount of project sizes. It should just point out that the software itself does not take too long time for performing actions and if used larger projects of course the time consumption rises as well. Further a validation mechanism of test coverage determination is being explained
+This chapter will analyze the consumption of time of different kind of processes, which are being performed by the created tool using a various amount of project sizes. It should just point out that the software itself does not take too long time for performing actions and if used larger projects of course the time consumption rises as well. Further a validation mechanism of test coverage determination is being explained
 
 	\section{Performance of loading ODB++ projects by using the PCBInvestigator API}
 First of all we have a closer look into the loading request of a \ac{ODB}++ project into the tool. As shown in \ref{fig:grpcApiPap} the following steps of procedure could be considered one by one:
@@ -11,7 +11,7 @@ First of all we have a closer look into the loading request of a \ac{ODB}++ proj
 	\item Parse all received serialized objects into class objects of interest (Stage 5)
 \end{enumerate}
 
-To be able for capturing the time consumption of course there was the need of adding some more debug related statements into the code which afterward were saved as they are not visible for the user at later usage of the tool. By proceeding in that way it was possible to capture as detailed and realistic time values as possible. 
+To be able for capturing the time consumption of course there was the need of adding some more debug related statements into the code, which afterward were saved as they are not visible for the user at later usage of the tool. By proceeding in that way it was possible to capture as detailed and realistic time values as possible. 
 
 \begin{table}[!h]
     \centering
@@ -38,7 +38,7 @@ As shown in table \ref{tab:timeOdb} it will be clear that the \ac{PCB}-Investiga
     \label{tab:timeImport}
 \end{table}
 	
-As stated in table \ref{tab:timeImport} it will be clear that the time consumption in general is really low as it depends only on the working mechanism of the external library \textbf{Newtonsoft.Json} which is quit fast in performing its parsing work.
+As stated in table \ref{tab:timeImport} it will be clear that the time consumption in general is really low as it depends only on the working mechanism of the external library \textbf{Newtonsoft.Json}, which is quite fast in performing its parsing work.
 
 	\section{Performance of exporting projects into JSON format}
 
@@ -53,7 +53,7 @@ As stated in table \ref{tab:timeImport} it will be clear that the time consumpti
     \label{tab:timeExport}
 \end{table}
 
-As stated in table \ref{tab:timeExport} it will be clear that again the time consumption in general is really low as it depends only on the working mechanism of the external library \textbf{Newtonsoft.Json} which is really fast in acting.
+As stated in table \ref{tab:timeExport} it will be clear that again the time consumption in general is really low as it depends only on the working mechanism of the external library \textbf{Newtonsoft.Json}, which is really fast in acting.
 
 	\section{Performance of showing connections of components}
 
@@ -108,7 +108,7 @@ public async Task<TestCoverageItems> GetTestCoverage(TestCoverageItems items, Te
 }
 \end{lstlisting}
 
-As stated in listing \ref{lst:GetTestCoverageTime} it will be visible that using of the StopWatch class which is being provided by the System.Diagnostics package is a pretty good choice as its handling is quit comfortable. Further there is being shown that the calling of Debug.WriteLine function only is visible for debugging purposes within the \ac{IDE}
+As stated in listing \ref{lst:GetTestCoverageTime} it will be visible that using of the StopWatch class, which is being provided by the System.Diagnostics package is a pretty good choice as its handling is quite easy. Further there is being shown that the calling of Debug.WriteLine function only is visible for debugging purposes within the \ac{IDE}
 
 	\section{Validation of test coverage values}
-To ensure that the software determines correct values there was made the assumption that comparing the gathered results to that ones which were determined by using a third party tool named XJTAG. It provides the possibility of determining such specific values in dependency on considered settings.\cite{XJTAG.492021} Comparing the results for the test coverage of pull down resistors led to a really small difference (12,8 \% from XJTAG - 12,03 \% from the created tool = 0,77 \%) which could be explained by the settings mismatch which were used.
+To ensure that the software determines correct values there was made the assumption that comparing the gathered results to that ones, which were determined by using a third party tool named XJTAG. It provides the possibility of determining such specific values in dependency on considered settings.\cite{XJTAG.492021} Comparing the results for the test coverage of pull down resistors led to a really small difference (12,8 \% from XJTAG - 12,03 \% from the created tool = 0,77 \%), which could be explained by the settings mismatch which were used.

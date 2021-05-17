@@ -2,10 +2,10 @@
 Within this chapter the motivation will be described, the requirements, the used programming language and operating system for creation of the whole project. All these aspects where previously discussed with the company to make sure to create a most valuable software for them.
 
 	\section{Motivation}
-As the company ProMik GmbH is already providing programmers for being able to write date into different \ac{MCU}s now there came up the requirement, in dependency on customer demands, to perform boundary scan tests on \ac{JTAG} devices.\cite{.4132021} For being able to perform these kind of tests there should be a software available which allows to determine first the test coverage parameters in dependency on the boundary scan mechanism and create such \ac{SVF} files for playing them with the programmer. This software should be provided as a complex framework where the opportunity is given to extend it in the future in elementary way by using much interfaces within the \ac{MVVM} pattern.
+As the company ProMik GmbH is already providing programmers for being able to write date into different \ac{MCU}s now there came up the requirement, in dependency on customer demands, to perform boundary scan tests on \ac{JTAG} devices.\cite{.4132021} For being able to perform these kind of tests there should be a software available which allows to determine first the test coverage parameters in dependency on the boundary scan mechanism and create such \ac{SVF} files for playing them with the programmer. This software should be provided as a complex framework where the opportunity is given to extend it in the future, in elementary way by using much interfaces within the \ac{MVVM} pattern.
 
 	\section{Requirements}
-In order to provide all features as needed there were a couple of requirements which popped up at the very beginning of the conceptual design and during the implementation of the software:\newpage
+In order to provide all features as needed there were a couple of requirements which came up at the very beginning of the conceptual design and during the implementation of the software:\newpage
 \begin{itemize}
 	\item There should be the possibility of opening \ac{ODB}++ project folders and display the result of circuit diagram in a useful way
 	\begin{itemize}
@@ -16,7 +16,7 @@ In order to provide all features as needed there were a couple of requirements w
 		\item The net names should be settable to visible and hidden
 	\end{itemize}
 	\item An export mechanism of an opened project into \ac{JSON} file for later usage should be available as an according import mechanism to be independent from the \ac{PCB}-Investigator  \ac{API} as this requires a separate license for usage
-	\item There should be the option of creating and loading zip compressed project files containing all necessary information
+	\item There should be the option of creating and loading ZIP compressed project files containing all necessary information
 	\begin{itemize}
 		\item If the project file mode is being used then all exports and opening of components should be done and saved within that project file
 		\item If the project file contains settings, a \ac{JSON} exported project then these files should be imported automatically on loading
@@ -42,4 +42,4 @@ In order to provide all features as needed there were a couple of requirements w
 \label{items:req}
 
 	\section{Programming language and operating system}
-The whole project was implemented with the software development environment called \textbf{Microsoft Visual Studio 2019} and the programming language \textbf{C\#}. This is a quit powerful and modern language for creation of different desktop applications. The developer environment is really comfortable too, as it provides a NuGet package manager for organizing all external included libraries. Furthermore the whole project was created on a operating system \textbf{Windows 10 Professional x64} using a central processing unit of type \textbf{Intel(R)Xeon(R) E3-1240 v6 @ 3.70 GHz} and a total amount of random access memory of \textbf{16 gigabyte}. This system makes sure to be able to implement without any delays of waiting for background processes at all and ensures to be able to run the developed software almost immediately without any delay times.
+The whole project was implemented with the software development environment called \textbf{Microsoft Visual Studio 2019} and the programming language \textbf{C\#}. This is a quite powerful and modern language for creation of different desktop applications. The developer environment is really helpful too, as it provides a NuGet package manager for organizing all external included libraries. Furthermore the whole project was created on a operating system \textbf{Windows 10 Professional x64}, using a central processing unit of type \textbf{Intel(R)Xeon(R) E3-1240 v6 @ 3.70 GHz} and a total amount of random access memory of \textbf{16 gigabyte}. This system makes sure to be able to implement without any delays of waiting for background processes at all and ensures to be able to run the developed software almost immediately without any delay times.
