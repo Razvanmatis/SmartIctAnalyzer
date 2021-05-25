@@ -70,11 +70,10 @@ This project is responsible for using the \ac{PCB}-Investigator \ac{API} which i
 	\item GetConvertedObjectsByZip(RequestZip) returns (Result) - that method obtains all objects by using the received project as zip file in bytes
 	\item ClientAvailable(Empty) returns (StatusResult) - this function is being used to detect whether the client has a valid connection to the server using the settings or not
 \end{itemize}
-
-To make sure that the server itself knows which data it has to open actually only the GetConvertedObjectsByZip method is being used where the project to be opened will be transferred as a byte array containing the a single zip file.
+To make sure that the server itself knows which data it has to open actually only the GetConvertedObjectsByZip method is being used where the project to be opened will be transferred as a byte array containing the a single zip file. \newpage
 
 \begin{center}
-	\includegraphics[scale=0.8]{figures/grpcApiPap.pdf}
+	\includegraphics[scale=0.7]{figures/grpcApiPap.pdf}
 	\begin{figure}[!h]
 	\caption{Program schedule of the Grpc server project}
 	\label{fig:grpcApiPap}
@@ -145,7 +144,7 @@ As shown in figure \ref{fig:IGrpcClientParserHandler} the main interface of this
 				}
 				else if (MatchesType(iDef, beginPartName, beginRef, false))
 				{
-						return new PCBInduction(geometricAttributes, functionalAttributes, connections);
+						return new PCBInductor(geometricAttributes, functionalAttributes, connections);
 				}
 				else if (MatchesType(icDef, beginPartName, beginRef, false))
 				{
@@ -189,8 +188,8 @@ Service which is based on the PRISM event service as a NuGet referenced package.
 	\item ChangeExportMenuItemEnabledStateEvent - will be created to toggle the enabled states of menu items for exporting data into file
 	\item CloseAllSettingsEvent - event which will be called if the settings page will be closed
 	\item ComponentsImportFinishedEvent - that event will be generated if the import of \ac{JSON} related data was finished
-	\item HandleDropEvent - an event which will be called if something was dropped my mouse into the tool
-	\item ResetLayersSelectionEvent - is being created to trigger the reset of all layers which will be shown within the view section
+	\item HandleDropEvent - an event which is being called if something was dropped by the mouse into the tool manually
+	\item ResetLayersSelectionEvent - is being created to trigger the reset of all layers which are being shown within the view section
 	\item ResetViewEvent - if the whole view needs to be reset then this event is being called
 	\item SelectBomFinishEvent - after a \ac{BOM} file was successfully selected then this event will be created
 	\item SendLayersEvent - to send all created layers after the read out from \ac{PCB}-Investigator \ac{API} to the view this event is needed
@@ -319,7 +318,7 @@ public bool OpenGenericDialog(DialogType dialogType, string title, string errorM
 As stated in listing \ref{lst:OpenGenericDialog} there was used the VistaOpenFileDialog and VistaSaveFileDialog from an external library used by the NuGet package manager for handling the path selection within a dialog. If needed just by using another implementation of this interface the complete handling and used packages for it could be easily changed.\newpage
 
 		\subsection{Model}
-To be able to hold different kind of data project wide and access it by dependency injection in easy way there are some models been defined:
+To be able to hold different kind of data project-wide and access it by dependency injection in easy way there are some models been defined:
 \begin{itemize}
 	\item BomDataModel - the model for holding all \ac{BOM} related data
 	\item ResultModel - this model saves all object related results after requesting the \ac{PCB}-Investigator \ac{API}
@@ -365,7 +364,7 @@ As shown in figure \ref{fig:uiModulesViewModels} there were used the following m
 \begin{itemize}
 	\item Gui related ViewModels, which are necessary to provide functionality for visible and click able content by the user within the main view
 	\item A helper ViewModel for representation of the origin of the coordinate system
-	\item Object related ViewModels for representation of all available object types from the read out \ac{ODB}++ project (resistor, capacitor, induction...)
+	\item Object related ViewModels for representation of all available object types from the read out \ac{ODB}++ project (resistor, capacitor, inductor...)
 \end{itemize}
 
 		\subsection{Views}
