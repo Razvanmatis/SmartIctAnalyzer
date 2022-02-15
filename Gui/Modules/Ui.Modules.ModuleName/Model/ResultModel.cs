@@ -1,4 +1,5 @@
-﻿using GrpcClientParser.Interfaces;
+﻿using System.Linq;
+using ProMik.SmartIct.Interfaces.GrpcClientParser;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.Model
@@ -9,15 +10,7 @@ namespace Ui.Modules.ModuleName.Model
 
         public bool CheckIfValuesAreBeingUsed()
         {
-            foreach (var comp in Result.Components)
-            {
-                if (!string.IsNullOrEmpty(comp.FunctionalAttributes.Value))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return Result.Components.FirstOrDefault(comp => !string.IsNullOrEmpty(comp.FunctionalAttributes.Value)) != null;
         }
     }
 }

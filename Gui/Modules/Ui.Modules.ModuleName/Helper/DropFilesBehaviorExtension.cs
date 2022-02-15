@@ -6,7 +6,9 @@ namespace Ui.Modules.ModuleName.Helper
     public static class DropFilesBehaviorExtension
     {
         public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
-            "IsEnabled", typeof(bool), typeof(DropFilesBehaviorExtension), new FrameworkPropertyMetadata(default(bool), OnPropChanged)
+            "IsEnabled", typeof(bool), typeof(DropFilesBehaviorExtension), new FrameworkPropertyMetadata(
+                default(bool),
+                OnPropChanged)
             {
                 BindsTwoWayByDefault = false,
             });

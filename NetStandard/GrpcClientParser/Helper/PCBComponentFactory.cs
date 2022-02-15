@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using GrpcClientParser.Implementations;
-using Interfaces.PcbInvestigator;
-using Interfaces.PcbInvestigator.Implementations;
+using System.Linq;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.PcbInvestigator.Implementations;
+using ProMik.SmartIct.PCBComponentParser.Implementations;
 
-namespace GrpcClientParser.Helper
+namespace ProMik.SmartIct.PCBComponentParser.Helper
 {
     public static class PCBComponentFactory
     {
@@ -52,54 +53,27 @@ namespace GrpcClientParser.Helper
 
             string beginPartName = functionalAttributes.PartName.ToLower(System.Globalization.CultureInfo.CurrentCulture);
             string beginRef = functionalAttributes.Ref.ToLower(System.Globalization.CultureInfo.CurrentCulture);
-            if (!useContains)
+            if (MatchesType(icDef, beginPartName, beginRef, useContains))
             {
-                if (MatchesType(rDef, beginPartName, beginRef, false))
-                {
-                    return new PCBResistor(geometricAttributes, functionalAttributes, connections);
-                }
-                else if (MatchesType(cDef, beginPartName, beginRef, false))
-                {
-                    return new PCBCapacitor(geometricAttributes, functionalAttributes, connections);
-                }
-                else if (MatchesType(iDef, beginPartName, beginRef, false))
-                {
-                    return new PCBInduction(geometricAttributes, functionalAttributes, connections);
-                }
-                else if (MatchesType(icDef, beginPartName, beginRef, false))
-                {
-                    return new PCBIc(geometricAttributes, functionalAttributes, connections);
-                }
-                else if (MatchesType(conDef, beginPartName, beginRef, false))
-                {
-                    return new PCBConnector(geometricAttributes, functionalAttributes, connections);
-                }
+                return new PCBIc(geometricAttributes, functionalAttributes, connections);
             }
-            else
+            else if (MatchesType(conDef, beginPartName, beginRef, useContains))
             {
-                if (MatchesType(rDef, beginPartName, beginRef, true))
-                {
-                    return new PCBResistor(geometricAttributes, functionalAttributes, connections);
-                }
-                else if (MatchesType(cDef, beginPartName, beginRef, true))
-                {
-                    return new PCBCapacitor(geometricAttributes, functionalAttributes, connections);
-                }
-                else if (MatchesType(iDef, beginPartName, beginRef, true))
-                {
-                    return new PCBInduction(geometricAttributes, functionalAttributes, connections);
-                }
-                else if (MatchesType(icDef, beginPartName, beginRef, true))
-                {
-                    return new PCBIc(geometricAttributes, functionalAttributes, connections);
-                }
-                else if (MatchesType(conDef, beginPartName, beginRef, true))
-                {
-                    return new PCBConnector(geometricAttributes, functionalAttributes, connections);
-                }
+                return new PCBConnector(geometricAttributes, functionalAttributes, connections);
             }
-
-            if (functionalAttributes.IsTestPoint)
+            else if (MatchesType(cDef, beginPartName, beginRef, useContains))
+            {
+                return new PCBCapacitor(geometricAttributes, functionalAttributes, connections);
+            }
+            else if (MatchesType(iDef, beginPartName, beginRef, useContains))
+            {
+                return new PCBInduction(geometricAttributes, functionalAttributes, connections);
+            }
+            else if (MatchesType(rDef, beginPartName, beginRef, useContains))
+            {
+                return new PCBResistor(geometricAttributes, functionalAttributes, connections);
+            }
+            else if (functionalAttributes.IsTestPoint)
             {
                 return new PCBTestpoint(geometricAttributes, functionalAttributes, connections);
             }
@@ -113,27 +87,13 @@ namespace GrpcClientParser.Helper
         {
             if (!useContains)
             {
-                foreach (var text in identifier)
-                {
-                    if (partName.StartsWith(text, StringComparison.Ordinal) || refText.StartsWith(text, StringComparison.Ordinal))
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
+                return identifier.FirstOrDefault(text => refText.StartsWith(
+                    text, StringComparison.InvariantCultureIgnoreCase)) != null;
             }
             else
             {
-                foreach (var text in identifier)
-                {
-                    if (partName.Contains(text, StringComparison.Ordinal) || refText.Contains(text, StringComparison.Ordinal))
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
+                return identifier.FirstOrDefault(text => refText.Contains(
+                    text, StringComparison.InvariantCultureIgnoreCase)) != null;
             }
         }
     }

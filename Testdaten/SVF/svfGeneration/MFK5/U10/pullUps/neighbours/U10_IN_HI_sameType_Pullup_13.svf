@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"W29","MaskPosition":399,"PinPort":"gpio_a11__uarta_rx","ConnectedComponents":["R143"],"TestType":8},{"PinName":"T27","MaskPosition":465,"PinPort":"gpio_a26__spib_cs0","ConnectedComponents":["R143"],"TestType":1},{"PinName":"W27","MaskPosition":487,"PinPort":"gpio_a4__timer_ck2","ConnectedComponents":["R218"],"TestType":1},{"PinName":"T30","MaskPosition":409,"PinPort":"gpio_a21__spia_cs0","ConnectedComponents":["R142"],"TestType":1},{"PinName":"N31","MaskPosition":521,"PinPort":"sma_mdio_0","ConnectedComponents":["R362"],"TestType":1},{"PinName":"R26","MaskPosition":557,"PinPort":"probe_rst_n","ConnectedComponents":["R186"],"TestType":1},{"PinName":"L9","MaskPosition":277,"PinPort":"i2c_a_sda","ConnectedComponents":["R178"],"TestType":1},{"PinName":"L10","MaskPosition":275,"PinPort":"i2c_a_scl","ConnectedComponents":["R177"],"TestType":1},{"PinName":"P4","MaskPosition":341,"PinPort":"pdt_probe_n","ConnectedComponents":["R200"],"TestType":1},{"PinName":"Y29","MaskPosition":389,"PinPort":"gpio_a1__timer_eoc0","ConnectedComponents":["R278"],"TestType":1},{"PinName":"AA10","MaskPosition":437,"PinPort":"gpio_b15__spic_cs0","ConnectedComponents":["R122"],"TestType":1},{"PinName":"V30","MaskPosition":481,"PinPort":"gpio_a10__uarta_tx","ConnectedComponents":["R122"],"TestType":1},{"PinName":"AA11","MaskPosition":427,"PinPort":"gpio_b20__spid_cs0","ConnectedComponents":["R123"],"TestType":1}],"ScanChainLength":580,"InstructionRegisterLength":16,"JtagIdCode":33656897,"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 16 TDI (01);
+SDR 580 TDI (000005555555555555555555555555555555555555555555540000155555555555555555555555555555555552AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA555555555555555555555555);
+SIR 16 TDI (02);
+SDR 580 TDI (000005555555555555555555555555555555555555555555540000155555555555555555555555555555555552AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA555555555555555555555555)
+TDO (000005755555555755555555D75557555555755D555755D574000015555575555555555555557D555555555552AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA555555555555555555555555)
+MASK (00000020000000020000000082000200000020080002008020000000000020000000000000002800000000000000000000000000000000000000000000000000000000000000000000);

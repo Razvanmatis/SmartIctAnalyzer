@@ -1,12 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+	<VersionPrefix>1.0.1</VersionPrefix>
+    <PackageId>ProMik.SmartIct.JtagPinInformationExtractor</PackageId>
+    <PackageProjectUrl>https://gitlab.promik.local/flash_task/host/smart_ict_analyser/-/tree/master/SmartIctTool/NetStandard/PinInformationExtractor</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\SmartIct.Interfaces\Interfaces.csproj" />
+    <ProjectReference Include="..\GrpcClientParser\GrpcClientParser.csproj" />
   </ItemGroup>
 
 </Project>

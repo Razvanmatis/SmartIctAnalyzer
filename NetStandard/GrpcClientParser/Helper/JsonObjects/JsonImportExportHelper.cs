@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using GrpcClientParser.Implementations;
-using GrpcClientParser.Interfaces;
-using Interfaces.Gui;
-using Interfaces.PcbInvestigator;
-using Interfaces.PcbInvestigator.Enums;
-using Interfaces.PcbInvestigator.Implementations;
 using Newtonsoft.Json;
+using ProMik.SmartIct.Interfaces.GrpcClientParser;
+using ProMik.SmartIct.Interfaces.Gui;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.PcbInvestigator.Enums;
+using ProMik.SmartIct.Interfaces.PcbInvestigator.Implementations;
+using ProMik.SmartIct.PCBComponentParser.Implementations;
+using ProMik.SmartIct.PCBComponentParser.Interfaces;
 
-namespace GrpcClientParser.Helper.JsonObjects
+namespace ProMik.SmartIct.PCBComponentParser.Helper.JsonObjects
 {
     public static class JsonImportExportHelper
     {
@@ -47,7 +48,7 @@ namespace GrpcClientParser.Helper.JsonObjects
                 pinJson.Add(new PinJson(GetNetsJson(pin.Nets, result.Nets), GetGeometricsJson(pin.GeometricAttributes), GetPinTypeJson(pin.PinType), pin.PinNumber));
             }
 
-            IResultJson resultJson = new ResultJson(pinJson, compJson, netJsons);
+            IResultJson resultJson = new ResultJson(pinJson, compJson, netJsons, result.AmountSteps);
             return GetSerializedData(resultJson, logger);
         }
 
@@ -58,7 +59,8 @@ namespace GrpcClientParser.Helper.JsonObjects
             IList<string> iIdentifier,
             IList<string> icIdentifier,
             IList<string> conIdentifier,
-            Func<IFunctionalAttributes, bool> isTestpoint)
+            Func<IFunctionalAttributes, bool> isTestpoint,
+            bool useContains = false)
         {
             IList<IPinComponent> pins = GetParsedPins(result.Pins);
             IList<IPCBComponent> components = GetParsedComponents(
@@ -69,7 +71,8 @@ namespace GrpcClientParser.Helper.JsonObjects
                 iIdentifier,
                 icIdentifier,
                 conIdentifier,
-                isTestpoint);
+                isTestpoint,
+                useContains);
             IList<INetComponent> nets = GetParsedNets(result.Nets, components, pins);
             UpdateAllParsedPins(pins, nets, result.Pins);
             return components;
@@ -103,7 +106,8 @@ namespace GrpcClientParser.Helper.JsonObjects
            IList<string> icIdentifier,
            IList<string> conIdentifier,
            Func<IFunctionalAttributes, bool> isTestPoint,
-           ILogger logger)
+           ILogger logger,
+           bool useContains = false)
         {
             IResultJson resultJson = GetResultJsonFromData(data, logger);
             if (resultJson != null)
@@ -115,9 +119,10 @@ namespace GrpcClientParser.Helper.JsonObjects
                 iIdentifier,
                 icIdentifier,
                 conIdentifier,
-                isTestPoint);
+                isTestPoint,
+                useContains);
                 IList<INetComponent> nets = GetParsedNets(components);
-                return new ParsedResult(components, nets);
+                return new ParsedResult(components, nets, resultJson.StepAmount);
             }
             else
             {
@@ -161,7 +166,7 @@ namespace GrpcClientParser.Helper.JsonObjects
 
         private static PinTypeJson GetPinTypeJson(PinComponentType pinType)
         {
-            return (PinTypeJson)((int)pinType);
+            return (PinTypeJson)(int)pinType;
         }
 
         private static IList<int> GetNetsJson(IList<INetComponent> netsToFind, IList<INetComponent> allNets)
@@ -207,12 +212,13 @@ namespace GrpcClientParser.Helper.JsonObjects
                 functionalAttributes.LayerName,
                 functionalAttributes.PackageName,
                 functionalAttributes.Value,
-                functionalAttributes.NormalizedName);
+                functionalAttributes.NormalizedName,
+                functionalAttributes.StepNo);
         }
 
         private static ComponentTypeJson GetComponentTypeJson(PCBObjectType componentType)
         {
-            return (ComponentTypeJson)((int)componentType);
+            return (ComponentTypeJson)(int)componentType;
         }
 
         private static GeometricJson GetGeometricsJson(IGeometricAttributes geometricAttributes)
@@ -281,19 +287,19 @@ namespace GrpcClientParser.Helper.JsonObjects
 
         private static PCBObjectType GetParsedComponentType(ComponentTypeJson componentType)
         {
-            return (PCBObjectType)((int)componentType);
+            return (PCBObjectType)(int)componentType;
         }
 
         private static PinComponentType GetParsedPinType(PinTypeJson pinType)
         {
-            return (PinComponentType)((int)pinType);
+            return (PinComponentType)(int)pinType;
         }
 
         private static IGeometricAttributes GetParsedGeometricAttributes(GeometricJson geometrics)
         {
             return new GeometricAttributes(
-                new System.Drawing.Rectangle(geometrics.Bounds.X, geometrics.Bounds.Y, geometrics.Bounds.Width, geometrics.Bounds.Height),
-                new System.Drawing.PointF(geometrics.CenterPoint.X, geometrics.CenterPoint.Y),
+                new Rectangle(geometrics.Bounds.X, geometrics.Bounds.Y, geometrics.Bounds.Width, geometrics.Bounds.Height),
+                new PointF(geometrics.CenterPoint.X, geometrics.CenterPoint.Y),
                 geometrics.Rotation,
                 geometrics.CompHeight);
         }
@@ -317,7 +323,8 @@ namespace GrpcClientParser.Helper.JsonObjects
         IList<string> iIdentifier,
         IList<string> icIdentifier,
         IList<string> conIdentifier,
-        Func<IFunctionalAttributes, bool> isTestPoint)
+        Func<IFunctionalAttributes, bool> isTestPoint,
+        bool useContains = false)
         {
             List<IPCBComponent> parsedComponents = new List<IPCBComponent>();
             foreach (var comp in components)
@@ -330,7 +337,8 @@ namespace GrpcClientParser.Helper.JsonObjects
                     cIdentifier,
                     iIdentifier,
                     icIdentifier,
-                    conIdentifier));
+                    conIdentifier,
+                    useContains));
             }
 
             return parsedComponents;
@@ -346,6 +354,7 @@ namespace GrpcClientParser.Helper.JsonObjects
                 functionals.PackageName,
                 string.Empty,
                 isTestPoint,
+                functionals.StepNo,
                 functionals.Value);
         }
     }

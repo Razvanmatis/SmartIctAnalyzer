@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Interfaces.Gui;
-using Interfaces.PcbInvestigator;
+using PinInformationExtractor.Interfaces;
 using ProMik.Core.Interfaces.Events;
-using TestCoverage.Events;
-using TestCoverage.Interfaces;
+using ProMik.SmartIct.Interfaces.Gui;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Services.ReportCreator.Interfaces;
+using ProMik.SmartIct.TestCoverageDeterminer.Events;
+using ProMik.SmartIct.TestCoverageDeterminer.Interfaces;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Helper;
 using Ui.Modules.ModuleName.Interfaces;
@@ -30,16 +33,28 @@ namespace Ui.Modules.ModuleName.Implementations
         private readonly ObservableCollection<ViewModelPCBBase> componentViews = new ObservableCollection<ViewModelPCBBase>();
         private readonly IList<IPCBComponent> allObjects = new List<IPCBComponent>();
         private readonly IList<INetComponent> allNets = new List<INetComponent>();
-        private readonly Dictionary<TestCoverageObject, IList<IPCBComponent>> mapTestCoverageObjects = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
+        private readonly Dictionary<TestCoverageObject, IList<IPCBComponent>> mapTestCoverageObjects
+            = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
         private readonly List<string> actualLayers = new List<string>();
         private readonly IList<ViewModelPCBBase> allViewModelsForPainting = new List<ViewModelPCBBase>();
         private readonly List<string> actualTestCoverageObjects = new List<string>();
+        private readonly IPdfReportHandler pdfReportHandler;
+        private readonly ICsvReportCreator csvReportHandler;
         private bool isClicked;
         private bool componentsAreLoaded;
+        private List<string> allLayers = new List<string>();
 
-        public ComponentHandler(IEventService eventService, ISettingsData settingsVm, ILogger logger, ITestCoverageDeterminer testCoverageDeterminer)
+        public ComponentHandler(
+            IEventService eventService,
+            ISettingsData settingsVm,
+            ILogger logger,
+            ITestCoverageDeterminer testCoverageDeterminer,
+            IPdfReportHandler pdfReportHandler,
+            ICsvReportCreator csvReportHandler)
         {
             this.eventService = eventService;
+            this.csvReportHandler = csvReportHandler;
+            this.pdfReportHandler = pdfReportHandler;
             this.settingsVm = settingsVm;
             this.testCoverageDeterminer = testCoverageDeterminer;
             this.logger = logger;
@@ -66,16 +81,22 @@ namespace Ui.Modules.ModuleName.Implementations
             isClicked = isBegin;
         }
 
-        public ComponentAttributes MoveMouseHandler(MouseEventArgs obj, ComponentAttributes attributes, ScrollViewer scrollviewer = null)
+        public ComponentAttributes MoveMouseHandler(
+            MouseEventArgs obj,
+            ComponentAttributes attributes,
+            ScrollViewer scrollviewer = null)
         {
             if (!isClicked)
             {
                 attributes.ActualXPos = obj.GetPosition(scrollviewer).X + scrollviewer.HorizontalOffset;
                 attributes.ActualYPos = obj.GetPosition(scrollviewer).Y + scrollviewer.VerticalOffset;
-                attributes.XPosition = (attributes.ActualXPos / attributes.ZoomFactor) - (ViewModelPCBBase.OffsetX + ViewModelPCBBase.OFFSET);
-                attributes.YPosition = (attributes.ActualYPos / attributes.ZoomFactor) - (ViewModelPCBBase.OffsetY + ViewModelPCBBase.OFFSET);
+                attributes.XPosition = (attributes.ActualXPos / attributes.ZoomFactor)
+                    - (ViewModelPCBBase.OffsetX + ViewModelPCBBase.OFFSET);
+                attributes.YPosition = (attributes.ActualYPos / attributes.ZoomFactor)
+                    - (ViewModelPCBBase.OffsetY + ViewModelPCBBase.OFFSET);
             }
-            else if (obj.GetPosition(scrollviewer).X < scrollviewer.ActualWidth - OffsetScrollbar && obj.GetPosition(scrollviewer).Y < scrollviewer.ActualHeight - OffsetScrollbar)
+            else if (obj.GetPosition(scrollviewer).X < scrollviewer.ActualWidth
+                - OffsetScrollbar && obj.GetPosition(scrollviewer).Y < scrollviewer.ActualHeight - OffsetScrollbar)
             {
                 double deltaX = attributes.ActualXPos - obj.GetPosition(scrollviewer).X;
                 double deltaY = attributes.ActualYPos - obj.GetPosition(scrollviewer).Y;
@@ -135,8 +156,19 @@ namespace Ui.Modules.ModuleName.Implementations
             attributes.OriginalHeight = attributes.OverallHeight;
             componentViews.Remove(allViewModelsForPainting[allViewModelsForPainting.Count - 1]);
             componentViews.Add(allViewModelsForPainting[allViewModelsForPainting.Count - 1]);
-            scrollViewer.UpdateLayout();
-            logger.LogMessage("Updated view sizes by width: " + attributes.OverallWidth + " and height: " + attributes.OverallHeight, LogCategory.INFO);
+            attributes.ZoomFactor = GetNewZoomFactor(
+                attributes.OverallWidth,
+                attributes.OverallHeight,
+                scrollViewer?.ActualWidth,
+                scrollViewer?.ActualHeight);
+            attributes.OverallWidth *= attributes.ZoomFactor;
+            attributes.OverallHeight *= attributes.ZoomFactor;
+            logger.LogMessage(
+                "Updated view sizes by width: "
+                + attributes.OverallWidth
+                + " and height: "
+                + attributes.OverallHeight,
+                LogCategory.INFO);
             return attributes;
         }
 
@@ -145,7 +177,10 @@ namespace Ui.Modules.ModuleName.Implementations
             return componentsAreLoaded;
         }
 
-        public ComponentAttributes ResetView(ResetViewEvent obj, ComponentAttributes attributes, Action setShowButtonsVisibility = null)
+        public ComponentAttributes ResetView(
+            ResetViewEvent obj,
+            ComponentAttributes attributes,
+            Action setShowButtonsVisibility = null)
         {
             attributes.ZoomFactor = 1.0;
             attributes.OverallHeight = 0;
@@ -156,11 +191,14 @@ namespace Ui.Modules.ModuleName.Implementations
             ViewModelLine.SetOffsets(0, 0);
             componentViews?.Clear();
             actualLayers?.Clear();
+            allLayers.Clear();
             allNets?.Clear();
             allObjects?.Clear();
             allViewModelsForPainting?.Clear();
             componentsAreLoaded = false;
             setShowButtonsVisibility?.Invoke();
+            pdfReportHandler.UpdateReportContent(null, null, null, null);
+            csvReportHandler.UpdateReportContent(null, null, null, null);
             eventService.Publish<ChangeExportMenuItemEnabledStateEvent>(new ChangeExportMenuItemEnabledStateEvent(false));
             return attributes;
         }
@@ -238,8 +276,14 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
-        public async Task AddPCBComponent(AddPcbObjectsEvent comp, Action defineRangesAction = null, Action setShowButtonsVisibility = null, Action resetObjectsAction = null)
+        public async Task AddPCBComponent(
+            AddPcbObjectsEvent comp,
+            Action defineRangesAction = null,
+            Action setShowButtonsVisibility = null,
+            Action resetObjectsAction = null)
         {
+            this.allLayers.Clear();
+            this.allLayers.AddRange(comp?.LayerNames);
             await Task.Run(() =>
             {
                 resetObjectsAction?.Invoke();
@@ -269,9 +313,9 @@ namespace Ui.Modules.ModuleName.Implementations
             defineRangesAction?.Invoke();
             componentsAreLoaded = true;
             setShowButtonsVisibility?.Invoke();
-            eventService.Publish<SetBusyEvent>(new SetBusyEvent(false));
-            eventService.Publish<ChangeExportMenuItemEnabledStateEvent>(new ChangeExportMenuItemEnabledStateEvent(true));
-            eventService.Publish<ComponentsImportFinishedEvent>(new ComponentsImportFinishedEvent());
+            await eventService.Publish(new SetBusyEvent(false)).ConfigureAwait(false);
+            await eventService.Publish(new ChangeExportMenuItemEnabledStateEvent(true)).ConfigureAwait(false);
+            await eventService.Publish(new ComponentsImportFinishedEvent()).ConfigureAwait(false);
         }
 
         public void CloseAllSettingsEventHandling(CloseAllSettingsEvent obj, Action setShowButtonsVisibilityAction = null)
@@ -299,10 +343,16 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
-        public async Task ShowLayerObjects(IList<string> layersToShow)
+        public async Task ShowLayerObjects(IList<string> layersToShow, bool showAllLayers = false)
         {
             await Task.Run(() =>
             {
+                if (layersToShow == null || showAllLayers)
+                {
+                    layersToShow = allLayers;
+                    actualLayers.Clear();
+                }
+
                 List<string> layersToRemove = GetLayersToRemove(layersToShow, actualLayers);
                 List<string> layersToAdd = GetLayersToAdd(layersToShow, actualLayers);
                 Application.Current.Dispatcher.Invoke(() => RemoveLayerObjectsFromView(layersToRemove));
@@ -358,10 +408,17 @@ namespace Ui.Modules.ModuleName.Implementations
                                     ViewModelPCBComponentBase compWithLines = GetVmObject(compOut);
                                     if (compWithLines != null)
                                     {
-                                        PositionHelper pOut = new PositionHelper(GetTranslatedBounds(comp.GeometricAttributes.Bounds));
-                                        PositionHelper pIn = new PositionHelper(GetTranslatedBounds(compOut.GeometricAttributes.Bounds));
+                                        PositionHelper pOut = new PositionHelper(
+                                            GetTranslatedBounds(comp.GeometricAttributes.Bounds));
+                                        PositionHelper pIn = new PositionHelper(
+                                            GetTranslatedBounds(compOut.GeometricAttributes.Bounds));
                                         PointCollection points = pOut.GetPointsForObject(pIn);
-                                        ViewModelLine lineVm = new ViewModelLine(points, points[^1], net.NetName, settingsVm, testCoverageDeterminer);
+                                        ViewModelLine lineVm = new ViewModelLine(
+                                            points,
+                                            points[^1],
+                                            net.NetName,
+                                            settingsVm,
+                                            testCoverageDeterminer);
                                         lineVm.ConnectedComponents.Add(comp.BaseComponent);
                                         lineVm.ConnectedComponents.Add(compOut);
                                         lineVm.CheckForTestCoverage();
@@ -379,7 +436,12 @@ namespace Ui.Modules.ModuleName.Implementations
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             componentViews.AddRange(lines);
-                            logger.LogMessage("Show connections for component " + comp.BaseComponent.FunctionalAttributes.Ref + " with total amount: " + lines.Count, LogCategory.INFO);
+                            logger.LogMessage(
+                                "Show connections for component "
+                                + comp.BaseComponent.FunctionalAttributes.Ref
+                                + " with total amount: "
+                                + lines.Count,
+                                LogCategory.INFO);
                         });
                     }
 
@@ -484,6 +546,26 @@ namespace Ui.Modules.ModuleName.Implementations
             return new Rectangle(x, y, bounds.Width, bounds.Height);
         }
 
+        private static double GetNewZoomFactor(
+            double overallWidth,
+            double overallHeight,
+            double? actualWidth,
+            double? actualHeight)
+        {
+            if (!actualWidth.HasValue || !actualHeight.HasValue)
+            {
+                return 1.0;
+            }
+
+            double value = actualWidth.Value / overallWidth;
+            if (actualHeight.Value / overallHeight < value)
+            {
+                value = actualHeight.Value / overallHeight;
+            }
+
+            return value;
+        }
+
         private ViewModelPCBComponentBase GetVmObject(IPCBComponent compOut)
         {
             foreach (var obj in componentViews)
@@ -499,12 +581,18 @@ namespace Ui.Modules.ModuleName.Implementations
 
         private void AddLayerObjectsToView(List<string> layersToAdd)
         {
+            if (allViewModelsForPainting == null || allViewModelsForPainting.Count == 0)
+            {
+                return;
+            }
+
             List<ViewModelPCBBase> convertedList = new List<ViewModelPCBBase>();
             foreach (var layer in layersToAdd)
             {
-                foreach (ViewModelPCBBase compInner in this.allViewModelsForPainting)
+                foreach (ViewModelPCBBase compInner in allViewModelsForPainting)
                 {
-                    if (compInner is ViewModelPCBComponentBase compInnerBase && compInnerBase.BaseComponent.FunctionalAttributes.LayerName.Equals(layer))
+                    if (compInner is ViewModelPCBComponentBase compInnerBase
+                        && compInnerBase.BaseComponent.FunctionalAttributes.LayerName.Equals(layer))
                     {
                         convertedList.Add(compInner);
                     }
@@ -516,30 +604,35 @@ namespace Ui.Modules.ModuleName.Implementations
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    logger.LogMessage("Inserted total amount of objects to be visible: " + convertedList.Count, LogCategory.INFO);
+                    logger.LogMessage(
+                        "Inserted total amount of objects to be visible: "
+                        + convertedList.Count,
+                        LogCategory.INFO);
                 });
             }
         }
 
         private void InsertObjectsIntoView(List<ViewModelPCBBase> convertedList)
         {
-            foreach (var comp in convertedList)
-            {
-                if (!componentViews.Contains(comp))
-                {
-                    Application.Current.Dispatcher.Invoke(() => componentViews.Add(comp));
-                }
-            }
+            convertedList.Where(comp => !componentViews.Contains(comp))
+                .ToList()
+                .ForEach(comp => Application.Current.Dispatcher.Invoke(() => componentViews.Add(comp)));
         }
 
         private void RemoveLayerObjectsFromView(List<string> layersToRemove)
         {
+            if (componentViews == null || componentViews.Count == 0)
+            {
+                return;
+            }
+
             List<ViewModelPCBComponentBase> compsToRemove = new List<ViewModelPCBComponentBase>();
             foreach (var layerToRem in layersToRemove)
             {
                 foreach (var comp in componentViews)
                 {
-                    if (comp is ViewModelPCBComponentBase compBase && compBase.BaseComponent.FunctionalAttributes.LayerName.Equals(layerToRem))
+                    if (comp is ViewModelPCBComponentBase compBase
+                        && compBase.BaseComponent.FunctionalAttributes.LayerName.Equals(layerToRem))
                     {
                         compsToRemove.Add(compBase);
                     }
@@ -596,7 +689,10 @@ namespace Ui.Modules.ModuleName.Implementations
 
             if (compsToRemoveTotal.Count > 0)
             {
-                logger.LogMessage("Removed total amount of test coverage related objects from view: " + compsToRemoveTotal.Count, LogCategory.INFO);
+                logger.LogMessage(
+                    "Removed total amount of test coverage related objects from view: "
+                    + compsToRemoveTotal.Count,
+                    LogCategory.INFO);
             }
         }
 
@@ -627,7 +723,10 @@ namespace Ui.Modules.ModuleName.Implementations
 
             if (convertedListTotal.Count > 0)
             {
-                logger.LogMessage("Inserted total amount of test coverage related objects into view: " + convertedListTotal.Count, LogCategory.INFO);
+                logger.LogMessage(
+                    "Inserted total amount of test coverage related objects into view: "
+                    + convertedListTotal.Count,
+                    LogCategory.INFO);
             }
         }
     }

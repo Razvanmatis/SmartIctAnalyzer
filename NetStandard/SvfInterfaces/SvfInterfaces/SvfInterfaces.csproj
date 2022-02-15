@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+	<VersionPrefix>1.0.1</VersionPrefix>
+    <PackageId>ProMik.SmartIct.Svf.SvfInterfaces</PackageId>
+    <PackageProjectUrl>https://gitlab.promik.local/flash_task/host/smart_ict_analyser/-/tree/master/SmartIctTool/NetStandard/SvfInterfaces</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ProMik.Svf.Contracts" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SmartIct.Interfaces\Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

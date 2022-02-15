@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 using Prism.Commands;
 using Prism.Regions;
 using ProMik.Core.Interfaces.Events;
-using TestCoverage.Events;
+using ProMik.SmartIct.TestCoverageDeterminer.Events;
 using Ui.Core.Mvvm;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Interfaces;
@@ -17,7 +23,7 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         private readonly IEventService eventService;
         private readonly IComponentHandler componentHandler;
-        private ObservableCollection<string> layers = new ObservableCollection<string>();
+        private ObservableCollection<LayerObjectViewModel> layers = new ObservableCollection<LayerObjectViewModel>();
         private ICommand selectionChanged;
         private ObservableCollection<string> objects = new ObservableCollection<string>();
         private ICommand selectionChangedObjects;
@@ -30,14 +36,16 @@ namespace Ui.Modules.ModuleName.ViewModels
             this.componentHandler = componentHandler;
             this.eventService = eventService;
             eventService.Subscribe<SendLayersEvent>(GetLayers);
-            SelectionChanged = new DelegateCommand<IList>(async (x) => await ChangedTheSelection(x).ConfigureAwait(true));
-            SelectionChangedObjects = new DelegateCommand<IList>(async (x) => await ChangedTheSelectionObjects(x).ConfigureAwait(true));
+            SelectionChangedLayer = new DelegateCommand<IList>(
+                async (x) => await ChangedTheSelectionLayer(x).ConfigureAwait(true));
+            SelectionChangedObjects = new DelegateCommand<IList>(
+                async (x) => await ChangedTheSelectionObjects(x).ConfigureAwait(true));
             eventService.Subscribe<ResetViewEvent>(ResetViewEventHandling);
             eventService.Subscribe<ResetLayersSelectionEvent>(async (x) => await ResetSelection().ConfigureAwait(false));
             eventService.Subscribe<TestCoverageForDeterminingObjectsPerformedEvent>(InitTestCoverageObjects);
         }
 
-        public ObservableCollection<string> Layers
+        public ObservableCollection<LayerObjectViewModel> Layers
         {
             get
             {
@@ -76,6 +84,8 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
+        public ICommand SaveListViewCommand { get; }
+
         public ObservableCollection<string> Objects
         {
             get
@@ -89,7 +99,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
-        public ICommand SelectionChanged
+        public ICommand SelectionChangedLayer
         {
             get
             {
@@ -115,20 +125,31 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
+        private static List<LayerObjectViewModel> GetLayerObjects(HashSet<string> hashSet)
+        {
+            List<LayerObjectViewModel> list = new List<LayerObjectViewModel>();
+            foreach (var entry in hashSet)
+            {
+                list.Add(new LayerObjectViewModel() { Content = entry, IsSelected = true });
+            }
+
+            return list;
+        }
+
         private async Task ResetSelection()
         {
             SelectedLayer = null;
             SelectedObject = null;
-            await ChangedTheSelection(new List<string>()).ConfigureAwait(false);
+            await ChangedTheSelectionLayer(new List<string>()).ConfigureAwait(false);
             await ChangedTheSelectionObjects(new List<string>()).ConfigureAwait(false);
         }
 
-        private async Task ChangedTheSelection(IList obj)
+        private async Task ChangedTheSelectionLayer(IList obj)
         {
             IList<string> list = new List<string>();
-            foreach (var item in obj)
+            foreach (LayerObjectViewModel item in obj)
             {
-                list.Add(item.ToString());
+                list.Add(item.Content);
             }
 
             await componentHandler.ShowLayerObjects(list).ConfigureAwait(false);
@@ -153,23 +174,14 @@ namespace Ui.Modules.ModuleName.ViewModels
         private void GetLayers(SendLayersEvent obj)
         {
             Layers.Clear();
-            foreach (var layer in obj.Layers)
-            {
-                if (!Layers.Contains(layer))
-                {
-                    Layers.Add(layer);
-                }
-            }
+            Layers.AddRange(GetLayerObjects(obj.Layers.ToHashSet()));
         }
 
         private void InitTestCoverageObjects(TestCoverageForDeterminingObjectsPerformedEvent obj)
         {
-            foreach (string text in obj.GetObjects())
+            foreach (string text in obj.GetObjects().Where(txt => !Objects.Contains(txt)))
             {
-                if (!Objects.Contains(text))
-                {
-                    Objects.Add(text);
-                }
+                Objects.Add(text);
             }
         }
 

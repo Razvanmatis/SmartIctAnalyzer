@@ -1,0 +1,21 @@
+#
+#Units
+#
+UNITS=MM
+ID=61
+#
+#Num Features
+#
+F 1
+#
+#Layer features
+#
+S P 0 ;;ID=62
+OB 0.889 -0.442385 I
+OS -0.889 -0.4423
+OS -0.889 0.446699
+OS 0 0.02506
+OS 0.889 0.4467
+OS 0.889 -0.442385
+OE
+SE

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using Interfaces.Gui;
+using ProMik.SmartIct.Interfaces.Gui;
+using ProMik.SmartIct.Services.ManifestHandler.Implementations;
 using Ui.Modules.ModuleName.Helper;
 using Ui.Modules.ModuleName.Interfaces;
 using Ui.Modules.ModuleName.Model;
@@ -64,7 +65,6 @@ namespace Ui.Modules.ModuleName.Implementations
                 settingsData.NetNamesChecked,
                 settingsData.GndNetIdentifier,
                 settingsData.PowerNetIdentifier,
-                settingsData.JTAGNetIdentifier,
                 settingsData.GndNetBlacklist,
                 settingsData.PowerNetBlacklist,
                 settingsData.JTAGNetBlacklist,
@@ -75,7 +75,13 @@ namespace Ui.Modules.ModuleName.Implementations
                 settingsData.SupplyVoltageMv,
                 settingsData.IoVoltageMv,
                 settingsData.Steps,
-                settingsData.JTAGPinIdentifier);
+                settingsData.JTAGPinIdentifier,
+                settingsData.Frequency,
+                settingsData.CableCompensation,
+                settingsData.Target,
+                settingsData.Slot,
+                settingsData.AskForSvfSettings,
+                settingsData.UseContains);
         }
 
         public void ImportStorageContent(byte[] data)
@@ -108,13 +114,7 @@ namespace Ui.Modules.ModuleName.Implementations
 
         private static string GetTextFromList(IList<string> values)
         {
-            string text = string.Empty;
-            foreach (string val in values)
-            {
-                text += val + ";";
-            }
-
-            return text[0..^1];
+            return string.Join(";", values);
         }
 
         /// <summary>

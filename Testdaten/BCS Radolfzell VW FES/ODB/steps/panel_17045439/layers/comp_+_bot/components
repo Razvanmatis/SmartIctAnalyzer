@@ -1,0 +1,151 @@
+#
+#Component attribute names
+#
+@0 .color
+@1 .comp_type
+@2 .comp_type2
+@3 .comp_mount_type
+@4 .comp_polarity
+@5 .comp_height
+@6 .comp_height_max
+@7 .comp_weight
+@8 .comp_htol_plus
+@9 .comp_htol_minus
+@10 .no_pop
+@11 .comp_ignore
+@12 .center_fiducial
+@13 .num_local_fiducials
+@14 .local_fiducial_dist
+@15 .otherside_keepout
+@16 .comp_ign_spacing
+@17 .toep_spacing_req
+@18 .toep_nochk_o_side
+@19 .no_fiducial_check
+@20 .no_tp_under
+@21 .no_hole_under
+@22 .no_trace_under
+@23 .no_copper_shape_under
+@24 .no_uncap_via_under
+@25 .no_text_under
+@26 .is_burried
+@27 .is_shadowed
+@28 .is_wirebonded
+@29 .thvpad_required
+@30 .label_clearance
+@31 .guard_comp
+@32 .needs_guarding
+@33 .ind_orient_req
+@34 .src_orientation
+@35 .rot_correction
+@36 .user_bom_rev
+@37 .cad_part_override
+@38 .package_version
+@39 .machine_pkg
+@40 .station
+@41 .mount_stage
+@42 .polarity_marker
+@43 .mechanical
+@44 .neutralization_angle
+@45 .neutralization_reviewed
+@46 .pin_length
+@47 .no_protrude_board
+@48 .spo_shape
+@49 .spo_shape_rotate
+@50 .spo_shape_stretch
+@51 .spo_move_center
+@52 .spo_w_mode
+@53 .spo_w_val
+@54 .spo_w_fact
+@55 .spo_h_mode
+@56 .spo_h_val
+@57 .spo_h_fact
+@58 .spo_s_mode
+@59 .spo_s_val
+@60 .spo_s_fact
+@61 .spo_p_mode
+@62 .spo_p_val
+@63 .spo_p_fact
+@64 .comp_height_area
+@65 .hp3070_device
+@66 .hp3070_value
+@67 .hp3070_tol_pos
+@68 .hp3070_tol_neg
+@69 .hp3070_type
+@70 .hp3070_test
+@71 .hp3070_hi_value
+@72 .hp3070_lo_value
+@73 .hp3070_seriesr
+@74 .hp3070_fail_msg
+@75 .hp3070_common_pin
+@76 .hp3070_contact_pin
+@77 .hp3070_probe_access
+@78 .hp3070_comment
+@79 .gencad_device_type
+@80 .gencad_device_style
+@81 .gencad_device_value
+@82 .gencad_device_ptol
+@83 .gencad_device_ntol
+@84 .desc1
+@85 .desc2
+@86 .desc3
+@87 .desc4
+@88 .desc5
+@89 .desc6
+@90 .desc7
+@91 .desc8
+@92 .desc9
+@93 .desc10
+@94 .part_desc1
+@95 .part_desc2
+@96 .part_desc3
+@97 .part_desc4
+@98 .part_desc5
+@99 .part_desc6
+@100 .part_desc7
+@101 .part_desc8
+@102 .part_desc9
+@103 .part_desc10
+@104 .comp_variant_list
+@105 .cad_local_footprint_change
+@106 .cad_package_name
+@107 .vpl1_pkg_name
+@108 .lead_form
+@109 .package_type
+
+
+# CMP 0
+CMP 6 -0.03937007874 3.933070866142 180 N NRD1 Part_No ;11,3=1,5=0.001969
+PRP CELL_LAST_MODIFIED_BY 'MOCKO@WRADDE-3785'
+PRP ALLOWED_MOUNT_SIDE 'BOTH'
+PRP MGC_UNIGROUP '17045439'
+#
+# CMP 1
+CMP 0 1.377952755906 0 180 N NRD8 Part_No ;11,3=1,5=0.003937
+PRP CELL_LAST_MODIFIED_BY 'BeliuzhV@DRADDE-4053'
+PRP ALLOWED_MOUNT_SIDE 'BOTH'
+PRP MGC_UNIGROUP '17045439'
+#
+# CMP 2
+CMP 13 0.787401574803 0.03937007874 180 N NRD13 Part_No ;11,3=1,5=0.003937
+PRP CELL_LAST_MODIFIED_BY 'SanalutM@NWARPL-HARD006'
+PRP ALLOWED_MOUNT_SIDE 'BOTH'
+PRP MGC_UNIGROUP '17045439'
+#
+# CMP 3
+CMP 13 9.866141732283 0.03937007874 180 N NRD15 Part_No ;11,3=1,5=0.003937
+PRP CELL_LAST_MODIFIED_BY 'SanalutM@NWARPL-HARD006'
+PRP ALLOWED_MOUNT_SIDE 'BOTH'
+PRP MGC_UNIGROUP '17045439'
+#
+# CMP 4
+CMP 12 9.669291338583 7.834645669291 180 N NRD18 Part_No ;11,3=1,5=0.003937
+PRP CELL_LAST_MODIFIED_BY 'SanalutM@NWARPL-HARD006'
+PRP ALLOWED_MOUNT_SIDE 'BOTH'
+PRP MGC_UNIGROUP '17045439'
+#
+# CMP 5
+CMP 5 0.204724409449 3.937007874016 0 N NRD22 Part_No ;11,3=1,5=0.003937
+PRP CELL_LAST_MODIFIED_BY 'mocko@WRADDE-3785'
+PRP ALLOWED_MOUNT_SIDE 'BOTH'
+PRP MGC_UNIGROUP '17045439'
+#

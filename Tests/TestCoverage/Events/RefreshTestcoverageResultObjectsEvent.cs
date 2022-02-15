@@ -1,6 +1,6 @@
 ﻿using ProMik.Core.Interfaces.Events;
 
-namespace TestCoverage.Events
+namespace ProMik.SmartIct.TestCoverageDeterminer.Events
 {
     public class RefreshTestcoverageResultObjectsEvent : EventPayload
     {

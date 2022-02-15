@@ -1,19 +1,29 @@
 ﻿using System;
-using Interfaces.PcbInvestigator.Enums;
+using ProMik.SmartIct.Interfaces.PcbInvestigator.Enums;
 
-namespace Interfaces.PcbInvestigator.Implementations
+namespace ProMik.SmartIct.Interfaces.PcbInvestigator.Implementations
 {
     public class FunctionalAttributes : IFunctionalAttributes
     {
         private readonly PCBObjectType componentType;
         private readonly string reference;
         private readonly string partName;
+        private readonly int stepNo;
         private readonly string layerName;
         private readonly string normalizedName;
         private readonly string packageName;
         private readonly Func<IFunctionalAttributes, bool> isTestPoint;
 
-        public FunctionalAttributes(PCBObjectType componentType, string reference, string partName, string layerName, string packageName, string normalizedName, Func<IFunctionalAttributes, bool> isTestPoint, string value = "")
+        public FunctionalAttributes(
+            PCBObjectType componentType,
+            string reference,
+            string partName,
+            string layerName,
+            string packageName,
+            string normalizedName,
+            Func<IFunctionalAttributes, bool> isTestPoint,
+            int stepNo,
+            string value = "")
         {
             this.componentType = componentType;
             this.reference = reference;
@@ -23,6 +33,7 @@ namespace Interfaces.PcbInvestigator.Implementations
             this.normalizedName = normalizedName;
             this.isTestPoint = isTestPoint;
             Value = value;
+            this.stepNo = stepNo;
         }
 
         public PCBObjectType ComponentType
@@ -85,6 +96,14 @@ namespace Interfaces.PcbInvestigator.Implementations
         {
             get;
             set;
+        }
+
+        public int StepNo
+        {
+            get
+            {
+                return stepNo;
+            }
         }
     }
 }

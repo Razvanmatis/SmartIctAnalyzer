@@ -1,0 +1,53 @@
+﻿<Window x:Class="Ui.Modules.ModuleName.Views.ProgrammerSettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ui.Modules.ModuleName.Views"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="true"
+        mc:Ignorable="d"
+        Title="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Height="300" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label Content="Programmer IP:" VerticalAlignment="Center" />
+        <TextBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding IP, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Content="Programmer Port: " Grid.Row="1" VerticalAlignment="Center" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+        <Label Grid.Row="2" Content="Programmer Target: " VerticalAlignment="Center" />
+        <ComboBox SelectedIndex="{Binding Target, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+            <ComboBoxItem Content="Channel_A" />
+            <ComboBoxItem Content="Channel_B" />
+        </ComboBox>
+        <Label Grid.Row="3" Content="Programmer Slot: " VerticalAlignment="Center" />
+        <ComboBox SelectedIndex="{Binding Slot, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center">
+            <ComboBoxItem Content="Slot_1" />
+            <ComboBoxItem Content="Slot_2" />
+            <ComboBoxItem Content="Slot_3" />
+            <ComboBoxItem Content="Slot_4" />
+        </ComboBox>
+        <Label Grid.Row="4" Content="Supply Voltage in mv: " VerticalAlignment="Center" />
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding SupplyVoltage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+        <Label Grid.Row="5" Content="IO Voltage in mv: " VerticalAlignment="Center" />
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding IoVoltage, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+        <Label Grid.Row="6" Content="Frequency in kHz: " VerticalAlignment="Center" />
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Frequency, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+        <Label Grid.Row="7" Content="Cable compensation: " VerticalAlignment="Center" />
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding CableCompensation, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+        <Button Click="Button_Click" Content="OK" Grid.Row="8" Grid.ColumnSpan="2" Width="50" Margin="5" />
+    </Grid>
+</Window>

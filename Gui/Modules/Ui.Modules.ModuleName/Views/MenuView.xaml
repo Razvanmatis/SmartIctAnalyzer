@@ -30,6 +30,12 @@
                                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem Header="Save to new project file" Command="{Binding SaveProjectFileCommand}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="ContentSaveAll" Width="22" Height="22"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                         <MenuItem Header="Close project file" IsEnabled="{Binding CloseProjectEnabled}" Command="{Binding CloseProjectFileCommand}">
                             <MenuItem.Icon>
                                 <materialDesign:PackIcon Kind="ExitRun" Width="22" Height="22"
@@ -37,34 +43,32 @@
                             </MenuItem.Icon>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Miscellaneous">
-                        <MenuItem Header="Open ODB project folder" Command="{Binding OpenCommand}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="OpenInNew" Width="22" Height="22"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding ExportEnabled}" Header="Import BOM data file" Command="{Binding ImportBomCommand}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="WatchImport" Width="22" Height="22"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <Separator />
-                        <MenuItem Header="Import data from JSON file" Command="{Binding ImportCommand}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="WatchImport" Width="22" Height="22"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem IsEnabled="{Binding ExportEnabled}" Header="Export data into JSON file" Command="{Binding ExportCommand}">
-                            <MenuItem.Icon>
-                                <materialDesign:PackIcon Kind="FileExport" Width="22" Height="22"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <Separator />
+                    <MenuItem Header="Open ODB project folder" Command="{Binding OpenCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="OpenInNew" Width="22" Height="22"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem IsEnabled="{Binding ExportJsonAndBomEnabled}" Header="Import BOM data file" Command="{Binding ImportBomCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="WatchImport" Width="22" Height="22"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem Header="Import data from JSON file" Command="{Binding ImportCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="WatchImport" Width="22" Height="22"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem IsEnabled="{Binding ExportJsonAndBomEnabled}" Header="Export data into JSON file" Command="{Binding ExportCommand}">
+                        <MenuItem.Icon>
+                            <materialDesign:PackIcon Kind="FileExport" Width="22" Height="22"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="Exit" Command="{Binding ExitCommand}">
                         <MenuItem.Icon>
                             <materialDesign:PackIcon Kind="ExitRun" Width="22" Height="22"
@@ -98,6 +102,12 @@
                         <MenuItem Header="Determine all boundary scan objects" Command="{Binding RunTestCoverageForDeterminingObjects}">
                             <MenuItem.Icon>
                                 <materialDesign:PackIcon Kind="{Binding ItemTestCoverageObjects}" Width="22" Height="22"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem IsEnabled="{Binding TestCoverageMenuItemsEnabled}" Header="Open chart window" Command="{Binding OpenChartWindow}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="ChartDonut" Width="22" Height="22"
                                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </MenuItem.Icon>
                         </MenuItem>
@@ -149,9 +159,24 @@
                                     VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </MenuItem.Icon>
                         </MenuItem>
+                        <MenuItem IsEnabled="{Binding ExportPdfEnabled}" Header="Export report into PDF file" Command="{Binding GetPdfFile}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="PdfBox" Width="22" Height="22"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem IsEnabled="{Binding ExportPdfEnabled}" Header="Export report into CSV file" Command="{Binding GetCsvFile}">
+                            <MenuItem.Icon>
+                                <materialDesign:PackIcon Kind="FileCsv" Width="22" Height="22"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Visibility="Hidden" Header="Play SVF data file" Command="{Binding PlaySvfFile}" />
+                <MenuItem Header="Play SVF">
+                    <MenuItem Visibility="Visible" Header="Play SVF file" Command="{Binding PlaySvfFile}" />
+                    <MenuItem Visibility="Visible" Header="Play SVF folder" Command="{Binding PlaySvfFolder}" />
+                </MenuItem>
             </Menu>
         </DockPanel>
     </Grid>

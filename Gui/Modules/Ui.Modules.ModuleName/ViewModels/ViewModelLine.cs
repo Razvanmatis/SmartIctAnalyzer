@@ -3,9 +3,9 @@ using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using Interfaces.PcbInvestigator;
 using Prism.Commands;
-using TestCoverage.Interfaces;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.TestCoverageDeterminer.Interfaces;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.ViewModels
@@ -23,7 +23,12 @@ namespace Ui.Modules.ModuleName.ViewModels
         private Visibility lineVisibility;
         private Brush lineColor = Brushes.Black;
 
-        public ViewModelLine(PointCollection points, Point pointOfNetName, string netName, ISettingsData settingsVm, ITestCoverageDeterminer testCoverageDeterminer)
+        public ViewModelLine(
+            PointCollection points,
+            Point pointOfNetName,
+            string netName,
+            ISettingsData settingsVm,
+            ITestCoverageDeterminer testCoverageDeterminer)
             : base(points[0].X, points[0].Y)
         {
             this.testCoverageDeterminer = testCoverageDeterminer;
@@ -142,7 +147,8 @@ namespace Ui.Modules.ModuleName.ViewModels
         {
             if (ConnectedComponents.Count == 2)
             {
-                if (testCoverageDeterminer.IsTestResultAvailableForComponentsAndType(ConnectedComponents[0], ConnectedComponents[1]))
+                if (testCoverageDeterminer.IsTestResultAvailableForComponentsAndType(
+                    ConnectedComponents[0], ConnectedComponents[1]))
                 {
                     LineColor = Brushes.Green;
                 }

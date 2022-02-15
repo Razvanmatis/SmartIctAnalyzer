@@ -27,7 +27,7 @@ namespace Ui.Modules.ModuleName.Implementations
             return await Task.FromResult(odbPath).ConfigureAwait(true);
         }
 
-        public byte[] GetSettingsFileContent()
+        public byte[] GetSettingsFileContent(bool useJsonSettingsFile = false)
         {
             return settingsContent;
         }

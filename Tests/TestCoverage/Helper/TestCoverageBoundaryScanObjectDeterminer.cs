@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using GrpcClientParser.Implementations;
-using Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.PCBComponentParser.Implementations;
 
-namespace TestCoverage.Helper
+namespace ProMik.SmartIct.TestCoverageDeterminer.Helper
 {
     public static class TestCoverageBoundaryScanObjectDeterminer
     {
@@ -45,7 +45,8 @@ namespace TestCoverage.Helper
             return GetNets(nets, jtagIdentifier, jtagBlacklist);
         }
 
-        public static IList<IPCBComponent> GetOthers(IList<IPCBComponent> ics, IList<IPCBComponent> pullDowns, IList<IPCBComponent> pullUps)
+        public static IList<IPCBComponent> GetOthers(
+            IList<IPCBComponent> ics, IList<IPCBComponent> pullDowns, IList<IPCBComponent> pullUps)
         {
             IList<IPCBComponent> resistors = new List<IPCBComponent>(pullDowns);
             foreach (var comp in pullUps)
@@ -62,7 +63,8 @@ namespace TestCoverage.Helper
                     {
                         foreach (var compToUse in net.Components)
                         {
-                            if (!compsToUse.Contains(compToUse) && !IsComponentInList(compToUse, ics) && !IsComponentInList(compToUse, resistors))
+                            if (!compsToUse.Contains(compToUse)
+                                && !IsComponentInList(compToUse, ics) && !IsComponentInList(compToUse, resistors))
                             {
                                 compsToUse.Add(compToUse);
                             }
@@ -76,15 +78,7 @@ namespace TestCoverage.Helper
 
         public static bool IsComponentInList(IPCBComponent comp, IList<IPCBComponent> list)
         {
-            foreach (var ic in list)
-            {
-                if (comp == ic)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return list.FirstOrDefault(ic => comp == ic) != null;
         }
 
         private static IList<IPCBComponent> GetResistors(IList<INetComponent> nets)
@@ -104,22 +98,24 @@ namespace TestCoverage.Helper
             return list;
         }
 
-        private static IList<INetComponent> GetNets(IList<INetComponent> nets, string identifier, string blacklist)
+        private static IList<INetComponent> GetNets(IList<INetComponent> nets, string netIdentifier, string netBlacklist)
         {
-            List<string> identifierList = GetListFromString(identifier);
-            List<string> blacklistList = GetListFromString(blacklist);
-            return nets.Where(net => ContainsIdentifier(net.NetName, identifierList) &&
-                    !IsInBlackList(net.NetName, blacklistList)).ToList();
+            List<string> netIdentifierList = GetListFromString(netIdentifier);
+            List<string> netBlacklistList = GetListFromString(netBlacklist);
+            return nets.Where(net => ContainsIdentifier(net.NetName, netIdentifierList) &&
+                !IsInBlackList(net.NetName, netBlacklistList)).ToList();
         }
 
         private static bool IsInBlackList(string netName, List<string> blacklistList)
         {
-            return blacklistList.Any(x => x.ToLower(CultureInfo.CurrentCulture).Equals(netName.ToLower(CultureInfo.CurrentCulture)));
+            return blacklistList.Any(
+                x => x.ToLower(CultureInfo.CurrentCulture).Equals(netName.ToLower(CultureInfo.CurrentCulture)));
         }
 
         private static bool ContainsIdentifier(string netName, List<string> identifierList)
         {
-            return identifierList.Any(x => netName.ToLower(CultureInfo.CurrentCulture).Contains(x.ToLower(CultureInfo.CurrentCulture)));
+            return identifierList.Any(
+                x => netName.ToLower(CultureInfo.CurrentCulture).Contains(x.ToLower(CultureInfo.CurrentCulture)));
         }
 
         private static List<string> GetListFromString(string identifier)

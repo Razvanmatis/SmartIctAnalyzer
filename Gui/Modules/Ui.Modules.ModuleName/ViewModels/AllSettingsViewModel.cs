@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GrpcClientParser.Interfaces;
-using Interfaces.Gui;
 using ProMik.Core.Interfaces.Events;
 using ProMik.Core.Interfaces.Settings;
+using ProMik.SmartIct.Interfaces.Gui;
+using ProMik.SmartIct.PCBComponentParser.Interfaces;
 using Ui.Core.Mvvm;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Interfaces;
@@ -14,7 +14,7 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         private readonly IEventService eventService;
         private readonly ISettingsData settingData;
-        private readonly IGrpcClientParserHandler grpcParser;
+        private readonly IPCBComponentParser grpcParser;
         private readonly ILogger logger;
         private readonly ISettingsHandler settingsHandler;
 
@@ -22,7 +22,7 @@ namespace Ui.Modules.ModuleName.ViewModels
             ISettingsService settingsService,
             IEventService eventService,
             ISettingsData settingData,
-            IGrpcClientParserHandler grpcParser,
+            IPCBComponentParser grpcParser,
             ILogger logger,
             ISettingsHandler settingsHandler)
         {

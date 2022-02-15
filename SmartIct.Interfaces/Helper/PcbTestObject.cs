@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Interfaces.Helper
+namespace ProMik.SmartIct.Interfaces.Helper
 {
     public class PcbTestObject
     {

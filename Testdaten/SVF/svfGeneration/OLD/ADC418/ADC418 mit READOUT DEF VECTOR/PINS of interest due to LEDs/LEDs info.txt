@@ -1,0 +1,14 @@
+[10:38] Raubuch Martin
+    /******************** Test S32G254A (NXP) on Conti ADC418 *********************
+  toggles test LED on breadboard
+  LED       LED
+  IO        B6
+  scan      273
+******************************************************************************/
+​[10:39] Raubuch Martin
+    /***************** Test RTL9072AAD (Realtek) on Conti ADC418 ******************
+  toggles test LED on breadboard
+  LED       LED on GPIOA_1 (TP22021)
+  IO        Y1
+  scan      140  IO, 141 control (1 = output)
+******************************************************************************/

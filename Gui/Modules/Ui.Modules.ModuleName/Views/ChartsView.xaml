@@ -1,0 +1,48 @@
+﻿<Window x:Class="Ui.Modules.ModuleName.Views.ChartsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:h="clr-namespace:Ui.Modules.ModuleName.Helper"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="true"
+        mc:Ignorable="d"
+        Title="Test coverage pie chart view" Height="800" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Test coverage results to show for the following JTAG device(s):" Margin="5" />
+        <ComboBox ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="5" SelectedItem="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged}" />
+        <lvc:PieChart DataClick="Chartpoint_DataClick" Background="White" Grid.Row="1" Grid.ColumnSpan="2" Name="Chartpoint" LegendLocation="Bottom" FontSize="20" Hoverable="False" DataTooltip="{x:Null}"
+                      h:PieChartAttached.ChartsViewProperty="{Binding SetPieChartCommand}">
+            <lvc:PieChart.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Save to image" Command="{Binding SaveCommand}" />
+                </ContextMenu>
+            </lvc:PieChart.ContextMenu>
+            <lvc:PieChart.Series>
+                <lvc:PieSeries Title="Pull ups" Values="{Binding PullUpValues, UpdateSourceTrigger=PropertyChanged}" Fill="Blue" FontSize="20" DataLabels="True" 
+                               LabelPoint="{Binding PointLabelPullUp, UpdateSourceTrigger=PropertyChanged}"/>
+                <lvc:PieSeries Title="Pull downs" Values="{Binding PullDownValues, UpdateSourceTrigger=PropertyChanged}" Fill="DarkGreen" FontSize="20" DataLabels="True" 
+                               LabelPoint="{Binding PointLabelPullDown, UpdateSourceTrigger=PropertyChanged}" />
+                <lvc:PieSeries Title="Others" Values="{Binding OtherValues, UpdateSourceTrigger=PropertyChanged}" Fill="DarkCyan" FontSize="20" DataLabels="True" 
+                               LabelPoint="{Binding PointLabelOthers, UpdateSourceTrigger=PropertyChanged}"/>
+                <lvc:PieSeries Title="Not covered nets" Values="{Binding NoneValues, UpdateSourceTrigger=PropertyChanged}" Fill="DarkGoldenrod" FontSize="20" DataLabels="True" 
+                               LabelPoint="{Binding PointLabelNone, UpdateSourceTrigger=PropertyChanged}"/>
+            </lvc:PieChart.Series>
+        </lvc:PieChart>
+        <TextBlock Margin="5" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="24">
+            <Run Text="Testcoverage of all covered nets / all nets of project:" />
+            <Run Text="{Binding Coverage, StringFormat={}{0:#,0.00}, UpdateSourceTrigger=PropertyChanged}" />
+            <Run Text="%" />
+        </TextBlock>
+    </Grid>
+</Window>

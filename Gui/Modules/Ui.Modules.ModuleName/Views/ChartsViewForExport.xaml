@@ -1,0 +1,32 @@
+﻿<Window x:Class="Ui.Modules.ModuleName.Views.ChartsForExportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:h="clr-namespace:Ui.Modules.ModuleName.Helper"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="true"
+        mc:Ignorable="d"
+        Title="Test coverage pie chart view" Height="{Binding Size, UpdateSourceTrigger=PropertyChanged}" Width="{Binding Size, UpdateSourceTrigger=PropertyChanged}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <lvc:PieChart Background="White" LegendLocation="Bottom" FontSize="20" Hoverable="False" DataTooltip="{x:Null}" h:PieChartAttached.ChartsViewProperty="{Binding SetPieChartCommand}">
+            <lvc:PieChart.Series>
+                <lvc:PieSeries Loaded="PieSeries_Loaded" Title="{Binding PullUpsTitle, UpdateSourceTrigger=PropertyChanged}" Values="{Binding PullUpValues, UpdateSourceTrigger=PropertyChanged}" Fill="Blue" FontSize="20" DataLabels="True" 
+                               LabelPoint="{Binding PointLabelPullUp, UpdateSourceTrigger=PropertyChanged}"/>
+                <lvc:PieSeries Loaded="PieSeries_Loaded" Title="{Binding PullDownsTitle, UpdateSourceTrigger=PropertyChanged}" Values="{Binding PullDownValues, UpdateSourceTrigger=PropertyChanged}" Fill="DarkGreen" FontSize="20" DataLabels="True" 
+                               LabelPoint="{Binding PointLabelPullDown, UpdateSourceTrigger=PropertyChanged}" />
+                <lvc:PieSeries Loaded="PieSeries_Loaded" Title="{Binding OthersTitle, UpdateSourceTrigger=PropertyChanged}" Values="{Binding OtherValues, UpdateSourceTrigger=PropertyChanged}" Fill="DarkCyan" FontSize="20" DataLabels="True" 
+                               LabelPoint="{Binding PointLabelOthers, UpdateSourceTrigger=PropertyChanged}"/>
+                <lvc:PieSeries Loaded="PieSeries_Loaded" Title="{Binding NotCoveredNetsTitle, UpdateSourceTrigger=PropertyChanged}" Values="{Binding NoneValues, UpdateSourceTrigger=PropertyChanged}" Fill="DarkGoldenrod" FontSize="20" DataLabels="True" 
+                               LabelPoint="{Binding PointLabelNone, UpdateSourceTrigger=PropertyChanged}"/>
+            </lvc:PieChart.Series>
+        </lvc:PieChart>
+    </Grid>
+</Window>

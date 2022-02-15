@@ -1,0 +1,32 @@
+Name : U10, amount Pins: 896 = QSPI = Eyeq
+Name : U4, amount Pins: 292 = Aurix = Tc387
+Name : U17, amount Pins: 200
+Name : U13, amount Pins: 200
+Name : U1, amount Pins: 57
+Name : U15, amount Pins: 41
+Name : U2, amount Pins: 37
+Name : U11, amount Pins: 24
+Name : U20, amount Pins: 20
+Name : U3, amount Pins: 15
+Name : U5, amount Pins: 15
+Name : U14, amount Pins: 14
+Name : U7, amount Pins: 9
+Name : U16, amount Pins: 9
+Name : U6, amount Pins: 6
+Name : U21, amount Pins: 6
+Name : U8, amount Pins: 5
+Name : U9, amount Pins: 5
+Name : U12, amount Pins: 5
+
+
+
+
+
+
+
+
+
+
+
+
+

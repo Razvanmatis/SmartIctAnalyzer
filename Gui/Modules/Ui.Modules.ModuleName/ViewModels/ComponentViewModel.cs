@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +8,7 @@ using Prism.Commands;
 using Prism.Regions;
 using ProMik.Core.Interfaces.Events;
 using ProMik.Core.Interfaces.Events.Enums;
-using TestCoverage.Events;
+using ProMik.SmartIct.TestCoverageDeterminer.Events;
 using Ui.Core.Mvvm;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Helper;
@@ -41,13 +42,18 @@ namespace Ui.Modules.ModuleName.ViewModels
         {
             this.componentHandler = componentHandler;
             this.settingsVm = settingsVm;
-            eventService.Subscribe<AddPcbObjectsEvent>(async (x) => await AddPCBComponent(x).ConfigureAwait(true), ThreadOption.UIThread);
+            eventService.Subscribe<AddPcbObjectsEvent>(
+                async (x) => await AddPCBComponent(x).ConfigureAwait(true), ThreadOption.UIThread);
             eventService.Subscribe<ResetViewEvent>(ResetView, ThreadOption.UIThread);
-            eventService.Subscribe<AddTestCoverageObjectsEvent>((objects) => componentHandler.AddTestCoverageObjectToView(objects), ThreadOption.UIThread);
-            eventService.Subscribe<ShowObjectsEvent>((obj) => componentHandler.ShowTestCoverageObjects(obj), ThreadOption.UIThread);
-            eventService.Subscribe<RefreshTestcoverageResultObjectsEvent>((obj) => componentHandler.RefreshTestCoverageResults(obj));
+            eventService.Subscribe<AddTestCoverageObjectsEvent>(
+                (objects) => componentHandler.AddTestCoverageObjectToView(objects), ThreadOption.UIThread);
+            eventService.Subscribe<ShowObjectsEvent>(
+                (obj) => componentHandler.ShowTestCoverageObjects(obj), ThreadOption.UIThread);
+            eventService.Subscribe<RefreshTestcoverageResultObjectsEvent>(
+                (obj) => componentHandler.RefreshTestCoverageResults(obj));
             eventService.Subscribe<UpdateBomDataEvent>((obj) => componentHandler.HandleUpdateBomEvent(obj));
-            eventService.Subscribe<CloseAllSettingsEvent>((x) => componentHandler.CloseAllSettingsEventHandling(x, SetShowButtonsVisibility));
+            eventService.Subscribe<CloseAllSettingsEvent>(
+                (x) => componentHandler.CloseAllSettingsEventHandling(x, SetShowButtonsVisibility));
             eventService.Subscribe<UpdateComponentsViewEvent>((x) => ComponentViews = componentHandler.GetComponentsView());
             componentViews = new ObservableCollection<ViewModelPCBBase>();
             MouseWheelCommand = new DelegateCommand<MouseWheelEventArgs>(MouseWheelHandler);
@@ -59,7 +65,10 @@ namespace Ui.Modules.ModuleName.ViewModels
             ButtonScrollInCommand = new DelegateCommand(() => HandleButtonScroll(true));
             ButtonScrollOutCommand = new DelegateCommand(() => HandleButtonScroll(false));
             MirrorCommand = new DelegateCommand<string>(MirrorAxis);
+            SetScrollViewerCommand = new DelegateCommand<ScrollViewer>(SetScrollViewer);
         }
+
+        public ICommand SetScrollViewerCommand { get; }
 
         public double ZoomFactor
         {
@@ -161,12 +170,6 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
-        public ScrollViewer Scrollviewer
-        {
-            get;
-            set;
-        }
-
         public ObservableCollection<ViewModelPCBBase> ComponentViews
         {
             get
@@ -180,6 +183,12 @@ namespace Ui.Modules.ModuleName.ViewModels
             }
         }
 
+        private ScrollViewer Scrollviewer
+        {
+            get;
+            set;
+        }
+
         public void OnFilesDropped(string[] files)
         {
             componentHandler.OnFilesDropped(files);
@@ -187,12 +196,19 @@ namespace Ui.Modules.ModuleName.ViewModels
 
         public async Task AddPCBComponent(AddPcbObjectsEvent comp)
         {
-            await componentHandler.AddPCBComponent(comp, DefineRanges, SetShowButtonsVisibility, ResetValuesForComponentsInsertion).ConfigureAwait(false);
+            await componentHandler.AddPCBComponent(
+                comp, DefineRanges, SetShowButtonsVisibility, ResetValuesForComponentsInsertion).ConfigureAwait(false);
+            await componentHandler.ShowLayerObjects(null, true).ConfigureAwait(false);
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             // do something
+        }
+
+        private void SetScrollViewer(ScrollViewer obj)
+        {
+            Scrollviewer = obj;
         }
 
         private void ResetValuesForComponentsInsertion()
@@ -236,7 +252,16 @@ namespace Ui.Modules.ModuleName.ViewModels
 
         private ComponentAttributes GetComponentAttributes()
         {
-            return new ComponentAttributes(actualXPos, actualYPos, XPosition, YPosition, ZoomFactor, OverallWidth, OverallHeight, originalWidth, originalHeight);
+            return new ComponentAttributes(
+                actualXPos,
+                actualYPos,
+                XPosition,
+                YPosition,
+                ZoomFactor,
+                OverallWidth,
+                OverallHeight,
+                originalWidth,
+                originalHeight);
         }
 
         private void SetComponentAttributes(ComponentAttributes attributes)
@@ -245,16 +270,17 @@ namespace Ui.Modules.ModuleName.ViewModels
             actualYPos = attributes.ActualYPos;
             XPosition = attributes.XPosition;
             YPosition = attributes.YPosition;
-            ZoomFactor = attributes.ZoomFactor;
             OverallWidth = attributes.OverallWidth;
             OverallHeight = attributes.OverallHeight;
             originalWidth = attributes.OriginalWidth;
             originalHeight = attributes.OriginalHeight;
+            ZoomFactor = attributes.ZoomFactor;
         }
 
         private void DefineRanges()
         {
             SetComponentAttributes(componentHandler.DefineRanges(GetComponentAttributes(), Scrollviewer));
+            Scrollviewer.UpdateLayout();
         }
 
         private void SetShowButtonsVisibility()

@@ -1,4 +1,4 @@
-﻿namespace Interfaces.Gui
+﻿namespace ProMik.SmartIct.Interfaces.Gui
 {
     public enum LogCategory
     {

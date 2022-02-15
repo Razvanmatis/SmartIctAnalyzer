@@ -3,9 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
-    <PackageId>ProMik.PCBComponentParser.Interfaces</PackageId>
-    <Version>0.0.0</Version>
-    <Platforms>AnyCPU;x64</Platforms>
+    <PackageId>ProMik.SmartIct.Interfaces</PackageId>
+    <Version>1.0.1</Version>
+	<VersionPrefix>1.0.1</VersionPrefix>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <PackageProjectUrl>https://gitlab.promik.local/flash_task/host/smart_ict_analyser/-/tree/master/SmartIctTool/SmartIct.Interfaces</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +15,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>

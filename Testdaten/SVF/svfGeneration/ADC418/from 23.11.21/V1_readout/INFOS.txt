@@ -1,0 +1,1 @@
+auf basis des alten boards V1 mit altem JSON projekt ADC418_DataWithValues.json und altem BSDL file erstellt mit readout def vector mit altem BOM PnlPartListProp_Max_old.csv

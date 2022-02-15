@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"AE4","MaskPosition":288,"PinPort":"pdt_probe_n","ConnectedComponents":["R200"],"TestType":8},{"PinName":"R1","MaskPosition":1,"PinPort":"i2c_b_scl","ConnectedComponents":["R179"],"TestType":1},{"PinName":"R2","MaskPosition":3,"PinPort":"i2c_b_sda","ConnectedComponents":["R180"],"TestType":1},{"PinName":"P1","MaskPosition":5,"PinPort":"i2c_a_scl","ConnectedComponents":["R177"],"TestType":1},{"PinName":"P2","MaskPosition":7,"PinPort":"i2c_a_sda","ConnectedComponents":["R178"],"TestType":1},{"PinName":"AC19","MaskPosition":248,"PinPort":"errout","ConnectedComponents":["R220"],"TestType":1},{"PinName":"T6","MaskPosition":322,"PinPort":"rst_n","ConnectedComponents":["R186"],"TestType":1},{"PinName":"W6","MaskPosition":294,"PinPort":"sma_mdio","ConnectedComponents":["R201"],"TestType":1},{"PinName":"AD24","MaskPosition":204,"PinPort":"spi_a_cs0","ConnectedComponents":["R142"],"TestType":1},{"PinName":"AB25","MaskPosition":193,"PinPort":"spi_b_cs0","ConnectedComponents":["R143"],"TestType":1}],"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 16 TDI (01);
+SDR 324 TDI (08AAAAAAEBAAAAAAAAEEFAEBAAAAAAFA57000000017D5EA000000000000000000000008000000000BF);
+SIR 16 TDI (02);
+SDR 324 TDI (08AAAAAAEBAAAAAAAAEEFAEBAAAAAAFA57000000017D5EA000000000000000000000008000000000BF)
+TDO (04AAAAAAEBAAAAAAAAEFFAEBAAAAAAFA57000000017D5EA000000000000000000000008000000000BF)
+MASK (04000000410000000001000000000010020000000000000000000000000000000000000000000000AA);

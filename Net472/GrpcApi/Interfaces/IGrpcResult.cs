@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
 
 namespace GrpcApi.Interfaces
 {
@@ -12,5 +12,7 @@ namespace GrpcApi.Interfaces
         IList<INetComponent> AllNets { get; }
 
         IList<IPCBComponent> AllComponents { get; }
+
+        int StepAmount { get; }
     }
 }

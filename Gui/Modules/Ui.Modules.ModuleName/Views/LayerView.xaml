@@ -5,6 +5,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:help="clr-namespace:Ui.Modules.ModuleName.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="200"
              prism:ViewModelLocator.AutoWireViewModel="true">
@@ -17,17 +18,34 @@
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" BorderThickness="2" Grid.RowSpan="2" />
         <TextBlock Text="Layers:" HorizontalAlignment="Left" Margin="10, 0, 0, 0" FontSize="20" FontWeight="Bold" />
-        <ListView x:Name="ListView" Grid.Row="1" ItemsSource="{Binding Layers}" SelectedItem="{Binding SelectedLayer, UpdateSourceTrigger=PropertyChanged}">
+        <ListView x:Name="ListViewLayers" Grid.Row="1" ItemsSource="{Binding Layers}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="5" Text="{Binding Content}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <Setter Property="IsSelected" Value="True" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="False">
+                            <Setter Property="IsSelected" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectionChanged}" PassEventArgsToCommand="True"
-                                            CommandParameter="{Binding ElementName=ListView, Path=SelectedItems}"/>
+                    <i:InvokeCommandAction Command="{Binding SelectionChangedLayer}" PassEventArgsToCommand="True"
+                                            CommandParameter="{Binding ElementName=ListViewLayers, Path=SelectedItems}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListView>
         <Border Grid.Row="2" BorderBrush="Black" BorderThickness="2" Grid.RowSpan="2" />
         <TextBlock Text="Objects:" Grid.Row="2" HorizontalAlignment="Left" Margin="10, 0, 0, 0" FontSize="20" FontWeight="Bold" />
-        <ListView x:Name="ListViewObjects" Grid.Row="3" ItemsSource="{Binding Objects}" SelectedItem="{Binding SelectedObject, UpdateSourceTrigger=PropertyChanged}">
+        <ListView x:Name="ListViewObjects" Grid.Row="3" ItemsSource="{Binding Objects}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding SelectionChangedObjects}" PassEventArgsToCommand="True"

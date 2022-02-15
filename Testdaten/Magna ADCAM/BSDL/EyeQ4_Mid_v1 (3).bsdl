@@ -1,0 +1,627 @@
+-- *************************************************************************************************
+
+--   BSDL file for design EyeQ4_Top
+
+--   Created by Synopsys Version J-2014.09-SP3 (Jan 19, 2015)
+
+--   Designer: 
+--   Company:  
+
+--   Date: Tue Jun  2 15:41:52 2015
+
+-- *************************************************************************************************
+
+
+ entity EyeQ4_Top is
+   
+-- This section identifies the default device package selected.
+   
+   generic (PHYSICAL_PIN_MAP: string:= "EyeQ4_Top");
+   
+-- This section declares all the ports in the design.
+   
+   port ( 
+          ntrst_n              : in       bit;
+          por_n                : in       bit;
+          ref_clk              : in       bit;
+          tck                  : in       bit;
+          tdi                  : in       bit;
+          tms                  : in       bit;
+          can_a_rx             : inout    bit;
+          can_a_tx             : inout    bit;
+          can_b_rx             : inout    bit;
+          can_b_tx             : inout    bit;
+          ddr0_ck_c_a          : inout    bit;
+          ddr0_ck_c_b          : inout    bit;
+          ddr0_ck_t_a          : inout    bit;
+          ddr0_ck_t_b          : inout    bit;
+          ddr0_cke_a           : inout    bit;
+          ddr0_cke_b           : inout    bit;
+          ddr0_cs_a            : inout    bit;
+          ddr0_cs_b            : inout    bit;
+          ddr0_odt_ca          : inout    bit;
+          ddr0_reset_n         : inout    bit;
+          errout               : inout    bit;
+          i2c_a_scl            : inout    bit;
+          i2c_a_sda            : inout    bit;
+          i2c_b_scl            : inout    bit;
+          i2c_b_sda            : inout    bit;
+          pdt_probe_n          : inout    bit;
+          pdt_trigin           : inout    bit;
+          pvia_hsync           : inout    bit;
+          pvia_pclk            : inout    bit;
+          pvia_vsync           : inout    bit;
+          rgmii_rx_clk         : inout    bit;
+          rgmii_rx_ctl         : inout    bit;
+          rgmii_tx_clk         : inout    bit;
+          rgmii_tx_ctl         : inout    bit;
+          rst_n                : inout    bit;
+          sfi_ck               : inout    bit;
+          sma_mdc              : inout    bit;
+          sma_mdio             : inout    bit;
+          spi_a_ck             : inout    bit;
+          spi_a_cs0            : inout    bit;
+          spi_a_cs1            : inout    bit;
+          spi_a_di             : inout    bit;
+          spi_a_do             : inout    bit;
+          spi_b_ck             : inout    bit;
+          spi_b_cs0            : inout    bit;
+          spi_b_cs1            : inout    bit;
+          spi_b_di             : inout    bit;
+          spi_b_do             : inout    bit;
+          uart_a_rx            : inout    bit;
+          uart_a_tx            : inout    bit;
+          uart_b_rx            : inout    bit;
+          uart_b_tx            : inout    bit;
+          xint                 : inout    bit;
+          ddr0_ca_a            : inout    bit_vector (0 to 5);
+          ddr0_ca_b            : inout    bit_vector (0 to 5);
+          ddr0_dmi_a           : inout    bit_vector (0 to 1);
+          ddr0_dmi_b           : inout    bit_vector (0 to 1);
+          ddr0_dq_a            : inout    bit_vector (0 to 15);
+          ddr0_dq_b            : inout    bit_vector (0 to 15);
+          ddr0_dqs_c_a         : inout    bit_vector (0 to 1);
+          ddr0_dqs_c_b         : inout    bit_vector (0 to 1);
+          ddr0_dqs_t_a         : inout    bit_vector (0 to 1);
+          ddr0_dqs_t_b         : inout    bit_vector (0 to 1);
+          ddr0_dto             : inout    bit_vector (0 to 1);
+          gpio_ra              : inout    bit_vector (1 to 9);
+          gpio_ra_0            : in       bit;
+          mipi_rx_4l_dn_cl     : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dn_dl0    : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dn_dl1    : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dn_dl2    : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dn_dl3    : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dp_cl     : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dp_dl0    : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dp_dl1    : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dp_dl2    : inout    bit_vector (0 to 1);
+          mipi_rx_4l_dp_dl3    : inout    bit_vector (0 to 1);
+          pvia_d               : inout    bit_vector (0 to 15);
+          rgmii_rd             : inout    bit_vector (0 to 3);
+          rgmii_td             : inout    bit_vector (0 to 3);
+          sfi_cs_n             : inout    bit_vector (0 to 2);
+          sfi_d                : inout    bit_vector (0 to 3);
+          tdo                  : out      bit;
+          clk_in               : linkage  bit;
+          clk_out              : linkage  bit;
+          ddr0_ato             : linkage  bit;
+          ddr0_pzq             : linkage  bit;
+          testen               : in       bit
+   );
+   
+   use STD_1149_1_2001.all;
+   
+   attribute COMPONENT_CONFORMANCE of EyeQ4_Top: entity is "STD_1149_1_2001";
+   
+   attribute PIN_MAP of EyeQ4_Top: entity is PHYSICAL_PIN_MAP;
+   
+-- This section specifies the pin map for each port. This information is extracted from the 
+-- port-to-pin map file that was read in using the "read_pin_map" command.
+   
+     constant EyeQ4_Top: PIN_MAP_STRING := 
+        "ntrst_n              : T4," &
+        "por_n                : U4," &
+        "ref_clk              : AB24," &
+        "tck                  : V6," &
+        "tdi                  : U5," &
+        "tms                  : U6," &
+        "can_a_rx             : AD22," &
+        "can_a_tx             : AE22," &
+        "can_b_rx             : AD23," &
+        "can_b_tx             : AE23," &
+        "ddr0_ck_c_a          : A23," &
+        "ddr0_ck_c_b          : E28," &
+        "ddr0_ck_t_a          : B23," &
+        "ddr0_ck_t_b          : E27," &
+        "ddr0_cke_a           : C24," &
+        "ddr0_cke_b           : E24," &
+        "ddr0_cs_a            : E22," &
+        "ddr0_cs_b            : F25," &
+        "ddr0_odt_ca          : C22," &
+        "ddr0_reset_n         : D23," &
+        "errout               : AC19," &
+        "i2c_a_scl            : P1," &
+        "i2c_a_sda            : P2," &
+        "i2c_b_scl            : R1," &
+        "i2c_b_sda            : R2," &
+        "pdt_probe_n          : AE4," &
+        "pdt_trigin           : AE3," &
+        "pvia_hsync           : AB10," &
+        "pvia_pclk            : AB8," &
+        "pvia_vsync           : AB9," &
+        "rgmii_rx_clk         : Y4," &
+        "rgmii_rx_ctl         : Y3," &
+        "rgmii_tx_clk         : V4," &
+        "rgmii_tx_ctl         : V3," &
+        "rst_n                : T6," &
+        "sfi_ck               : U26," &
+        "sma_mdc              : W5," &
+        "sma_mdio             : W6," &
+        "spi_a_ck             : AC24," &
+        "spi_a_cs0            : AD24," &
+        "spi_a_cs1            : AD25," &
+        "spi_a_di             : AE25," &
+        "spi_a_do             : AE24," &
+        "spi_b_ck             : AA24," &
+        "spi_b_cs0            : AB25," &
+        "spi_b_cs1            : AA25," &
+        "spi_b_di             : AA23," &
+        "spi_b_do             : AB23," &
+        "uart_a_rx            : AD21," &
+        "uart_a_tx            : AC21," &
+        "uart_b_rx            : AC22," &
+        "uart_b_tx            : AC23," &
+        "xint                 : U7," &
+        "ddr0_ca_a            : (D21, A26, A22, B21, B25, A24)," &
+        "ddr0_ca_b            : (E26, D25, C26, D27, C28, B27)," &
+        "ddr0_dmi_a           : (D19, D16)," &
+        "ddr0_dmi_b           : (H25, L25)," &
+        "ddr0_dq_a            : (A20, C20, D20, E20, D18, E18, C18, A18, A15, C15, E15, D15, D17, E17, C17, A17)," &
+        "ddr0_dq_b            : (G28, G26, G25, G24, J25, J24, J26, J28, M26, M28, M24, M25, K25, K24, K28, K26)," &
+        "ddr0_dqs_c_a         : (B19, B16)," &
+        "ddr0_dqs_c_b         : (H27, L27)," &
+        "ddr0_dqs_t_a         : (A19, A16)," &
+        "ddr0_dqs_t_b         : (H28, L28)," &
+        "ddr0_dto             : (F21, F22)," &
+        "gpio_ra              : (AD19, AE19, AC20, AA19, AD20, AA20, AE21, AB20, AE20)," &
+        "gpio_ra_0            : AB19," &
+        "mipi_rx_4l_dn_cl     : (AH5, AH11)," &
+        "mipi_rx_4l_dn_dl0    : (AH4, AH10)," &
+        "mipi_rx_4l_dn_dl1    : (AH6, AH12)," &
+        "mipi_rx_4l_dn_dl2    : (AH7, AH13)," &
+        "mipi_rx_4l_dn_dl3    : (AH3, AH9)," &
+        "mipi_rx_4l_dp_cl     : (AG5, AG11)," &
+        "mipi_rx_4l_dp_dl0    : (AG4, AG10)," &
+        "mipi_rx_4l_dp_dl1    : (AG6, AG12)," &
+        "mipi_rx_4l_dp_dl2    : (AG7, AG13)," &
+        "mipi_rx_4l_dp_dl3    : (AG3, AG9)," &
+        "pvia_d               : (AC6, AE6, AD6, AD7, AE7, AC7, AB7, AD8, AC8, AE9, AE8, AD9, AC9, AD10, AE10, AC10)," &
+        "rgmii_rd             : (W2, Y1, Y2, W1)," &
+        "rgmii_td             : (U1, U2, V2, V1)," &
+        "sfi_cs_n             : (V27, V26, T28)," &
+        "sfi_d                : (V28, U27, T27, U28)," &
+        "tdo                  : V5," &
+        "clk_in               : P28," &
+        "clk_out              : P27," &
+        "ddr0_ato             : H19," &
+        "ddr0_pzq             : K21," &
+        "testen               : T5";
+
+  attribute PORT_GROUPING of EyeQ4_Top : entity is
+  "DIFFERENTIAL_VOLTAGE  ((ddr0_ck_t_a,ddr0_ck_c_a),"&
+  "                       (ddr0_dqs_t_a(0), ddr0_dqs_c_a(0)),"&
+  "                       (ddr0_dqs_t_a(1), ddr0_dqs_c_a(1)),"&
+  "                       (ddr0_ck_t_b,ddr0_ck_c_b),"&
+  "                       (ddr0_dqs_t_b(0), ddr0_dqs_c_b(0)),"&
+  "                       (ddr0_dqs_t_b(1), ddr0_dqs_c_b(1)))";
+
+   
+-- This section specifies the TAP ports. For the TAP TCK port, the parameters in the brackets are:
+--        First Field : Maximum  TCK frequency.
+--        Second Field: Allowable states TCK may be stopped in.
+   
+   attribute TAP_SCAN_CLOCK of tck    : signal is (10.0e6, BOTH);
+   attribute TAP_SCAN_IN    of tdi    : signal is true;
+   attribute TAP_SCAN_MODE  of tms    : signal is true;
+   attribute TAP_SCAN_OUT   of tdo    : signal is true;
+   attribute TAP_SCAN_RESET of ntrst_n: signal is true;
+   
+-- Specifies the compliance enable patterns for the design. It lists a set of design ports and the 
+-- values that they should be set to, in order to enable compliance to IEEE Std 1149.1
+   
+   attribute COMPLIANCE_PATTERNS of EyeQ4_Top: entity is 
+        "(testen,por_n,gpio_ra_0) (101)";
+   
+-- Specifies the number of bits in the instruction register.
+   
+   attribute INSTRUCTION_LENGTH of EyeQ4_Top: entity is 16;
+   
+-- Specifies the boundary-scan instructions implemented in the design and their opcodes.
+   
+   attribute INSTRUCTION_OPCODE of EyeQ4_Top: entity is 
+     "BYPASS  (1111111111111111)," &
+     "EXTEST  (0000000000000010)," &
+     "SAMPLE  (0000000000000001)," &
+     "PRELOAD (0000000000000001)," &
+     "CLAMP   (0000000010011111)," &
+     "HIGHZ   (0000000010101111)," &
+     "IDCODE  (0000000000000000)";
+   
+-- Specifies the bit pattern that is loaded into the instruction register when the TAP controller 
+-- passes through the Capture-IR state. The standard mandates that the two LSBs must be "01". The 
+-- remaining bits are design specific.
+   
+   attribute INSTRUCTION_CAPTURE of EyeQ4_Top: entity is "0000000000000001";
+   
+-- Specifies the bit pattern that is loaded into the DEVICE_ID register during the IDCODE 
+-- instruction when the TAP controller passes through the Capture-DR state.
+   
+   attribute IDCODE_REGISTER of EyeQ4_Top: entity is 
+     "0000" &                  
+ -- 4-bit version number
+     "0010000000000101" &      
+ -- 16-bit part number
+     "00000100000" &           
+ -- 11-bit identity of the manufacturer
+     "1";                      
+ -- Required by IEEE Std 1149.1
+   
+-- This section specifies the test data register placed between TDI and TDO for each implemented 
+-- instruction.
+   
+   attribute REGISTER_ACCESS of EyeQ4_Top: entity is 
+        "BYPASS    (BYPASS, CLAMP, HIGHZ)," &
+        "BOUNDARY  (EXTEST, SAMPLE, PRELOAD)," &
+        "DEVICE_ID (IDCODE)";
+   
+-- Specifies the length of the boundary scan register.
+   
+   attribute BOUNDARY_LENGTH of EyeQ4_Top: entity is 324;
+   
+-- The following list specifies the characteristics of each cell in the boundary scan register from 
+-- TDI to TDO. The following is a description of the label fields:
+--      num     : Is the cell number.
+--      cell    : Is the cell type as defined by the standard.
+--      port    : Is the design port name. Control cells do not have a port name.
+--      function: Is the function of the cell as defined by the standard. Is one of input, output2, 
+--                output3, bidir, control or controlr.
+--      safe    : Specifies the value that the BSR cell should be loaded with for safe operation 
+--                when the software might otherwise choose a random value.
+--      ccell   : The control cell number. Specifies the control cell that drives the output enable 
+--                for this port.
+--      disval  : Specifies the value that is loaded into the control cell to disable the output 
+--                enable for the corresponding port.
+--      rslt    : Resulting state. Shows the state of the driver when it is disabled.
+   
+   attribute BOUNDARY_REGISTER of EyeQ4_Top: entity is 
+--     
+--    num   cell   port                  function      safe  [ccell  disval  rslt]
+--     
+     "323  (BC_2,  *,                    control,      1),                        " &
+     "322  (BC_7,  rst_n,                bidir,        X,    323,    1,      Z),  " &
+     "321  (BC_2,  *,                    control,      1),                        " &
+     "320  (BC_7,  xint,                 bidir,        X,    321,    1,      Z),  " &
+     "319  (BC_2,  *,                    control,      1),                        " &
+     "318  (BC_7,  rgmii_td(0),          bidir,        X,    319,    1,      Z),  " &
+     "317  (BC_2,  *,                    control,      1),                        " &
+     "316  (BC_7,  rgmii_td(1),          bidir,        X,    317,    1,      Z),  " &
+     "315  (BC_2,  *,                    control,      1),                        " &
+     "314  (BC_7,  rgmii_td(2),          bidir,        X,    315,    1,      Z),  " &
+     "313  (BC_2,  *,                    control,      1),                        " &
+     "312  (BC_7,  rgmii_td(3),          bidir,        X,    313,    1,      Z),  " &
+     "311  (BC_2,  *,                    control,      1),                        " &
+     "310  (BC_7,  rgmii_tx_ctl,         bidir,        X,    311,    1,      Z),  " &
+     "309  (BC_2,  *,                    control,      1),                        " &
+     "308  (BC_7,  rgmii_tx_clk,         bidir,        X,    309,    1,      Z),  " &
+     "307  (BC_2,  *,                    control,      1),                        " &
+     "306  (BC_7,  rgmii_rd(0),          bidir,        X,    307,    1,      Z),  " &
+     "305  (BC_2,  *,                    control,      1),                        " &
+     "304  (BC_7,  rgmii_rd(1),          bidir,        X,    305,    1,      Z),  " &
+     "303  (BC_2,  *,                    control,      1),                        " &
+     "302  (BC_7,  rgmii_rd(2),          bidir,        X,    303,    1,      Z),  " &
+     "301  (BC_2,  *,                    control,      1),                        " &
+     "300  (BC_7,  rgmii_rd(3),          bidir,        X,    301,    1,      Z),  " &
+     "299  (BC_2,  *,                    control,      1),                        " &
+     "298  (BC_7,  rgmii_rx_ctl,         bidir,        X,    299,    1,      Z),  " &
+     "297  (BC_2,  *,                    control,      1),                        " &
+     "296  (BC_7,  rgmii_rx_clk,         bidir,        X,    297,    1,      Z),  " &
+     "295  (BC_2,  *,                    control,      1),                        " &
+     "294  (BC_7,  sma_mdio,             bidir,        X,    295,    1,      Z),  " &
+     "293  (BC_2,  *,                    control,      1),                        " &
+     "292  (BC_7,  sma_mdc,              bidir,        X,    293,    1,      Z),  " &
+     "291  (BC_2,  *,	        	 control,      1),			  " &
+     "290  (BC_7,  pdt_trigin,  	 bidir,        X,    291,    1,      Z),  " &
+     "289  (BC_2,  *,	        	 control,      1),			  " &
+     "288  (BC_7,  pdt_probe_n, 	 bidir,        X,    289,    1,      Z),  " &
+     "287  (BC_2,  *,	                 control,      1),                        " &
+     "286  (BC_7,  pvia_d(0),            bidir,        X,    287,    1,      Z),  " &
+     "285  (BC_2,  *,	                 control,      1),                        " &
+     "284  (BC_7,  pvia_d(1),            bidir,        X,    285,    1,      Z),  " &
+     "283  (BC_2,  *,	                 control,      1),                        " &
+     "282  (BC_7,  pvia_d(2),            bidir,        X,    283,    1,      Z),  " &
+     "281  (BC_2,  *,	                 control,      1),                        " &
+     "280  (BC_7,  pvia_d(3),            bidir,        X,    281,    1,      Z),  " &
+     "279  (BC_2,  *,	                 control,      1),                        " &
+     "278  (BC_7,  pvia_d(4),            bidir,        X,    279,    1,      Z),  " &
+     "277  (BC_2,  *,	                 control,      1),                        " &
+     "276  (BC_7,  pvia_d(5),            bidir,        X,    277,    1,      Z),  " &
+     "275  (BC_2,  *,	                 control,      1),                        " &
+     "274  (BC_7,  pvia_d(6),            bidir,        X,    275,    1,      Z),  " &
+     "273  (BC_2,  *,	                 control,      1),                        " &
+     "272  (BC_7,  pvia_d(7),            bidir,        X,    273,    1,      Z),  " &
+     "271  (BC_2,  *,	                 control,      1),                        " &
+     "270  (BC_7,  pvia_d(8),            bidir,        X,    271,    1,      Z),  " &
+     "269  (BC_2,  *,	                 control,      1),                        " &
+     "268  (BC_7,  pvia_d(9),            bidir,        X,    269,    1,      Z),  " &
+     "267  (BC_2,  *,	                 control,      1),                        " &
+     "266  (BC_7,  pvia_d(10),           bidir,        X,    267,    1,      Z),  " &
+     "265  (BC_2,  *,	                 control,      1),                        " &
+     "264  (BC_7,  pvia_d(11),           bidir,        X,    265,    1,      Z),  " &
+     "263  (BC_2,  *,	                 control,      1),                        " &
+     "262  (BC_7,  pvia_d(12),           bidir,        X,    263,    1,      Z),  " &
+     "261  (BC_2,  *,	                 control,      1),                        " &
+     "260  (BC_7,  pvia_d(13),           bidir,        X,    261,    1,      Z),  " &
+     "259  (BC_2,  *,	                 control,      1),                        " &
+     "258  (BC_7,  pvia_d(14),           bidir,        X,    259,    1,      Z),  " &
+     "257  (BC_2,  *,	                 control,      1),                        " &
+     "256  (BC_7,  pvia_d(15),           bidir,        X,    257,    1,      Z),  " &
+     "255  (BC_2,  *,	                 control,      1),                        " &
+     "254  (BC_7,  pvia_hsync,           bidir,        X,    255,    1,      Z),  " &
+     "253  (BC_2,  *,                    control,      1),                        " &
+     "252  (BC_7,  pvia_pclk,            bidir,        X,    253,    1,      Z),  " &
+     "251  (BC_2,  *,                    control,      1),                        " &
+     "250  (BC_7,  pvia_vsync,           bidir,        X,    251,    1,      Z),  " &
+     "249  (BC_2,  *,                    control,      1),                        " &
+     "248  (BC_7,  errout,               bidir,        X,    249,    1,      Z),  " &
+     "247  (BC_2,  *,                    internal,     1),                        " &
+     "246  (BC_2,  *,                    internal,     X),                        " & -- gpio_ra(0)
+     "245  (BC_2,  *,                    control,      1),                        " &
+     "244  (BC_7,  gpio_ra(1),           bidir,        X,    245,    1,      Z),  " &
+     "243  (BC_2,  *,                    control,      1),                        " &
+     "242  (BC_7,  gpio_ra(2),           bidir,        X,    243,    1,      Z),  " &
+     "241  (BC_2,  *,                    control,      1),                        " &
+     "240  (BC_7,  gpio_ra(3),           bidir,        X,    241,    1,      Z),  " &
+     "239  (BC_2,  *,                    control,      1),                        " &
+     "238  (BC_7,  gpio_ra(4),           bidir,        X,    239,    1,      Z),  " &
+     "237  (BC_2,  *,                    control,      1),                        " &
+     "236  (BC_7,  gpio_ra(5),           bidir,        X,    237,    1,      Z),  " &
+     "235  (BC_2,  *,                    control,      1),                        " &
+     "234  (BC_7,  gpio_ra(6),           bidir,        X,    235,    1,      Z),  " &
+     "233  (BC_2,  *,                    control,      1),                        " &
+     "232  (BC_7,  gpio_ra(7),           bidir,        X,    233,    1,      Z),  " &
+     "231  (BC_2,  *,                    control,      1),                        " &
+     "230  (BC_7,  gpio_ra(8),           bidir,        X,    231,    1,      Z),  " &
+     "229  (BC_2,  *,                    control,      1),                        " &
+     "228  (BC_7,  gpio_ra(9),           bidir,        X,    229,    1,      Z),  " &
+     "227  (BC_2,  *,                    control,      1),                        " &
+     "226  (BC_7,  uart_a_tx,            bidir,        X,    227,    1,      Z),  " &
+     "225  (BC_2,  *,                    control,      1),                        " &
+     "224  (BC_7,  uart_a_rx,            bidir,        X,    225,    1,      Z),  " &
+     "223  (BC_2,  *,                    control,      1),                        " &
+     "222  (BC_7,  uart_b_tx,            bidir,        X,    223,    1,      Z),  " &
+     "221  (BC_2,  *,                    control,      1),                        " &
+     "220  (BC_7,  uart_b_rx,            bidir,        X,    221,    1,      Z),  " &
+     "219  (BC_2,  *,                    control,      1),                        " &
+     "218  (BC_7,  can_a_tx,             bidir,        X,    219,    1,      Z),  " &
+     "217  (BC_2,  *,                    control,      1),                        " &
+     "216  (BC_7,  can_a_rx,             bidir,        X,    217,    1,      Z),  " &
+     "215  (BC_2,  *,                    control,      1),                        " &
+     "214  (BC_7,  can_b_tx,             bidir,        X,    215,    1,      Z),  " &
+     "213  (BC_2,  *,                    control,      1),                        " &
+     "212  (BC_7,  can_b_rx,             bidir,        X,    213,    1,      Z),  " &
+     "211  (BC_2,  *,                    control,      1),                        " &
+     "210  (BC_7,  spi_a_do,             bidir,        X,    211,    1,      Z),  " &
+     "209  (BC_2,  *,                    control,      1),                        " &
+     "208  (BC_7,  spi_a_di,             bidir,        X,    209,    1,      Z),  " &
+     "207  (BC_2,  *,                    control,      1),                        " &
+     "206  (BC_7,  spi_a_ck,             bidir,        X,    207,    1,      Z),  " &
+     "205  (BC_2,  *,                    control,      1),                        " &
+     "204  (BC_7,  spi_a_cs0,            bidir,        X,    205,    1,      Z),  " &
+     "203  (BC_2,  *,                    control,      1),                        " &
+     "202  (BC_7,  spi_a_cs1,            bidir,        X,    203,    1,      Z),  " &
+     "201  (BC_2,  *,                    control,      1),                        " &
+     "200  (BC_7,  spi_b_do,             bidir,        X,    201,    1,      Z),  " &
+     "199  (BC_2,  ref_clk,              input,        X),                        " & 
+     "198  (BC_2,  *,                    control,      1),                        " &
+     "197  (BC_7,  spi_b_di,             bidir,        X,    198,    1,      Z),  " &
+     "196  (BC_2,  *,                    control,      1),                        " &
+     "195  (BC_7,  spi_b_ck,             bidir,        X,    196,    1,      Z),  " &
+     "194  (BC_2,  *,                    control,      1),                        " &
+     "193  (BC_7,  spi_b_cs0,            bidir,        X,    194,    1,      Z),  " &
+     "192  (BC_2,  *,                    control,      1),                        " &
+     "191  (BC_7,  spi_b_cs1,            bidir,        X,    192,    1,      Z),  " &
+     "190  (BC_2,  *,                    control,      0),                        " &
+     "189  (BC_7,  mipi_rx_4l_dn_dl3(0), bidir,        X,    190,    0,      Z),  " &
+     "188  (BC_7,  mipi_rx_4l_dp_dl3(0), bidir,        X,    190,    0,      Z),  " &
+     "187  (BC_2,  *,                    control,      0),                        " &
+     "186  (BC_7,  mipi_rx_4l_dn_dl0(0), bidir,        X,    187,    0,      Z),  " &
+     "185  (BC_7,  mipi_rx_4l_dp_dl0(0), bidir,        X,    187,    0,      Z),  " &
+     "184  (BC_2,  *,                    control,      0),                        " &
+     "183  (BC_7,  mipi_rx_4l_dn_cl(0),  bidir,        X,    184,    0,      Z),  " &
+     "182  (BC_7,  mipi_rx_4l_dp_cl(0),  bidir,        X,    184,    0,      Z),  " &
+     "181  (BC_2,  *,                    control,      0),                        " &
+     "180  (BC_7,  mipi_rx_4l_dn_dl1(0), bidir,        X,    181,    0,      Z),  " &
+     "179  (BC_7,  mipi_rx_4l_dp_dl1(0), bidir,        X,    181,    0,      Z),  " &
+     "178  (BC_2,  *,                    control,      0),                        " &
+     "177  (BC_7,  mipi_rx_4l_dn_dl2(0), bidir,        X,    178,    0,      Z),  " &
+     "176  (BC_7,  mipi_rx_4l_dp_dl2(0), bidir,        X,    178,    0,      Z),  " &
+     "175  (BC_2,  *,                    control,      0),                        " &
+     "174  (BC_7,  mipi_rx_4l_dn_dl3(1), bidir,        X,    175,    0,      Z),  " &
+     "173  (BC_7,  mipi_rx_4l_dp_dl3(1), bidir,        X,    175,    0,      Z),  " &
+     "172  (BC_2,  *,                    control,      0),                        " &
+     "171  (BC_7,  mipi_rx_4l_dn_dl0(1), bidir,        X,    172,    0,      Z),  " &
+     "170  (BC_7,  mipi_rx_4l_dp_dl0(1), bidir,        X,    172,    0,      Z),  " &
+     "169  (BC_2,  *,                    control,      0),                        " &
+     "168  (BC_7,  mipi_rx_4l_dn_cl(1),  bidir,        X,    169,    0,      Z),  " &
+     "167  (BC_7,  mipi_rx_4l_dp_cl(1),  bidir,        X,    169,    0,      Z),  " &
+     "166  (BC_2,  *,                    control,      0),                        " &
+     "165  (BC_7,  mipi_rx_4l_dn_dl1(1), bidir,        X,    166,    0,      Z),  " &
+     "164  (BC_7,  mipi_rx_4l_dp_dl1(1), bidir,        X,    166,    0,      Z),  " &
+     "163  (BC_2,  *,                    control,      0),                        " &
+     "162  (BC_7,  mipi_rx_4l_dn_dl2(1), bidir,        X,    163,    0,      Z),  " &
+     "161  (BC_7,  mipi_rx_4l_dp_dl2(1), bidir,        X,    163,    0,      Z),  " &
+     "160  (BC_2,  *,                    control,      1),                        " &
+     "159  (BC_7,  sfi_ck,               bidir,        X,    160,    1,      Z),  " &
+     "158  (BC_2,  *,                    control,      1),                        " &
+     "157  (BC_7,  sfi_cs_n(0),          bidir,        X,    158,    1,      Z),  " &
+     "156  (BC_2,  *,                    control,      1),                        " &
+     "155  (BC_7,  sfi_cs_n(1),          bidir,        X,    156,    1,      Z),  " &
+     "154  (BC_2,  *,                    control,      1),                        " &
+     "153  (BC_7,  sfi_cs_n(2),          bidir,        X,    154,    1,      Z),  " &
+     "152  (BC_2,  *,                    control,      1),                        " &
+     "151  (BC_7,  sfi_d(0),             bidir,        X,    152,    1,      Z),  " &
+     "150  (BC_2,  *,                    control,      1),                        " &
+     "149  (BC_7,  sfi_d(1),             bidir,        X,    150,    1,      Z),  " &
+     "148  (BC_2,  *,                    control,      1),                        " &
+     "147  (BC_7,  sfi_d(2),             bidir,        X,    148,    1,      Z),  " &
+     "146  (BC_2,  *,                    control,      1),                        " &
+     "145  (BC_7,  sfi_d(3),             bidir,        X,    146,    1,      Z),  " &
+     "144  (BC_2,  *,                    control,      0),                        " &
+     "143  (BC_7,  ddr0_ck_t_a,          bidir,        X,    144,    0,      Z),  " &
+     "142  (BC_2,  *,                    internal,     0),                        " & -- 0 means  LPDDR4 SSTL mode. phy_smode[11] = 1
+     "141  (BC_2,  *,                    internal,     X),                        " & -- ddr0_ck_c_a
+     "140  (BC_2,  *,                    control,      0),                        " &
+     "139  (BC_7,  ddr0_ca_a(3),         bidir,        X,    140,    0,      Z),  " &
+     "138  (BC_2,  *,                    control,      0),                        " &
+     "137  (BC_7,  ddr0_ca_a(0),         bidir,        X,    138,    0,      Z),  " &
+     "136  (BC_2,  *,                    control,      0),                        " &
+     "135  (BC_7,  ddr0_ca_a(1),         bidir,        X,    136,    0,      Z),  " &
+     "134  (BC_2,  *,                    control,      0),                        " &
+     "133  (BC_7,  ddr0_ca_a(2),         bidir,        X,    134,    0,      Z),  " &
+     "132  (BC_2,  *,                    control,      0),                        " &
+     "131  (BC_7,  ddr0_ca_a(5),         bidir,        X,    132,    0,      Z),  " &
+     "130  (BC_2,  *,                    control,      0),                        " &
+     "129  (BC_7,  ddr0_ca_a(4),         bidir,        X,    130,    0,      Z),  " &
+     "128  (BC_2,  *,                    control,      0),                        " &
+     "127  (BC_7,  ddr0_cs_a,            bidir,        X,    128,    0,      Z),  " &
+     "126  (BC_2,  *,                    control,      0),                        " &
+     "125  (BC_7,  ddr0_cke_a,           bidir,        X,    126,    0,      Z),  " &
+     "124  (BC_2,  *,                    control,      0),                        " &
+     "123  (BC_7,  ddr0_dmi_a(1),        bidir,        X,    124,    0,      Z),  " &
+     "122  (BC_2,  *,                    control,      0),                        " &
+     "121  (BC_7,  ddr0_dmi_a(0),        bidir,        X,    122,    0,      Z),  " &
+     "120  (BC_2,  *,                    control,      0),                        " &
+     "119  (BC_7,  ddr0_dqs_t_a(1),      bidir,        X,    120,    0,      Z),  " &
+     "118  (BC_2,  *,                    control,      0),                        " &
+     "117  (BC_7,  ddr0_dqs_t_a(0),      bidir,        X,    118,    0,      Z),  " &
+     "116  (BC_2,  *,                    internal,     0),                        " &
+     "115  (BC_2,  *,                    internal,     X),                        " & -- ddr0_dqs_c_a(1)
+     "114  (BC_2,  *,                    internal,     0),                        " &
+     "113  (BC_2,  *,                    internal,     X),                        " & -- ddr0_dqs_c_a(0)
+     "112  (BC_2,  *,                    control,      0),                        " &
+     "111  (BC_7,  ddr0_odt_ca,          bidir,        X,    112,    0,      Z),  " &
+     "110  (BC_2,  *,                    control,      0),                        " &
+     "109  (BC_7,  ddr0_dq_a(8),        bidir,        X,    110,    0,      Z),  " &
+     "108  (BC_2,  *,                    control,      0),                        " &
+     "107  (BC_7,  ddr0_dq_a(9),        bidir,        X,    108,    0,      Z),  " &
+     "106  (BC_2,  *,                    control,      0),                        " &
+     "105  (BC_7,  ddr0_dq_a(10),        bidir,        X,    106,    0,      Z),  " &
+     "104  (BC_2,  *,                    control,      0),                        " &
+     "103  (BC_7,  ddr0_dq_a(11),        bidir,        X,    104,    0,      Z),  " &
+     "102  (BC_2,  *,                    control,      0),                        " &
+     "101  (BC_7,  ddr0_dq_a(15),        bidir,        X,    102,    0,      Z),  " &
+     "100  (BC_2,  *,                    control,      0),                        " &
+     "99  (BC_7,  ddr0_dq_a(14),        bidir,        X,    100,    0,      Z),  " &
+     "98  (BC_2,  *,                    control,      0),                        " &
+     "97  (BC_7,  ddr0_dq_a(13),         bidir,        X,    98,    0,      Z),  " &
+     "96  (BC_2,  *,                    control,      0),                        " &
+     "95  (BC_7,  ddr0_dq_a(12),         bidir,        X,    96,    0,      Z),  " &
+     "94  (BC_2,  *,                    control,      0),                        " &
+     "93  (BC_7,  ddr0_dq_a(3),         bidir,        X,    94,    0,      Z),  " &
+     "92  (BC_2,  *,                    control,      0),                        " &
+     "91  (BC_7,  ddr0_dq_a(2),         bidir,        X,    92,    0,      Z),  " &
+     "90  (BC_2,  *,                    control,      0),                        " &
+     "89  (BC_7,  ddr0_dq_a(1),         bidir,        X,    90,    0,      Z),  " &
+     "88  (BC_2,  *,                    control,      0),                        " &
+     "87  (BC_7,  ddr0_dq_a(0),         bidir,        X,    88,    0,      Z),  " &
+     "86  (BC_2,  *,                    control,      0),                        " &
+     "85  (BC_7,  ddr0_dq_a(4),         bidir,        X,    86,    0,      Z),  " &
+     "84  (BC_2,  *,                    control,      0),                        " &
+     "83  (BC_7,  ddr0_dq_a(5),         bidir,        X,    84,    0,      Z),  " &
+     "82  (BC_2,  *,                    control,      0),                        " &
+     "81  (BC_7,  ddr0_dq_a(6),         bidir,        X,    82,    0,      Z),  " &
+     "80  (BC_2,  *,                    control,      0),                        " &
+     "79  (BC_7,  ddr0_dq_a(7),         bidir,        X,    80,    0,      Z),  " &
+     "78  (BC_2,  *,                    control,      0),                        " &
+     "77  (BC_7,  ddr0_ck_t_b,          bidir,        X,    78,    0,      Z),  " &
+     "76  (BC_2,  *,                    internal,     0),                        " &
+     "75  (BC_2,  *,                    internal,     X),                        " & -- ddr0_ck_c_b
+     "74  (BC_2,  *,                    control,      0),                        " &
+     "73  (BC_7,  ddr0_ca_b(3),         bidir,        X,    74,    0,      Z),  " &
+     "72  (BC_2,  *,                    control,      0),                        " &
+     "71  (BC_7,  ddr0_ca_b(4),         bidir,        X,    72,    0,      Z),  " &
+     "70  (BC_2,  *,                    control,      0),                        " &
+     "69  (BC_7,  ddr0_ca_b(2),         bidir,        X,    70,    0,      Z),  " &
+     "68  (BC_2,  *,                    control,      0),                        " &
+     "67  (BC_7,  ddr0_ca_b(1),         bidir,        X,    68,    0,      Z),  " &
+     "66  (BC_2,  *,                    control,      0),                        " &
+     "65  (BC_7,  ddr0_ca_b(5),         bidir,        X,    66,    0,      Z),  " &
+     "64  (BC_2,  *,                    control,      0),                        " &
+     "63  (BC_7,  ddr0_ca_b(0),         bidir,        X,    64,    0,      Z),  " &
+     "62  (BC_2,  *,                    control,      0),                        " &
+     "61  (BC_7,  ddr0_cs_b,            bidir,        X,    62,    0,      Z),  " &
+     "60  (BC_2,  *,                    control,      0),                        " &
+     "59  (BC_7,  ddr0_cke_b,           bidir,        X,    60,    0,      Z),  " &
+     "58  (BC_2,  *,                    control,      0),                        " &
+     "57  (BC_7,  ddr0_dmi_b(1),        bidir,        X,    58,    0,      Z),  " &
+     "56  (BC_2,  *,                    control,      0),                        " &
+     "55  (BC_7,  ddr0_dmi_b(0),        bidir,        X,    56,    0,      Z),  " &
+     "54  (BC_2,  *,                    control,      0),                        " &
+     "53  (BC_7,  ddr0_dqs_t_b(1),      bidir,        X,    54,    0,      Z),  " &
+     "52  (BC_2,  *,                    control,      0),                        " &
+     "51  (BC_7,  ddr0_dqs_t_b(0),      bidir,        X,    52,    0,      Z),  " &
+     "50  (BC_2,  *,                    internal,     0),                        " &
+     "49  (BC_2,  *,                    internal,     X),                        " & -- ddr0_dqs_c_b(1)
+     "48  (BC_2,  *,                    internal,     1),                        " & -- 1 means DDR CK and DQS are differential.
+     "47  (BC_2,  *,                    internal,     X),                        " & -- ddr0_dqs_c_b(0)
+     "46  (BC_2,  *,                    control,      0),                        " &
+     "45  (BC_7,  ddr0_dq_b(8),         bidir,        X,    46,    0,      Z),  " &
+     "44  (BC_2,  *,                    control,      0),                        " &
+     "43  (BC_7,  ddr0_dq_b(9),         bidir,        X,    44,    0,      Z),  " &
+     "42  (BC_2,  *,                    control,      0),                        " &
+     "41  (BC_7,  ddr0_dq_b(10),        bidir,        X,    42,    0,      Z),  " &
+     "40  (BC_2,  *,                    control,      0),                        " &
+     "39  (BC_7,  ddr0_dq_b(11),        bidir,        X,    40,    0,      Z),  " &
+     "38  (BC_2,  *,                    control,      0),                        " &
+     "37  (BC_7,  ddr0_dq_b(15),        bidir,        X,    38,    0,      Z),  " &
+     "36  (BC_2,  *,                    control,      0),                        " &
+     "35  (BC_7,  ddr0_dq_b(14),        bidir,        X,    36,    0,      Z),  " &
+     "34  (BC_2,  *,                    control,      0),                        " &
+     "33  (BC_7,  ddr0_dq_b(13),         bidir,        X,   34,    0,      Z),  " &
+     "32  (BC_2,  *,                    control,      0),                        " &
+     "31  (BC_7,  ddr0_dq_b(12),         bidir,        X,   32,    0,      Z),  " &
+     "30  (BC_2,  *,                    control,      0),                        " &
+     "29  (BC_7,  ddr0_dq_b(2),         bidir,        X,    30,    0,      Z),  " &
+     "28  (BC_2,  *,                    control,      0),                        " &
+     "27  (BC_7,  ddr0_dq_b(3),         bidir,        X,    28,    0,      Z),  " &
+     "26  (BC_2,  *,                    control,      0),                        " &
+     "25  (BC_7,  ddr0_dq_b(1),         bidir,        X,    26,    0,      Z),  " &
+     "24  (BC_2,  *,                    control,      0),                        " &
+     "23  (BC_7,  ddr0_dq_b(0),         bidir,        X,    24,    0,      Z),  " &
+     "22  (BC_2,  *,                    control,      0),                        " &
+     "21  (BC_7,  ddr0_dq_b(5),         bidir,        X,    22,    0,      Z),  " &
+     "20  (BC_2,  *,                    control,      0),                        " &
+     "19  (BC_7,  ddr0_dq_b(4),         bidir,        X,    20,    0,      Z),  " &
+     "18  (BC_2,  *,                    control,      0),                        " &
+     "17  (BC_7,  ddr0_dq_b(6),         bidir,        X,    18,    0,      Z),  " &
+     "16  (BC_2,  *,                    control,      0),                        " &
+     "15  (BC_7,  ddr0_dq_b(7),         bidir,        X,    16,    0,      Z),  " &
+     "14  (BC_2,  *,                    control,      0),                        " &
+     "13  (BC_7,  ddr0_reset_n,         bidir,        X,    14,    0,      Z),  " &
+     "12   (BC_2,  *,                    control,      0),                        " &
+     "11   (BC_7,  ddr0_dto(1),          bidir,        X,    12,    0,      Z),  " &
+     "10   (BC_2,  *,                    control,      0),                        " &
+     "9    (BC_7,  ddr0_dto(0),          bidir,        X,    10,    0,      Z),  " &
+     "8    (BC_2,  i2c_a_sda,            input,        X),                        " &
+     "7    (BC_1,  i2c_a_sda,            output2,      1,    7,     1,      WEAK1)," &
+     "6    (BC_2,  i2c_a_scl,            input,        X),                        " &
+     "5    (BC_1,  i2c_a_scl,            output2,      1,    5,     1,      WEAK1)," &
+     "4    (BC_2,  i2c_b_sda,            input,        X),                        " &
+     "3    (BC_1,  i2c_b_sda,            output2,      1,    3,      1,      WEAK1)," &
+     "2    (BC_2,  i2c_b_scl,            input,        X),                        " &
+     "1    (BC_1,  i2c_b_scl,            output2,      1,    1,      1,      WEAK1)," &
+     "0    (BC_2,  *,                    internal,     X)                        "; -- por_n
+
+ 
+ end EyeQ4_Top;

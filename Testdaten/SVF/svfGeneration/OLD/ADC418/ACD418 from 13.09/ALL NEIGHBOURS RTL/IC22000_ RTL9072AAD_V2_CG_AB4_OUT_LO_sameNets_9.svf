@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"AB4","MaskPosition":36,"PinPort":"ISOLATEB_1","ConnectedComponents":["Direct_GND"],"TestType":8},{"PinName":"L24","MaskPosition":52,"PinPort":"P9_RXER","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"M1","MaskPosition":92,"PinPort":"P4_RXC","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"P1","MaskPosition":94,"PinPort":"P4_RXDV","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"R1","MaskPosition":102,"PinPort":"P4_RXD3","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"T1","MaskPosition":100,"PinPort":"P4_RXD2","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"U1","MaskPosition":98,"PinPort":"P4_RXD1","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"V1","MaskPosition":96,"PinPort":"P4_RXD0","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"W25","MaskPosition":172,"PinPort":"P5_RXER","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"Y4","MaskPosition":44,"PinPort":"ISOLATEB_0","ConnectedComponents":["Direct_GND"],"TestType":6}],"ScanChainLength":176,"InstructionRegisterLength":20,"JtagIdCode":37173491,"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 20 TDI (FFFF8);
+SDR 176 TDI (755444158002555401FFF55555554171717155A55555);
+SIR 20 TDI (FFFE8);
+SDR 176 TDI (755444158002555401FFF55555554171717155A55555)
+TDO (45544415800255540100055555554141414155A55555)
+MASK (10000000000000000055500000000010101000000000);

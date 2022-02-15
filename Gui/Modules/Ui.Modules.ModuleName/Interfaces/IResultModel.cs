@@ -1,4 +1,4 @@
-﻿using GrpcClientParser.Interfaces;
+﻿using ProMik.SmartIct.Interfaces.GrpcClientParser;
 
 namespace Ui.Modules.ModuleName.Interfaces
 {

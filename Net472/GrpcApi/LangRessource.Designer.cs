@@ -106,6 +106,15 @@ namespace GrpcApi {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Used project file with other password!.
+        /// </summary>
+        internal static string UsedOtherPassword {
+            get {
+                return ResourceManager.GetString("UsedOtherPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version 1.0.
         /// </summary>
         internal static string Version {

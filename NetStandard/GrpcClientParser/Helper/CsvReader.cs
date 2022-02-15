@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Interfaces.Gui;
-using Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.Gui;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
 
-namespace GrpcClientParser.Helper
+namespace ProMik.SmartIct.PCBComponentParser.Helper
 {
     public class CsvReader
     {
@@ -25,18 +25,21 @@ namespace GrpcClientParser.Helper
                 string[] values = text.Split(separator);
                 if (values.Length >= columnRef && values.Length >= columnValue)
                 {
-                    content.Add(values[columnRef], values[columnValue]);
+                    content[values[columnRef]] = values[columnValue];
                 }
             }
 
             return content;
         }
 
-        public IList<IPCBComponent> SetValuesToObjectsFromCsv(IList<IPCBComponent> components, Dictionary<string, string> contentToUse = null)
+        public IList<IPCBComponent> SetValuesToObjectsFromCsv(
+            IList<IPCBComponent> components, Dictionary<string, string> contentToUse = null)
         {
-            if (content.Count == 0 && (contentToUse == null || (contentToUse != null && contentToUse.Count == 0)))
+            if (content.Count == 0 && (contentToUse == null || contentToUse != null && contentToUse.Count == 0))
             {
-                logger.LogMessage("Perform the reading of the file content before executing this method or provide a valid object!", LogCategory.ERROR);
+                logger.LogMessage(
+                    "Perform the reading of the file content before executing this method or provide a valid object!",
+                    LogCategory.ERROR);
                 return null;
             }
 

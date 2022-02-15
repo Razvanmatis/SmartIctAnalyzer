@@ -1,0 +1,66 @@
+{
+  "Version": "1.0",
+  "OdbProject": "odbProject/",
+  "JsonProject": "jsonProject/jsonProject.json",
+  "SettingsFile": "settings/settings.db",
+  "BomFile": "bom/bomFile.csv",
+  "BomSettingsFile": "bom/bomSettings.json",
+  "BSDL": [
+    {
+      "JTAGName": "U10",
+      "BSDLFileName": "bsdl/EyeQ4_Mid_v1 (3).bsdl",
+      "ScanChainLength": 324,
+      "InstructionLength": 16,
+      "JtagIdCode": 33574977,
+      "IdCodeInstr": 0,
+      "PreloadInstr": 1,
+      "ProgrammerSettings": {
+        "IoVoltage": 3300,
+        "SupplyVoltage": 12000,
+        "Target": 0,
+        "Slot": 0,
+        "Port": 15504,
+        "Id": 1,
+        "Frequency": 1000,
+        "CableCompensation": 0
+      },
+      "SvfPath": {
+        "PullUps": "svf/U10/pullUps",
+        "PullDowns": "svf/U10/pullDowns",
+        "PullUpsAndDowns": "",
+        "UnknownControls": "svf/U10/unknownsControl",
+        "UnknownInputs": "svf/U10/unknownsInput",
+        "DirectGnd": "",
+        "DirectPower": ""
+      }
+    },
+    {
+      "JTAGName": "U4",
+      "BSDLFileName": "bsdl/TC37xA_Step_PD_BGA292.bsd.txt",
+      "ScanChainLength": 571,
+      "InstructionLength": 8,
+      "JtagIdCode": 270561411,
+      "IdCodeInstr": 4,
+      "PreloadInstr": 2,
+      "ProgrammerSettings": {
+        "IoVoltage": 3300,
+        "SupplyVoltage": 12000,
+        "Target": 0,
+        "Slot": 0,
+        "Port": 15504,
+        "Id": 2,
+        "Frequency": 1000,
+        "CableCompensation": 0
+      },
+      "SvfPath": {
+        "PullUps": "svf/U4/pullUps",
+        "PullDowns": "svf/U4/pullDowns",
+        "PullUpsAndDowns": "svf/U4/pullUpsAndDowns",
+        "UnknownControls": "svf/U4/unknownsControl",
+        "UnknownInputs": "svf/U4/unknownsInput",
+        "DirectGnd": "svf/U4/directGnd",
+        "DirectPower": ""
+      }
+    }
+  ]
+}

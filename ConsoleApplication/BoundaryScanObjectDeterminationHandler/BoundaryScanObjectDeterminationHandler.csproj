@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+	<VersionPrefix>1.0.1</VersionPrefix>
+    <PackageId>ProMik.SmartIct.Console.BoundaryScanObjectDetermination</PackageId>
+    <PackageProjectUrl>https://gitlab.promik.local/flash_task/host/smart_ict_analyser/-/tree/master/SmartIctTool/ConsoleApplication/BoundaryScanObjectDeterminationHandler</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SmartIct.Interfaces\Interfaces.csproj" />
+    <ProjectReference Include="..\..\Tests\TestCoverage\TestCoverage.csproj" />
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

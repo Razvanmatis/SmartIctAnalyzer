@@ -14,5 +14,7 @@ namespace Ui.Modules.ModuleName.Interfaces
         void OpenBomView(bool autoMode = false);
 
         void PerformAfterBomAction(SelectBomFinishEvent eventData);
+
+        void SaveBomIntoProjectFile();
     }
 }

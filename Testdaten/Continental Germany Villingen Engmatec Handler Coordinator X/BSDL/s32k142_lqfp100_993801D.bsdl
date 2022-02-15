@@ -1,0 +1,466 @@
+-- *****************************************************************************
+--    BSDL file for design   --> s32k142
+--    Company  --> Freescale Semiconductor
+--    Designer --> b35866
+--    BSDL file generated on --> 27-Mar-2017
+--    Tool --> BSDL_GEN, Version 5.0
+-- *****************************************************************************
+
+
+ entity s32k142 is
+
+   generic (PHYSICAL_PIN_MAP: string:= "lqfp100");
+
+-- This section declares all the ports in the design.
+
+   port (
+           PTE16			:		inout		  bit;
+           PTE15			:		inout		  bit;
+           PTD1			:		inout		  bit;
+           PTD0			:		inout		  bit;
+           PTE11			:		inout		  bit;
+           PTE10			:		inout		  bit;
+           PTE13			:		inout		  bit;
+           PTE5			:		inout		  bit;
+           PTE4			:		inout		  bit;
+           VDD			:		linkage		  bit_vector(3 downto 0);
+           VDDA			:		linkage		  bit;
+           VREFH			:		linkage		  bit;
+           VREFL			:		linkage		  bit;
+           VSS			:		linkage		  bit_vector(3 downto 0);
+           PTB7			:		inout		  bit;
+           PTB6			:		inout		  bit;
+           PTE14			:		inout		  bit;
+           PTE3			:		inout		  bit;
+           PTE12			:		inout		  bit;
+           PTD17			:		inout		  bit;
+           PTD16			:		inout		  bit;
+           PTD15			:		inout		  bit;
+           PTE9			:		inout		  bit;
+           PTD14			:		inout		  bit;
+           PTD13			:		inout		  bit;
+           PTE8			:		inout		  bit;
+           PTB5			:		inout		  bit;
+           PTB4			:		inout		  bit;
+           PTC3			:		inout		  bit;
+           PTC2			:		inout		  bit;
+           PTD7			:		inout		  bit;
+           PTD6			:		inout		  bit;
+           PTD5			:		inout		  bit;
+           PTD12			:		inout		  bit;
+           PTD11			:		inout		  bit;
+           PTD10			:		inout		  bit;
+           PTC1			:		inout		  bit;
+           PTC0			:		inout		  bit;
+           PTD9			:		inout		  bit;
+           PTD8			:		inout		  bit;
+           PTC17			:		inout		  bit;
+           PTC16			:		inout		  bit;
+           PTC15			:		inout		  bit;
+           PTC14			:		inout		  bit;
+           PTB3			:		inout		  bit;
+           PTB2			:		inout		  bit;
+           PTC13			:		inout		  bit;
+           PTC12			:		inout		  bit;
+           PTC11			:		inout		  bit;
+           PTC10			:		inout		  bit;
+           PTB1			:		inout		  bit;
+           PTB0			:		inout		  bit;
+           PTC9			:		inout		  bit;
+           PTC8			:		inout		  bit;
+           PTA7			:		inout		  bit;
+           PTA6			:		inout		  bit;
+           PTE7			:		inout		  bit;
+           PTA17			:		inout		  bit;
+           PTB17			:		inout		  bit;
+           PTB16			:		inout		  bit;
+           PTB15			:		inout		  bit;
+           PTB14			:		inout		  bit;
+           PTB13			:		inout		  bit;
+           PTB12			:		inout		  bit;
+           PTD4			:		inout		  bit;
+           PTD3			:		inout		  bit;
+           PTD2			:		inout		  bit;
+           PTA3			:		inout		  bit;
+           PTA2			:		inout		  bit;
+           PTB11			:		inout		  bit;
+           PTB10			:		inout		  bit;
+           PTB9			:		inout		  bit;
+           PTB8			:		inout		  bit;
+           PTA1			:		inout		  bit;
+           PTA0			:		inout		  bit;
+           PTC7			:		inout		  bit;
+           PTC6			:		inout		  bit;
+           PTA16			:		inout		  bit;
+           PTA15			:		inout		  bit;
+           PTE6			:		inout		  bit;
+           PTE2			:		inout		  bit;
+           PTA14			:		inout		  bit;
+           PTA13			:		inout		  bit;
+           PTA12			:		inout		  bit;
+           PTA11			:		inout		  bit;
+           PTA10			:		out		  bit;
+           PTE1			:		inout		  bit;
+           PTE0			:		inout		  bit;
+           PTC5			:		in		  bit;
+           PTC4			:		in		  bit;
+           PTA5			:		linkage		  bit;
+           PTA4			:		in		  bit;
+           PTA9			:		inout		  bit;
+           PTA8			:		inout		  bit
+   );
+
+   use STD_1149_1_2001.all;
+
+   attribute COMPONENT_CONFORMANCE of s32k142: entity is "STD_1149_1_2001";
+
+   attribute PIN_MAP of s32k142: entity is PHYSICAL_PIN_MAP;
+
+-- This section specifies the pin map for each port.
+
+     constant lqfp100: PIN_MAP_STRING :=
+        "PTE16			:	1 ,"  &
+        "PTE15			:	2 ,"  &
+        "PTD1			:	3 ,"  &
+        "PTD0			:	4 ,"  &
+        "PTE11			:	5 ,"  &
+        "PTE10			:	6 ,"  &
+        "PTE13			:	7 ,"  &
+        "PTE5			:	8 ,"  &
+        "PTE4			:	9 ,"  &
+        "VDD			:	(10,38,61,87),"  &
+        "VDDA			:	11 ,"  &
+        "VREFH			:	12 ,"  &
+        "VREFL			:	13 ,"  &
+        "VSS			:	(14,37,60,86),"  &
+        "PTB7			:	15 ,"  &
+        "PTB6			:	16 ,"  &
+        "PTE14			:	17 ,"  &
+        "PTE3			:	18 ,"  &
+        "PTE12			:	19 ,"  &
+        "PTD17			:	20 ,"  &
+        "PTD16			:	21 ,"  &
+        "PTD15			:	22 ,"  &
+        "PTE9			:	23 ,"  &
+        "PTD14			:	24 ,"  &
+        "PTD13			:	25 ,"  &
+        "PTE8			:	26 ,"  &
+        "PTB5			:	27 ,"  &
+        "PTB4			:	28 ,"  &
+        "PTC3			:	29 ,"  &
+        "PTC2			:	30 ,"  &
+        "PTD7			:	31 ,"  &
+        "PTD6			:	32 ,"  &
+        "PTD5			:	33 ,"  &
+        "PTD12			:	34 ,"  &
+        "PTD11			:	35 ,"  &
+        "PTD10			:	36 ,"  &
+        "PTC1			:	39 ,"  &
+        "PTC0			:	40 ,"  &
+        "PTD9			:	41 ,"  &
+        "PTD8			:	42 ,"  &
+        "PTC17			:	43 ,"  &
+        "PTC16			:	44 ,"  &
+        "PTC15			:	45 ,"  &
+        "PTC14			:	46 ,"  &
+        "PTB3			:	47 ,"  &
+        "PTB2			:	48 ,"  &
+        "PTC13			:	49 ,"  &
+        "PTC12			:	50 ,"  &
+        "PTC11			:	51 ,"  &
+        "PTC10			:	52 ,"  &
+        "PTB1			:	53 ,"  &
+        "PTB0			:	54 ,"  &
+        "PTC9			:	55 ,"  &
+        "PTC8			:	56 ,"  &
+        "PTA7			:	57 ,"  &
+        "PTA6			:	58 ,"  &
+        "PTE7			:	59 ,"  &
+        "PTA17			:	62 ,"  &
+        "PTB17			:	63 ,"  &
+        "PTB16			:	64 ,"  &
+        "PTB15			:	65 ,"  &
+        "PTB14			:	66 ,"  &
+        "PTB13			:	67 ,"  &
+        "PTB12			:	68 ,"  &
+        "PTD4			:	69 ,"  &
+        "PTD3			:	70 ,"  &
+        "PTD2			:	71 ,"  &
+        "PTA3			:	72 ,"  &
+        "PTA2			:	73 ,"  &
+        "PTB11			:	74 ,"  &
+        "PTB10			:	75 ,"  &
+        "PTB9			:	76 ,"  &
+        "PTB8			:	77 ,"  &
+        "PTA1			:	78 ,"  &
+        "PTA0			:	79 ,"  &
+        "PTC7			:	80 ,"  &
+        "PTC6			:	81 ,"  &
+        "PTA16			:	82 ,"  &
+        "PTA15			:	83 ,"  &
+        "PTE6			:	84 ,"  &
+        "PTE2			:	85 ,"  &
+        "PTA14			:	88 ,"  &
+        "PTA13			:	89 ,"  &
+        "PTA12			:	90 ,"  &
+        "PTA11			:	91 ,"  &
+        "PTA10			:	92 ,"  &
+        "PTE1			:	93 ,"  &
+        "PTE0			:	94 ,"  &
+        "PTC5			:	95 ,"  &
+        "PTC4			:	96 ,"  &
+        "PTA5			:	97 ,"  &
+        "PTA4			:	98 ,"  &
+        "PTA9			:	99 ,"  &
+        "PTA8			:	100 ";
+
+-- This section specifies the TAP ports. For the TAP TCK port, the parameters in
+-- the brackets are:
+--        First Field : Maximum  TCK frequency.
+--        Second Field: Allowable states TCK may be stopped in.
+
+   attribute TAP_SCAN_CLOCK of PTC4 : signal is (10.0e6, BOTH);
+   attribute TAP_SCAN_IN    of PTC5 : signal is true;
+   attribute TAP_SCAN_MODE  of PTA4 : signal is true;
+   attribute TAP_SCAN_OUT   of PTA10 : signal is true;
+
+-- Specifies the compliance enable patterns for the design. It lists a set of
+-- design ports and the values that they should be set to, in order to enable
+-- compliance to IEEE Std 1149.1
+
+
+-- Specifies the number of bits in the instruction register.
+
+   attribute INSTRUCTION_LENGTH of s32k142: entity is 4;
+
+-- SPecifies the boundary-scan instructions implemented in the design and thier
+-- opcodes.
+
+   attribute INSTRUCTION_OPCODE of s32k142: entity is
+      "IDCODE			(0000)," &
+      "EXTEST			(0100)," &
+      "PRELOAD			(0010)," &
+      "SAMPLE			(0011)," &
+      "HIGHZ			(1001)," &
+      "CLAMP			(1100)," &
+      "BYPASS			(1111)";
+
+-- Specifies the bit pattern that is loaded into the instruction register when
+-- the TAP controller passes through the Capture-IR state. The standard mandates
+-- that the two LSBs must be "01". The remaining bits are design specific.
+
+   attribute INSTRUCTION_CAPTURE of s32k142: entity is "0001";
+
+
+
+-- Specifies the bit pattern that is loaded into the DEVICE_ID register during
+-- the IDCODE instruction when the TAP controller passes through the Capture-DR
+-- state.
+   attribute IDCODE_REGISTER of s32k142: entity is
+     "0000" &                -- version number
+     "100110" &              -- design center
+     "0100111000" &          -- part number
+     "00000001110" &         -- manufacturer ID (Freescale)
+     "1";                    -- Required by IEEE Std 1149.1
+
+-- This section specifies the test data register placed between TDI and TDO for
+-- each implemented instruction.
+
+
+-- Specifies the length of the boundary scan register.
+
+   attribute BOUNDARY_LENGTH of s32k142: entity is 168;
+
+-- The following list specifies the characteristics of each cell in the boundary 
+-- scan register from TDI to TDO. The following is a description of the label 
+-- fields:
+--      num     : Is the cell number.
+--      cell    : Is the cell type as defined by the standard.
+--      port    : Is the design port name. Control cells do not have a port 
+--                name.
+--      function: Is the function of the cell as defined by the standard. Is one 
+--                of input, output2, output3, bidir, control or controlr.
+--      safe    : Specifies the value that the BSR cell should be loaded with 
+--                for safe operation when the software might otherwise choose a 
+--                random value.
+--      ccell   : The control cell number. Specifies the control cell that 
+--                drives the output enable for this port.
+--      disval  : Specifies the value that is loaded into the control cell to 
+--                disable the output enable for the corresponding port.
+--      rslt    : Resulting state. Shows the state of the driver when it is 
+--                disabled.
+
+   attribute BOUNDARY_REGISTER of s32k142: entity is
+--
+--    num	cell	port		function	safe	[ccell	disval	rslt]
+--
+      "0	(BC_2,	*,		control,	0)," &
+      "1	(BC_7,	PTA8,		bidir,	X,	0,	0,	Z)," &
+      "2	(BC_2,	*,		control,	0)," &
+      "3	(BC_7,	PTA9,		bidir,	X,	2,	0,	Z)," &
+      "4	(BC_2,	*,		control,	0)," &
+      "5	(BC_7,	PTE0,		bidir,	X,	4,	0,	Z)," &
+      "6	(BC_2,	*,		control,	0)," &
+      "7	(BC_7,	PTE1,		bidir,	X,	6,	0,	Z)," &
+      "8	(BC_2,	*,		control,	0)," &
+      "9	(BC_7,	PTA11,		bidir,	X,	8,	0,	Z)," &
+      "10	(BC_2,	*,		control,	0)," &
+      "11	(BC_7,	PTA12,		bidir,	X,	10,	0,	Z)," &
+      "12	(BC_2,	*,		control,	0)," &
+      "13	(BC_7,	PTA13,		bidir,	X,	12,	0,	Z)," &
+      "14	(BC_2,	*,		control,	0)," &
+      "15	(BC_7,	PTA14,		bidir,	X,	14,	0,	Z)," &
+      "16	(BC_2,	*,		control,	0)," &
+      "17	(BC_7,	PTE2,		bidir,	X,	16,	0,	Z)," &
+      "18	(BC_2,	*,		control,	0)," &
+      "19	(BC_7,	PTE6,		bidir,	X,	18,	0,	Z)," &
+      "20	(BC_2,	*,		control,	0)," &
+      "21	(BC_7,	PTA15,		bidir,	X,	20,	0,	Z)," &
+      "22	(BC_2,	*,		control,	0)," &
+      "23	(BC_7,	PTA16,		bidir,	X,	22,	0,	Z)," &
+      "24	(BC_2,	*,		control,	0)," &
+      "25	(BC_7,	PTC6,		bidir,	X,	24,	0,	Z)," &
+      "26	(BC_2,	*,		control,	0)," &
+      "27	(BC_7,	PTC7,		bidir,	X,	26,	0,	Z)," &
+      "28	(BC_2,	*,		control,	0)," &
+      "29	(BC_7,	PTA0,		bidir,	X,	28,	0,	Z)," &
+      "30	(BC_2,	*,		control,	0)," &
+      "31	(BC_7,	PTA1,		bidir,	X,	30,	0,	Z)," &
+      "32	(BC_2,	*,		control,	0)," &
+      "33	(BC_7,	PTB8,		bidir,	X,	32,	0,	Z)," &
+      "34	(BC_2,	*,		control,	0)," &
+      "35	(BC_7,	PTB9,		bidir,	X,	34,	0,	Z)," &
+      "36	(BC_2,	*,		control,	0)," &
+      "37	(BC_7,	PTB10,		bidir,	X,	36,	0,	Z)," &
+      "38	(BC_2,	*,		control,	0)," &
+      "39	(BC_7,	PTB11,		bidir,	X,	38,	0,	Z)," &
+      "40	(BC_2,	*,		control,	0)," &
+      "41	(BC_7,	PTA2,		bidir,	X,	40,	0,	Z)," &
+      "42	(BC_2,	*,		control,	0)," &
+      "43	(BC_7,	PTA3,		bidir,	X,	42,	0,	Z)," &
+      "44	(BC_2,	*,		control,	0)," &
+      "45	(BC_7,	PTD2,		bidir,	X,	44,	0,	Z)," &
+      "46	(BC_2,	*,		control,	0)," &
+      "47	(BC_7,	PTD3,		bidir,	X,	46,	0,	Z)," &
+      "48	(BC_2,	*,		control,	0)," &
+      "49	(BC_7,	PTD4,		bidir,	X,	48,	0,	Z)," &
+      "50	(BC_2,	*,		control,	0)," &
+      "51	(BC_7,	PTB12,		bidir,	X,	50,	0,	Z)," &
+      "52	(BC_2,	*,		control,	0)," &
+      "53	(BC_7,	PTB13,		bidir,	X,	52,	0,	Z)," &
+      "54	(BC_2,	*,		control,	0)," &
+      "55	(BC_7,	PTB14,		bidir,	X,	54,	0,	Z)," &
+      "56	(BC_2,	*,		control,	0)," &
+      "57	(BC_7,	PTB15,		bidir,	X,	56,	0,	Z)," &
+      "58	(BC_2,	*,		control,	0)," &
+      "59	(BC_7,	PTB16,		bidir,	X,	58,	0,	Z)," &
+      "60	(BC_2,	*,		control,	0)," &
+      "61	(BC_7,	PTB17,		bidir,	X,	60,	0,	Z)," &
+      "62	(BC_2,	*,		control,	0)," &
+      "63	(BC_7,	PTA17,		bidir,	X,	62,	0,	Z)," &
+      "64	(BC_2,	*,		control,	0)," &
+      "65	(BC_7,	PTE7,		bidir,	X,	64,	0,	Z)," &
+      "66	(BC_2,	*,		control,	0)," &
+      "67	(BC_7,	PTA6,		bidir,	X,	66,	0,	Z)," &
+      "68	(BC_2,	*,		control,	0)," &
+      "69	(BC_7,	PTA7,		bidir,	X,	68,	0,	Z)," &
+      "70	(BC_2,	*,		control,	0)," &
+      "71	(BC_7,	PTC8,		bidir,	X,	70,	0,	Z)," &
+      "72	(BC_2,	*,		control,	0)," &
+      "73	(BC_7,	PTC9,		bidir,	X,	72,	0,	Z)," &
+      "74	(BC_2,	*,		control,	0)," &
+      "75	(BC_7,	PTB0,		bidir,	X,	74,	0,	Z)," &
+      "76	(BC_2,	*,		control,	0)," &
+      "77	(BC_7,	PTB1,		bidir,	X,	76,	0,	Z)," &
+      "78	(BC_2,	*,		control,	0)," &
+      "79	(BC_7,	PTC10,		bidir,	X,	78,	0,	Z)," &
+      "80	(BC_2,	*,		control,	0)," &
+      "81	(BC_7,	PTC11,		bidir,	X,	80,	0,	Z)," &
+      "82	(BC_2,	*,		control,	0)," &
+      "83	(BC_7,	PTC12,		bidir,	X,	82,	0,	Z)," &
+      "84	(BC_2,	*,		control,	0)," &
+      "85	(BC_7,	PTC13,		bidir,	X,	84,	0,	Z)," &
+      "86	(BC_2,	*,		control,	0)," &
+      "87	(BC_7,	PTB2,		bidir,	X,	86,	0,	Z)," &
+      "88	(BC_2,	*,		control,	0)," &
+      "89	(BC_7,	PTB3,		bidir,	X,	88,	0,	Z)," &
+      "90	(BC_2,	*,		control,	0)," &
+      "91	(BC_7,	PTC14,		bidir,	X,	90,	0,	Z)," &
+      "92	(BC_2,	*,		control,	0)," &
+      "93	(BC_7,	PTC15,		bidir,	X,	92,	0,	Z)," &
+      "94	(BC_2,	*,		control,	0)," &
+      "95	(BC_7,	PTC16,		bidir,	X,	94,	0,	Z)," &
+      "96	(BC_2,	*,		control,	0)," &
+      "97	(BC_7,	PTC17,		bidir,	X,	96,	0,	Z)," &
+      "98	(BC_2,	*,		control,	0)," &
+      "99	(BC_7,	PTD8,		bidir,	X,	98,	0,	Z)," &
+      "100	(BC_2,	*,		control,	0)," &
+      "101	(BC_7,	PTD9,		bidir,	X,	100,	0,	Z)," &
+      "102	(BC_2,	*,		control,	0)," &
+      "103	(BC_7,	PTC0,		bidir,	X,	102,	0,	Z)," &
+      "104	(BC_2,	*,		control,	0)," &
+      "105	(BC_7,	PTC1,		bidir,	X,	104,	0,	Z)," &
+      "106	(BC_2,	*,		control,	0)," &
+      "107	(BC_7,	PTD10,		bidir,	X,	106,	0,	Z)," &
+      "108	(BC_2,	*,		control,	0)," &
+      "109	(BC_7,	PTD11,		bidir,	X,	108,	0,	Z)," &
+      "110	(BC_2,	*,		control,	0)," &
+      "111	(BC_7,	PTD12,		bidir,	X,	110,	0,	Z)," &
+      "112	(BC_2,	*,		control,	0)," &
+      "113	(BC_7,	PTD5,		bidir,	X,	112,	0,	Z)," &
+      "114	(BC_2,	*,		control,	0)," &
+      "115	(BC_7,	PTD6,		bidir,	X,	114,	0,	Z)," &
+      "116	(BC_2,	*,		control,	0)," &
+      "117	(BC_7,	PTD7,		bidir,	X,	116,	0,	Z)," &
+      "118	(BC_2,	*,		control,	0)," &
+      "119	(BC_7,	PTC2,		bidir,	X,	118,	0,	Z)," &
+      "120	(BC_2,	*,		control,	0)," &
+      "121	(BC_7,	PTC3,		bidir,	X,	120,	0,	Z)," &
+      "122	(BC_2,	*,		control,	0)," &
+      "123	(BC_7,	PTB4,		bidir,	X,	122,	0,	Z)," &
+      "124	(BC_2,	*,		control,	0)," &
+      "125	(BC_7,	PTB5,		bidir,	X,	124,	0,	Z)," &
+      "126	(BC_2,	*,		control,	0)," &
+      "127	(BC_7,	PTE8,		bidir,	X,	126,	0,	Z)," &
+      "128	(BC_2,	*,		control,	0)," &
+      "129	(BC_7,	PTD13,		bidir,	X,	128,	0,	Z)," &
+      "130	(BC_2,	*,		control,	0)," &
+      "131	(BC_7,	PTD14,		bidir,	X,	130,	0,	Z)," &
+      "132	(BC_2,	*,		control,	0)," &
+      "133	(BC_7,	PTE9,		bidir,	X,	132,	0,	Z)," &
+      "134	(BC_2,	*,		control,	0)," &
+      "135	(BC_7,	PTD15,		bidir,	X,	134,	0,	Z)," &
+      "136	(BC_2,	*,		control,	0)," &
+      "137	(BC_7,	PTD16,		bidir,	X,	136,	0,	Z)," &
+      "138	(BC_2,	*,		control,	0)," &
+      "139	(BC_7,	PTD17,		bidir,	X,	138,	0,	Z)," &
+      "140	(BC_2,	*,		control,	0)," &
+      "141	(BC_7,	PTE12,		bidir,	X,	140,	0,	Z)," &
+      "142	(BC_2,	*,		control,	0)," &
+      "143	(BC_7,	PTE3,		bidir,	X,	142,	0,	Z)," &
+      "144	(BC_2,	*,		control,	0)," &
+      "145	(BC_7,	PTE14,		bidir,	X,	144,	0,	Z)," &
+      "146	(BC_2,	*,		control,	0)," &
+      "147	(BC_7,	PTB6,		bidir,	X,	146,	0,	Z)," &
+      "148	(BC_2,	*,		control,	0)," &
+      "149	(BC_7,	PTB7,		bidir,	X,	148,	0,	Z)," &
+      "150	(BC_2,	*,		control,	0)," &
+      "151	(BC_7,	PTE4,		bidir,	X,	150,	0,	Z)," &
+      "152	(BC_2,	*,		control,	0)," &
+      "153	(BC_7,	PTE5,		bidir,	X,	152,	0,	Z)," &
+      "154	(BC_2,	*,		control,	0)," &
+      "155	(BC_7,	PTE13,		bidir,	X,	154,	0,	Z)," &
+      "156	(BC_2,	*,		control,	0)," &
+      "157	(BC_7,	PTE10,		bidir,	X,	156,	0,	Z)," &
+      "158	(BC_2,	*,		control,	0)," &
+      "159	(BC_7,	PTE11,		bidir,	X,	158,	0,	Z)," &
+      "160	(BC_2,	*,		control,	0)," &
+      "161	(BC_7,	PTD0,		bidir,	X,	160,	0,	Z)," &
+      "162	(BC_2,	*,		control,	0)," &
+      "163	(BC_7,	PTD1,		bidir,	X,	162,	0,	Z)," &
+      "164	(BC_2,	*,		control,	0)," &
+      "165	(BC_7,	PTE15,		bidir,	X,	164,	0,	Z)," &
+      "166	(BC_2,	*,		control,	0)," &
+      "167	(BC_7,	PTE16,		bidir,	X,	166,	0,	Z)";
+
+ end s32k142;

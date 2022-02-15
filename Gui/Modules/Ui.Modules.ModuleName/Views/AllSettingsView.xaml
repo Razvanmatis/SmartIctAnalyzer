@@ -8,7 +8,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="true"
         mc:Ignorable="d"
-        Title="Settings" Height="900" Width="1200"
+        Title="Settings" Height="700" MinHeight="150" Width="700" MinWidth="500" MaxWidth="720"
         Icon="/Ressources/start.png">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,6 +30,9 @@
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
+                </Style>
+                <Style TargetType="Grid" >
+                    <Setter Property="MaxWidth" Value="700" />
                 </Style>
             </settingsPanel:SettingsPanel.Resources>
         </settingsPanel:SettingsPanel>

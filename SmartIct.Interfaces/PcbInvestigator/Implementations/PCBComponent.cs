@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ProMik.SmartIct.Interfaces.PcbInvestigator.Enums;
 
-namespace Interfaces.PcbInvestigator.Implementations
+namespace ProMik.SmartIct.Interfaces.PcbInvestigator.Implementations
 {
     public class PCBComponent : IPCBComponent
     {
@@ -8,12 +10,16 @@ namespace Interfaces.PcbInvestigator.Implementations
         private readonly IFunctionalAttributes functionalAttributes;
         private readonly IList<IPinComponent> connections;
 
-        public PCBComponent(IGeometricAttributes geometricAttributes, IFunctionalAttributes functionalAttributes, IList<IPinComponent> connections)
+        public PCBComponent(
+            IGeometricAttributes geometricAttributes,
+            IFunctionalAttributes functionalAttributes,
+            IList<IPinComponent> connections)
         {
             this.connections = connections;
             this.geometricAttributes = geometricAttributes;
             this.functionalAttributes = functionalAttributes;
             IsVisible = false;
+            ComponentType = PcbComponentType.Undefined;
         }
 
         public IGeometricAttributes GeometricAttributes
@@ -45,5 +51,7 @@ namespace Interfaces.PcbInvestigator.Implementations
             get;
             set;
         }
+
+        public PcbComponentType ComponentType { get; protected set; }
     }
 }

@@ -6,11 +6,12 @@ namespace TestDotNetCore
     using System.IO;
     using System.Linq;
     using System.Security;
-    using GrpcClientParser.Implementations;
-    using GrpcClientParser.Interfaces;
-    using Interfaces.Helper;
-    using Interfaces.PcbInvestigator;
     using Newtonsoft.Json;
+    using ProMik.SmartIct.Interfaces.GrpcClientParser;
+    using ProMik.SmartIct.Interfaces.Helper;
+    using ProMik.SmartIct.Interfaces.PcbInvestigator;
+    using ProMik.SmartIct.PCBComponentParser.Implementations;
+    using ProMik.SmartIct.PCBComponentParser.Interfaces;
     using Xunit;
 
     /// <summary>
@@ -28,7 +29,7 @@ namespace TestDotNetCore
         [Fact]
         public void TestParsingFromApi()
         {
-            IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler(new DebugLogger());
+            IPCBComponentParser grpcHandler = new PCBComponentParserHandler(new DebugLogger());
             List<PcbTestObject> resultData = GetSerialzedData(FILEPATH);
             Assert.NotNull(resultData);
             Assert.True(resultData.Count > 0);
@@ -46,7 +47,7 @@ namespace TestDotNetCore
         [Fact]
         public void TestParsingFromImport()
         {
-            IGrpcClientParserHandler grpcHandler = new GrpcClientParserHandler(new DebugLogger());
+            IPCBComponentParser grpcHandler = new PCBComponentParserHandler(new DebugLogger());
             List<PcbTestObject> resultData = GetSerialzedData(FILEPATH);
             Assert.NotNull(resultData);
             Assert.True(resultData.Count > 0);
@@ -222,12 +223,10 @@ namespace TestDotNetCore
 
         private static IPCBComponent GetComponentFromList(string name, IList<IPCBComponent> components)
         {
-            foreach (var comp in components)
+            var comp = components.FirstOrDefault(comp => name.Equals(comp.FunctionalAttributes.Ref));
+            if (comp != null)
             {
-                if (name.Equals(comp.FunctionalAttributes.Ref))
-                {
-                    return comp;
-                }
+                return comp;
             }
 
             Debug.WriteLine("Component not found with name: " + name);

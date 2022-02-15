@@ -1,0 +1,33 @@
+RTL: IC22000
+	(UnknownControl:
+		U24_OUT_HIGH 6 - an R zwischen weiteren IC angeschlossen -> pull down
+		U25_OUT_HIGH 4 - an R zwischen weiteren IC angeschlossen -> pull down
+		V24_OUT_HIGH 2 - an R zwischen weiteren IC angeschlossen -> pull down
+		V25_OUT_HIGH 0 - an R zwischen weiteren IC angeschlossen -> pull down
+		Y24_OUT_HIGH 170 - an R zwischen weiteren IC angeschlossen -> pull down
+		W24_OUT_HIGH 174 - an R zwischen weiteren IC angeschlossen -> pull down)
+		
+Injected errors on RTL: (No valid boundary scan cells at all!)
+	Remove Pulldowns:
+		R22112 1:GND 2(AE21): SIGN000150840 +
+		R22072 1: GND 2(AE18): SIGN000150836
+	Add Short between:
+		R22016 1: GND 2(AE9): SIGN000150833 +
+		R22017 1: GND 2(AE8): SIGN000150834
+	Change Pulldown to Pullup: R22015 1: GND 2(AE5): SIGN000150832
+
+S32G: IC41000
+	PULL UPS:
+		F13_IN_HIGH 207: KL30_UV_ALERT: R12054: 3V3_SMPS_SMH_SI - nochmal genauer anschauen. treibender PIN liegt dahinter
+		G6_IN_HIGH 291: NMI_SMH: R41021: 3V3_SMPS_SMH_SI - keiner angeschlossen!!
+		Y7_IN_HIGH 1 - keiner angeschlossen!!
+	PULL DOWNS:
+		E16_IN_LOW 193: PJ_12_SMH: R41079: GND - hängt tatsächlich ein PULL UP DRAN!!
+		
+Injected errors on S32G:
+	Add Pulldown: R41024 1: GND 2(G15): STBY_PG_PMIC_SMH - NOT DETECTED! 26.07.21
+	Remove Pulldown: R41055 1: GND 2(U19): SA_SMH_SI_MUX - DETECTED! 26.07.21
+	Change Pulldown to Pullup: R41086: 1: GND 2(F14): PK_04_SMH - NOT DETECTED! 26.07.21
+	Add Short between:
+		R41102 1: GND 2(J21): PG_02_SMH + - DETECTED by NEIGHBOURS TEST! 04.08.21
+		R41103 1: GND 2(H21): PG_03_SMH - DETECTED by NEIGHBOURS TEST! 04.08.21

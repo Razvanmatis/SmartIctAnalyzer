@@ -5,7 +5,7 @@
              xmlns:helper="clr-namespace:Ui.Modules.ModuleName.Helper"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              prism:ViewModelLocator.AutoWireViewModel="true" >
     <Grid>
         <Grid.RowDefinitions>
@@ -13,8 +13,9 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" BorderThickness="2" Grid.RowSpan="2" />
-        <ScrollViewer x:Name="Scrollviewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                      helper:DropFilesBehaviorExtension.IsEnabled="True">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                      helper:DropFilesBehaviorExtension.IsEnabled="True"
+                      helper:ScrollViewerAttached.ScrollViewerProperty="{Binding SetScrollViewerCommand}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewMouseWheel">
                     <i:InvokeCommandAction Command="{Binding MouseWheelCommand}" PassEventArgsToCommand="True" />

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Interfaces.PcbInvestigator;
 using ProMik.Core.Interfaces.Events;
-using TestCoverage.Interfaces;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.TestCoverageDeterminer.Interfaces;
 
-namespace TestCoverage.Events
+namespace ProMik.SmartIct.TestCoverageDeterminer.Events
 {
     public class AddTestCoverageObjectsEvent : EventPayload
     {

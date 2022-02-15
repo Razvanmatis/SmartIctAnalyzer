@@ -1,4 +1,4 @@
-﻿namespace Interfaces.PcbInvestigator.Enums
+﻿namespace ProMik.SmartIct.Interfaces.PcbInvestigator.Enums
 {
     public enum PinComponentType
     {

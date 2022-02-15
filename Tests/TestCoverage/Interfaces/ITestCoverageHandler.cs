@@ -1,7 +1,7 @@
-﻿using System;
-using TestCoverage.Helper;
+﻿using ProMik.SmartIct.TestCoverageDeterminer.Helper;
+using System;
 
-namespace TestCoverage.Interfaces
+namespace ProMik.SmartIct.TestCoverageDeterminer.Interfaces
 {
     public interface ITestCoverageHandler
     {

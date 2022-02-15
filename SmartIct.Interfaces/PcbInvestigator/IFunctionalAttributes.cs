@@ -1,6 +1,6 @@
-﻿using Interfaces.PcbInvestigator.Enums;
+﻿using ProMik.SmartIct.Interfaces.PcbInvestigator.Enums;
 
-namespace Interfaces.PcbInvestigator
+namespace ProMik.SmartIct.Interfaces.PcbInvestigator
 {
     public interface IFunctionalAttributes
     {
@@ -19,5 +19,7 @@ namespace Interfaces.PcbInvestigator
         bool IsTestPoint { get; }
 
         string Value { get; set; }
+
+        int StepNo { get; }
     }
 }

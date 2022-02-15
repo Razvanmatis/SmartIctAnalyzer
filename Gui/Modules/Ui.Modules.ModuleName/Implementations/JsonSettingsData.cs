@@ -17,6 +17,8 @@ namespace Ui.Modules.ModuleName.Implementations
             InitContent();
         }
 
+        public bool UseContains { get; set; }
+
         public IList<string> ResistorChars { get; set; }
 
         public Color ResistorColor { get; set; }
@@ -63,8 +65,6 @@ namespace Ui.Modules.ModuleName.Implementations
 
         public bool UseValues { get; set; }
 
-        public string JTAGNetIdentifier { get; set; }
-
         public string JTAGNetBlacklist { get; set; }
 
         public string PowerNetIdentifier { get; set; }
@@ -91,6 +91,16 @@ namespace Ui.Modules.ModuleName.Implementations
 
         public string JTAGPinIdentifier { get; set; }
 
+        public uint Frequency { get; set; }
+
+        public uint CableCompensation { get; set; }
+
+        public TargetDef Target { get; set; }
+
+        public SlotDef Slot { get; set; }
+
+        public bool AskForSvfSettings { get; set; }
+
         public void InitContent()
         {
             content = storageManager.GetStorageContent();
@@ -116,7 +126,6 @@ namespace Ui.Modules.ModuleName.Implementations
             ICNamesChecked = content.ICShow;
             CompNamesChecked = content.CompShow;
             NetNamesChecked = content.NetsShow;
-            JTAGNetIdentifier = content.JTAGNetIdentifier;
             JTAGNetBlacklist = content.JTAGNetBlacklist;
             PowerNetIdentifier = content.PowerNetIdentifier;
             PowerNetBlacklist = content.PowerNetBlacklist;
@@ -129,6 +138,13 @@ namespace Ui.Modules.ModuleName.Implementations
             SupplyVoltageMv = content.SupplyVoltageMv;
             IoVoltageMv = content.IoVoltageMv;
             Steps = content.Steps;
+            JTAGPinIdentifier = content.JTAGPinIdentifier;
+            Frequency = content.Frequency;
+            CableCompensation = content.CableCompensation;
+            Target = content.Target;
+            Slot = content.Slot;
+            AskForSvfSettings = content.AskForSvfSettings;
+            UseContains = content.UseContains;
         }
 
         public void SaveValues()
@@ -158,7 +174,6 @@ namespace Ui.Modules.ModuleName.Implementations
                 NetNamesChecked,
                 GndNetIdentifier,
                 PowerNetIdentifier,
-                JTAGNetIdentifier,
                 GndNetBlacklist,
                 PowerNetBlacklist,
                 JTAGNetBlacklist,
@@ -169,30 +184,26 @@ namespace Ui.Modules.ModuleName.Implementations
                 SupplyVoltageMv,
                 IoVoltageMv,
                 Steps,
-                string.Empty);
+                JTAGPinIdentifier,
+                Frequency,
+                CableCompensation,
+                Target,
+                Slot,
+                AskForSvfSettings,
+                UseContains);
             storageManager.SaveStorageContent(content);
         }
 
         private static IList<string> GetListContent(string value)
         {
-            IList<string> list = new List<string>();
-            foreach (var text in value.Split(";"))
-            {
-                list.Add(text);
-            }
-
+            IList<string> list = new List<string>(value.Split(";"));
             return list;
         }
 
         private static string GetTextFromList(IList<string> values)
         {
-            string text = string.Empty;
-            foreach (string val in values)
-            {
-                text += val + ";";
-            }
-
-            return text[0..^1];
+            string text = string.Join(";", values);
+            return text;
         }
     }
 }

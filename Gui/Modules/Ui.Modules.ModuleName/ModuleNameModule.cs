@@ -3,7 +3,6 @@ using Prism.Modularity;
 using Prism.Regions;
 using Ui.Core;
 using Ui.Modules.ModuleName.Interfaces;
-using Ui.Modules.ModuleName.ViewModels;
 using Ui.Modules.ModuleName.Views;
 
 namespace Ui.Modules.ModuleName

@@ -1,0 +1,1 @@
+auf basis des neuen JSON export files ADC418 new_DataWithValues.json und dem neuen BSDL file für RTL mit readout defvector mit alter BOM PnlPartListProp_Max_old.csv

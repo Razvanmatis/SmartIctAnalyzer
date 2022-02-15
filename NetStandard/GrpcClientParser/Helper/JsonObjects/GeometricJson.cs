@@ -1,4 +1,4 @@
-﻿namespace GrpcClientParser.Helper.JsonObjects
+﻿namespace ProMik.SmartIct.PCBComponentParser.Helper.JsonObjects
 {
     public class GeometricJson
     {

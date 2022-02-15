@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"E7","MaskPosition":278,"PinPort":"PB_01","ConnectedComponents":["R41060"],"TestType":8},{"PinName":"W12","MaskPosition":35,"PinPort":"PB_00","ConnectedComponents":["R41061"],"TestType":1},{"PinName":"A10","MaskPosition":234,"PinPort":"PJ_15","ConnectedComponents":["R21006"],"TestType":1},{"PinName":"Y7","MaskPosition":1,"PinPort":"PC_13","ConnectedComponents":["R11049"],"TestType":1},{"PinName":"U20","MaskPosition":59,"PinPort":"PH_03","ConnectedComponents":["R12025"],"TestType":1},{"PinName":"C19","MaskPosition":214,"PinPort":"PMIC_STBY_MODE_B","ConnectedComponents":["R41018"],"TestType":1},{"PinName":"C9","MaskPosition":246,"PinPort":"PK_13","ConnectedComponents":["R17004"],"TestType":1},{"PinName":"W8","MaskPosition":11,"PinPort":"PC_02","ConnectedComponents":["R14026"],"TestType":1},{"PinName":"G10","MaskPosition":250,"PinPort":"PC_05","ConnectedComponents":["R14032"],"TestType":1},{"PinName":"C6","MaskPosition":284,"PinPort":"PB_03","ConnectedComponents":["R12106"],"TestType":1},{"PinName":"Y8","MaskPosition":7,"PinPort":"PC_01","ConnectedComponents":["R14025"],"TestType":1},{"PinName":"AA10","MaskPosition":23,"PinPort":"PB_09","ConnectedComponents":["R41070"],"TestType":1},{"PinName":"V11","MaskPosition":17,"PinPort":"PB_10","ConnectedComponents":["R41048"],"TestType":1},{"PinName":"AA14","MaskPosition":41,"PinPort":"FCCU_ERR1","ConnectedComponents":["R14023"],"TestType":1}],"ScanChainLength":488,"InstructionRegisterLength":8,"JtagIdCode":405803037,"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 8 TDI (02);
+SDR 488 TDI (FFF00000000000000000000004000000000000000000000000082000000220020000200000000000000000000000000000000000000400010400410441);
+SIR 8 TDI (04);
+SDR 488 TDI (FFF00000000000000000000004000000000000000000000000082000000220020000200000000000000000000000000000000000000400010400410441)
+TDO (FFF00000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+MASK (00000000000000000000000000000000000000000000000000104000000440040000400000000000000000000000000000000000000800020800820882);

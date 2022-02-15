@@ -16,6 +16,7 @@ message StatusResult {
 message RequestZip {
 	bytes zipFolder = 1;
 	string steps = 2;
+	string computerName = 3;
 }
 
 message Request {
@@ -27,6 +28,7 @@ message Result {
 	map<int32, PinGrpc> pins = 1;
 	map<int32, ComponentGrpc> components = 2;
 	map<int32, NetGrpc> nets = 3;
+	int32 amountSteps = 4;
 }
 
 message PinGrpc {
@@ -80,6 +82,7 @@ message FunctionalAttributesGrpc {
 	string partName = 3;
 	string layerName = 4;
 	string packageName = 5;
+	int32 stepNo = 6;
 }
 
 enum ComponentTypeGrpc {

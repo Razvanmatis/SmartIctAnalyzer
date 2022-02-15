@@ -1,0 +1,1 @@
+das problem bei diesem projekt ist die tatsache das alle netze des ODB projekts keine information über pullup oder pulldown beinhalten, weshalb mein tool alle nur als OTHERS erkennen kann!
