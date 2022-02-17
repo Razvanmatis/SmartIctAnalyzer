@@ -16,6 +16,8 @@ namespace ProMik.SmartIct.Services.ManifestHandler.Interfaces
 
         ZipFile GetArchiveForPath(string path);
 
+        void DeleteContentFromZipWithAllSubfolders(string nameToUse);
+
         T GetObjectFromZipArchive<T>(string fileName);
 
         void SetPathAndManifestOfZipfile(string path, bool newCreation);

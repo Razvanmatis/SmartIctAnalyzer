@@ -45,8 +45,8 @@ namespace ProMik.SmartIct.Services.ReportCreator.Implementations
                 ReportContent.Remove(jtagDevice);
                 if (pinContainer != null && pinContainer.Count > 0)
                 {
-                    ReportContent.Add(jtagDevice, pinContainer);
-                    this.pinContainerNotTested.Add(jtagDevice, pinContainerNotTested);
+                    ReportContent[jtagDevice] = pinContainer;
+                    this.pinContainerNotTested[jtagDevice] = pinContainerNotTested;
                 }
             }
             else

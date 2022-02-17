@@ -35,6 +35,46 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
             manifestHandler = new ManifestActionsHandler(logger);
         }
 
+        public async Task<Result<Dictionary<string, byte[]>>> GetBsdlFilesContent(string svfProjectFilePath)
+        {
+            string message = string.Empty;
+            bool success = true;
+            ((ConsoleLogger)logger).SetLoggerCallbackForError((msg, cat) =>
+            {
+                if (cat == LogCategory.ERROR)
+                {
+                    message += msg + ", ";
+                    success = false;
+                }
+            });
+
+            manifestHandler.SetPathAndManifestOfZipfile(svfProjectFilePath, false);
+            Manifest manifestResult = manifestHandler.Manifest;
+            if (manifestResult == null)
+            {
+                return new Result<Dictionary<string, byte[]>>(message, false, null);
+            }
+
+            Result<Dictionary<string, byte[]>> bsdlFiles = await GetBsdlFilesAsByteArray(manifestResult.BSDL).ConfigureAwait(true);
+            if (!bsdlFiles.Success)
+            {
+                return new Result<Dictionary<string, byte[]>>(bsdlFiles.Message, false, bsdlFiles.Data);
+            }
+            else
+            {
+                if (message.Length > 2)
+                {
+                    message = message.Substring(0, message.Length - 2);
+                }
+                else
+                {
+                    message = Ok;
+                }
+
+                return new Result<Dictionary<string, byte[]>>(message, success, bsdlFiles.Data);
+            }
+        }
+
         public async Task<Result> UpdateOdbProjectZipFolder(string svfProjectFilePath, string odbPath)
         {
             string message = Ok;
@@ -150,9 +190,18 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
             });
 
             manifestHandler.SetPathAndManifestOfZipfile(svfProjectFilePath, false);
+            await HandleBsdlDeletion().ConfigureAwait(true);
             await AddBsdlDataToZipFile(bsdlContent).ConfigureAwait(true);
             manifestHandler.ResetValues();
             return new Result(message, success);
+        }
+
+        private Task HandleBsdlDeletion()
+        {
+            manifestHandler.DeleteContentFromZipWithAllSubfolders(Manifest.BSDLDEF);
+            manifestHandler.Manifest.BSDL.Clear();
+            manifestHandler.UpdateManifestInZipfile(manifestHandler.Manifest);
+            return Task.CompletedTask;
         }
 
         public Task<Result> UpdateManifestContent(string svfProjectFilePath, Manifest manifest)
@@ -174,7 +223,7 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
             return Task.FromResult(new Result(message, success));
         }
 
-        public Task<Result> UpdateSvfFiles(string svfProjectFilePath, List<ISvfData> svfFiles)
+        public Task<Result> UpdateSvfFiles(string svfProjectFilePath, List<ISvfData> svfFiles, bool firstDeleteAllContent = true)
         {
             string message = Ok;
             bool success = true;
@@ -188,12 +237,17 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
             });
 
             manifestHandler.SetPathAndManifestOfZipfile(svfProjectFilePath, false);
+            if (firstDeleteAllContent)
+            {
+                manifestHandler.DeleteContentFromZipWithAllSubfolders(Manifest.SVFDEF);
+            }
+
             manifestHandler.ExportSvfFiles(svfFiles);
             manifestHandler.ResetValues();
             return Task.FromResult(new Result(message, success));
         }
 
-        public async Task<Result> UpdateSvfFiles(string svfProjectFilePath, string jtagName, SvfPath svfPathsToUse)
+        public async Task<Result> UpdateSvfFiles(string svfProjectFilePath, string jtagName, SvfPath svfPathsToUse, bool firstDeleteAllContent = true)
         {
             string message = Ok;
             bool success = true;
@@ -207,6 +261,11 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
             });
 
             manifestHandler.SetPathAndManifestOfZipfile(svfProjectFilePath, false);
+            if (firstDeleteAllContent)
+            {
+                manifestHandler.DeleteContentFromZipWithAllSubfolders(Manifest.SVFDEF);
+            }
+
             var func = await GetFuncForSvfPath().ConfigureAwait(true);
             await func(new List<WrappedBsdlContainer>()
             {
@@ -666,7 +725,7 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
                     else
                     {
                         success = false;
-                        message = "Could not read out the BSDL file: " + entry.BSDLFileName;
+                        message += "Could not read out the BSDL file: " + entry.BSDLFileName + ", ";
                     }
                 }
             }
@@ -692,7 +751,7 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
         private async Task<Result> AddBsdlDataToZipFile(
             List<WrappedBsdlContainer> bsdl)
         {
-            if (bsdl == null || !bsdl.Any() || !await AreAnyPathsDefined(bsdl))
+            if (bsdl == null || !bsdl.Any())
             {
                 return new Result(Ok, true);
             }
@@ -724,6 +783,10 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
                 if (!success && message.Length > 2)
                 {
                     message = message.Substring(0, message.Length - 2);
+                }
+                else
+                {
+                    message = Ok;
                 }
 
                 return new Result(message, success);
@@ -791,38 +854,6 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Implementations
             }
 
             return Task.CompletedTask;
-        }
-
-        private Task<bool> AreAnyPathsDefined(List<WrappedBsdlContainer> bsdl)
-        {
-            foreach (var entry in bsdl)
-            {
-                if (entry is SvfPathWrappedBsdlContainer svfPathEntry)
-                {
-                    if (!string.IsNullOrEmpty(entry.BSDLFileToBeUsed)
-                        || (svfPathEntry.SvfPathsToUseFromLocalSystem != null
-                        && (!string.IsNullOrEmpty(svfPathEntry.SvfPathsToUseFromLocalSystem.DirectPower)
-                        || !string.IsNullOrEmpty(svfPathEntry.SvfPathsToUseFromLocalSystem.PullUps)
-                        || !string.IsNullOrEmpty(svfPathEntry.SvfPathsToUseFromLocalSystem.DirectGnd)
-                        || !string.IsNullOrEmpty(svfPathEntry.SvfPathsToUseFromLocalSystem.PullDowns)
-                        || !string.IsNullOrEmpty(svfPathEntry.SvfPathsToUseFromLocalSystem.PullUpsAndDowns)
-                        || !string.IsNullOrEmpty(svfPathEntry.SvfPathsToUseFromLocalSystem.UnknownControls)
-                        || !string.IsNullOrEmpty(svfPathEntry.SvfPathsToUseFromLocalSystem.UnknownInputs))))
-                    {
-                        return Task.FromResult(true);
-                    }
-                }
-                else if (entry is SvfDataWrappedBsdlContainer svfFilesEntry)
-                {
-                    if (svfFilesEntry.SvfDataFiles != null && svfFilesEntry.SvfDataFiles.Count > 0)
-                    {
-                        return Task.FromResult(true);
-                    }
-                }
-
-            }
-
-            return Task.FromResult(false);
         }
 
         private async Task<Result<byte[]>> GetFileContentAsBytes(string filePath)

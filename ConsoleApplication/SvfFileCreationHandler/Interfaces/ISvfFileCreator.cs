@@ -24,7 +24,9 @@ namespace ProMik.SmartIct.Console.SvfFileCreator.Interfaces
         Task<Result<(byte[] defaultVector, uint idCode)>> GetDefaultVectorOfDevice(
             WrappedProgrammerSettings programmer,
             Stream bsdlContentStream,
-            Action<string, LogCategory> loggerAction);
+            Action<string, LogCategory> loggerAction,
+            bool allowCalculationOfVector = true,
+            bool justUseCalculatedVector = false);
 
         Task<Result> SaveSvfFilesToPath(List<ISvfData> svfFiles, string destinationPath);
     }

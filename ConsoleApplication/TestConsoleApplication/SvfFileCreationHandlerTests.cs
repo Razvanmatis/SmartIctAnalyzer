@@ -24,6 +24,25 @@ namespace TestConsoleApplication
     public class SvfFileCreationHandlerTests
     {
         [Fact]
+        public async Task TestGetDefaultVector()
+        {
+            ISvfFileCreator svfHandler = new SvfFileCreator();
+            string bsdlFile = @"C:\Repositories\smart_ict_analyser\Testdaten\Magna ADCAM\BSDL\TC37xA_Step_PD_BGA292.bsd.txt";
+            var defVectorResult = await svfHandler.GetDefaultVectorOfDevice(new WrappedProgrammerSettings()
+            {
+                CableCompensation = 0,
+                Frequency = 1000,
+                Id = 0,
+                IoVoltage = 3300,
+                Ip = "192.168.1.2",
+                Port = 15504,
+                Slot = 0,
+                Target = 0,
+                SupplyVoltage = 12000,
+            }, File.OpenRead(bsdlFile), (msg, cat) => Debug.WriteLine(msg), false);
+        }
+
+        [Fact]
         public async Task TestSvfFileCreation()
         {
             // create a valid settings content
@@ -77,6 +96,7 @@ namespace TestConsoleApplication
                 settingsContent, odbProjectPath).ConfigureAwait(true);
             if (!projectLoadResult.Success)
             {
+                Debug.WriteLine(projectLoadResult.Message);
                 return;
             }
 
@@ -89,7 +109,7 @@ namespace TestConsoleApplication
              bomSettings).ConfigureAwait(true);
             if (!bomResult.Success)
             {
-                Debug.WriteLine("Error in bom update!");
+                Debug.WriteLine(bomResult.Message);
             }
 
             // read out the boundary scan related objects
@@ -118,10 +138,11 @@ namespace TestConsoleApplication
                 (msg, cat) =>
                 {
                     Debug.WriteLine(msg);
-                });
+                }, true, true);
 
             if (!defVectorResult.Success)
             {
+                Debug.WriteLine(defVectorResult.Message);
                 return;
             }
 
@@ -139,6 +160,7 @@ namespace TestConsoleApplication
 
             if (!svfCreationResult.Success)
             {
+                Debug.WriteLine(svfCreationResult.Message);
                 return;
             }
 
@@ -149,6 +171,7 @@ namespace TestConsoleApplication
             var projectDataTransformResult = await projectLoadHandler.GetDataAsJsonString(projectLoadResult.Data).ConfigureAwait(true);
             if (!projectDataTransformResult.Success)
             {
+                Debug.WriteLine(projectDataTransformResult.Message);
                 return;
             }
 
@@ -160,7 +183,10 @@ namespace TestConsoleApplication
             IProjectFileHandler projectFileHandler = new ProjectFileHandler();
             var resultProjectCreate = await projectFileHandler.CreateProjectFile(
                 odbProjectPath, jsonProjectContent, settingsContent, bomFilePath, bomSettings, bsdl, destinationFileName).ConfigureAwait(true);
-
+            if (!resultProjectCreate.Success)
+            {
+                Debug.WriteLine(resultProjectCreate.Message);
+            }
         }
     }
 }

@@ -123,8 +123,8 @@ namespace Ui.Modules.ModuleName.Implementations
                 ReportContent.Remove(jtagDevice);
                 if (pinContainer != null && pinContainer.Count > 0)
                 {
-                    ReportContent.Add(jtagDevice, pinContainer);
-                    jtagMapping.Add(jtagDevice, jtagDeviceRealname);
+                    ReportContent[jtagDevice] = pinContainer;
+                    jtagMapping[jtagDevice] = jtagDeviceRealname;
                 }
             }
             else

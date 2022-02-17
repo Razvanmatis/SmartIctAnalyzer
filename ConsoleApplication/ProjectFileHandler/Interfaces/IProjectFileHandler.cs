@@ -26,6 +26,8 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Interfaces
 
         Task<Result<byte[]>> GetBomSettingsFile(string svfProjectFilePath);
 
+        Task<Result<Dictionary<string, byte[]>>> GetBsdlFilesContent(string svfProjectFilePath);
+
         Task<Result<Dictionary<string, Stream>>> GetBsdlFiles(string svfProjectFilePath);
 
         Task<Result<Manifest>> GetManifestContent(string svfProjectFilePath);
@@ -73,8 +75,8 @@ namespace ProMik.SmartIct.Console.ProjectFileHandler.Interfaces
 
         Task<Result> UpdateManifestContent(string svfProjectFilePath, Manifest manifest);
 
-        Task<Result> UpdateSvfFiles(string svfProjectFilePath, List<ISvfData> svfFiles);
+        Task<Result> UpdateSvfFiles(string svfProjectFilePath, List<ISvfData> svfFiles, bool firstDeleteAllContent = true);
 
-        Task<Result> UpdateSvfFiles(string svfProjectFilePath, string jtagName, SvfPath svfPathsToUse);
+        Task<Result> UpdateSvfFiles(string svfProjectFilePath, string jtagName, SvfPath svfPathsToUse, bool firstDeleteAllContent = true);
     }
 }

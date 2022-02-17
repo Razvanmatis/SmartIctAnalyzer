@@ -23,7 +23,6 @@ namespace ProMik.SmartIct.Console.SvfFileCreator.Implementations
 {
     public class SvfFileCreator : ISvfFileCreator
     {
-        private const bool CalculationOfDefaultVectorByBsdlFileIsAllowed = true;
         private const string Ok = "OK";
         private readonly ISvfDataCreator svfDataCreator;
         private readonly ILogger logger = new ConsoleLogger(false);
@@ -39,7 +38,9 @@ namespace ProMik.SmartIct.Console.SvfFileCreator.Implementations
         public async Task<Result<(byte[] defaultVector, uint idCode)>> GetDefaultVectorOfDevice(
             WrappedProgrammerSettings programmer,
             Stream bsdlContentStream,
-            Action<string, LogCategory> loggerAction)
+            Action<string, LogCategory> loggerAction,
+            bool allowCalculationOfVector = true,
+            bool justUseCalculatedVector = false)
         {
             Result<IBSDLOutput> bsdlResult = await GetBsdlResult(bsdlContentStream).ConfigureAwait(true);
             if (!bsdlResult.Success)
@@ -62,14 +63,18 @@ namespace ProMik.SmartIct.Console.SvfFileCreator.Implementations
                 loggerAction?.Invoke(msg, category);
             });
 
-            byte[] defaultVector = svfPlayer.GetDefaultVector(
+            byte[] defaultVector = null;
+            uint idCode = 0;
+            if (!justUseCalculatedVector)
+            {
+                defaultVector = svfPlayer.GetDefaultVector(
                     bsdlContainer.Data.container.ScanChainLength,
                     bsdlContainer.Data.container.InstructionLength,
                     programmer.Ip,
                     programmer.Port,
                     programmer.SupplyVoltage,
                     programmer.IoVoltage,
-                    out uint idCode,
+                    out idCode,
                     bsdlContainer.Data.container.JtagIdCode,
                     programmer.Frequency,
                     programmer.CableCompensation,
@@ -78,10 +83,11 @@ namespace ProMik.SmartIct.Console.SvfFileCreator.Implementations
                     programmer.Slot,
                     bsdlContainer.Data.container.IdCodeInstr,
                     bsdlContainer.Data.container.PreloadInstr);
-
+            }
+            
             if (defaultVector == null || defaultVector.Length == 0)
             {
-                if (!CalculationOfDefaultVectorByBsdlFileIsAllowed)
+                if (!justUseCalculatedVector && !allowCalculationOfVector)
                 {
                     return new Result<(byte[] defaulVector, uint idCode)>(
                         "Were not able to read out the default vector of the device. Further the calculation of it is not allowed!",
@@ -90,8 +96,17 @@ namespace ProMik.SmartIct.Console.SvfFileCreator.Implementations
                 }
 
                 byte[] defVectorCreated = bsdlResult.Data.GetDefaultVector();
-                loggerAction?.Invoke("Were not able to read out the default vector of the device. Used calculated one!", LogCategory.WARNING);
-                message = "Were not able to read out the default vector of the device. Used calculated one!";
+                if (justUseCalculatedVector)
+                {
+                    loggerAction?.Invoke("Used just calculated default vector!", LogCategory.WARNING);
+                    message = "Used just calculated default vector!";
+                }
+                else
+                {
+                    loggerAction?.Invoke("Were not able to read out the default vector of the device. Used calculated one!", LogCategory.WARNING);
+                    message = "Were not able to read out the default vector of the device. Used calculated one!";
+                }
+                
                 success = true;
                 defaultVector = defVectorCreated;
             }

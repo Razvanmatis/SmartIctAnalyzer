@@ -303,6 +303,37 @@ namespace ProMik.SmartIct.Services.ManifestHandler.Implementations
             }
         }
 
+        /// <summary>
+        /// DeleteContentFromZipWithAllSubfolders
+        /// </summary>
+        /// <exception cref="Ui.Modules.ModuleName.Helper.CustomCollectionException">Ignore.</exception>
+        public void DeleteContentFromZipWithAllSubfolders(string nameToUse)
+        {
+            try
+            {
+                using ZipFile archive = ZipFile.Read(ManifestProjectFilePath);
+                if (ZipFile.CheckZipPassword(ManifestProjectFilePath, PASSWORD))
+                {
+                    archive.Password = PASSWORD;
+                }
+                else
+                {
+                    logger.LogMessage("Used other password protected projectfile!", LogCategory.ERROR);
+                    return;
+                }
+
+                List<ZipEntry> entriesToDelete = new List<ZipEntry>(archive.Entries.Where(
+                    entry => entry.FileName.StartsWith(nameToUse, StringComparison.Ordinal)
+                    || entry.FileName.Replace("/", "\\").StartsWith(nameToUse, StringComparison.Ordinal)));
+                archive.RemoveEntries(entriesToDelete);
+                archive.Save();
+            }
+            catch (Exception e)
+            {
+                throw new CustomCollectionException(e.Message);
+            }
+        }
+
         public virtual void ResetValues(bool skipFolderDeletion = false)
         {
             ManifestProjectFilePath = string.Empty;
@@ -342,7 +373,7 @@ namespace ProMik.SmartIct.Services.ManifestHandler.Implementations
             {
                 try
                 {
-                    DeleteContentFromZipWithAllSubfolders();
+                    DeleteContentFromZipWithAllSubfolders(Manifest.OdbProject);
                     return UpdateObdProjectInZip(pathToFolder);
                 }
                 catch (CustomCollectionException e)
@@ -659,37 +690,6 @@ namespace ProMik.SmartIct.Services.ManifestHandler.Implementations
             }
 
             return Manifest.BSDL.FirstOrDefault(bs => bs.JTAGName.Equals(jtagDevice))?.BSDLFileName ?? string.Empty;
-        }
-
-        /// <summary>
-        /// DeleteContentFromZipWithAllSubfolders
-        /// </summary>
-        /// <exception cref="Ui.Modules.ModuleName.Helper.CustomCollectionException">Ignore.</exception>
-        protected void DeleteContentFromZipWithAllSubfolders()
-        {
-            try
-            {
-                using ZipFile archive = ZipFile.Read(ManifestProjectFilePath);
-                if (ZipFile.CheckZipPassword(ManifestProjectFilePath, PASSWORD))
-                {
-                    archive.Password = PASSWORD;
-                }
-                else
-                {
-                    logger.LogMessage("Used other password protected projectfile!", LogCategory.ERROR);
-                    return;
-                }
-
-                List<ZipEntry> entriesToDelete = new List<ZipEntry>(archive.Entries.Where(
-                    entry => entry.FileName.StartsWith(Manifest.OdbProject, StringComparison.Ordinal)
-                    || entry.FileName.Replace("/", "\\").StartsWith(Manifest.OdbProject, StringComparison.Ordinal)));
-                archive.RemoveEntries(entriesToDelete);
-                archive.Save();
-            }
-            catch (Exception e)
-            {
-                throw new CustomCollectionException(e.Message);
-            }
         }
 
         protected void CreateZipFileWithManifest(Manifest manifest, string manifestProjectFilePath)

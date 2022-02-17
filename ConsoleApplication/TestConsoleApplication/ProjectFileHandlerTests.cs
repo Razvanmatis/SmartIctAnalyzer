@@ -1,4 +1,5 @@
 using ProMik.SmartIct.Console.Contracts.Container;
+using ProMik.SmartIct.Console.ProjectFileHandler.Implementations;
 using ProMik.SmartIct.Console.ProjectFileHandler.Interfaces;
 using ProMik.SmartIct.Interfaces.Container;
 using ProMik.SmartIct.Svf.SvfInterfaces.Container;
@@ -14,9 +15,25 @@ namespace TestConsoleApplication
     public class ProjectFileHandlerTests
     {
         [Fact]
+        public async Task TestUpdateProject()
+        {
+            IProjectFileHandler projectFileHandler = new ProjectFileHandler();
+            string svfProjFilePath = @"C:\Repositories\smart_ict_analyser\Testdaten\Project files\new_created_project.svfproj";
+            SvfPath path = new SvfPath()
+            {
+                PullDowns = @"C:\Repositories\smart_ict_analyser\Testdaten\SVF\svfGeneration\ADCAM\from 01.12.21_readout_after_svf_fix\U10_Eyeq\pullDowns",
+                PullUps = @"C:\Repositories\smart_ict_analyser\Testdaten\SVF\svfGeneration\ADCAM\from 01.12.21_readout_after_svf_fix\U10_Eyeq\pullUps",
+                UnknownControls = @"C:\Repositories\smart_ict_analyser\Testdaten\SVF\svfGeneration\ADCAM\from 01.12.21_readout_after_svf_fix\U10_Eyeq\unknownsControl",
+                UnknownInputs = @"C:\Repositories\smart_ict_analyser\Testdaten\SVF\svfGeneration\ADCAM\from 01.12.21_readout_after_svf_fix\U10_Eyeq\unknownsInput",
+            };
+
+            var result = await projectFileHandler.UpdateSvfFiles(svfProjFilePath, "S32P", path);
+        }
+
+        [Fact]
         public async Task TestUpdateSvfFiles()
         {
-            IProjectFileHandler projectFileHandler = new ProMik.SmartIct.Console.ProjectFileHandler.Implementations.ProjectFileHandler();
+            IProjectFileHandler projectFileHandler = new ProjectFileHandler();
             var result = await projectFileHandler.UpdateSvfFiles(
                 @"C:\Repositories\smart_ict_analyser\Testdaten\Project files\new_created_project.svfproj",
                 "S32P",

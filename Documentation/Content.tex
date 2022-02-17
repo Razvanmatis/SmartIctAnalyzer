@@ -139,6 +139,12 @@ As shown in \ref{fig:testCoverageSettings} there are the following settings avai
 	\item JTAG
 	\item Power
 \end{itemize}
+Further more there is the possibility of defining the JTAG pin identifier for making sure being able to use not just the default values \textbf{TMS, TDI, TDO, TCK}. That means in detail for correctly determining a JTAG device there should be the following requirements accomplished:
+\begin{enumerate}
+	\item Set up the \textbf{IC identifier} setting from general settings in that way that the JTAG device is being recognized correctly as an IC component
+	\item Set up the \textbf{JTAG nets identifier} from the test coverage settings in that way that the JTAG device is correctly being recognized within a corresponding net
+	\item Set up the \textbf{JTAG pin identifier} setting from the test coverage settings in that way that the JTAG device is correctly being recognized by its pins
+\end{enumerate}
 
 \subsection{Import / Export settings file}
 By clicking on one of the menu items Settings -> Import settings file or Settings -> Export settings file afterward a new file selection dialog will be shown where to select the source / target file to be imported / exported. Further if the project file handling is enabled the settings file will automatically be stored within the project file and be loaded automatically on next opening of project file
