@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Forms;
 
 namespace Ui.Views
 {
@@ -10,6 +11,10 @@ namespace Ui.Views
         public MainWindow()
         {
             InitializeComponent();
+            Top = 0;
+            Left = 0;
+            Width = Screen.PrimaryScreen.Bounds.Width;
+            Height = Screen.PrimaryScreen.Bounds.Height;
         }
     }
 }

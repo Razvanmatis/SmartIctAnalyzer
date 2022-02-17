@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+	<VersionPrefix>1.0.1</VersionPrefix>
+    <PackageId>ProMik.SmartIct.Console.BoundaryScanReportCreator</PackageId>
+    <PackageProjectUrl>https://gitlab.promik.local/flash_task/host/smart_ict_analyser/-/tree/master/SmartIctTool/ConsoleApplication/BoundaryScanReportHandler</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ProMik.Core.Interfaces" Version="1.0.77-beta" />
+    <PackageReference Include="System.Security.Permissions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NetStandard\ReportCreator\ReportCreator.csproj" />
+    <ProjectReference Include="..\..\NetStandard\SVFHelper\SVFHelper.csproj" />
+    <ProjectReference Include="..\..\NetStandard\SvfInterfaces\SvfInterfaces\SvfInterfaces.csproj" />
+    <ProjectReference Include="..\Contracts\Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

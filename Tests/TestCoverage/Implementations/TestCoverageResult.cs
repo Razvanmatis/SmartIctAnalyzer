@@ -1,7 +1,7 @@
-﻿using Interfaces.PcbInvestigator;
-using TestCoverage.Interfaces;
+﻿using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.TestCoverageDeterminer.Interfaces;
 
-namespace TestCoverage.Implementations
+namespace ProMik.SmartIct.TestCoverageDeterminer.Implementations
 {
     public class TestCoverageResult : ITestCoverageResult
     {

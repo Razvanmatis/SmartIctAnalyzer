@@ -1,0 +1,58 @@
+#
+#Units
+#
+U INCH
+#
+#Feature symbol names
+#
+$0 r39.37
+$1 rect78.74x78.74
+#
+#Feature attribute names
+#
+@0 .pad_usage
+@1 .test_point
+@2 .geometry
+@3 .smd
+@4 .nomenclature
+@5 .string
+@6 .drc_assembly_lyrs
+@7 .drc_board
+@8 .drc_comp_height
+@9 .drc_comp_keepin
+@10 .drc_comp_keepout
+@11 .drc_etch_lyrs
+@12 .drc_etch_lyrs_all
+@13 .drc_etch_lyrs_bit
+@14 .drc_max_height
+@15 .drc_min_height
+@16 .drc_pad_keepout
+@17 .drc_plane_keepout
+@18 .drc_ref_des
+@19 .drc_route_keepin
+@20 .drc_route_keepout
+@21 .drc_tp_keepin
+@22 .drc_tp_keepout
+@23 .drc_trace_keepout
+@24 .drc_via_keepout
+@25 .source_llayer
+@26 .tear_drop
+@27 .artwork
+@28 .pattern_fill
+@29 .hatch
+@30 .mount_hole
+@31 .tooling_hole
+#
+#Feature attribute text strings
+#
+&0 RNDFLASH0.039
+&1 RECT0.079X0.079
+#
+#Layer features
+#
+P 0.787401574803 0.03937007874 0 P 0 1 ;2=0
+P 9.866141732283 0.03937007874 0 P 0 1 ;2=0
+P 0.787401574803 0.03937007874 0 P 0 1 ;2=0
+P 9.866141732283 0.03937007874 0 P 0 1 ;2=0
+P 9.669291338583 7.834645669291 1 P 0 0 ;2=1
+P 9.669291338583 7.834645669291 1 P 0 0 ;2=1

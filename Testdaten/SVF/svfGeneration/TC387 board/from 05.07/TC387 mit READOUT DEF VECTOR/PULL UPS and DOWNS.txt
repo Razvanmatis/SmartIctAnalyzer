@@ -1,0 +1,2 @@
+No SVF files for the pins which were determined as PULL UPS has been created!
+Created SVF files for the following pins which were determined as PULL DOWNS: (2): A14, E13

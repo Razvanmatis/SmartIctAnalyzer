@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Interfaces.PcbInvestigator;
-using TestCoverage.Helper;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.TestCoverage;
+using ProMik.SmartIct.TestCoverageDeterminer.Helper;
 
-namespace TestCoverage.Interfaces
+namespace ProMik.SmartIct.TestCoverageDeterminer.Interfaces
 {
     public enum TestCoverageType
     {
@@ -36,6 +37,11 @@ namespace TestCoverage.Interfaces
         /// BOUNDARY_SCAN_ICS
         /// </summary>
         BOUNDARY_SCAN_ICS,
+
+        /// <summary>
+        /// none connections
+        /// </summary>
+        BOUNDARY_SCAN_NONE,
     }
 
     public interface ITestCoverageDeterminer
@@ -50,5 +56,14 @@ namespace TestCoverage.Interfaces
             IList<INetComponent> nets,
             IdentifierBlacklistContainer content,
             TestCoverageItems items);
+
+        ITestCoverageDataModel GetTestRelatedObjects(
+            IList<INetComponent> nets,
+            IdentifierBlacklistContainer content);
+
+        Task<float> GetTestCoverageValue(TestCoverageType type, List<IPCBComponent> jtags = null);
+
+        int GetAmountOfTotalDistinctNets(
+            TestCoverageType type, bool onlyIntersectionWithIcNets = true, List<IPCBComponent> jtags = null);
     }
 }

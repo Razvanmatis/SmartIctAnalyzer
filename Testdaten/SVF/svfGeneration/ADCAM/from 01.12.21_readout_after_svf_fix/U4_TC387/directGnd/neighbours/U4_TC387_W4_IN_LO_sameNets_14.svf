@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"W4","MaskPosition":552,"PinPort":"P40_11","ConnectedComponents":["Direct_GND"],"TestType":8},{"PinName":"W3","MaskPosition":555,"PinPort":"P40_12","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"U5","MaskPosition":549,"PinPort":"P40_10","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"P4","MaskPosition":531,"PinPort":"P40_4","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"N5","MaskPosition":543,"PinPort":"P40_8","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"N4","MaskPosition":537,"PinPort":"P40_6","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"W2","MaskPosition":519,"PinPort":"P40_0","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"W1","MaskPosition":522,"PinPort":"P40_1","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"V2","MaskPosition":525,"PinPort":"P40_2","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"V1","MaskPosition":528,"PinPort":"P40_3","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"U2","MaskPosition":558,"PinPort":"P40_13","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"U1","MaskPosition":561,"PinPort":"P40_14","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"R1","MaskPosition":534,"PinPort":"P40_5","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"P2","MaskPosition":540,"PinPort":"P40_7","ConnectedComponents":["Direct_GND"],"TestType":6},{"PinName":"P1","MaskPosition":546,"PinPort":"P40_9","ConnectedComponents":["Direct_GND"],"TestType":6}],"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 8 TDI (02);
+SDR 571 TDI (0000FFFFFFFFFFEDB6DB6DB6DB6DB6DF6DB6DB6DB6DB6DB6DB6FB7FB6DB6FF6DB7FB6FB6DB6DB6DF6DB7DB7DB7FF6DF6DF7DB6DB6DB6DB6FFEDB6DB6DBFDB6DB6DB6DB6DB7DB6DB7);
+SIR 8 TDI (08);
+SDR 571 TDI (0000FFFFFFFFFFEDB6DB6DB6DB6DB6DF6DB6DB6DB6DB6DB6DB6FB7FB6DB6FF6DB7FB6FB6DB6DB6DF6DB7DB7DB7FF6DF6DF7DB6DB6DB6DB6FFEDB6DB6DBFDB6DB6DB6DB6DB7DB6DB7)
+TDO (0000FFFFFFFFFFEDB6DB6DB6DB6DB6DF6DB6DB6DB6DB6DB6DB6FB7FB6DB6FF6DB7FB6FB6DB6DB6DF6DB7DB7DB7FF6DF6DF7DB6DB6DB6DB6FFEDB6DB6DBFDB6DB6DB6DB6DB7DB6DB7)
+MASK (000249249249248000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000);

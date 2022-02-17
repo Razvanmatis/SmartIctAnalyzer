@@ -1,0 +1,222 @@
+% Required Packages
+\documentclass[]
+%toc=bibliographynumbered, %literaturverzeichnis nummeriert und im toc    
+%bibliography=leveldown  %literaturverzeichnis ist section statt chapter    
+{article}
+\usepackage[a4paper,top=3cm,bottom=6cm,left=3cm,right=3cm,headheight=55pt,footskip=36pt]{geometry}
+\usepackage[ngerman,english]{babel} % english main language
+\usepackage[utf8]{inputenc} % Linux + Windows
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[table]{xcolor}
+\usepackage{todonotes}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{fourier}
+\usepackage{graphicx}
+\usepackage{vhistory}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{textcomp}
+% nomenclature in table of contents and page reference
+\usepackage[intoc,refpage]{nomencl}
+\usepackage[]{float}
+\usepackage{longtable}
+\usepackage{threeparttable}
+\usepackage{amsmath}
+\usepackage{varwidth}
+\usepackage{diagbox}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{tikz-timing}
+\usepackage{tikz}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true} %smaller
+\usepackage[
+	%numbib,
+	nottoc,notlot,notlof
+]{tocbibind}
+\usepackage{multirow}
+\usepackage{csquotes}
+\usepackage[nolinks]{qrcode} % make sure the code is not colored
+\usepackage{epsfig}
+
+% Tikz for wiring.tex
+\usepackage[european,nooldvoltagedirection]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{spy,calc}
+\usetikzlibrary{arrows,arrows.meta, backgrounds}
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{matrix}
+\usetikzlibrary{calc} % for distance calc
+\usetikzlibrary{shapes.misc}
+
+\usepackage[center]{caption}
+\captionsetup{
+	format=hang,					%eingerückt zu erster zeiel
+	justification=RaggedRight,  	%silbentrennung und alle zeilen linksbündig
+	font=normalsize,
+	labelfont=bf,
+	singlelinecheck=true,
+	width = 1\textwidth  		%mehr einrücken und zentriert bei bedarf
+}
+
+% für links
+\usepackage{xcolor}
+\usepackage[draft = false]{hyperref}
+\hypersetup{
+	%hidelinks		= false,	% 
+	colorlinks 		= true, 	% Links sind farbig 
+	pdftoolbar		= true,		% Anzeigen der Acrobat toolbar oder nicht
+	pdfmenubar		= true, 	% Anzeigen des Acrobat menu oder nicht 
+	%bookmarks 		= true, 	% erstellt Bookmarks
+	bookmarksopen	= false,	% Anzeigen der Bookmarks beim Öffen des Dokuments
+	linkcolor		= black, 	% Farbe der internen Verweise
+	citecolor		= black,	% Farbe der Zitate
+	urlcolor 		= blue,  	% Farbe der Links
+	urlbordercolor 	= cyan      % Rahmenfarbe
+}
+
+%%%%%%% Nötig für schnelles übersetzen und BIBER backend %%%%%%%%%%%%%%
+%pdflatex -synctex=1 -interaction=nonstopmode %.tex|biber %|makeindex %.nlo -s nomencl.ist -o %.nls|pdflatex -synctex=1 -interaction=nonstopmode %.tex|pdflatex -synctex=1 -interaction=nonstopmode %.tex|"C:/Program Files (x86)/Adobe/Reader 11.0/Reader/AcroRd32.exe" %.pdf
+\usepackage[
+	backend=biber,
+	style=numeric-comp, % [1] style
+	sortlocale=de_DE, % sorting, knowing --> ß
+	natbib=true, % Loads compatibility module which provides aliases for the citation commands of the natbib package
+	url=false, %field and the access date
+	doi=true,%controls whether the field doi is printed.
+	eprint=false %whether eprint information is printed.
+]{biblatex}
+\bibliography{bibliography}
+\addbibresource{bibliography.bib}
+
+
+% Set font to sans serif
+\renewcommand{\familydefault}{\sfdefault}
+
+%set indention for new paragraphs 
+\setlength{\parindent}{0pt}
+
+%set distance between items in a list
+\setlist[1]{itemsep=-3pt}
+
+% Set the watermark
+%\usepackage{transparent}
+%\usepackage{draftwatermark}
+%\SetWatermarkAngle{50}
+%\SetWatermarkText{\transparent{0.10}DRAFT}
+%\SetWatermarkScale{0.5}
+% Candy apple red
+%\SetWatermarkColor[rgb]{1.0, 0.03, 0.0}
+
+% Nomenclature layout, indent, dots, page number
+\setlength{\nomlabelwidth}{0.25\textwidth}
+\renewcommand{\nomlabel}[1]{\hspace*{1.07cm}#1 \dotfill}
+% Zeilenabstände verkleinern
+\setlength{\nomitemsep}{-\parsep}
+\renewcommand{\nompreamble}{\markboth{\nomname}{\nomname}}
+\makenomenclature
+
+
+% Define columns for revision history
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Define ProMik Green
+\usepackage{xcolor}
+\definecolor{ProMikGreen}{RGB}{63, 140, 36}
+
+% Page style for regular pages
+\fancyhf{}
+\fancyhead[R]{
+	%\textcolor{red}{\textbf{Preliminary document for some company}} \hspace*{3.5cm}
+	\includegraphics[scale=0.25] {images/ProMik-Logo_4C}
+}
+
+\renewcommand{\footrulewidth}{0.4pt}
+\addtolength{\footskip}{5pt}
+\fancyfoot[C]{
+	\vspace*{0.5\baselineskip}
+	\thepage
+	\vspace*{0.5\baselineskip}
+	\begin{footnotesize}
+		\renewcommand{\arraystretch}{1.2} %distance border top <--> text within a table-cell
+		\setlength{\tabcolsep}{1.5mm} %spaltenabstand
+		\begin{tabularx}{\textwidth}{llllX}
+			\multicolumn{5}{l}{\includegraphics[trim={0 0 0 0},clip, scale=0.11]{images/ProMik-Logo_4C.eps}}                                                                                                                                                       \\
+			Programmiersysteme für die & Phone: & +49 (0) 911-25 26 65-0                              & \multirow{4}{*}{\qrcode[height=1.5cm]{http://www.promik.com}} & Certified according to:                                                                    \\
+			Mikroelektronik GmbH       & Fax:   & +49 (0) 911-25 26 65-66                             &                                                               & \hspace*{0.8mm} - ISO 9001                                                                 \\
+			Südwestpark 100            & Mail:  & \href{mailto:info@promik.com}{info@promik.com}      &                                                               & \hspace*{0.8mm} - ISO 14001                                                                \\
+			D-90449 Nürnberg           & Web:   & \href{http://www.promik.com}{http://www.promik.com} &                                                               & \raisebox{0.325ex}{\resizebox{!}{1.2ex}{\textcopyright}} ProMik GmbH,  All rights reserved \\
+		\end{tabularx}
+	\end{footnotesize}
+}
+
+%\raisebox{0.325ex}{\resizebox{!}{1.2ex}{\textcopyright}} ProMik GmbH
+%All rights reserved
+
+
+% Page style for title page
+\fancypagestyle{plain}{
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+	\fancyhead[R]{
+		\vspace*{3\baselineskip}
+	}
+	\fancyfoot[C]{
+		\begin{footnotesize}
+			\renewcommand{\arraystretch}{1.2} %distance border top <--> text within a table-cell
+			\setlength{\tabcolsep}{1.5mm} %spaltenabstand
+			\begin{tabularx}{\textwidth}{llllX}
+				\multicolumn{5}{l}{}                                                                                                                                                                                                                                   \\
+				Programmiersysteme für die & Phone: & +49 (0) 911-25 26 65-0                              & \multirow{4}{*}{\qrcode[height=1.5cm]{http://www.promik.com}} & Certified according to:                                                                    \\
+				Mikroelektronik GmbH       & Fax:   & +49 (0) 911-25 26 65-66                             &                                                               & \hspace*{0.8mm} - ISO 9001                                                                 \\
+				Südwestpark 100            & Mail:  & \href{mailto:info@promik.com}{info@promik.com}      &                                                               & \hspace*{0.8mm} - ISO 14001                                                                \\
+				D-90449 Nürnberg           & Web:   & \href{http://www.promik.com}{http://www.promik.com} &                                                               & \raisebox{0.325ex}{\resizebox{!}{1.2ex}{\textcopyright}} ProMik GmbH,  All rights reserved \\
+			\end{tabularx}
+		\end{footnotesize}
+	}}
+
+\pagestyle{fancy}
+
+\title{
+	\includegraphics[scale=0.7] {images/ProMik-Logo_4C} \\
+	\vspace{1cm}
+	\huge{REPORT OF TEST COVERAGE OF GENERATED SVF FILES}\\
+	\vspace{1.25cm}
+	%\vhCurrentDate
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Useful global Tex Commands/Definitions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\arraystretch}{1.4} %distance border <--> text within a table-cell
+
+% --- Abkürzung bei der ersten Verwendung ------------------
+%Zum Abkürzungsverzeichnis hinzufügen
+%Neuen Anker für die Abkürzung setzen
+%Link auf Abkürzungsverzeichnis, Abkürzung und Bedeutung ausschreiben
+\newcommand{\abvDef}[2]{\nomenclature{#1}{#2}\label{Abv.#1}\hyperref[AbvIndex]{#1 (#2)}}
+
+% --- Abkürzung bei weiterer Verwendung --------------------
+\newcommand{\abv}[1]{\hyperref[Abv.#1]{#1}}
+
+% overline für RESET for instance
+\makeatletter
+\newcommand*{\textoverline}[1]{$\overline{\hbox{#1}}\m@th$}
+\makeatother
+
+% colors
+\definecolor{light_grey}{rgb}{0.90,0.90,0.90}
+
+\definecolor{Gray}{gray}{0.85}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+
+% tables
+\newcommand{\mc}[2]{\multicolumn{#1}{c}{#2}}
+\newcolumntype{a}{>{\columncolor{light_grey}}l}
+\newcolumntype{b}{>{\columncolor{white}}c}

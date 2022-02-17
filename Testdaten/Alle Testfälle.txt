@@ -1,0 +1,66 @@
+Grundsätzlich besteht ein Boundary Scan Pin aus entweder 1, 2 oder 3 Boundary Scan Zellen:
+Diese können sein:
+input || control & output || control & input & output
+Wird control in den safe zustand versetzt nehmen die Zellen den INPUTMODUS an. beim gegenteiligen ansteueren nimmt sie den OUTPUTMODUS an
+1 zellige boudary scan pins können nur gelesen werden! bedeutet TDI kann komplett 0 sein
+für 2 und 3 zellige versionen gilt:
+	TDI kann nur sinnvoll angesteuert werden: CONTROL = INPUT || CONTROL = OUTPUT & OUTPUT = ERWARTUNGSWERT
+	TDO kann nur sinnvoll zurückgelesen werden: INPUT (bei 3 Zellen) oder OUTPUT (bei 2 Zellen)
+die maske ist entsprechend der position INPUT (bei 1 || 3 Zellen) oder OUTPUT (bei 2 Zellen) zu setzen
+
+pullUps:
+pullUpsAndDowns:
+	pull-up test für bidir mit 3 zellen
+	test 1: TDI[control] = input, erwartet TDO [input] ist 1 - OK
+	test 2: TDI[control] = output, TDI[output] = 0, erwarteter TDO [input] ist 0 - OK
+
+	pull-up test für bidir mit 2 zellen
+	test 1: TDI[control] = input, erwartet TDO [output] ist 1
+	test 2: TDI[control] = output, TDI[output] = 0, erwarteter TDO [output] ist 0
+
+pullDowns:
+pullUpsAndDowns:
+	pull-down test für bidir mit 3 zellen
+	test 1: TDI[control] = input, erwartet TDO [input] ist 0 - 
+	test 2: TDI[control] = output, TDI[output] = 1, erwarteter TDO [input] ist 1 - OK
+
+	pull-down test für bidir mit 2 zellen
+	test 1: TDI[control] = input, erwartet TDO [output] ist 0 - 
+	test 2: TDI[control] = output, TDI[output] = 1, erwarteter TDO [output] ist 1 - OK
+
+directGnd:
+	directGnd test für bidir mit 3 zellen
+	test 1: TDI[control] = input, erwartet TDO [input] ist 0 - 
+	test 2: TDI[control] = output, TDI[output] = 1, erwarteter TDO [input] ist 0 - OK
+
+	directGnd test für bidir mit 2 zellen
+	test 1: TDI[control] = input, erwartet TDO [output] ist 0 - 
+	test 2: TDI[control] = output, TDI[output] = 1, erwarteter TDO [output] ist 0 - OK
+
+directPower:
+	directPower test für bidir mit 3 zellen
+	test 1: TDI[control] = input, erwartet TDO [input] ist 1 - 
+	test 2: TDI[control] = output, TDI[output] = 0, erwarteter TDO [input] ist 1 - OK
+
+	directPower test für bidir mit 2 zellen
+	test 1: TDI[control] = input, erwartet TDO [output] ist 1 - 
+	test 2: TDI[control] = output, TDI[output] = 0, erwarteter TDO [output] ist 1 - OK
+
+unknownsControl:
+	others (short) test für bidir mit 3 zellen
+	test 1: TDI[control] = output, TDI[output] = 0, erwarteter TDO [input] ist 0 - OK
+	test 2: TDI[control] = output, TDI[output] = 1, erwarteter TDO [input] ist 1 - OK
+		
+	others (short) test für bidir mit 2 zellen
+	test 1: TDI[control] = output, TDI[output] = 0, erwarteter TDO [output] ist 0 - OK
+	test 2: TDI[control] = output, TDI[output] = 1, erwarteter TDO [output] ist 1 - OK
+	
+unknownsInput:
+	others (short) test für bidir mit 3 zellen
+	test 3: TDI[control] = input, erwarteter TDO [input] ist 0 - OK
+	test 4: TDI[control] = input, erwarteter TDO [input] ist 1 - OK
+		
+	others (short) test für bidir mit 2 zellen
+	test 3: TDI[control] = input, erwarteter TDO [output] ist 0 - OK
+	test 4: TDI[control] = input, erwarteter TDO [output] ist 1 - OK
+		

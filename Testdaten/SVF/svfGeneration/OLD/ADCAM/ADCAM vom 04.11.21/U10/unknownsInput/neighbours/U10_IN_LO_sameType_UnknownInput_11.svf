@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"V4","MaskPosition":308,"PinPort":"rgmii_tx_clk","ConnectedComponents":["R231"],"TestType":8},{"PinName":"Y4","MaskPosition":296,"PinPort":"rgmii_rx_clk","ConnectedComponents":["CON5"],"TestType":5},{"PinName":"Y3","MaskPosition":298,"PinPort":"rgmii_rx_ctl","ConnectedComponents":["CON5"],"TestType":5},{"PinName":"W5","MaskPosition":292,"PinPort":"sma_mdc","ConnectedComponents":["CON5"],"TestType":5},{"PinName":"AC24","MaskPosition":206,"PinPort":"spi_a_ck","ConnectedComponents":["78","R20"],"TestType":5},{"PinName":"AE24","MaskPosition":210,"PinPort":"spi_a_do","ConnectedComponents":["80","R21"],"TestType":5},{"PinName":"AA24","MaskPosition":195,"PinPort":"spi_b_ck","ConnectedComponents":["CON5","72","R17"],"TestType":5},{"PinName":"AA23","MaskPosition":197,"PinPort":"spi_b_di","ConnectedComponents":["CON5","70","R16"],"TestType":5},{"PinName":"AD21","MaskPosition":224,"PinPort":"uart_a_rx","ConnectedComponents":["CON5","46"],"TestType":5},{"PinName":"AC21","MaskPosition":226,"PinPort":"uart_a_tx","ConnectedComponents":["CON5"],"TestType":5},{"PinName":"V3","MaskPosition":310,"PinPort":"rgmii_tx_ctl","ConnectedComponents":["R242"],"TestType":5}],"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 16 TDI (01);
+SDR 324 TDI (00AAAAAAEBAAAAAAAAEEFAEBAAAAAAFA57000000017D5EA000000000000000000000008000000000BF);
+SIR 16 TDI (02);
+SDR 324 TDI (00AAAAAAEBAAAAAAAAEEFAEBAAAAAAFA57000000017D5EA000000000000000000000008000000000BF)
+TDO (00AAAAAAEBAAAAAAAAEEFAEBAAAAAAFA57000000017D5EA000000000000000000000008000000000BF)
+MASK (0000500510000000000000000500044028000000000000000000000000000000000000000000000000);

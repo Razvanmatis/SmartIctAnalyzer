@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Globalization;
-using Interfaces.Gui;
+using System.Windows.Forms;
 using ProMik.Core.Interfaces.Events;
+using ProMik.SmartIct.Interfaces.Gui;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Interfaces;
 using Ui.Modules.ModuleName.Views;
@@ -41,6 +42,8 @@ namespace Ui.Modules.ModuleName.Implementations
                 allSettingsView = new AllSettingsView(eventService);
             }
 
+            allSettingsView.Top = (Screen.PrimaryScreen.Bounds.Height / 2) - (allSettingsView.Height / 2);
+            allSettingsView.Left = (Screen.PrimaryScreen.Bounds.Width / 2) - (allSettingsView.Width / 2);
             allSettingsView.Show();
         }
 
@@ -63,7 +66,8 @@ namespace Ui.Modules.ModuleName.Implementations
 
         public void HandleExportSettings(IProjectHandler projectHandlerToUse)
         {
-            if (!dialogSelector.OpenGenericDialog(DialogType.SAVEFILE, TextRessources.ExportSettingsFile, "No valid target to save selected!", out string fileName, TextRessources.SettingsFilter))
+            string fileName = projectHandlerToUse.GetSettingsDestinationPath();
+            if (string.IsNullOrEmpty(fileName))
             {
                 return;
             }

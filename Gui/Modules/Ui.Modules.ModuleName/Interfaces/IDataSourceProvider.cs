@@ -1,13 +1,10 @@
 ﻿using System.Threading.Tasks;
+using ProMik.SmartIct.Services.ManifestHandler.Interfaces;
 
 namespace Ui.Modules.ModuleName.Interfaces
 {
-    public interface IDataSourceProvider
+    public interface IDataSourceProvider : IDataSourceCollector
     {
-        byte[] GetSettingsFileContent();
-
-        byte[] GetJsonProjectContent();
-
         Task<string> GetOdbProjectFolder();
     }
 }

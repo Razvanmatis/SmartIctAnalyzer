@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using ProMik.SmartIct.Interfaces.PcbInvestigator.Enums;
 
-namespace Interfaces.PcbInvestigator
+namespace ProMik.SmartIct.Interfaces.PcbInvestigator
 {
     public interface IPCBComponent
     {
@@ -9,5 +10,7 @@ namespace Interfaces.PcbInvestigator
         IFunctionalAttributes FunctionalAttributes { get; }
 
         IList<IPinComponent> Connections { get; }
+
+        PcbComponentType ComponentType { get; }
     }
 }

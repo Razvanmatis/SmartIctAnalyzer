@@ -1,0 +1,26 @@
+#
+#Units
+#
+UNITS=MM
+ID=762
+#
+#Num Features
+#
+F 2
+#
+#Feature symbol names
+#
+$0 rect2590.8x2108.2
+#
+#Layer features
+#
+S P 0 ;;ID=763
+OB 1.2954 -0.563117 I
+OS 1.2954 -1.126489
+OS -1.2954 -1.12649
+OS -1.2954 -0.563118
+OS 1.2954 -0.563117
+OS 1.2954 -0.563117
+OE
+SE
+P 0 0 0 P 0 0 ;;ID=764

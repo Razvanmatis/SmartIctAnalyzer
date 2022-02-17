@@ -1,6 +1,6 @@
-﻿using Interfaces.PcbInvestigator;
+﻿using ProMik.SmartIct.Interfaces.PcbInvestigator;
 
-namespace TestCoverage.Interfaces
+namespace ProMik.SmartIct.TestCoverageDeterminer.Interfaces
 {
     public enum TestCoverageObject
     {

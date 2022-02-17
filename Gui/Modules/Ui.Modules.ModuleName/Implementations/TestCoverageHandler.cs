@@ -1,7 +1,7 @@
 ﻿using System;
-using Interfaces.Gui;
-using TestCoverage.Helper;
-using TestCoverage.Interfaces;
+using ProMik.SmartIct.Interfaces.Gui;
+using ProMik.SmartIct.TestCoverageDeterminer.Helper;
+using ProMik.SmartIct.TestCoverageDeterminer.Interfaces;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.Implementations
@@ -25,7 +25,9 @@ namespace Ui.Modules.ModuleName.Implementations
             this.settingsStorageManager = settingsStorageManager;
         }
 
-        public void DetermineObjects(Action<TestCoverageItems> setItemsObjectsAction, Func<TestCoverageItems> getActualItemsObjectFunc)
+        public void DetermineObjects(
+            Action<TestCoverageItems> setItemsObjectsAction,
+            Func<TestCoverageItems> getActualItemsObjectFunc)
         {
             if (resultModel.Result != null && resultModel.Result.Nets != null && resultModel.Result.Nets.Count > 0)
             {
@@ -37,7 +39,7 @@ namespace Ui.Modules.ModuleName.Implementations
                         content.GndNetBlacklist,
                         content.PowerNetIdentifier,
                         content.PowerNetBlacklist,
-                        content.JTAGNetIdentifier,
+                        content.JTAGPinIdentifier,
                         content.JTAGNetBlacklist),
                     getActualItemsObjectFunc()));
             }

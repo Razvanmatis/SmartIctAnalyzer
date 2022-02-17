@@ -3,8 +3,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using Interfaces.PcbInvestigator;
 using Prism.Commands;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.PCBComponentParser.Implementations;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.ViewModels
@@ -12,6 +13,13 @@ namespace Ui.Modules.ModuleName.ViewModels
     public abstract class ViewModelPCBComponentBase : ViewModelPCBBase
     {
         private const double OPACITYMIN = 0.1;
+        private const int ZINDEXPCBCOMPONENT = 900;
+        private const int ZINDEXCONNECTOR = 901;
+        private const int ZINDEXINDUCTION = 902;
+        private const int ZINDEXCAPACITOR = 903;
+        private const int ZINDEXRESISTOR = 904;
+        private const int ZINDEXIC = 904;
+        private const int ZINDEXTESTPOINT = 905;
         private static bool xAxisMirror;
         private static bool yAxisMirror;
         private readonly ISettingsData settingsVm;
@@ -25,6 +33,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         private SolidColorBrush borderColor;
         private int borderThickness;
         private Visibility toolTipVisible;
+        private string refName;
 
         public ViewModelPCBComponentBase(IPCBComponent component, ISettingsData settingsVm, IComponentHandler componentVm)
             : base(component.GeometricAttributes.Bounds.X, component.GeometricAttributes.Bounds.Y)
@@ -36,13 +45,45 @@ namespace Ui.Modules.ModuleName.ViewModels
             ToggleVisiblityAll = new DelegateCommand(async () => await ToggleVisibiltyAll().ConfigureAwait(false));
             ToggleConnections = new DelegateCommand(async () => await ToggleConnectionsShowing().ConfigureAwait(false));
             Name = component?.FunctionalAttributes?.Ref;
+            Ref = component?.FunctionalAttributes?.Ref;
             Value = component?.FunctionalAttributes?.Value;
             if (string.IsNullOrEmpty(Value))
             {
                 Value = component?.FunctionalAttributes?.PartName;
             }
 
+            ZIndex = GetZindex();
             InitValues(false);
+        }
+
+        private int GetZindex()
+        {
+            if (component is PCBConnector)
+            {
+                return ZINDEXCONNECTOR;
+            }
+            else if (component is PCBInduction)
+            {
+                return ZINDEXINDUCTION;
+            }
+            else if (component is PCBCapacitor)
+            {
+                return ZINDEXCAPACITOR;
+            }
+            else if (component is PCBIc)
+            {
+                return ZINDEXIC;
+            }
+            else if (component is PCBResistor)
+            {
+                return ZINDEXRESISTOR;
+            }
+            else if (component is PCBTestpoint)
+            {
+                return ZINDEXTESTPOINT;
+            }
+
+            return ZINDEXPCBCOMPONENT;
         }
 
         public IGeometricAttributes GeometricAttributes
@@ -115,6 +156,19 @@ namespace Ui.Modules.ModuleName.ViewModels
             set
             {
                 SetProperty(ref toolTipVisible, value);
+            }
+        }
+
+        public string Ref
+        {
+            get
+            {
+                return refName;
+            }
+
+            set
+            {
+                SetProperty(ref refName, value);
             }
         }
 
@@ -250,7 +304,7 @@ namespace Ui.Modules.ModuleName.ViewModels
                 BorderThickness = 1;
             }
 
-            if (string.IsNullOrEmpty(Value))
+            if (string.IsNullOrEmpty(Value) && string.IsNullOrEmpty(Ref))
             {
                 ToolTipVisible = Visibility.Hidden;
             }
@@ -269,6 +323,7 @@ namespace Ui.Modules.ModuleName.ViewModels
         private void ToggleVisibleState()
         {
             Opacity = Opacity == ViewModelPCBBase.OPACITYMAX ? OPACITYMIN : ViewModelPCBBase.OPACITYMAX;
+            ZIndex = Opacity == ViewModelPCBBase.OPACITYMAX ? GetZindex() : ZINDEXMIN;
         }
 
         private async Task ToggleVisibiltyAll()

@@ -1,0 +1,20 @@
+#
+#Units
+#
+UNITS=MM
+ID=90
+#
+#Num Features
+#
+F 1
+#
+#Layer features
+#
+S P 0 ;;ID=91
+OB -1.0922 1.0501 I
+OS 1.0922 1.0501
+OS 1.0922 -0.550099
+OS -1.0922 -0.5501
+OS -1.0922 1.0501
+OE
+SE

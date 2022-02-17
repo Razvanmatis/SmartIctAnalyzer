@@ -1,4 +1,4 @@
-﻿namespace TestCoverage.Helper
+﻿namespace ProMik.SmartIct.TestCoverageDeterminer.Helper
 {
     public class TestCoverageItems
     {

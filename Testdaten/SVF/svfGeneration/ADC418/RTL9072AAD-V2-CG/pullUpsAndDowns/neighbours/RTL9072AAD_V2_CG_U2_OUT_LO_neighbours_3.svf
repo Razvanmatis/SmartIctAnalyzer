@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"U2","MaskPosition":126,"PinPort":"GPIOC_3","ConnectedComponents":["R22042"],"TestType":8},{"PinName":"T1","MaskPosition":92,"PinPort":"P4_RXD2","ConnectedComponents":["DIRECT_GND"],"TestType":6},{"PinName":"U1","MaskPosition":90,"PinPort":"P4_RXD1","ConnectedComponents":["DIRECT_GND"],"TestType":6},{"PinName":"V1","MaskPosition":88,"PinPort":"P4_RXD0","ConnectedComponents":["DIRECT_GND"],"TestType":6}],"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 24 TDI (FFFFF8);
+SDR 166 TDI (000000000080000000150000000000000000000000);
+SIR 24 TDI (FFFFE8);
+SDR 166 TDI (000000000080000000150000000000000000000000)
+TDO (000000000000000000000000000000000000000000)
+MASK (000000000040000000150000000000000000000000);

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CableCompensation" xml:space="preserve">
+    <value>Enter the cable compensation for JTAG device:</value>
+  </data>
   <data name="ExportIntoJsonFile" xml:space="preserve">
     <value>Export into JSON file: {0}ms</value>
   </data>
@@ -126,6 +129,12 @@
   <data name="ExportSettingsFile" xml:space="preserve">
     <value>Export settings file"</value>
   </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Enter the frequency to be used in Hz for JTAG device:</value>
+  </data>
+  <data name="FrequencyAndCableCompensation" xml:space="preserve">
+    <value>Type in the frequency in Hz to use and the cable compensation (a;b) for the JTAG device:</value>
+  </data>
   <data name="ImportDataFromFile" xml:space="preserve">
     <value>Import object data from file</value>
   </data>
@@ -134,6 +143,12 @@
   </data>
   <data name="JsonFilter" xml:space="preserve">
     <value>json files (*.json)|*.json|All files (*.*)|*.*</value>
+  </data>
+  <data name="PdfFilter" xml:space="preserve">
+    <value>PDF files (*.pdf)|*.pdf|All files (*.*)|*.*</value>
+  </data>
+  <data name="PdfSaveFile" xml:space="preserve">
+    <value>Select or specify the PDF file to be saved at</value>
   </data>
   <data name="PinExportTitle" xml:space="preserve">
     <value>Export PIN connection information into local file</value>
@@ -152,6 +167,9 @@
   </data>
   <data name="SelectSvfFolder" xml:space="preserve">
     <value>Select folder to save the SVF files at</value>
+  </data>
+  <data name="SelectSvfFolderForPlay" xml:space="preserve">
+    <value>Select the SVF folder to be played</value>
   </data>
   <data name="SelectTheOdbProjectPath" xml:space="preserve">
     <value>Select the ODB project path</value>

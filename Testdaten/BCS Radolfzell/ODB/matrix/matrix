@@ -1,0 +1,300 @@
+
+STEP {
+    COL=1
+    NAME=panel_17045439
+}
+
+
+STEP {
+    COL=2
+    NAME=17045438_master
+}
+
+
+LAYER {
+    ROW=1
+    CONTEXT=BOARD
+    TYPE=COMPONENT
+    NAME=comp_+_top
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=2
+    CONTEXT=BOARD
+    TYPE=SILK_SCREEN
+    NAME=sst
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=3
+    CONTEXT=BOARD
+    TYPE=SOLDER_PASTE
+    NAME=spt
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=4
+    CONTEXT=BOARD
+    TYPE=SOLDER_MASK
+    NAME=smt
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=5
+    CONTEXT=BOARD
+    TYPE=SIGNAL
+    NAME=signal_1
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=6
+    CONTEXT=BOARD
+    TYPE=SIGNAL
+    NAME=signal_2
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=7
+    CONTEXT=BOARD
+    TYPE=POWER_GROUND
+    NAME=signal_3
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=8
+    CONTEXT=BOARD
+    TYPE=SIGNAL
+    NAME=signal_4
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=9
+    CONTEXT=BOARD
+    TYPE=SOLDER_MASK
+    NAME=smb
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=10
+    CONTEXT=BOARD
+    TYPE=SOLDER_PASTE
+    NAME=spb
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=11
+    CONTEXT=BOARD
+    TYPE=SILK_SCREEN
+    NAME=ssb
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=12
+    CONTEXT=BOARD
+    TYPE=COMPONENT
+    NAME=comp_+_bot
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=13
+    CONTEXT=BOARD
+    TYPE=DRILL
+    NAME=d_1_4
+    POLARITY=POSITIVE
+    START_NAME=signal_1
+    END_NAME=signal_4
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=14
+    CONTEXT=BOARD
+    TYPE=ROUT
+    NAME=rout
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=15
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=assemt
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=16
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=assemb
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=17
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=ddt
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=18
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=gerber_top
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=19
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=gerber_bot
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=20
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=dwg_mark
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=21
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=gerber_all
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=22
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=dwg_markpcb
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=23
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=odb_panel_outline
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=24
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    NAME=odb_board_outline
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+

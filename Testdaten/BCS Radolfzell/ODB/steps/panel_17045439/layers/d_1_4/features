@@ -1,0 +1,65 @@
+#
+#Units
+#
+U INCH
+#
+#Feature symbol names
+#
+$0 r133.858
+$1 r118.11
+#
+#Feature attribute names
+#
+@0 .pad_usage
+@1 .test_point
+@2 .geometry
+@3 .smd
+@4 .nomenclature
+@5 .string
+@6 .drc_assembly_lyrs
+@7 .drc_board
+@8 .drc_comp_height
+@9 .drc_comp_keepin
+@10 .drc_comp_keepout
+@11 .drc_etch_lyrs
+@12 .drc_etch_lyrs_all
+@13 .drc_etch_lyrs_bit
+@14 .drc_max_height
+@15 .drc_min_height
+@16 .drc_pad_keepout
+@17 .drc_plane_keepout
+@18 .drc_ref_des
+@19 .drc_route_keepin
+@20 .drc_route_keepout
+@21 .drc_tp_keepin
+@22 .drc_tp_keepout
+@23 .drc_trace_keepout
+@24 .drc_via_keepout
+@25 .drill
+@26 .pf_optimized
+@27 .source_llayer
+@28 .tear_drop
+@29 .artwork
+@30 .pattern_fill
+@31 .hatch
+@32 .mount_hole
+@33 .tooling_hole
+#
+#Feature attribute text strings
+#
+&0 panel_drn_3.4_mm_+_-tol_0.05_non-plated
+&1 panel_oblong_4_4x3.4_mm_+_-tol_0.05_non-plated
+&2 panel_drn_3.0_mm_+_-tol_0.05_non-plated
+#
+#Layer features
+#
+P 0 7.874015748031 0 P 1 0 ;0=4,2=0,25=1,32
+P 10.535433070866 7.874015748031 0 P 1 0 ;0=4,2=0,25=1,32
+L 0.374015748031 7.874015748031 0.413385826772 7.874015748031 0 P 1 ;0=4,2=1,25=1,32
+L 0.374015748031 0 0.413385826772 0 0 P 1 ;0=4,2=1,25=1,32
+P 8.897637795276 3.937007874016 1 P 2 0 ;0=4,2=2,25=1,32
+L 10.240157480315 7.874015748031 10.279527559055 7.874015748031 0 P 1 ;0=4,2=1,25=1,32
+P 10.535433070866 0 0 P 1 0 ;0=4,2=0,25=1,32
+P 0 0 0 P 1 0 ;0=4,2=0,25=1,32
+P 1.614173228346 3.937007874016 1 P 2 0 ;0=4,2=2,25=1,32
+L 10.240157480315 0 10.279527559055 0 0 P 1 ;0=4,2=1,25=1,32

@@ -1,4 +1,4 @@
-﻿namespace GrpcClientParser.Helper.JsonObjects
+﻿namespace ProMik.SmartIct.PCBComponentParser.Helper.JsonObjects
 {
     public enum ComponentTypeJson
     {
@@ -52,7 +52,8 @@
             string layerName,
             string packageName,
             string value,
-            string normalizedName)
+            string normalizedName,
+            int stepNo)
         {
             ComponentType = componentType;
             Ref = refValue;
@@ -61,6 +62,7 @@
             PackageName = packageName;
             Value = value;
             NormalizedName = normalizedName;
+            StepNo = stepNo;
         }
 
         public ComponentTypeJson ComponentType { get; set; }
@@ -76,5 +78,7 @@
         public string Value { get; set; }
 
         public string NormalizedName { get; }
+
+        public int StepNo { get; }
     }
 }

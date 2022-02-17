@@ -1,5 +1,5 @@
-﻿using GrpcClientParser.Implementations;
-using Interfaces.PcbInvestigator;
+﻿using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.PCBComponentParser.Implementations;
 using Ui.Modules.ModuleName.Interfaces;
 using Ui.Modules.ModuleName.ViewModels;
 
@@ -7,7 +7,10 @@ namespace Ui.Modules.ModuleName.Helper
 {
     public static class ViewModelFactory
     {
-        public static ViewModelPCBComponentBase GetViewModelObject(IPCBComponent component, ISettingsData settingsVm, IComponentHandler componentVm)
+        public static ViewModelPCBComponentBase GetViewModelObject(
+            IPCBComponent component,
+            ISettingsData settingsVm,
+            IComponentHandler componentVm)
         {
             if (component is PCBResistor)
             {

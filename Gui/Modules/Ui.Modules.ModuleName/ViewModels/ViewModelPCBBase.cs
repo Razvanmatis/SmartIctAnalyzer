@@ -6,12 +6,14 @@ namespace Ui.Modules.ModuleName.ViewModels
     {
         public const double OPACITYMAX = 1;
         public const int OFFSET = 15;
-        private const int ZINDEXDEF = 1000;
+        public const int ZINDEXMIN = 2;
+        public const int ZINDEXDEF = 1000;
         private static int offsetX;
         private static int offsetY;
         private double opacity = OPACITYMAX;
         private double posXToUse;
         private double posYToUse;
+        private int zindex = ZINDEXDEF;
 
         public ViewModelPCBBase(double posX, double posY)
         {
@@ -39,7 +41,12 @@ namespace Ui.Modules.ModuleName.ViewModels
         {
             get
             {
-                return ZINDEXDEF;
+                return zindex;
+            }
+
+            set
+            {
+                SetProperty(ref zindex, value);
             }
         }
 

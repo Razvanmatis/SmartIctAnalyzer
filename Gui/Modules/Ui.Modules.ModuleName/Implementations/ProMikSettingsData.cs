@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Media;
-using Interfaces.Gui;
 using ProMik.Core.Interfaces.Settings;
+using ProMik.SmartIct.Interfaces.Gui;
+using Ui.Modules.ModuleName.Helper;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.Implementations
@@ -61,6 +62,8 @@ namespace Ui.Modules.ModuleName.Implementations
         private const string COMPCHECKNAMESETTINGKEY = "compCheckNameSettingKey";
         private const string SECTIONGENKEY = "sectionGenKey";
         private const string SECTIONGENNAME = "General appearance";
+        private const string USECONTAINSSETTINGKEY = "useContainsSettingKey";
+        private const string USECONTAINSSETTINGNAME = "Use \"contains\" for component determination instead of \"start with\"";
         private const string FONTSIZESETTINGKEY = "fontSizeSettingKey";
         private const string FONTSIZESETTINGNAME = "Fontsize of names:";
         private const string SHOWNETNAMESSETTINGKEY = "showNetNamesSettingKey";
@@ -94,12 +97,12 @@ namespace Ui.Modules.ModuleName.Implementations
         private const string POWERBLACKSETTINGKEY = "POWERBlackSettingKey";
         private const string JTAGSECTIONKEY = "JTAGSectionKey";
         private const string JTAGSECTIONNAME = "JTAG settings";
-        private const string JTAGIDENTSETTINGKEY = "JTAGIdentSettingKey";
-        private const string JTAGIDENTSETTINGNAME = "JTAG nets identifier (a;b;c):";
         private const string JTAGBLACKSETTINGKEY = "JTAGBlackSettingKey";
-        private const string JTAGPINSNAME = "JTAG pin identifier (a;b;c)";
+        private const string JTAGPINSNAME = "JTAG nets identifier (a;b;c)";
         private const string JTAGPINSKEY = "JTAGExtendedPinsSettingKey";
-        private const string DEFJTAGPINSVALUE = PinInformationExtractor.Implementations.PinInformationExtractor.DEFJTAGPINIDENTIFIER;
+        private const string DEFJTAGPINSVALUE = ProMik.SmartIct.JtagPinInformationExtractor.Implementations.JJtagPinInformationCreator
+            .DEFJTAGPINIDENTIFIER;
+
         private const string PAGEKEYSVF = "pageKeySvf";
         private const string PAGENAMESVF = "SVF Player";
         private const string SECTIONSVFKEY = "sectionSvfProgrammerKey";
@@ -112,6 +115,16 @@ namespace Ui.Modules.ModuleName.Implementations
         private const string SVFSUPPLYVNAME = "Supply Voltage in mv:";
         private const string SVFIOVOLTAGESETTINGKEY = "svfIoVoltageSettingKey";
         private const string SVFIOVOLTAGENAME = "IO Voltage in mv:";
+        private const string SVFFREQUENCYKEY = "svfFrequencyKey";
+        private const string SVFFREQUENCYNAME = "Default frequency to use in KHz";
+        private const string SVFCABLECOMPKEY = "svfCableCompKey";
+        private const string SVFCABLECOMPNAME = "Default cable compensation to use";
+        private const string SVFTARGETSETTINGKEY = "svfTargetSettingKey";
+        private const string SVFTARGETNAME = "Programmer Target";
+        private const string SVFSLOTSETTINGKEY = "svfSlotSettingKey";
+        private const string SVFSLOTNAME = "Programmer Slot";
+        private const string ASKFORSVFSESETTINGSKEY = "svfUseSettingsKey";
+        private const string ASKFORSESETTINGSNAME = "Ask the user for programmer related settings";
         private readonly ISettingsService settingsService;
         private readonly ILogger logger;
         private IList<string> resistorChars;
@@ -140,7 +153,6 @@ namespace Ui.Modules.ModuleName.Implementations
         private string steps;
         private string ipAddress;
         private string jtagPinIdentifier;
-        private string jtagNetIdentifier;
         private string jtagNetBlacklist;
         private string powerNetIdentifier;
         private string powerNetBlacklist;
@@ -150,6 +162,12 @@ namespace Ui.Modules.ModuleName.Implementations
         private uint pgmPort;
         private uint supplyVoltageMv;
         private uint ioVoltageMv;
+        private uint frequency;
+        private uint cableCompensation;
+        private bool askForSvfSettings;
+        private TargetDef target;
+        private SlotDef slot;
+        private bool useContains;
 
         public ProMikSettingsData(ISettingsService settingsService, ILogger logger)
         {
@@ -164,6 +182,42 @@ namespace Ui.Modules.ModuleName.Implementations
             get
             {
                 return resistorChars;
+            }
+
+            set
+            {
+            }
+        }
+
+        public bool UseContains
+        {
+            get
+            {
+                return useContains;
+            }
+
+            set
+            {
+            }
+        }
+
+        public TargetDef Target
+        {
+            get
+            {
+                return target;
+            }
+
+            set
+            {
+            }
+        }
+
+        public SlotDef Slot
+        {
+            get
+            {
+                return slot;
             }
 
             set
@@ -459,18 +513,6 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
-        public string JTAGNetIdentifier
-        {
-            get
-            {
-                return jtagNetIdentifier;
-            }
-
-            set
-            {
-            }
-        }
-
         public string JTAGNetBlacklist
         {
             get
@@ -593,48 +635,88 @@ namespace Ui.Modules.ModuleName.Implementations
             }
         }
 
+        public uint Frequency
+        {
+            get
+            {
+                return frequency;
+            }
+
+            set
+            {
+            }
+        }
+
+        public uint CableCompensation
+        {
+            get
+            {
+                return cableCompensation;
+            }
+
+            set
+            {
+            }
+        }
+
+        public bool AskForSvfSettings
+        {
+            get
+            {
+                return askForSvfSettings;
+            }
+
+            set
+            {
+            }
+        }
+
         public void InitContent()
         {
             settingsService.Reinitialize();
             resistorChars = GetListContent(GetSettingValue<string>(RCHARSSETTINGKEY));
-            resistorColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(RCOLORSETTINGKEY));
+            resistorColor = GetSettingValue<System.Drawing.Color>(RCOLORSETTINGKEY).ConvertToMediaColor();
             resistorNamesChecked = GetSettingValue<bool>(RCHECKNAMESETTINGKEY);
             capacitorChars = GetListContent(GetSettingValue<string>(CCHARSSETTINGKEY));
-            capacitorColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(CCOLORSETTINGKEY));
+            capacitorColor = GetSettingValue<System.Drawing.Color>(CCOLORSETTINGKEY).ConvertToMediaColor();
             capacitorNamesChecked = GetSettingValue<bool>(CCHECKNAMESETTINGKEY);
             inductionChars = GetListContent(GetSettingValue<string>(ICHARSSETTINGKEY));
-            inductionColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(ICOLORSETTINGKEY));
+            inductionColor = GetSettingValue<System.Drawing.Color>(ICOLORSETTINGKEY).ConvertToMediaColor();
             inductionNamesChecked = GetSettingValue<bool>(ICHECKNAMESETTINGKEY);
             icChars = GetListContent(GetSettingValue<string>(ICCHARSSETTINGKEY));
-            icColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(ICCOLORSETTINGKEY));
+            icColor = GetSettingValue<System.Drawing.Color>(ICCOLORSETTINGKEY).ConvertToMediaColor();
             icNamesChecked = GetSettingValue<bool>(ICCHECKNAMESETTINGKEY);
             connectorChars = GetListContent(GetSettingValue<string>(CONCHARSSETTINGKEY));
-            connectorColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(CONCOLORSETTINGKEY));
+            connectorColor = GetSettingValue<System.Drawing.Color>(CONCOLORSETTINGKEY).ConvertToMediaColor();
             connectorNamesChecked = GetSettingValue<bool>(CONCHECKNAMESETTINGKEY);
             testpointChars = GetListContent(GetSettingValue<string>(TPCHARSSETTINGKEY));
-            testpointColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(TPCOLORSETTINGKEY));
+            testpointColor = GetSettingValue<System.Drawing.Color>(TPCOLORSETTINGKEY).ConvertToMediaColor();
             testpointNamesChecked = GetSettingValue<bool>(TPCHECKNAMESETTINGKEY);
-            compColor = (Color)ColorConverter.ConvertFromString(GetSettingValue<string>(COMPCOLORSETTINGKEY));
+            compColor = GetSettingValue<System.Drawing.Color>(COMPCOLORSETTINGKEY).ConvertToMediaColor();
             compNamesChecked = GetSettingValue<bool>(COMPCHECKNAMESETTINGKEY);
-            fontSizeNames = GetSettingValue<int>(FONTSIZESETTINGKEY);
+            fontSizeNames = (int)GetSettingValue<long>(FONTSIZESETTINGKEY);
             netNamesChecked = GetSettingValue<bool>(SHOWNETNAMESSETTINGKEY);
             showButtons = GetSettingValue<bool>(SHOWBUTTONSSETTINGKEY);
             steps = GetSettingValue<string>(STEPSSETTINGKEY);
             ipAddress = GetSettingValue<string>(IPSETTINGKEY);
             jtagPinIdentifier = GetSettingValue<string>(JTAGPINSKEY);
-            jtagNetIdentifier = GetSettingValue<string>(JTAGIDENTSETTINGKEY);
             jtagNetBlacklist = GetSettingValue<string>(JTAGBLACKSETTINGKEY);
             powerNetIdentifier = GetSettingValue<string>(POWERIDENTSETTINGKEY);
             powerNetBlacklist = GetSettingValue<string>(POWERBLACKSETTINGKEY);
             gndNetIdentifier = GetSettingValue<string>(GNDIDENTSETTINGKEY);
             gndNetBlacklist = GetSettingValue<string>(GNDBLACKSETTINGKEY);
             pgmIp = GetSettingValue<string>(SVFPGMSETTINGKEY);
-            pgmPort = (uint)GetSettingValue<int>(SVFPORTSETTINGKEY);
-            supplyVoltageMv = (uint)GetSettingValue<int>(SVFSUPPLYVSETTINGKEY);
-            ioVoltageMv = (uint)GetSettingValue<int>(SVFIOVOLTAGESETTINGKEY);
+            pgmPort = (uint)GetSettingValue<long>(SVFPORTSETTINGKEY);
+            supplyVoltageMv = (uint)GetSettingValue<long>(SVFSUPPLYVSETTINGKEY);
+            ioVoltageMv = (uint)GetSettingValue<long>(SVFIOVOLTAGESETTINGKEY);
+            frequency = (uint)GetSettingValue<long>(SVFFREQUENCYKEY);
+            cableCompensation = (uint)GetSettingValue<long>(SVFCABLECOMPKEY);
+            target = (TargetDef)GetSettingValue<TargetDef>(SVFTARGETSETTINGKEY);
+            slot = (SlotDef)GetSettingValue<SlotDef>(SVFSLOTSETTINGKEY);
+            askForSvfSettings = GetSettingValue<bool>(ASKFORSVFSESETTINGSKEY);
+            useContains = GetSettingValue<bool>(USECONTAINSSETTINGKEY);
             CheckForNullvalue(ref steps);
             CheckForNullvalue(ref ipAddress);
-            CheckForNullvalue(ref jtagNetIdentifier);
             CheckForNullvalue(ref jtagNetBlacklist);
             CheckForNullvalue(ref powerNetIdentifier);
             CheckForNullvalue(ref powerNetBlacklist);
@@ -653,18 +735,7 @@ namespace Ui.Modules.ModuleName.Implementations
             catch (Exception e)
             {
                 logger.LogMessage("Setting for key not found: " + key + ": " + e.Message, LogCategory.WARNING);
-                if (typeof(T) == typeof(string))
-                {
-                    return (T)(object)string.Empty;
-                }
-                else if (typeof(T) == typeof(int))
-                {
-                    return (T)(object)0;
-                }
-                else
-                {
-                    return (T)(object)false;
-                }
+                return (T)default;
             }
         }
 
@@ -688,83 +759,92 @@ namespace Ui.Modules.ModuleName.Implementations
                 return new List<string>();
             }
 
-            IList<string> list = new List<string>();
-            foreach (var text in value.Split(";"))
-            {
-                list.Add(text);
-            }
-
+            IList<string> list = new List<string>(value.Split(";"));
             return list;
         }
 
         private static void DefineSvfSettings(IPage svfPage)
         {
             var section = svfPage.AddSection(SECTIONSVFKEY, SECTIONSVFNAME);
-            section.AddSetting(SVFPGMSETTINGKEY, SVFPGMNAME, SettingType.String, JsonSettingsStorageManager.PgmIpDef);
-            section.AddSetting(SVFPORTSETTINGKEY, SVFPORTNAME, SettingType.Integer, (int)JsonSettingsStorageManager.PgmPortDef);
-            section.AddSetting(SVFSUPPLYVSETTINGKEY, SVFSUPPLYVNAME, SettingType.Integer, (int)JsonSettingsStorageManager.SupplyVoltageMvDef);
-            section.AddSetting(SVFIOVOLTAGESETTINGKEY, SVFIOVOLTAGENAME, SettingType.Integer, (int)JsonSettingsStorageManager.IoVoltageMvDef);
+            section.AddStringSetting(SVFPGMSETTINGKEY, SVFPGMNAME, JsonSettingsStorageManager.PgmIpDef);
+            section.AddLongSetting(SVFPORTSETTINGKEY, SVFPORTNAME, (int)JsonSettingsStorageManager.PgmPortDef);
+            section.AddEnumSetting(SVFTARGETSETTINGKEY, SVFTARGETNAME, TargetDef.Channel_A);
+            section.AddEnumSetting(SVFSLOTSETTINGKEY, SVFSLOTNAME, SlotDef.Slot_1);
+            section.AddLongSetting(SVFSUPPLYVSETTINGKEY, SVFSUPPLYVNAME, (int)JsonSettingsStorageManager.SupplyVoltageMvDef);
+            section.AddLongSetting(SVFIOVOLTAGESETTINGKEY, SVFIOVOLTAGENAME, (int)JsonSettingsStorageManager.IoVoltageMvDef);
+            section.AddLongSetting(SVFFREQUENCYKEY, SVFFREQUENCYNAME, (int)JsonSettingsStorageManager.FrequencyDef);
+            section.AddLongSetting(SVFCABLECOMPKEY, SVFCABLECOMPNAME, (int)JsonSettingsStorageManager.CableCompensationDef);
+            section.AddBooleanSetting(
+                ASKFORSVFSESETTINGSKEY,
+                ASKFORSESETTINGSNAME,
+                JsonSettingsStorageManager.AskForSvfSettingsDef);
         }
 
         private static void DefineTestCoverageSettings(IPage pageTestCoverage)
         {
             var gndSection = pageTestCoverage.AddSection(GNDSECTIONKEY, GNDSECTIONNAME);
-            gndSection.AddSetting(GNDIDENTSETTINGKEY, GNDIDENTSETTINGNAME, SettingType.String, JsonSettingsStorageManager.GndDef);
-            gndSection.AddSetting(GNDBLACKSETTINGKEY, BLACKLISTNAME, SettingType.String, string.Empty);
+            gndSection.AddStringSetting(GNDIDENTSETTINGKEY, GNDIDENTSETTINGNAME, JsonSettingsStorageManager.GndDef);
+            gndSection.AddStringSetting(GNDBLACKSETTINGKEY, BLACKLISTNAME, string.Empty);
             var powerSection = pageTestCoverage.AddSection(POWERSECTIONKEY, POWERSECTIONNAME);
-            powerSection.AddSetting(POWERIDENTSETTINGKEY, POWERIDENTSETTINGNAME, SettingType.String, JsonSettingsStorageManager.PowerDef);
-            powerSection.AddSetting(POWERBLACKSETTINGKEY, BLACKLISTNAME, SettingType.String, string.Empty);
+            powerSection.AddStringSetting(POWERIDENTSETTINGKEY, POWERIDENTSETTINGNAME, JsonSettingsStorageManager.PowerDef);
+            powerSection.AddStringSetting(POWERBLACKSETTINGKEY, BLACKLISTNAME, string.Empty);
             var jtagSection = pageTestCoverage.AddSection(JTAGSECTIONKEY, JTAGSECTIONNAME);
-            jtagSection.AddSetting(JTAGIDENTSETTINGKEY, JTAGIDENTSETTINGNAME, SettingType.String, JsonSettingsStorageManager.JtagDef);
-            jtagSection.AddSetting(JTAGBLACKSETTINGKEY, BLACKLISTNAME, SettingType.String, string.Empty);
-            jtagSection.AddSetting(JTAGPINSKEY, JTAGPINSNAME, SettingType.String, DEFJTAGPINSVALUE);
+            jtagSection.AddStringSetting(JTAGPINSKEY, JTAGPINSNAME, DEFJTAGPINSVALUE);
+            jtagSection.AddStringSetting(JTAGBLACKSETTINGKEY, BLACKLISTNAME, string.Empty);
         }
 
         private static void DefineConnectionSettings(IPage pageConnection)
         {
             var section = pageConnection.AddSection(CONNECTIONSECTIONKEY, CONNECTIONSECTIONNAME);
-            section.AddSetting(IPSETTINGKEY, IPSETTINGNAME, SettingType.String, JsonSettingsStorageManager.Ipdef);
+            section.AddStringSetting(IPSETTINGKEY, IPSETTINGNAME, JsonSettingsStorageManager.Ipdef);
         }
 
         private static void DefineApiSettings(IPage pageApi)
         {
             var sectionApi = pageApi.AddSection(SECTIONAPIKEY, SECTIONAPINAME);
-            sectionApi.AddSetting(STEPSSETTINGKEY, STEPSSETTINGNAME, SettingType.String, JsonSettingsStorageManager.StepsDef);
+            sectionApi.AddStringSetting(STEPSSETTINGKEY, STEPSSETTINGNAME, JsonSettingsStorageManager.StepsDef);
         }
 
         private static void DefineGeneralSettings(IPage pageGeneral)
         {
             var sectionR = pageGeneral.AddSection(SECTIONRKEY, SECTIONRNAME);
-            sectionR.AddSetting(RCHARSSETTINGKEY, RCHARSETTINGSNAME, SettingType.String, JsonSettingsStorageManager.RDef);
-            sectionR.AddSetting(RCOLORSETTINGKEY, RCOLORSETTINGSNAME, SettingType.Color, JsonSettingsStorageManager.RDefColor.ToString());
-            sectionR.AddSetting(RCHECKNAMESETTINGKEY, SHOWNAMES, SettingType.Boolean, false);
+            sectionR.AddStringSetting(RCHARSSETTINGKEY, RCHARSETTINGSNAME, JsonSettingsStorageManager.RDef);
+            sectionR.AddColorSetting(RCOLORSETTINGKEY, RCOLORSETTINGSNAME, JsonSettingsStorageManager.RDefColor.ToString());
+            sectionR.AddBooleanSetting(RCHECKNAMESETTINGKEY, SHOWNAMES, false);
             var sectionC = pageGeneral.AddSection(SECTIONCKEY, SECTIONCNAME);
-            sectionC.AddSetting(CCHARSSETTINGKEY, CCHARSETTINGSNAME, SettingType.String, JsonSettingsStorageManager.CDef);
-            sectionC.AddSetting(CCOLORSETTINGKEY, CCOLORSETTINGSNAME, SettingType.Color, JsonSettingsStorageManager.CDefColor.ToString());
-            sectionC.AddSetting(CCHECKNAMESETTINGKEY, SHOWNAMES, SettingType.Boolean, false);
+            sectionC.AddStringSetting(CCHARSSETTINGKEY, CCHARSETTINGSNAME, JsonSettingsStorageManager.CDef);
+            sectionC.AddColorSetting(CCOLORSETTINGKEY, CCOLORSETTINGSNAME, JsonSettingsStorageManager.CDefColor.ToString());
+            sectionC.AddBooleanSetting(CCHECKNAMESETTINGKEY, SHOWNAMES, false);
             var sectionI = pageGeneral.AddSection(SECTIONIKEY, SECTIONINAME);
-            sectionI.AddSetting(ICHARSSETTINGKEY, ICHARSETTINGSNAME, SettingType.String, JsonSettingsStorageManager.IDef);
-            sectionI.AddSetting(ICOLORSETTINGKEY, ICOLORSETTINGSNAME, SettingType.Color, JsonSettingsStorageManager.IDefColor.ToString());
-            sectionI.AddSetting(ICHECKNAMESETTINGKEY, SHOWNAMES, SettingType.Boolean, false);
+            sectionI.AddStringSetting(ICHARSSETTINGKEY, ICHARSETTINGSNAME, JsonSettingsStorageManager.IDef);
+            sectionI.AddColorSetting(ICOLORSETTINGKEY, ICOLORSETTINGSNAME, JsonSettingsStorageManager.IDefColor.ToString());
+            sectionI.AddBooleanSetting(ICHECKNAMESETTINGKEY, SHOWNAMES, false);
             var sectionIc = pageGeneral.AddSection(SECTIONICKEY, SECTIONICNAME);
-            sectionIc.AddSetting(ICCHARSSETTINGKEY, ICCHARSETTINGSNAME, SettingType.String, JsonSettingsStorageManager.IcDef);
-            sectionIc.AddSetting(ICCOLORSETTINGKEY, ICCOLORSETTINGSNAME, SettingType.Color, JsonSettingsStorageManager.IcDefColor.ToString());
-            sectionIc.AddSetting(ICCHECKNAMESETTINGKEY, SHOWNAMES, SettingType.Boolean, false);
+            sectionIc.AddStringSetting(ICCHARSSETTINGKEY, ICCHARSETTINGSNAME, JsonSettingsStorageManager.IcDef);
+            sectionIc.AddColorSetting(ICCOLORSETTINGKEY, ICCOLORSETTINGSNAME, JsonSettingsStorageManager.IcDefColor.ToString());
+            sectionIc.AddBooleanSetting(ICCHECKNAMESETTINGKEY, SHOWNAMES, false);
             var sectionCon = pageGeneral.AddSection(SECTIONCONKEY, SECTIONCONNAME);
-            sectionCon.AddSetting(CONCHARSSETTINGKEY, CONCHARSETTINGSNAME, SettingType.String, JsonSettingsStorageManager.ConDef);
-            sectionCon.AddSetting(CONCOLORSETTINGKEY, CONCOLORSETTINGSNAME, SettingType.Color, JsonSettingsStorageManager.ConDefColor.ToString());
-            sectionCon.AddSetting(CONCHECKNAMESETTINGKEY, SHOWNAMES, SettingType.Boolean, true);
+            sectionCon.AddStringSetting(CONCHARSSETTINGKEY, CONCHARSETTINGSNAME, JsonSettingsStorageManager.ConDef);
+            sectionCon.AddColorSetting(
+                CONCOLORSETTINGKEY,
+                CONCOLORSETTINGSNAME,
+                JsonSettingsStorageManager.ConDefColor.ToString());
+            sectionCon.AddBooleanSetting(CONCHECKNAMESETTINGKEY, SHOWNAMES, true);
             var sectionTp = pageGeneral.AddSection(SECTIONTPKEY, SECTIONTPNAME);
-            sectionTp.AddSetting(TPCHARSSETTINGKEY, TPCHARSETTINGSNAME, SettingType.String, JsonSettingsStorageManager.TpDef);
-            sectionTp.AddSetting(TPCOLORSETTINGKEY, TPCOLORSETTINGSNAME, SettingType.Color, JsonSettingsStorageManager.TpDefColor.ToString());
-            sectionTp.AddSetting(TPCHECKNAMESETTINGKEY, SHOWNAMES, SettingType.Boolean, false);
+            sectionTp.AddStringSetting(TPCHARSSETTINGKEY, TPCHARSETTINGSNAME, JsonSettingsStorageManager.TpDef);
+            sectionTp.AddColorSetting(TPCOLORSETTINGKEY, TPCOLORSETTINGSNAME, JsonSettingsStorageManager.TpDefColor.ToString());
+            sectionTp.AddBooleanSetting(TPCHECKNAMESETTINGKEY, SHOWNAMES, false);
             var sectionComp = pageGeneral.AddSection(SECTIONCOMPKEY, SECTIONCOMPNAME);
-            sectionComp.AddSetting(COMPCOLORSETTINGKEY, COMPCOLORSETTINGSNAME, SettingType.Color, JsonSettingsStorageManager.CompDefColor.ToString());
-            sectionComp.AddSetting(COMPCHECKNAMESETTINGKEY, SHOWNAMES, SettingType.Boolean, true);
+            sectionComp.AddColorSetting(
+                COMPCOLORSETTINGKEY,
+                COMPCOLORSETTINGSNAME,
+                JsonSettingsStorageManager.CompDefColor.ToString());
+            sectionComp.AddBooleanSetting(COMPCHECKNAMESETTINGKEY, SHOWNAMES, true);
             var sectionGen = pageGeneral.AddSection(SECTIONGENKEY, SECTIONGENNAME);
-            sectionGen.AddSetting(FONTSIZESETTINGKEY, FONTSIZESETTINGNAME, SettingType.Integer, JsonSettingsStorageManager.FontDef);
-            sectionGen.AddSetting(SHOWNETNAMESSETTINGKEY, SHOWNETNAMESSETTINGNAME, SettingType.Boolean, false);
-            sectionGen.AddSetting(SHOWBUTTONSSETTINGKEY, SHOWBUTTONSSETTINGNAME, SettingType.Boolean, true);
+            sectionGen.AddBooleanSetting(USECONTAINSSETTINGKEY, USECONTAINSSETTINGNAME, false);
+            sectionGen.AddLongSetting(FONTSIZESETTINGKEY, FONTSIZESETTINGNAME, JsonSettingsStorageManager.FontDef);
+            sectionGen.AddBooleanSetting(SHOWNETNAMESSETTINGKEY, SHOWNETNAMESSETTINGNAME, false);
+            sectionGen.AddBooleanSetting(SHOWBUTTONSSETTINGKEY, SHOWBUTTONSSETTINGNAME, true);
         }
 
         private void DefineSettings()

@@ -4,7 +4,16 @@
     <DataTemplate DataType="{x:Type if:ViewModelPCBComponentBase}">
         <Grid Opacity="{Binding Opacity}">
             <Grid.ToolTip>
-                <ToolTip Visibility="{Binding ToolTipVisible}" Content="{Binding Value}" Placement="MousePoint"/>
+                <ToolTip Visibility="{Binding ToolTipVisible}" Placement="MousePoint">
+                    <ToolTip.Content>
+                        <TextBlock>
+                            <Run Text="Name: " />
+                            <Run Text="{Binding Ref}" />
+                            <Run Text="Value: " />
+                            <Run Text="{Binding Value}" />
+                        </TextBlock>
+                    </ToolTip.Content>
+                </ToolTip>
             </Grid.ToolTip>
             <Grid.RenderTransform>
                 <TranslateTransform X="{Binding PosXWithOffset}" Y="{Binding PosYWithOffset}"/>

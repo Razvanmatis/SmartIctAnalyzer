@@ -1,6 +1,4 @@
 ﻿using System.Windows.Controls;
-using Ui.Modules.ModuleName.Interfaces;
-using Ui.Modules.ModuleName.ViewModels;
 
 namespace Ui.Modules.ModuleName.Views
 {
@@ -12,7 +10,6 @@ namespace Ui.Modules.ModuleName.Views
         public ComponentView()
         {
             InitializeComponent();
-            ((ComponentViewModel)DataContext).Scrollviewer = Scrollviewer;
         }
     }
 }

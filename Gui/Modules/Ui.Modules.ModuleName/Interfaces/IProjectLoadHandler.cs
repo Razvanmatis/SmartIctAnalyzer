@@ -8,12 +8,15 @@ namespace Ui.Modules.ModuleName.Interfaces
     {
         Task HandleImportJsonProject(IDataSourceProvider projectHandler, bool useSavingInProject, Action resetAction);
 
-        Task HandleExportJsonProject(IProjectHandler projectHandlerToUse);
+        Task HandleExportJsonProject(IProjectHandler projectHandlerToUse, bool triggerIsBusyEvent = true);
 
         Task PerformLoadAction(Action resetTestCoverageAction, string selectedPath);
 
         Task OpenOdbFolder(IDataSourceProvider projectHandler, Action resetTestCoverageAction);
 
-        void HandleComponentImportFinishedEvent(ComponentsImportFinishedEvent obj, bool autoLoad, IProjectHandler projectHandlerToUse);
+        void HandleComponentImportFinishedEvent(
+            ComponentsImportFinishedEvent obj, bool autoLoad, IProjectHandler projectHandlerToUse);
+
+        Task<bool> UpdateOdbProject();
     }
 }

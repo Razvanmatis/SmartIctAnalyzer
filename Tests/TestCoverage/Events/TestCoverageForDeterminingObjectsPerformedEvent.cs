@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ProMik.Core.Interfaces.Events;
 
-namespace TestCoverage.Events
+namespace ProMik.SmartIct.TestCoverageDeterminer.Events
 {
     public class TestCoverageForDeterminingObjectsPerformedEvent : EventPayload
     {

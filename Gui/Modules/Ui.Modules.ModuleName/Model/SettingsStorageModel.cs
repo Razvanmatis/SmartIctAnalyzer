@@ -1,4 +1,5 @@
 ﻿using Ui.Modules.ModuleName.Helper;
+using Ui.Modules.ModuleName.Implementations;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.Model
@@ -30,7 +31,6 @@ namespace Ui.Modules.ModuleName.Model
             bool netsShow,
             string gndIdent,
             string powerIdent,
-            string jtagIdent,
             string gndBlacklist,
             string powerBlacklist,
             string jtagBlacklist,
@@ -41,7 +41,13 @@ namespace Ui.Modules.ModuleName.Model
             uint supplyVoltageMv,
             uint ioVoltageMv,
             string steps,
-            string jTAGPinIdentifier)
+            string jTAGPinIdentifier,
+            uint frequency,
+            uint cableCompensation,
+            TargetDef target,
+            SlotDef slot,
+            bool askForSfvSettings,
+            bool useContains)
         {
             RIdentifier = r;
             RColor = rc;
@@ -65,7 +71,6 @@ namespace Ui.Modules.ModuleName.Model
             CompShow = compShow;
             ConShow = conShow;
             NetsShow = netsShow;
-            JTAGNetIdentifier = jtagIdent;
             PowerNetIdentifier = powerIdent;
             GndNetIdentifier = gndIdent;
             JTAGNetBlacklist = jtagBlacklist;
@@ -79,7 +84,15 @@ namespace Ui.Modules.ModuleName.Model
             IoVoltageMv = ioVoltageMv;
             Steps = steps;
             JTAGPinIdentifier = jTAGPinIdentifier;
+            Frequency = frequency;
+            CableCompensation = cableCompensation;
+            Target = target;
+            Slot = slot;
+            AskForSvfSettings = askForSfvSettings;
+            UseContains = useContains;
         }
+
+        public bool UseContains { get; set; }
 
         public bool RShow { get; set; }
 
@@ -125,8 +138,6 @@ namespace Ui.Modules.ModuleName.Model
 
         public StorageColor CompColor { get; set; }
 
-        public string JTAGNetIdentifier { get; set; }
-
         public string JTAGNetBlacklist { get; set; }
 
         public string PowerNetIdentifier { get; set; }
@@ -152,5 +163,15 @@ namespace Ui.Modules.ModuleName.Model
         public string Steps { get; set; }
 
         public string JTAGPinIdentifier { get; set; }
+
+        public uint Frequency { get; set; }
+
+        public uint CableCompensation { get; set; }
+
+        public TargetDef Target { get; set; }
+
+        public SlotDef Slot { get; set; }
+
+        public bool AskForSvfSettings { get; set; }
     }
 }

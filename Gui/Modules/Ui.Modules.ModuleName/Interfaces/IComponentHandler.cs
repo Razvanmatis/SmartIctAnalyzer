@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ProMik.SmartIct.TestCoverageDeterminer.Events;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using TestCoverage.Events;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Helper;
 using Ui.Modules.ModuleName.ViewModels;
@@ -29,7 +29,7 @@ namespace Ui.Modules.ModuleName.Interfaces
 
         Task ToggleShowConnections(ViewModelPCBComponentBase comp, bool shouldShow);
 
-        Task ShowLayerObjects(IList<string> layersToShow);
+        Task ShowLayerObjects(IList<string> layersToShow, bool showAllLayers = false);
 
         void ShowTestCoverageObjects(ShowObjectsEvent obj);
 
@@ -41,7 +41,8 @@ namespace Ui.Modules.ModuleName.Interfaces
 
         void MouseMoveStartEndHandler(bool isBegin);
 
-        ComponentAttributes MoveMouseHandler(MouseEventArgs obj, ComponentAttributes attributes, ScrollViewer scrollViewer = null);
+        ComponentAttributes MoveMouseHandler(
+            MouseEventArgs obj, ComponentAttributes attributes, ScrollViewer scrollViewer = null);
 
         ComponentAttributes MouseWheelHandler(MouseWheelEventArgs obj, ComponentAttributes attributes);
 

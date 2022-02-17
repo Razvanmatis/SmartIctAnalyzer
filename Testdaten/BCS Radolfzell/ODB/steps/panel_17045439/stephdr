@@ -1,0 +1,332 @@
+X_DATUM=0
+Y_DATUM=0
+X_ORIGIN=0
+Y_ORIGIN=0
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=10.1024
+    Y=6.00787
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=8.26772
+    Y=6.00787
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=6.43307
+    Y=6.00787
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=4.59843
+    Y=6.00787
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=2.76378
+    Y=6.00787
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=0.929134
+    Y=6.00787
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=10.1024
+    Y=4.17717
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=8.26772
+    Y=4.17717
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=6.43307
+    Y=4.17717
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=4.59843
+    Y=4.17717
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=2.76378
+    Y=4.17717
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=0.929134
+    Y=4.17717
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=4.59843
+    Y=2.11024
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=6.43307
+    Y=2.11024
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=4.59843
+    Y=0.279528
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=6.43307
+    Y=0.279528
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=10.1024
+    Y=0.279528
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=10.1024
+    Y=2.11024
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=0.929134
+    Y=2.11024
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=0.929134
+    Y=0.279528
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=8.26772
+    Y=2.11024
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=8.26772
+    Y=0.279528
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=2.76378
+    Y=2.11024
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+STEP-REPEAT {
+    NAME=17045438_master
+    X=2.76378
+    Y=0.279528
+    DX=0
+    DY=0
+    NX=1
+    NY=1
+    ANGLE=270
+    MIRROR=NO
+}
+
+
+TOP_ACTIVE=0
+BOTTOM_ACTIVE=0
+RIGHT_ACTIVE=0
+LEFT_ACTIVE=0
+ONLINE_DRC_NAME=
+ONLINE_DRC_MODE=DISABLED
+ONLINE_DRC_STAT=GREEN
+ONLINE_DRC_TIME=0
+ONLINE_DRC_BEEP_VOL=0
+ONLINE_DRC_BEEP_TONE=0
+ONLINE_NET_MODE=DISABLED
+ONLINE_NET_STAT=GREEN
+ONLINE_NET_TIME=0
+ONLINE_NET_BEEP_VOL=0
+ONLINE_NET_BEEP_TONE=0

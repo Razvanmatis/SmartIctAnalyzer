@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Ui.Modules.ModuleName.ViewModels;
 
 namespace Ui.Modules.ModuleName.Views
 {

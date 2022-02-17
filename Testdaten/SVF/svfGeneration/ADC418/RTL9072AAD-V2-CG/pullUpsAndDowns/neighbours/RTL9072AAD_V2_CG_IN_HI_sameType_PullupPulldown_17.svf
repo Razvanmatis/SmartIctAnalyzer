@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"AD24","MaskPosition":148,"PinPort":"P5_TXD2","ConnectedComponents":["R22047"],"TestType":8},{"PinName":"P25","MaskPosition":52,"PinPort":"P9_TXD1","ConnectedComponents":["R22086"],"TestType":3},{"PinName":"W9","MaskPosition":102,"PinPort":"GPIOF_1","ConnectedComponents":["R22090"],"TestType":3},{"PinName":"AA8","MaskPosition":104,"PinPort":"GPIOF_0","ConnectedComponents":["R22091"],"TestType":3},{"PinName":"AA9","MaskPosition":100,"PinPort":"GPIOF_2","ConnectedComponents":["R22089"],"TestType":3},{"PinName":"AA10","MaskPosition":98,"PinPort":"GPIOF_3","ConnectedComponents":["R22088"],"TestType":3},{"PinName":"R24","MaskPosition":50,"PinPort":"P9_TXD2","ConnectedComponents":["R22082"],"TestType":3},{"PinName":"P24","MaskPosition":54,"PinPort":"P9_TXD0","ConnectedComponents":["R22087"],"TestType":3},{"PinName":"AC25","MaskPosition":150,"PinPort":"P5_TXD1","ConnectedComponents":["R22048"],"TestType":3},{"PinName":"AC24","MaskPosition":152,"PinPort":"P5_TXD0","ConnectedComponents":["R22049"],"TestType":3},{"PinName":"AD25","MaskPosition":146,"PinPort":"P5_TXD3","ConnectedComponents":["R22046"],"TestType":3},{"PinName":"P4","MaskPosition":122,"PinPort":"GPIOC_5","ConnectedComponents":["R22040"],"TestType":3},{"PinName":"V2","MaskPosition":124,"PinPort":"GPIOC_4","ConnectedComponents":["R22041"],"TestType":3},{"PinName":"U2","MaskPosition":126,"PinPort":"GPIOC_3","ConnectedComponents":["R22042"],"TestType":3},{"PinName":"T2","MaskPosition":128,"PinPort":"GPIOC_2","ConnectedComponents":["R22043"],"TestType":3},{"PinName":"R2","MaskPosition":130,"PinPort":"GPIOC_1","ConnectedComponents":["R22044"],"TestType":3},{"PinName":"P2","MaskPosition":132,"PinPort":"GPIOC_0","ConnectedComponents":["R22045"],"TestType":3}],"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 24 TDI (FFFFF8);
+SDR 166 TDI (000000000000000000000000000000000000000000);
+SIR 24 TDI (FFFFE8);
+SDR 166 TDI (000000000000000000000000000000000000000000)
+TDO (000154001554000154000000000054000000000000)
+MASK (000154001554000154000000000054000000000000);

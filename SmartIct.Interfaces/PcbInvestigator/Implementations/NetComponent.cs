@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Interfaces.PcbInvestigator.Implementations
+namespace ProMik.SmartIct.Interfaces.PcbInvestigator.Implementations
 {
     public class NetComponent : INetComponent
     {

@@ -1,9 +1,12 @@
 ﻿using Ui.Modules.ModuleName.Helper;
+using Ui.Modules.ModuleName.Implementations;
 
 namespace Ui.Modules.ModuleName.Interfaces
 {
     public interface ISettingsStorageModel
     {
+        bool UseContains { get; set; }
+
         bool RShow { get; set; }
 
         bool CShow { get; set; }
@@ -48,8 +51,6 @@ namespace Ui.Modules.ModuleName.Interfaces
 
         StorageColor CompColor { get; set; }
 
-        string JTAGNetIdentifier { get; set; }
-
         string JTAGNetBlacklist { get; set; }
 
         string PowerNetIdentifier { get; set; }
@@ -75,5 +76,15 @@ namespace Ui.Modules.ModuleName.Interfaces
         string Steps { get; set; }
 
         string JTAGPinIdentifier { get; set; }
+
+        uint Frequency { get; set; }
+
+        uint CableCompensation { get; set; }
+
+        TargetDef Target { get; set; }
+
+        SlotDef Slot { get; set; }
+
+        bool AskForSvfSettings { get; set; }
     }
 }

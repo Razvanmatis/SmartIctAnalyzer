@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
+using ProMik.SmartIct.Interfaces.Gui;
+using Ui.Modules.ModuleName.Implementations;
 
 namespace Ui.Modules.ModuleName.Interfaces
 {
-    public interface ISettingsData
+    public interface ISettingsData : IBomUseValues
     {
+        bool UseContains { get; set; }
+
         IList<string> ResistorChars { get; set; }
 
         Color ResistorColor { get; set; }
@@ -51,11 +55,7 @@ namespace Ui.Modules.ModuleName.Interfaces
 
         bool NetNamesChecked { get; set; }
 
-        bool UseValues { get; set; }
-
         public string JTAGPinIdentifier { get; set; }
-
-        public string JTAGNetIdentifier { get; set; }
 
         public string JTAGNetBlacklist { get; set; }
 
@@ -77,7 +77,17 @@ namespace Ui.Modules.ModuleName.Interfaces
 
         uint IoVoltageMv { get; set; }
 
+        uint Frequency { get; set; }
+
+        uint CableCompensation { get; set; }
+
         string Steps { get; set; }
+
+        bool AskForSvfSettings { get; set; }
+
+        TargetDef Target { get; set; }
+
+        SlotDef Slot { get; set; }
 
         void InitContent();
 

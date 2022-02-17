@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using Interfaces.Gui;
+using ProMik.SmartIct.Interfaces.Gui;
 
 namespace TestDotNetCore
 {

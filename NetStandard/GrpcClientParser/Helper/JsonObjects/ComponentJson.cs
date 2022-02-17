@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GrpcClientParser.Helper.JsonObjects
+namespace ProMik.SmartIct.PCBComponentParser.Helper.JsonObjects
 {
     public class ComponentJson
     {

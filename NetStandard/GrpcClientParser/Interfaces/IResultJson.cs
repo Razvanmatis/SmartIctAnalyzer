@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using GrpcClientParser.Helper.JsonObjects;
+using ProMik.SmartIct.PCBComponentParser.Helper.JsonObjects;
 
-namespace GrpcClientParser.Interfaces
+namespace ProMik.SmartIct.PCBComponentParser.Interfaces
 {
     public interface IResultJson
     {
@@ -10,5 +10,7 @@ namespace GrpcClientParser.Interfaces
         IList<ComponentJson> Components { get; set; }
 
         IList<NetJson> Nets { get; set; }
+
+        int StepAmount { get; }
     }
 }

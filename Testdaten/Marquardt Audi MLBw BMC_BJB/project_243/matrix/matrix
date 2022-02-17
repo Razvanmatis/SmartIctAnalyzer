@@ -1,0 +1,205 @@
+
+STEP {
+    COL=1
+    ID=0
+    NAME=v19234868
+}
+
+
+LAYER {
+    ROW=1
+    CONTEXT=BOARD
+    TYPE=COMPONENT
+    ID=1
+    NAME=comp_+_top
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=2
+    CONTEXT=BOARD
+    TYPE=SOLDER_PASTE
+    ID=2
+    NAME=spt
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=3
+    CONTEXT=BOARD
+    TYPE=SOLDER_MASK
+    ID=3
+    NAME=smt
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=4
+    CONTEXT=BOARD
+    TYPE=POWER_GROUND
+    ID=4
+    NAME=plane_1
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=5
+    CONTEXT=BOARD
+    TYPE=DIELECTRIC
+    ID=5
+    NAME=dielectric_3
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+    DIELECTRIC_TYPE=Prepreg
+}
+
+
+LAYER {
+    ROW=6
+    CONTEXT=BOARD
+    TYPE=POWER_GROUND
+    ID=6
+    NAME=plane_2
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=7
+    CONTEXT=BOARD
+    TYPE=DIELECTRIC
+    ID=7
+    NAME=dielectric_5
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+    DIELECTRIC_TYPE=Prepreg
+}
+
+
+LAYER {
+    ROW=8
+    CONTEXT=BOARD
+    TYPE=POWER_GROUND
+    ID=8
+    NAME=plane_3
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=9
+    CONTEXT=BOARD
+    TYPE=DIELECTRIC
+    ID=9
+    NAME=dielectric_7
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+    DIELECTRIC_TYPE=Prepreg
+}
+
+
+LAYER {
+    ROW=10
+    CONTEXT=BOARD
+    TYPE=POWER_GROUND
+    ID=10
+    NAME=plane_4
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=11
+    CONTEXT=BOARD
+    TYPE=SOLDER_MASK
+    ID=11
+    NAME=smb
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=12
+    CONTEXT=BOARD
+    TYPE=SOLDER_PASTE
+    ID=12
+    NAME=spb
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=13
+    CONTEXT=BOARD
+    TYPE=COMPONENT
+    ID=13
+    NAME=comp_+_bot
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=14
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    ID=14
+    NAME=ddt
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+
+
+LAYER {
+    ROW=15
+    CONTEXT=MISC
+    TYPE=DOCUMENT
+    ID=15
+    NAME=odb_board_outline
+    POLARITY=POSITIVE
+    START_NAME=
+    END_NAME=
+    OLD_NAME=
+}
+

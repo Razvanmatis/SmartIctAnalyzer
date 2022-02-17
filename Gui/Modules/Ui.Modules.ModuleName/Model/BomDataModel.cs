@@ -1,4 +1,5 @@
-﻿using Ui.Modules.ModuleName.Helper;
+﻿using ProMik.SmartIct.Interfaces.Container;
+using Ui.Modules.ModuleName.Helper;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.Model

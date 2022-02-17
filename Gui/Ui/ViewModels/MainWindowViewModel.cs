@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using Interfaces.Gui;
 using Prism.Commands;
 using Prism.Mvvm;
 using ProMik.Core.Interfaces.Events;
 using ProMik.Core.Interfaces.Events.Enums;
+using ProMik.SmartIct.Interfaces.Gui;
+using ProMik.SmartIct.TestCoverageDeterminer.Implementations;
 using ProMik.UI.WPF.Panels.LogPanel.Wrappers;
-using TestCoverage.Implementations;
+using Ui.Helper;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Interfaces;
 
@@ -19,7 +21,12 @@ namespace Ui.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private const string Name = "Smart ICT Tool";
-        private static readonly string Path = Directory.GetCurrentDirectory() + "\\logs" + "\\" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "\\SmartIctTool.log";
+        private static readonly string Path
+            = Directory.GetCurrentDirectory()
+            + "\\logs"
+            + "\\"
+            + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "\\SmartIctTool.log";
+
         private readonly ILogger logger;
         private readonly IManifestHandler manifestHandler;
         private bool isBusy;
@@ -148,7 +155,10 @@ namespace Ui.ViewModels
 
         private bool HandleEnabledStateOfContextMenu(LogWrapper arg)
         {
-            return string.Compare(arg.Message, TestCoverageBoundaryScanDeterminer.ErrorMessageDoublesFound, StringComparison.InvariantCulture) == 0;
+            return string.Compare(
+                arg.Message,
+                TestCoverageBoundaryScanDeterminer.ErrorMessageDoublesFound,
+                StringComparison.InvariantCulture) == 0;
         }
 
         private void HandleLogContext(LogWrapper obj)
@@ -171,6 +181,7 @@ namespace Ui.ViewModels
         private void LogPanelLoadedHandler()
         {
             logger.LogMessage("Logfile created at: " + Path, LogCategory.INFO);
+            new RessourceChecker(logger).CopyLatexRessources();
         }
     }
 }

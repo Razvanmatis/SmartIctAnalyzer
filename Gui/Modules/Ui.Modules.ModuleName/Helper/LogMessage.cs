@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Windows.Media;
-using Interfaces.Gui;
+using ProMik.SmartIct.Interfaces.Gui;
 
 namespace Ui.Modules.ModuleName.Helper
 {

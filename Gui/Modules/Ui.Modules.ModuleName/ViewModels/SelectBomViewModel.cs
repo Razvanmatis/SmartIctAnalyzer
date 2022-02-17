@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
-using Interfaces.Gui;
 using Prism.Commands;
 using ProMik.Core.Interfaces.Events;
+using ProMik.SmartIct.Interfaces.Gui;
 using Ui.Core.Mvvm;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Interfaces;
@@ -94,8 +94,8 @@ namespace Ui.Modules.ModuleName.ViewModels
 
         private void OpenSelectFileDialog()
         {
-            string fileName = string.Empty;
-            if (!dialogSelector.OpenGenericDialog(DialogType.OPENFILE, TextRessources.SelectBomFile, "No valid BOM file selected!", out fileName))
+            if (!dialogSelector.OpenGenericDialog(
+                DialogType.OPENFILE, TextRessources.SelectBomFile, "No valid BOM file selected!", out string fileName))
             {
                 return;
             }

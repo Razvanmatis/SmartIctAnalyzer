@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
-using Interfaces.Gui;
+using ProMik.SmartIct.Interfaces.Gui;
 using Ui.Modules.ModuleName.Events;
 using Ui.Modules.ModuleName.Interfaces;
 
@@ -33,10 +33,16 @@ namespace Ui.Modules.ModuleName.Implementations
             this.generalProjectHandler = generalProjectHandler;
         }
 
-        public async Task HandleDropEventMethod(HandleDropEvent obj, Action resetAllAction, Action resetTestCoverageAction, Action<bool, bool, IProjectHandler> setItemsAction)
+        public async Task HandleDropEventMethod(
+            HandleDropEvent obj,
+            Action resetAllAction,
+            Action resetTestCoverageAction,
+            Action<bool, bool, IProjectHandler> setItemsAction)
         {
             string fileName = obj.FileName.ToLower(CultureInfo.CurrentCulture);
-            if (fileName.EndsWith(".json", StringComparison.InvariantCulture) || fileName.EndsWith(".txt", StringComparison.InvariantCulture)
+            if (fileName.EndsWith(
+                ".json", StringComparison.InvariantCulture)
+                || fileName.EndsWith(".txt", StringComparison.InvariantCulture)
                 || fileName.EndsWith(".db", StringComparison.InvariantCulture))
             {
                 byte[] settingsContent = settingsStorageManager.IsValidSettingsFile(obj.FileName);
@@ -49,7 +55,9 @@ namespace Ui.Modules.ModuleName.Implementations
                     byte[] content = ((GeneralProjectHandler)generalProjectHandler).GetBytesOfFile(obj.FileName);
                     if (content != null)
                     {
-                        await projectLoadHandler.HandleImportJsonProject(new DropDataSourceProvider(null, content, string.Empty), true, resetTestCoverageAction).ConfigureAwait(false);
+                        await projectLoadHandler.HandleImportJsonProject(
+                            new DropDataSourceProvider(null, content, string.Empty), true, resetTestCoverageAction)
+                            .ConfigureAwait(false);
                     }
                     else
                     {
@@ -59,11 +67,16 @@ namespace Ui.Modules.ModuleName.Implementations
             }
             else if (!Directory.Exists(obj.FileName))
             {
-                await projectFileHandler.OpenProjectFile(obj.FileName, resetAllAction, resetTestCoverageAction, setItemsAction).ConfigureAwait(false);
+                await projectFileHandler.OpenProjectFile(
+                    obj.FileName,
+                    resetAllAction,
+                    resetTestCoverageAction,
+                    setItemsAction).ConfigureAwait(false);
             }
             else
             {
-                await projectLoadHandler.OpenOdbFolder(new DropDataSourceProvider(null, null, obj.FileName), resetTestCoverageAction).ConfigureAwait(false);
+                await projectLoadHandler.OpenOdbFolder(
+                    new DropDataSourceProvider(null, null, obj.FileName), resetTestCoverageAction).ConfigureAwait(false);
             }
         }
     }

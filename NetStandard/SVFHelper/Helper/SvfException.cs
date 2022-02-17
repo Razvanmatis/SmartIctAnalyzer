@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SVFHelper.Helper
+namespace ProMik.SmartIct.Svf.SvfFileCreation.Helper
 {
     public class SvfException : Exception
     {

@@ -10,7 +10,8 @@ namespace Ui.Modules.ModuleName.Helper
             List<string> iDef,
             List<string> tDef,
             List<string> icDef,
-            List<string> conDef)
+            List<string> conDef,
+            bool useContains)
         {
             RDef = rDef;
             CDef = cDef;
@@ -18,6 +19,7 @@ namespace Ui.Modules.ModuleName.Helper
             TDef = tDef;
             IcDef = icDef;
             ConDef = conDef;
+            UseContains = useContains;
         }
 
         public List<string> RDef { get; private set; }
@@ -31,5 +33,7 @@ namespace Ui.Modules.ModuleName.Helper
         public List<string> IcDef { get; private set; }
 
         public List<string> ConDef { get; private set; }
+
+        public bool UseContains { get; private set; }
     }
 }

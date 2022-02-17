@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Interfaces.PcbInvestigator.Enums;
+using ProMik.SmartIct.Interfaces.PcbInvestigator.Enums;
 
-namespace Interfaces.PcbInvestigator
+namespace ProMik.SmartIct.Interfaces.PcbInvestigator
 {
     public interface IPinComponent
     {

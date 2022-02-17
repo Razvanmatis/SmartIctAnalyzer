@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Google.Protobuf.Collections;
-using GrpcClientParser.Implementations;
-using GrpcClientParser.Interfaces;
+using ProMik.SmartIct.PCBComponentParser.Implementations;
+using ProMik.SmartIct.PCBComponentParser.Interfaces;
 
-namespace GrpcClientParser.Helper.JsonObjects
+namespace ProMik.SmartIct.PCBComponentParser.Helper.JsonObjects
 {
     public static class GrpcJsonConverter
     {
@@ -27,7 +27,7 @@ namespace GrpcClientParser.Helper.JsonObjects
                 nets.Add(GetNetJson(net));
             }
 
-            return new ResultJson(pins, comps, nets);
+            return new ResultJson(pins, comps, nets, result.AmountSteps);
         }
 
         public static ComponentJson GetComponentJson(ComponentGrpc grpc)
@@ -67,18 +67,12 @@ namespace GrpcClientParser.Helper.JsonObjects
 
         private static IList<int> GetListOfNumbers(RepeatedField<int> values)
         {
-            IList<int> list = new List<int>();
-            foreach (var value in values)
-            {
-                list.Add(value);
-            }
-
-            return list;
+            return new List<int>(values);
         }
 
         private static FunctionalAttributesJson GetFunctionalJson(FunctionalAttributesGrpc functionals)
         {
-            return new FunctionalAttributesJson(GetComponentTypeJson(functionals.ComponentType), functionals.Ref, functionals.PartName, functionals.LayerName, functionals.PackageName, string.Empty, string.Empty);
+            return new FunctionalAttributesJson(GetComponentTypeJson(functionals.ComponentType), functionals.Ref, functionals.PartName, functionals.LayerName, functionals.PackageName, string.Empty, string.Empty, functionals.StepNo);
         }
 
         private static ComponentTypeJson GetComponentTypeJson(ComponentTypeGrpc componentType)

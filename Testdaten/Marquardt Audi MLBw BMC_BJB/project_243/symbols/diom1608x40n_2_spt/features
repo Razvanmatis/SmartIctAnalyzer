@@ -1,0 +1,24 @@
+#
+#Units
+#
+UNITS=MM
+ID=1214
+#
+#Num Features
+#
+F 1
+#
+#Layer features
+#
+S P 0 ;;ID=1215
+OB -0.26 -0.32 I
+OS -0.26 0.32
+OS 0.22 0.32
+OS 0.22 0.165
+OS 0.47 0.165
+OS 0.47 -0.165
+OS 0.22 -0.165
+OS 0.22 -0.32
+OS -0.26 -0.32
+OE
+SE

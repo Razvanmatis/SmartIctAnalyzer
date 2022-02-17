@@ -3,29 +3,34 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Interfaces.Gui;
-using Interfaces.PcbInvestigator;
 using ProMik.Core.Interfaces.Events;
-using TestCoverage.Events;
-using TestCoverage.Helper;
-using TestCoverage.Interfaces;
+using ProMik.SmartIct.Interfaces.Gui;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.TestCoverage;
+using ProMik.SmartIct.TestCoverageDeterminer.Events;
+using ProMik.SmartIct.TestCoverageDeterminer.Helper;
+using ProMik.SmartIct.TestCoverageDeterminer.Interfaces;
 
-namespace TestCoverage.Implementations
+namespace ProMik.SmartIct.TestCoverageDeterminer.Implementations
 {
     public class TestCoverageBoundaryScanDeterminer : ITestCoverageDeterminer
     {
         public const string ITEMNOTSELECTED = "CheckboxBlankOutline";
-        public const string ErrorMessageDoublesFound = "Detected the following resistors as PULLUPS and PULLDOWNS! Please check your settings: ";
+        public const string ErrorMessageDoublesFound
+            = "Detected the following resistors as PULLUPS and PULLDOWNS! Please check your settings: ";
+
         public const string ITEMSELECTED = "Checkbox";
         private static readonly string[] TESTCOVERAGEOBJECTS = new string[] { "Pullups", "Pulldowns", "JTAG", "Others" };
         private readonly IList<ITestCoverageResult> testCoverageResult = new List<ITestCoverageResult>();
         private readonly IEventService eventService;
+        private readonly IBomUseValues bomUseValues;
         private readonly ILogger logger;
         private readonly ITestCoverageDataModel testCoverageDataModel;
+        private readonly IDialogSelector dialogSelector;
         private IList<IPCBComponent> pullDowns = new List<IPCBComponent>();
         private IList<IPCBComponent> pullUps = new List<IPCBComponent>();
         private IList<IPCBComponent> others = new List<IPCBComponent>();
-        private IList<IPCBComponent> ics = new List<IPCBComponent>();
+        private IList<IPCBComponent> jtags = new List<IPCBComponent>();
         private IList<INetComponent> gndNets = new List<INetComponent>();
         private IList<INetComponent> jtagNets = new List<INetComponent>();
         private IList<INetComponent> powerNets = new List<INetComponent>();
@@ -34,17 +39,89 @@ namespace TestCoverage.Implementations
         private bool jtagPullDownTestsPerformed;
         private bool othersTestsPerformed;
 
-        public TestCoverageBoundaryScanDeterminer(IEventService eventService, ILogger logger, ITestCoverageDataModel testCoverageDataModel)
+        public TestCoverageBoundaryScanDeterminer(
+            IEventService eventService,
+            ILogger logger,
+            ITestCoverageDataModel testCoverageDataModel,
+            IBomUseValues bomUseValues,
+            IDialogSelector dialogSelector)
         {
             this.eventService = eventService;
             this.logger = logger;
+            this.dialogSelector = dialogSelector;
+            this.bomUseValues = bomUseValues;
             this.testCoverageDataModel = testCoverageDataModel;
+        }
+
+        public TestCoverageBoundaryScanDeterminer(IBomUseValues bomUseValues)
+        {
+            this.bomUseValues = bomUseValues;
+        }
+
+        public int GetAmountOfTotalDistinctNets(
+            TestCoverageType type, bool onlyIntersectionWithIcNets = true, List<IPCBComponent> jtags = null)
+        {
+            if (jtags == null)
+            {
+                jtags = this.jtags.ToList();
+            }
+
+            int result = 0;
+            if (type == TestCoverageType.BOUNDARY_SCAN_ICS)
+            {
+                result = GetDistinctNetsFromComponents(jtags, false);
+            }
+
+            if (type == TestCoverageType.BOUNDARY_SCAN_OTHERS || type == TestCoverageType.BOUNDARY_SCAN_ALL)
+            {
+                List<INetComponent> otherToUse = new List<INetComponent>(GetAllNetsOfComponents(others));
+                RemoveSameNetComponents(pullUps.ToList(), otherToUse);
+                RemoveSameNetComponents(pullDowns.ToList(), otherToUse);
+                result += GetIntersectedNets(otherToUse, jtags);
+            }
+
+            if (type == TestCoverageType.BOUNDARY_SCAN_PULL_DOWNS
+                || type == TestCoverageType.BOUNDARY_SCAN_ALL
+                || type == TestCoverageType.BOUNDARY_SCAN_PULL_UPS_DOWNS)
+            {
+                result += GetDistinctNetsFromComponents(pullDowns, onlyIntersectionWithIcNets, jtags);
+            }
+
+            if (type == TestCoverageType.BOUNDARY_SCAN_PULL_UPS
+                || type == TestCoverageType.BOUNDARY_SCAN_ALL
+                || type == TestCoverageType.BOUNDARY_SCAN_PULL_UPS_DOWNS)
+            {
+                result += GetDistinctNetsFromComponents(pullUps, onlyIntersectionWithIcNets, jtags);
+            }
+
+            return result;
+        }
+
+        private static int GetIntersectedNets(List<INetComponent> otherToUse, List<IPCBComponent> jtags)
+        {
+            List<INetComponent> netsToSearchFor = GetAllNetsOfComponents(jtags);
+            otherToUse.RemoveAll(x => !netsToSearchFor.Contains(x));
+            return otherToUse.Count;
+        }
+
+        private static void RemoveSameNetComponents(List<IPCBComponent> componentsToRemove, List<INetComponent> baseComponents)
+        {
+            foreach (var compToRemove in componentsToRemove)
+            {
+                foreach (var pinToRemove in compToRemove.Connections)
+                {
+                    foreach (var netToRemove in pinToRemove.Nets)
+                    {
+                        baseComponents.Remove(netToRemove);
+                    }
+                }
+            }
         }
 
         public async Task<TestCoverageItems> GetTestCoverage(TestCoverageItems items, TestCoverageType type)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            TestCoverageItems result = null;
+            TestCoverageItems result;
             if (type == TestCoverageType.BOUNDARY_SCAN_ALL)
             {
                 result = await GetCompleteTestCoverageOfAllJtags(items).ConfigureAwait(false);
@@ -85,7 +162,7 @@ namespace TestCoverage.Implementations
             pullDowns.Clear();
             pullUps.Clear();
             others.Clear();
-            ics.Clear();
+            jtags.Clear();
             gndNets.Clear();
             powerNets.Clear();
             jtagNets.Clear();
@@ -98,13 +175,13 @@ namespace TestCoverage.Implementations
 
         public bool IsTestResultAvailableForComponentsAndType(IPCBComponent comp, IPCBComponent second)
         {
-            if (!this.ics.Contains(comp) && !this.ics.Contains(second))
+            if (!jtags.Contains(comp) && !jtags.Contains(second))
             {
                 return false;
             }
 
             IPCBComponent other = second;
-            if (!this.ics.Contains(comp))
+            if (!jtags.Contains(comp))
             {
                 other = comp;
             }
@@ -113,7 +190,7 @@ namespace TestCoverage.Implementations
             {
                 if (result.PCBComponent == other)
                 {
-                    if (ics.Contains(other))
+                    if (jtags.Contains(other))
                     {
                         return jtagIcTestsPerformed;
                     }
@@ -138,6 +215,26 @@ namespace TestCoverage.Implementations
             return false;
         }
 
+        public ITestCoverageDataModel GetTestRelatedObjects(
+            IList<INetComponent> nets,
+            IdentifierBlacklistContainer content)
+        {
+            if (nets == null || nets.Count == 0)
+            {
+                return null;
+            }
+
+            var gndNets = TestCoverageBoundaryScanObjectDeterminer.GetGndNets(nets, content.GndNetIdentifier, content.GndNetBlacklist);
+            var powerNets = TestCoverageBoundaryScanObjectDeterminer.GetPowerNets(nets, content.PowerNetIdentifier, content.PowerNetBlacklist);
+            var jtagNets = TestCoverageBoundaryScanObjectDeterminer.GetJtagNets(nets, content.JTAGPinIdentifier, content.JTAGNetBlacklist);
+            ITestCoverageDataModel dataModel = new TestCoverageDataModel();
+            dataModel.Jtags = DefineJtags(jtagNets);
+            dataModel.PullUps = DefinePullUpResistors(powerNets);
+            dataModel.PullDowns = DefinePullDownResistors(gndNets);
+            dataModel.Others = DefineOthers(dataModel.Jtags, dataModel.PullUps, dataModel.PullDowns);
+            return dataModel;
+        }
+
         public TestCoverageItems DetermineTestCoverageRelatedObjects(
             IList<INetComponent> nets,
             IdentifierBlacklistContainer content,
@@ -147,19 +244,25 @@ namespace TestCoverage.Implementations
             {
                 DefineGndNets(nets, content.GndNetIdentifier, content.GndNetBlacklist);
                 DefinePowerNets(nets, content.PowerNetIdentifier, content.PowerNetBlacklist);
-                DefineJtagNets(nets, content.JTAGNetIdentifier, content.JTAGNetBlacklist);
-                Dictionary<TestCoverageObject, IList<IPCBComponent>> mapObjects = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
-                testCoverageDataModel.Ics = DefineIcs();
-                testCoverageDataModel.PullUps = DefinePullUpResistors();
-                testCoverageDataModel.PullDowns = DefinePullDownResistors();
+                DefineJtagNets(nets, content.JTAGPinIdentifier, content.JTAGNetBlacklist);
+                Dictionary<TestCoverageObject, IList<IPCBComponent>> mapObjects
+                    = new Dictionary<TestCoverageObject, IList<IPCBComponent>>();
+                testCoverageDataModel.Jtags = DefineJtags();
+                var pullUps = DefinePullUpResistors();
+                var pullDowns = DefinePullDownResistors();
+                var others = DefineOthers();
+                DeleteBlackListContent(pullUps, pullDowns, others);
+                testCoverageDataModel.PullUps = pullUps;
+                testCoverageDataModel.PullDowns = pullDowns;
+                testCoverageDataModel.Others = others;
                 mapObjects.Add(TestCoverageObject.PULLUP, testCoverageDataModel.PullUps);
                 mapObjects.Add(TestCoverageObject.PULLDOWN, testCoverageDataModel.PullDowns);
-                mapObjects.Add(TestCoverageObject.JTAG, testCoverageDataModel.Ics);
-                mapObjects.Add(TestCoverageObject.OTHERS, DefineOthers());
+                mapObjects.Add(TestCoverageObject.JTAG, testCoverageDataModel.Jtags);
+                mapObjects.Add(TestCoverageObject.OTHERS, testCoverageDataModel.Others);
                 LogTestCoverageObjects(mapObjects);
                 eventService.Publish(new AddTestCoverageObjectsEvent(mapObjects));
                 eventService.Publish(new TestCoverageForDeterminingObjectsPerformedEvent(TESTCOVERAGEOBJECTS.ToList()));
-                items.ItemTestCoverageObjects = TestCoverageBoundaryScanDeterminer.ITEMSELECTED;
+                items.ItemTestCoverageObjects = ITEMSELECTED;
                 if (mapObjects.Count > 0)
                 {
                     items.TestCoverageMenuItemsEnabled = true;
@@ -170,10 +273,52 @@ namespace TestCoverage.Implementations
             }
             else
             {
-                items.ItemTestCoverageObjects = TestCoverageBoundaryScanDeterminer.ITEMNOTSELECTED;
+                items.ItemTestCoverageObjects = ITEMNOTSELECTED;
             }
 
             return items;
+        }
+
+        public async Task<float> GetTestCoverageValue(TestCoverageType type, List<IPCBComponent> jtags = null)
+        {
+            float result = 0;
+            if (type == TestCoverageType.BOUNDARY_SCAN_ALL)
+            {
+                float valueOfOthers = await GetTestCoveragePercentageValueForAllOtherObjects(jtags).ConfigureAwait(true);
+                List<IPCBComponent> comps = new List<IPCBComponent>();
+                comps.AddRange(pullUps);
+                comps.AddRange(pullDowns);
+                result = await GetTestCoveragePercentageValue(comps, jtags).ConfigureAwait(true) + valueOfOthers;
+            }
+            else if (type == TestCoverageType.BOUNDARY_SCAN_ICS)
+            {
+                result = await GetTestCoveragePercentageValueForIcs(jtags).ConfigureAwait(false);
+            }
+            else if (type == TestCoverageType.BOUNDARY_SCAN_OTHERS)
+            {
+                result = await GetTestCoveragePercentageValueForAllOtherObjects(jtags).ConfigureAwait(true);
+            }
+            else if (type == TestCoverageType.BOUNDARY_SCAN_PULL_DOWNS)
+            {
+                result = await GetTestCoveragePercentageValue(pullDowns, jtags).ConfigureAwait(false);
+            }
+            else if (type == TestCoverageType.BOUNDARY_SCAN_PULL_UPS)
+            {
+                result = await GetTestCoveragePercentageValue(pullUps, jtags).ConfigureAwait(false);
+            }
+            else if (type == TestCoverageType.BOUNDARY_SCAN_PULL_UPS_DOWNS)
+            {
+                List<IPCBComponent> comps = new List<IPCBComponent>();
+                comps.AddRange(pullUps);
+                comps.AddRange(pullDowns);
+                result = await GetTestCoveragePercentageValue(comps, jtags).ConfigureAwait(false);
+            }
+            else
+            {
+                logger.LogMessage("Received invalid test type!", LogCategory.ERROR);
+            }
+
+            return result;
         }
 
         private static string ToggleItem(string value)
@@ -190,7 +335,7 @@ namespace TestCoverage.Implementations
 
         private static List<INetComponent> GetAllNetsOfComponents(IList<IPCBComponent> pullUpsDowns)
         {
-            List<INetComponent> nets = new List<INetComponent>();
+            HashSet<INetComponent> nets = new HashSet<INetComponent>();
             foreach (var comp in pullUpsDowns)
             {
                 foreach (var pin in comp.Connections)
@@ -205,7 +350,7 @@ namespace TestCoverage.Implementations
                 }
             }
 
-            return nets;
+            return nets.ToList();
         }
 
         private static string GetNetsOfComp(IList<IPinComponent> connections)
@@ -243,13 +388,59 @@ namespace TestCoverage.Implementations
             return false;
         }
 
+        private void DeleteBlackListContent(IList<IPCBComponent> pullUps, IList<IPCBComponent> pullDowns, IList<IPCBComponent> others)
+        {
+            // TO DO: IMPLEMENT LOGIC FOR DETERMINING ALL OBJECTS WHICH SHOULD BE DELETED FROM SVF FILE GENERATION
+            dialogSelector.ToString();
+        }
+
+        private int GetDistinctNetsFromComponents(
+            IList<IPCBComponent> components, bool onlyWhichAreInIcs = true, List<IPCBComponent> jtags = null)
+        {
+            if (jtags == null)
+            {
+                jtags = this.jtags.ToList();
+            }
+
+            HashSet<INetComponent> nets = new HashSet<INetComponent>();
+            foreach (var comp in components)
+            {
+                foreach (var pin in comp.Connections)
+                {
+                    foreach (var net in pin.Nets)
+                    {
+                        nets.Add(net);
+                    }
+                }
+            }
+
+            if (onlyWhichAreInIcs)
+            {
+                List<INetComponent> netsIcs = GetAllNetsOfComponents(jtags);
+                List<INetComponent> netsFound = new List<INetComponent>();
+                foreach (var net in nets)
+                {
+                    if (netsIcs.Contains(net))
+                    {
+                        netsFound.Add(net);
+                    }
+                }
+
+                return netsFound.Count;
+            }
+            else
+            {
+                return nets.Count;
+            }
+        }
+
         private async Task<TestCoverageItems> TestCoverageForIcs(TestCoverageItems items)
         {
             bool value = false;
             IList<ITestCoverageResult> result = DefineTestCoverageForIcObjects();
             if (result.Count > 0)
             {
-                eventService.Publish<RefreshTestcoverageResultObjectsEvent>(new RefreshTestcoverageResultObjectsEvent());
+                await eventService.Publish(new RefreshTestcoverageResultObjectsEvent()).ConfigureAwait(false);
                 items.ItemTestCoverageJtag = ToggleItem(items.ItemTestCoverageJtag);
                 value = !GetTestsPerformedState(TestCoverageObject.JTAG);
             }
@@ -268,10 +459,10 @@ namespace TestCoverage.Implementations
         private async Task<TestCoverageItems> TestCoverageForPullUps(TestCoverageItems items)
         {
             bool value = false;
-            IList<ITestCoverageResult> results = await DefineTestCoverageForPullUpDownObjects(DefineIcs(), DefinePullUpResistors()).ConfigureAwait(true);
+            IList<ITestCoverageResult> results = await DefineTestCoverageForPullUpDownObjects(DefineJtags(), DefinePullUpResistors()).ConfigureAwait(true);
             if (results.Count > 0)
             {
-                eventService.Publish<RefreshTestcoverageResultObjectsEvent>(new RefreshTestcoverageResultObjectsEvent());
+                await eventService.Publish(new RefreshTestcoverageResultObjectsEvent()).ConfigureAwait(false);
                 items.ItemTestCoveragePullup = ToggleItem(items.ItemTestCoveragePullup);
                 value = !GetTestsPerformedState(TestCoverageObject.PULLUP);
             }
@@ -290,10 +481,10 @@ namespace TestCoverage.Implementations
         private async Task<TestCoverageItems> TestCoverageForPullDowns(TestCoverageItems items)
         {
             bool value = false;
-            IList<ITestCoverageResult> results = await DefineTestCoverageForPullUpDownObjects(DefineIcs(), DefinePullDownResistors()).ConfigureAwait(true);
+            IList<ITestCoverageResult> results = await DefineTestCoverageForPullUpDownObjects(DefineJtags(), DefinePullDownResistors()).ConfigureAwait(true);
             if (results.Count > 0)
             {
-                eventService.Publish<RefreshTestcoverageResultObjectsEvent>(new RefreshTestcoverageResultObjectsEvent());
+                await eventService.Publish(new RefreshTestcoverageResultObjectsEvent()).ConfigureAwait(false);
                 items.ItemTestCoveragePulldown = ToggleItem(items.ItemTestCoveragePulldown);
                 value = !GetTestsPerformedState(TestCoverageObject.PULLDOWN);
             }
@@ -315,7 +506,7 @@ namespace TestCoverage.Implementations
             IList<ITestCoverageResult> results = await DefineTestCoverageForPullUpDownObjects().ConfigureAwait(true);
             if (results.Count > 0)
             {
-                eventService.Publish<RefreshTestcoverageResultObjectsEvent>(new RefreshTestcoverageResultObjectsEvent());
+                await eventService.Publish(new RefreshTestcoverageResultObjectsEvent()).ConfigureAwait(false);
                 items.ItemTestCoveragePullupdown = ToggleItem(items.ItemTestCoveragePullupdown);
                 if (items.ItemTestCoveragePullupdown.Equals(ITEMSELECTED))
                 {
@@ -398,7 +589,7 @@ namespace TestCoverage.Implementations
             string textValue = ITEMNOTSELECTED;
             if (someThingChanged)
             {
-                eventService.Publish<RefreshTestcoverageResultObjectsEvent>(new RefreshTestcoverageResultObjectsEvent());
+                await eventService.Publish(new RefreshTestcoverageResultObjectsEvent()).ConfigureAwait(false);
                 items.ItemTestCoverageAll = ToggleItem(items.ItemTestCoverageAll);
                 if (items.ItemTestCoverageAll.Equals(ITEMSELECTED))
                 {
@@ -425,7 +616,7 @@ namespace TestCoverage.Implementations
         {
             if (ics == null)
             {
-                ics = this.ics;
+                ics = jtags;
             }
 
             IList<ITestCoverageResult> coverageResult = new List<ITestCoverageResult>();
@@ -508,9 +699,32 @@ namespace TestCoverage.Implementations
             }
         }
 
-        private IList<IPCBComponent> DefineOthers()
+        private IList<IPCBComponent> DefineOthers(
+            IList<IPCBComponent> jtags = null,
+            IList<IPCBComponent> pullDowns = null,
+            IList<IPCBComponent> pullUps = null)
         {
-            others = TestCoverageBoundaryScanObjectDeterminer.GetOthers(ics, pullDowns, pullUps);
+            IList<IPCBComponent> jtagToUse = jtags;
+            if (jtagToUse == null)
+            {
+                jtagToUse = this.jtags;
+            }
+
+            IList<IPCBComponent> pullDownToUse = pullDowns;
+            if (pullDownToUse == null)
+            {
+                pullDownToUse = this.pullDowns;
+            }
+
+            IList<IPCBComponent> pullUpToUse = pullUps;
+            if (pullUpToUse == null)
+            {
+                pullUpToUse = this.pullUps;
+            }
+
+            others = TestCoverageBoundaryScanObjectDeterminer.GetOthers(jtagToUse, pullDownToUse, pullUpToUse);
+            var num = ((List<IPCBComponent>)others).RemoveAll(x => string.IsNullOrEmpty(x.FunctionalAttributes.Value) && bomUseValues.UseValues);
+
             return others;
         }
 
@@ -520,15 +734,17 @@ namespace TestCoverage.Implementations
             return gndNets;
         }
 
-        private IList<IPCBComponent> DefineIcs(IList<INetComponent> jtagNets = null)
+        private IList<IPCBComponent> DefineJtags(IList<INetComponent> jtagNets = null)
         {
             if (jtagNets == null)
             {
                 jtagNets = this.jtagNets;
             }
 
-            ics = TestCoverageBoundaryScanObjectDeterminer.GetIcs(jtagNets);
-            return ics;
+            jtags = TestCoverageBoundaryScanObjectDeterminer.GetIcs(jtagNets);
+            var num = ((List<IPCBComponent>)jtags).RemoveAll(x => string.IsNullOrEmpty(x.FunctionalAttributes.Value) && bomUseValues.UseValues);
+
+            return jtags;
         }
 
         private IList<INetComponent> DefineJtagNets(IList<INetComponent> nets, string jtagIdentifier, string jtagBlacklist)
@@ -547,10 +763,12 @@ namespace TestCoverage.Implementations
         {
             if (net == null)
             {
-                net = this.gndNets;
+                net = gndNets;
             }
 
             pullDowns = TestCoverageBoundaryScanObjectDeterminer.GetPullUpDownResistors(net);
+            var num = ((List<IPCBComponent>)pullDowns).RemoveAll(x => string.IsNullOrEmpty(x.FunctionalAttributes.Value) && bomUseValues.UseValues);
+
             return pullDowns;
         }
 
@@ -562,22 +780,25 @@ namespace TestCoverage.Implementations
             }
 
             pullUps = TestCoverageBoundaryScanObjectDeterminer.GetPullUpDownResistors(powerNets);
+            var num = ((List<IPCBComponent>)pullUps).RemoveAll(x => string.IsNullOrEmpty(x.FunctionalAttributes.Value) && bomUseValues.UseValues);
+
             return pullUps;
         }
 
-        private async Task<float> GetTestCoveragePercentageValue(IList<IPCBComponent> pullUpsDowns = null, IList<IPCBComponent> ics = null)
+        private async Task<float> GetTestCoveragePercentageValue(
+            IList<IPCBComponent> pullUpsDowns = null, IList<IPCBComponent> ics = null)
         {
             if (pullUpsDowns == null)
             {
                 await Task.Run(() =>
                 {
                     pullUpsDowns = new List<IPCBComponent>();
-                    foreach (var comp in this.pullUps)
+                    foreach (var comp in pullUps)
                     {
                         pullUpsDowns.Add(comp);
                     }
 
-                    foreach (var comp in this.pullDowns)
+                    foreach (var comp in pullDowns)
                     {
                         pullUpsDowns.Add(comp);
                     }
@@ -591,7 +812,7 @@ namespace TestCoverage.Implementations
 
             if (ics == null)
             {
-                ics = this.ics;
+                ics = jtags;
             }
 
             int baseValue = 0;
@@ -609,9 +830,11 @@ namespace TestCoverage.Implementations
             }
 
             List<INetComponent> netsOfPullUpsPullDowns = GetAllNetsOfComponents(pullUpsDowns);
-            List<INetComponent> netsOfIcs = GetAllNetsOfComponents(this.ics);
+            List<INetComponent> netsOfIcs = GetAllNetsOfComponents(ics);
             netsOfPullUpsPullDowns.RemoveAll(x => !netsOfIcs.Contains(x));
-            logger.LogMessage("Test coverage calculation for " + netsOfPullUpsPullDowns.Count + " / " + baseValue + " * 100", LogCategory.INFO);
+            logger.LogMessage(
+                "Test coverage calculation for " + netsOfPullUpsPullDowns.Count + " / " + baseValue + " * 100",
+                LogCategory.INFO);
             return (float)netsOfPullUpsPullDowns.Count / baseValue * 100;
         }
 
@@ -619,7 +842,7 @@ namespace TestCoverage.Implementations
         {
             if (ics == null)
             {
-                ics = this.ics;
+                ics = jtags;
             }
 
             int baseNumber = 0;
@@ -637,7 +860,7 @@ namespace TestCoverage.Implementations
             await Task.Run(() =>
             {
                 IList<INetComponent> nets = new List<INetComponent>();
-                IList<INetComponent> netsFromIc = GetAllNetsOfComponents(this.ics);
+                IList<INetComponent> netsFromIc = GetAllNetsOfComponents(ics);
 
                 foreach (var comp in others)
                 {
@@ -657,8 +880,15 @@ namespace TestCoverage.Implementations
                     }
                 }
 
-                amountNets = nets.Count;
+                var newNets = nets.ToList();
+                List<INetComponent> netsOfPullUps = GetAllNetsOfComponents(pullUps);
+                netsOfPullUps.RemoveAll(x => !netsFromIc.Contains(x));
+                newNets.RemoveAll(x => netsOfPullUps.Contains(x));
+                List<INetComponent> netsOfPullDowns = GetAllNetsOfComponents(pullDowns);
+                netsOfPullDowns.RemoveAll(x => !netsFromIc.Contains(x));
+                newNets.RemoveAll(x => netsOfPullDowns.Contains(x));
 
+                amountNets = newNets.Count;
                 IList<ITestCoverageResult> results = new List<ITestCoverageResult>();
                 foreach (var comp in others)
                 {
@@ -672,26 +902,27 @@ namespace TestCoverage.Implementations
             return (float)amountNets / baseNumber * 100;
         }
 
-        private async Task<IList<ITestCoverageResult>> DefineTestCoverageForPullUpDownObjects(IList<IPCBComponent> ics = null, IList<IPCBComponent> pullUpsDowns = null)
+        private async Task<IList<ITestCoverageResult>> DefineTestCoverageForPullUpDownObjects(
+            IList<IPCBComponent> ics = null, IList<IPCBComponent> pullUpsDowns = null)
         {
             IList<ITestCoverageResult> results = new List<ITestCoverageResult>();
             await Task.Run(() =>
             {
                 if (ics == null)
                 {
-                    ics = this.ics;
+                    ics = jtags;
                 }
 
                 IList<IPCBComponent> pulls = pullUpsDowns;
                 if (pulls == null)
                 {
                     pulls = new List<IPCBComponent>();
-                    foreach (var comp in this.pullDowns)
+                    foreach (var comp in pullDowns)
                     {
                         pulls.Add(comp);
                     }
 
-                    foreach (var comp in this.pullUps)
+                    foreach (var comp in pullUps)
                     {
                         pulls.Add(comp);
                     }
@@ -734,7 +965,7 @@ namespace TestCoverage.Implementations
         {
             if (ics == null)
             {
-                ics = this.ics;
+                ics = jtags;
             }
 
             if (ics == null || ics.Count == 0)
@@ -762,10 +993,10 @@ namespace TestCoverage.Implementations
 
         private void LogResults()
         {
-            List<INetComponent> netsOfIc = GetAllNetsOfComponents(this.ics);
-            List<INetComponent> netsOfOther = GetAllNetsOfComponents(this.others);
-            List<INetComponent> netsOfPullups = GetAllNetsOfComponents(this.pullUps);
-            List<INetComponent> netsOfPullDowns = GetAllNetsOfComponents(this.pullDowns);
+            List<INetComponent> netsOfIc = GetAllNetsOfComponents(jtags);
+            List<INetComponent> netsOfOther = GetAllNetsOfComponents(others);
+            List<INetComponent> netsOfPullups = GetAllNetsOfComponents(pullUps);
+            List<INetComponent> netsOfPullDowns = GetAllNetsOfComponents(pullDowns);
             netsOfOther.RemoveAll(x => !netsOfIc.Contains(x));
             netsOfPullups.RemoveAll(x => !netsOfIc.Contains(x));
             netsOfPullDowns.RemoveAll(x => !netsOfIc.Contains(x));
@@ -790,7 +1021,10 @@ namespace TestCoverage.Implementations
                     }
 
                     comps.Add(comp);
-                    logger.LogMessage(comp.FunctionalAttributes.Ref + ":" + comp.FunctionalAttributes.Value + GetNetsOfComp(comp.Connections), LogCategory.WARNING);
+                    logger.LogMessage(
+                        comp.FunctionalAttributes.Ref + ":" + comp.FunctionalAttributes.Value
+                        + GetNetsOfComp(comp.Connections),
+                        LogCategory.WARNING);
                 }
             }
         }
@@ -800,7 +1034,10 @@ namespace TestCoverage.Implementations
             logger.LogMessage("Determined pull up objects: " + mapObjects[TestCoverageObject.PULLUP].Count, LogCategory.INFO);
             logger.LogMessage("Determined pull down objects: " + mapObjects[TestCoverageObject.PULLDOWN].Count, LogCategory.INFO);
             logger.LogMessage("Determined IC objects: " + mapObjects[TestCoverageObject.JTAG].Count, LogCategory.INFO);
-            logger.LogMessage("Determined other objects which are connected to the ICs: " + mapObjects[TestCoverageObject.OTHERS].Count, LogCategory.INFO);
+            logger.LogMessage(
+                "Determined other objects which are connected to the ICs: "
+                + mapObjects[TestCoverageObject.OTHERS].Count,
+                LogCategory.INFO);
         }
 
         private bool IsTestResultAvailableForComponent(IPCBComponent comp, IList<ITestCoverageResult> coverageResult = null)
@@ -810,22 +1047,15 @@ namespace TestCoverage.Implementations
                 coverageResult = testCoverageResult;
             }
 
-            foreach (var result in coverageResult)
-            {
-                if (result.PCBComponent == comp)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return coverageResult.FirstOrDefault(result => result.PCBComponent == comp) != null;
         }
 
         private void FinalizeTestCoverageDetermination(IList<ITestCoverageResult> results)
         {
             foreach (var result in results)
             {
-                if (!testCoverageResult.Contains(result) && !IsTestResultAvailableForComponent(result.PCBComponent, testCoverageResult))
+                if (!testCoverageResult.Contains(result)
+                    && !IsTestResultAvailableForComponent(result.PCBComponent, testCoverageResult))
                 {
                     testCoverageResult.Add(result);
                 }

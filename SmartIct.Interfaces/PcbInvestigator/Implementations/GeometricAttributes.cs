@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Interfaces.PcbInvestigator.Implementations
+namespace ProMik.SmartIct.Interfaces.PcbInvestigator.Implementations
 {
     public class GeometricAttributes : IGeometricAttributes
     {

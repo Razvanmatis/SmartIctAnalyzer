@@ -1,0 +1,1463 @@
+-- Copyright © 2017 Infineon Technologies
+-- All rights reserved
+
+-- File Name         : TC38xA_Step_PD_BGA292.bsd
+-- Device            : TC38x A-step Production Device (PD)
+-- Package           : BGA292
+-- Build Version     : M3991A_20170705
+-- Build Date & Time : 5/7/2017 4:59:36 PM (SIN)
+-- Created by        : Infineon Technologies BSDL Generation Program
+-- Verification by   : ASSET InterTech/Agilent Technologies BSDL Validation Service © 2016
+--                     GOEPEL Electronic BSDL Testwriter ver. 2.2.4
+-- Documentation     : TC38x_BS_Chain.xlsx
+--                     Spinner release V1.0.0.1.14
+--                     AURIXTC3XX_its_part1 V2.2.1
+
+-- *********************************************************************************************************************
+-- *                                                  IMPORTANT NOTICE                                                 *
+-- *********************************************************************************************************************
+--
+-- Infineon Technologies is supplying this file to use exclusively with Infineon's microcontroller products.
+-- This file can be freely distributed within development tools that are supporting such microcontroller products.
+--
+-- THIS SOFTWARE IS PROVIDED "AS IS".
+-- NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED TO IMPLIED WARRANTIES OF
+-- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+-- INFINEON SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES,
+-- FOR ANY REASON WHATSOEVER.
+
+-- *********************************************************************************************************************
+-- *                                           ENTITY DEFINITIONS WITH PORTS                                           *
+-- *********************************************************************************************************************
+
+entity bsr is 
+ generic(PHYSICAL_PIN_MAP : string := "BGA292"); 
+
+port (
+              P00_0         : inout bit;
+              P00_1         : inout bit;
+              P00_2         : inout bit;
+              P00_3         : inout bit;
+              P00_4         : inout bit;
+              P00_5         : inout bit;
+              P00_6         : inout bit;
+              P00_7         : inout bit;
+              P00_8         : inout bit;
+              P00_9         : inout bit;
+              P00_10        : inout bit;
+              P00_11        : inout bit;
+              P00_12        : inout bit;
+              P01_3         : inout bit;
+              P01_4         : inout bit;
+              P01_5         : inout bit;
+              P01_6         : inout bit;
+              P01_7         : inout bit;
+              P02_0         : inout bit;
+              P02_1         : inout bit;
+              P02_2         : inout bit;
+              P02_3         : inout bit;
+              P02_4         : inout bit;
+              P02_5         : inout bit;
+              P02_6         : inout bit;
+              P02_7         : inout bit;
+              P02_8         : inout bit;
+              P02_9         : inout bit;
+              P02_10        : inout bit;
+              P02_11        : inout bit;
+              P10_0         : inout bit;
+              P10_1         : inout bit;
+              P10_2         : inout bit;
+              P10_3         : inout bit;
+              P10_4         : inout bit;
+              P10_5         : inout bit;
+              P10_6         : inout bit;
+              P10_7         : inout bit;
+              P10_8         : inout bit;
+              P11_0         : inout bit;
+              P11_1         : inout bit;
+              P11_2         : inout bit;
+              P11_3         : inout bit;
+              P11_4         : inout bit;
+              P11_5         : inout bit;
+              P11_6         : inout bit;
+              P11_7         : inout bit;
+              P11_8         : inout bit;
+              P11_9         : inout bit;
+              P11_10        : inout bit;
+              P11_11        : inout bit;
+              P11_12        : inout bit;
+              P11_13        : inout bit;
+              P11_14        : inout bit;
+              P11_15        : inout bit;
+              P12_0         : inout bit;
+              P12_1         : inout bit;
+              P13_0         : inout bit;
+              P13_1         : inout bit;
+              P13_2         : inout bit;
+              P13_3         : inout bit;
+              P14_0         : inout bit;
+              P14_1         : inout bit;
+              P14_2         : inout bit;
+              P14_3         : inout bit;
+              P14_4         : inout bit;
+              P14_5         : inout bit;
+              P14_6         : inout bit;
+              P14_7         : inout bit;
+              P14_8         : inout bit;
+              P14_9         : inout bit;
+              P14_10        : inout bit;
+              P15_0         : inout bit;
+              P15_1         : inout bit;
+              P15_2         : inout bit;
+              P15_3         : inout bit;
+              P15_4         : inout bit;
+              P15_5         : inout bit;
+              P15_6         : inout bit;
+              P15_7         : inout bit;
+              P15_8         : inout bit;
+              P20_0         : inout bit;
+              P20_1         : inout bit;
+              TESTMODE      : in bit;
+              P20_3         : inout bit;
+              P20_6         : inout bit;
+              P20_7         : inout bit;
+              P20_8         : inout bit;
+              P20_9         : inout bit;
+              P20_10        : inout bit;
+              P20_11        : inout bit;
+              P20_12        : inout bit;
+              P20_13        : inout bit;
+              P20_14        : inout bit;
+              P21_0         : inout bit;
+              P21_1         : inout bit;
+              P21_2         : inout bit;
+              P21_3         : inout bit;
+              P21_4         : inout bit;
+              P21_5         : inout bit;
+              TDI           : in bit;
+              TDO           : out bit;
+              P22_0         : inout bit;
+              P22_1         : inout bit;
+              P22_2         : inout bit;
+              P22_3         : inout bit;
+              P22_4         : inout bit;
+              P22_5         : inout bit;
+              P22_6         : inout bit;
+              P22_7         : inout bit;
+              P22_8         : inout bit;
+              P22_9         : inout bit;
+              P22_10        : inout bit;
+              P22_11        : inout bit;
+              P23_0         : inout bit;
+              P23_1         : inout bit;
+              P23_2         : inout bit;
+              P23_3         : inout bit;
+              P23_4         : inout bit;
+              P23_5         : inout bit;
+              P23_6         : inout bit;
+              P23_7         : inout bit;
+              P32_0         : inout bit;
+              P32_1         : inout bit;
+              P32_2         : inout bit;
+              P32_3         : inout bit;
+              P32_4         : inout bit;
+              P32_5         : inout bit;
+              P32_6         : inout bit;
+              P32_7         : inout bit;
+              P33_0         : inout bit;
+              P33_1         : inout bit;
+              P33_2         : inout bit;
+              P33_3         : inout bit;
+              P33_4         : inout bit;
+              P33_5         : inout bit;
+              P33_6         : inout bit;
+              P33_7         : inout bit;
+              P33_8         : inout bit;
+              P33_9         : inout bit;
+              P33_10        : inout bit;
+              P33_11        : inout bit;
+              P33_12        : inout bit;
+              P33_13        : inout bit;
+              P33_14        : inout bit;
+              P33_15        : inout bit;
+              P34_1         : inout bit;
+              P34_2         : inout bit;
+              P34_3         : inout bit;
+              P34_4         : inout bit;
+              P34_5         : inout bit;
+              P40_0         : in bit;
+              P40_1         : in bit;
+              P40_2         : in bit;
+              P40_3         : in bit;
+              P40_4         : in bit;
+              P40_5         : in bit;
+              P40_6         : in bit;
+              P40_7         : in bit;
+              P40_8         : in bit;
+              P40_9         : in bit;
+              P40_10        : in bit;
+              P40_11        : in bit;
+              P40_12        : in bit;
+              P40_13        : in bit;
+              P40_14        : in bit;
+              ESR0          : inout bit;
+              ESR1          : inout bit;
+              TCK           : in bit;
+              TMS           : in bit;
+              TRST          : in bit;
+              AN0           : linkage bit;
+              AN1           : linkage bit;
+              AN2           : linkage bit;
+              AN3           : linkage bit;
+              AN4           : linkage bit;
+              AN5           : linkage bit;
+              AN6           : linkage bit;
+              AN7           : linkage bit;
+              AN8           : linkage bit;
+              AN9           : linkage bit;
+              AN10          : linkage bit;
+              AN11          : linkage bit;
+              AN12          : linkage bit;
+              AN13          : linkage bit;
+              AN14          : linkage bit;
+              AN15          : linkage bit;
+              AN16          : linkage bit;
+              AN20          : linkage bit;
+              AN21          : linkage bit;
+              AN22          : linkage bit;
+              AN23          : linkage bit;
+              AN30          : linkage bit;
+              AN31          : linkage bit;
+              AN34          : linkage bit;
+              AN35          : linkage bit;
+              AN40          : linkage bit;
+              AN41          : linkage bit;
+              AN42          : linkage bit;
+              AN43          : linkage bit;
+              AN44          : linkage bit;
+              AN45          : linkage bit;
+              AN46          : linkage bit;
+              AN47          : linkage bit;
+              PORST         : linkage bit;
+              XTAL1         : linkage bit;
+              XTAL2         : linkage bit;
+              VAGND1        : linkage bit;
+              VAGND2        : linkage bit;
+              VAREF1        : linkage bit;
+              VAREF2        : linkage bit;
+              VDD           : linkage bit_vector( 1 to 10 );
+              VDDM          : linkage bit;
+              VDDOSC        : linkage bit;
+              VDDP3         : linkage bit_vector( 1 to 2 );
+              VEVRSB        : linkage bit;
+              VEXT          : linkage bit_vector( 1 to 4 );
+              VEXTOSC       : linkage bit;
+              VFLEX         : linkage bit;
+              VSS           : linkage bit_vector( 1 to 54 );
+              VSSM          : linkage bit;
+              VSSOSC        : linkage bit;
+              NC            : linkage bit;
+              NC1           : linkage bit_vector( 1 to 3 )
+        );
+
+    use STD_1149_1_2001.all;
+
+    attribute COMPONENT_CONFORMANCE of bsr : entity is "STD_1149_1_2001";
+
+-- *********************************************************************************************************************
+-- *                                                    PIN MAPPING                                                    *
+-- *********************************************************************************************************************
+
+    attribute PIN_MAP of bsr : entity is PHYSICAL_PIN_MAP;
+
+    constant BGA292 : PIN_MAP_STRING :=
+              "P00_0        : G1," &
+              "P00_1        : G2," &
+              "P00_2        : H1," &
+              "P00_3        : H2," &
+              "P00_4        : J1," &
+              "P00_5        : J2," &
+              "P00_6        : J4," &
+              "P00_7        : K1," &
+              "P00_8        : K4," &
+              "P00_9        : K2," &
+              "P00_10       : K5," &
+              "P00_11       : L1," &
+              "P00_12       : L2," &
+              "P01_3        : G5," &
+              "P01_4        : G4," &
+              "P01_5        : H5," &
+              "P01_6        : H4," &
+              "P01_7        : J5," &
+              "P02_0        : B1," &
+              "P02_1        : C2," &
+              "P02_2        : C1," &
+              "P02_3        : D2," &
+              "P02_4        : D1," &
+              "P02_5        : E2," &
+              "P02_6        : E1," &
+              "P02_7        : F2," &
+              "P02_8        : F1," &
+              "P02_9        : E4," &
+              "P02_10       : F5," &
+              "P02_11       : F4," &
+              "P10_0        : A7," &
+              "P10_1        : B7," &
+              "P10_2        : A5," &
+              "P10_3        : A6," &
+              "P10_4        : B6," &
+              "P10_5        : B5," &
+              "P10_6        : A4," &
+              "P10_7        : A3," &
+              "P10_8        : B4," &
+              "P11_0        : E10," &
+              "P11_1        : E9," &
+              "P11_2        : A10," &
+              "P11_3        : B10," &
+              "P11_4        : D10," &
+              "P11_5        : D8," &
+              "P11_6        : D9," &
+              "P11_7        : E8," &
+              "P11_8        : E7," &
+              "P11_9        : A9," &
+              "P11_10       : B9," &
+              "P11_11       : A8," &
+              "P11_12       : B8," &
+              "P11_13       : E6," &
+              "P11_14       : D7," &
+              "P11_15       : D6," &
+              "P12_0        : E12," &
+              "P12_1        : E11," &
+              "P13_0        : B12," &
+              "P13_1        : A12," &
+              "P13_2        : B11," &
+              "P13_3        : A11," &
+              "P14_0        : B16," &
+              "P14_1        : A15," &
+              "P14_2        : E13," &
+              "P14_3        : B14," &
+              "P14_4        : B15," &
+              "P14_5        : A14," &
+              "P14_6        : B13," &
+              "P14_7        : D13," &
+              "P14_8        : A13," &
+              "P14_9        : D12," &
+              "P14_10       : D11," &
+              "P15_0        : B20," &
+              "P15_1        : A18," &
+              "P15_2        : C19," &
+              "P15_3        : B17," &
+              "P15_4        : A17," &
+              "P15_5        : E14," &
+              "P15_6        : A16," &
+              "P15_7        : D15," &
+              "P15_8        : D14," &
+              "P20_0        : H20," &
+              "P20_1        : G19," &
+              "TESTMODE     : H19," &
+              "P20_3        : G20," &
+              "P20_6        : F17," &
+              "P20_7        : F19," &
+              "P20_8        : F20," &
+              "P20_9        : E17," &
+              "P20_10       : E19," &
+              "P20_11       : E20," &
+              "P20_12       : D19," &
+              "P20_13       : D20," &
+              "P20_14       : C20," &
+              "P21_0        : K17," &
+              "P21_1        : J17," &
+              "P21_2        : K19," &
+              "P21_3        : J19," &
+              "P21_4        : K20," &
+              "P21_5        : J20," &
+              "TDI          : H17," &
+              "TDO          : H16," &
+              "P22_0        : P20," &
+              "P22_1        : P19," &
+              "P22_2        : R20," &
+              "P22_3        : R19," &
+              "P22_4        : P16," &
+              "P22_5        : P17," &
+              "P22_6        : N16," &
+              "P22_7        : N17," &
+              "P22_8        : M16," &
+              "P22_9        : M17," &
+              "P22_10       : L16," &
+              "P22_11       : L17," &
+              "P23_0        : V20," &
+              "P23_1        : U19," &
+              "P23_2        : U20," &
+              "P23_3        : T19," &
+              "P23_4        : T20," &
+              "P23_5        : T17," &
+              "P23_6        : R17," &
+              "P23_7        : R16," &
+              "P32_0        : Y17," &
+              "P32_1        : W17," &
+              "P32_2        : Y18," &
+              "P32_3        : Y19," &
+              "P32_4        : W18," &
+              "P32_5        : T15," &
+              "P32_6        : U15," &
+              "P32_7        : U16," &
+              "P33_0        : W10," &
+              "P33_1        : Y10," &
+              "P33_2        : W11," &
+              "P33_3        : Y11," &
+              "P33_4        : W12," &
+              "P33_5        : Y12," &
+              "P33_6        : W13," &
+              "P33_7        : Y13," &
+              "P33_8        : W14," &
+              "P33_9        : Y14," &
+              "P33_10       : W15," &
+              "P33_11       : Y15," &
+              "P33_12       : W16," &
+              "P33_13       : Y16," &
+              "P33_14       : T14," &
+              "P33_15       : U14," &
+              "P34_1        : U11," &
+              "P34_2        : T12," &
+              "P34_3        : U12," &
+              "P34_4        : T13," &
+              "P34_5        : U13," &
+              "P40_0        : W2," &
+              "P40_1        : W1," &
+              "P40_2        : V2," &
+              "P40_3        : V1," &
+              "P40_4        : P4," &
+              "P40_5        : R1," &
+              "P40_6        : N4," &
+              "P40_7        : P2," &
+              "P40_8        : N5," &
+              "P40_9        : P1," &
+              "P40_10       : U5," &
+              "P40_11       : W4," &
+              "P40_12       : W3," &
+              "P40_13       : U2," &
+              "P40_14       : U1," &
+              "ESR0         : F16," &
+              "ESR1         : G16," &
+              "TCK          : J16," &
+              "TMS          : K16," &
+              "TRST         : L19," &
+              "AN0          : T10," &
+              "AN1          : U10," &
+              "AN2          : W9," &
+              "AN3          : U9," &
+              "AN4          : T9," &
+              "AN5          : Y9," &
+              "AN6          : T8," &
+              "AN7          : U8," &
+              "AN8          : W8," &
+              "AN9          : U7," &
+              "AN10         : Y8," &
+              "AN11         : W7," &
+              "AN12         : T7," &
+              "AN13         : W6," &
+              "AN14         : U6," &
+              "AN15         : T6," &
+              "AN16         : W5," &
+              "AN20         : Y3," &
+              "AN21         : Y2," &
+              "AN22         : T5," &
+              "AN23         : R5," &
+              "AN30         : T4," &
+              "AN31         : R4," &
+              "AN34         : P5," &
+              "AN35         : R2," &
+              "AN40         : M5," &
+              "AN41         : M4," &
+              "AN42         : L5," &
+              "AN43         : L4," &
+              "AN44         : N1," &
+              "AN45         : N2," &
+              "AN46         : M1," &
+              "AN47         : M2," &
+              "PORST        : G17," &
+              "XTAL1        : M20," &
+              "XTAL2        : M19," &
+              "VAGND1       : Y7," &
+              "VAGND2       : T2," &
+              "VAREF1       : Y6," &
+              "VAREF2       : T1," &
+              "VDD          : (D16,E15,G13,G8,H14,H7,N14,N7,P13,P8)," &
+              "VDDM         : Y5," &
+              "VDDOSC       : N19," &
+              "VDDP3        : (A19,B18)," &
+              "VEVRSB       : T11," &
+              "VEXT         : (A2,B3,V19,W20)," &
+              "VEXTOSC      : N20," &
+              "VFLEX        : D5," &
+              "VSS          : (A20,B19,B2,D17,D4,E16,E5,G10,G11,G12,G9,H10,H11,H12,H9,J10,J11,J13,J14,J7,J8,K10,K11,K12,K13,K7,K8,K9,L10,L11,L12,L13,L14,L7,L8,L9,M10,M11,M13,M14,M7,M8,N10,N11,N12,N9,P10,P11,P12,P9,T16,U17,W19,Y20)," &
+              "VSSM         : Y4," &
+              "VSSOSC       : L20," &
+              "NC           : K14," &
+              "NC1          : (A1,U4,Y1)";
+
+-- *********************************************************************************************************************
+-- *                                               IEEE 1149.1 TAP PORTS                                               *
+-- *********************************************************************************************************************
+
+    attribute TAP_SCAN_IN of TDI     : signal is true;
+    attribute TAP_SCAN_MODE of TMS   : signal is true;
+    attribute TAP_SCAN_OUT of TDO    : signal is true;
+    attribute TAP_SCAN_CLOCK of TCK  : signal is (20.0e+06, BOTH);
+    attribute TAP_SCAN_RESET of TRST : signal is true;
+
+-- *********************************************************************************************************************
+-- *                                          INSTRUCTIONS AND REGISTER ACCESS                                         *
+-- *********************************************************************************************************************
+
+    attribute INSTRUCTION_LENGTH of bsr : entity is 8;
+    attribute INSTRUCTION_OPCODE of bsr : entity is
+              "sample    (00000010),"&
+              "preload   (00000010),"&
+              "idcode    (00000100),"&
+              "clamp     (00000110),"&
+              "highz     (00000111),"&
+              "extest    (00001000),"&
+              "bypass    (11111111)";
+
+    attribute INSTRUCTION_CAPTURE of bsr : entity is "00000001";
+
+    attribute IDCODE_REGISTER of bsr : entity is
+              "0001"&                -- Version Number
+              "0000001000000110"&    -- Part Number
+              "00001000001"&         -- Manufacturer ID
+              "1";                   -- Required by IEEE Std. 1149.1-2001
+
+    attribute REGISTER_ACCESS of bsr : entity is
+              "BOUNDARY  (extest, sample),"&
+              "DEVICE_ID (idcode),"&
+              "BYPASS    (clamp, highz, bypass)";
+
+-- *********************************************************************************************************************
+-- *                                          BOUNDARY SCAN CELL INFORMATION                                           *
+-- *********************************************************************************************************************
+
+    attribute BOUNDARY_LENGTH of bsr : entity is 919 ;
+    attribute BOUNDARY_REGISTER of bsr : entity is
+              --num         cell          port          function      safe        [ccell        disval        rslt]
+              " 0           (bc_4,        TESTMODE,     input,        0                                           )," &
+              " 1           (bc_1,        *,            control,      1                                           )," &
+              " 2           (bc_1,        P00_0,        output3,      0,             1 ,          1 ,           Z )," &
+              " 3           (bc_1,        P00_0,        input,        0                                           )," &
+              " 4           (bc_1,        *,            control,      1                                           )," &
+              " 5           (bc_1,        P00_1,        output3,      0,             4 ,          1 ,           Z )," &
+              " 6           (bc_1,        P00_1,        input,        0                                           )," &
+              " 7           (bc_1,        *,            control,      1                                           )," &
+              " 8           (bc_1,        P00_2,        output3,      0,             7 ,          1 ,           Z )," &
+              " 9           (bc_1,        P00_2,        input,        0                                           )," &
+              " 10          (bc_1,        *,            control,      1                                           )," &
+              " 11          (bc_1,        P00_3,        output3,      0,             10 ,         1 ,           Z )," &
+              " 12          (bc_1,        P00_3,        input,        0                                           )," &
+              " 13          (bc_1,        *,            control,      1                                           )," &
+              " 14          (bc_1,        P00_4,        output3,      0,             13 ,         1 ,           Z )," &
+              " 15          (bc_1,        P00_4,        input,        0                                           )," &
+              " 16          (bc_1,        *,            control,      1                                           )," &
+              " 17          (bc_1,        P00_5,        output3,      0,             16 ,         1 ,           Z )," &
+              " 18          (bc_1,        P00_5,        input,        0                                           )," &
+              " 19          (bc_1,        *,            control,      1                                           )," &
+              " 20          (bc_1,        P00_6,        output3,      0,             19 ,         1 ,           Z )," &
+              " 21          (bc_1,        P00_6,        input,        0                                           )," &
+              " 22          (bc_1,        *,            control,      1                                           )," &
+              " 23          (bc_1,        P00_7,        output3,      0,             22 ,         1 ,           Z )," &
+              " 24          (bc_1,        P00_7,        input,        0                                           )," &
+              " 25          (bc_1,        *,            control,      1                                           )," &
+              " 26          (bc_1,        P00_8,        output3,      0,             25 ,         1 ,           Z )," &
+              " 27          (bc_1,        P00_8,        input,        0                                           )," &
+              " 28          (bc_1,        *,            control,      1                                           )," &
+              " 29          (bc_1,        P00_9,        output3,      0,             28 ,         1 ,           Z )," &
+              " 30          (bc_1,        P00_9,        input,        0                                           )," &
+              " 31          (bc_1,        *,            control,      1                                           )," &
+              " 32          (bc_1,        P00_10,       output3,      0,             31 ,         1 ,           Z )," &
+              " 33          (bc_1,        P00_10,       input,        0                                           )," &
+              " 34          (bc_1,        *,            control,      1                                           )," &
+              " 35          (bc_1,        P00_11,       output3,      0,             34 ,         1 ,           Z )," &
+              " 36          (bc_1,        P00_11,       input,        0                                           )," &
+              " 37          (bc_1,        *,            control,      1                                           )," &
+              " 38          (bc_1,        P00_12,       output3,      0,             37 ,         1 ,           Z )," &
+              " 39          (bc_1,        P00_12,       input,        0                                           )," &
+              " 40          (bc_1,        *,            internal,     1                                           )," &
+              " 41          (bc_1,        *,            internal,     0                                           )," &
+              " 42          (bc_1,        *,            internal,     0                                           )," &
+              " 43          (bc_1,        *,            internal,     1                                           )," &
+              " 44          (bc_1,        *,            internal,     0                                           )," &
+              " 45          (bc_1,        *,            internal,     0                                           )," &
+              " 46          (bc_1,        *,            internal,     1                                           )," &
+              " 47          (bc_1,        *,            internal,     0                                           )," &
+              " 48          (bc_1,        *,            internal,     0                                           )," &
+              " 49          (bc_1,        *,            internal,     1                                           )," &
+              " 50          (bc_1,        *,            internal,     0                                           )," &
+              " 51          (bc_1,        *,            internal,     0                                           )," &
+              " 52          (bc_1,        *,            internal,     1                                           )," &
+              " 53          (bc_1,        *,            internal,     0                                           )," &
+              " 54          (bc_1,        *,            internal,     0                                           )," &
+              " 55          (bc_1,        *,            internal,     1                                           )," &
+              " 56          (bc_1,        *,            internal,     0                                           )," &
+              " 57          (bc_1,        *,            internal,     0                                           )," &
+              " 58          (bc_1,        *,            control,      1                                           )," &
+              " 59          (bc_1,        P01_3,        output3,      0,             58 ,         1 ,           Z )," &
+              " 60          (bc_1,        P01_3,        input,        0                                           )," &
+              " 61          (bc_1,        *,            control,      1                                           )," &
+              " 62          (bc_1,        P01_4,        output3,      0,             61 ,         1 ,           Z )," &
+              " 63          (bc_1,        P01_4,        input,        0                                           )," &
+              " 64          (bc_1,        *,            control,      1                                           )," &
+              " 65          (bc_1,        P01_5,        output3,      0,             64 ,         1 ,           Z )," &
+              " 66          (bc_1,        P01_5,        input,        0                                           )," &
+              " 67          (bc_1,        *,            control,      1                                           )," &
+              " 68          (bc_1,        P01_6,        output3,      0,             67 ,         1 ,           Z )," &
+              " 69          (bc_1,        P01_6,        input,        0                                           )," &
+              " 70          (bc_1,        *,            control,      1                                           )," &
+              " 71          (bc_1,        P01_7,        output3,      0,             70 ,         1 ,           Z )," &
+              " 72          (bc_1,        P01_7,        input,        0                                           )," &
+              " 73          (bc_1,        *,            internal,     1                                           )," &
+              " 74          (bc_1,        *,            internal,     0                                           )," &
+              " 75          (bc_1,        *,            internal,     0                                           )," &
+              " 76          (bc_1,        *,            internal,     1                                           )," &
+              " 77          (bc_1,        *,            internal,     0                                           )," &
+              " 78          (bc_1,        *,            internal,     0                                           )," &
+              " 79          (bc_1,        *,            internal,     1                                           )," &
+              " 80          (bc_1,        *,            internal,     0                                           )," &
+              " 81          (bc_1,        *,            internal,     0                                           )," &
+              " 82          (bc_1,        *,            internal,     1                                           )," &
+              " 83          (bc_1,        *,            internal,     0                                           )," &
+              " 84          (bc_1,        *,            internal,     0                                           )," &
+              " 85          (bc_1,        *,            internal,     1                                           )," &
+              " 86          (bc_1,        *,            internal,     0                                           )," &
+              " 87          (bc_1,        *,            internal,     0                                           )," &
+              " 88          (bc_1,        *,            internal,     1                                           )," &
+              " 89          (bc_1,        *,            internal,     0                                           )," &
+              " 90          (bc_1,        *,            internal,     0                                           )," &
+              " 91          (bc_1,        *,            internal,     1                                           )," &
+              " 92          (bc_1,        *,            internal,     0                                           )," &
+              " 93          (bc_1,        *,            internal,     0                                           )," &
+              " 94          (bc_1,        *,            internal,     1                                           )," &
+              " 95          (bc_1,        *,            internal,     0                                           )," &
+              " 96          (bc_1,        *,            internal,     0                                           )," &
+              " 97          (bc_1,        *,            control,      1                                           )," &
+              " 98          (bc_1,        P02_0,        output3,      0,             97 ,         1 ,           Z )," &
+              " 99          (bc_1,        P02_0,        input,        0                                           )," &
+              " 100         (bc_1,        *,            control,      1                                           )," &
+              " 101         (bc_1,        P02_1,        output3,      0,             100 ,        1 ,           Z )," &
+              " 102         (bc_1,        P02_1,        input,        0                                           )," &
+              " 103         (bc_1,        *,            control,      1                                           )," &
+              " 104         (bc_1,        P02_2,        output3,      0,             103 ,        1 ,           Z )," &
+              " 105         (bc_1,        P02_2,        input,        0                                           )," &
+              " 106         (bc_1,        *,            control,      1                                           )," &
+              " 107         (bc_1,        P02_3,        output3,      0,             106 ,        1 ,           Z )," &
+              " 108         (bc_1,        P02_3,        input,        0                                           )," &
+              " 109         (bc_1,        *,            control,      1                                           )," &
+              " 110         (bc_1,        P02_4,        output3,      0,             109 ,        1 ,           Z )," &
+              " 111         (bc_1,        P02_4,        input,        0                                           )," &
+              " 112         (bc_1,        *,            control,      1                                           )," &
+              " 113         (bc_1,        P02_5,        output3,      0,             112 ,        1 ,           Z )," &
+              " 114         (bc_1,        P02_5,        input,        0                                           )," &
+              " 115         (bc_1,        *,            control,      1                                           )," &
+              " 116         (bc_1,        P02_6,        output3,      0,             115 ,        1 ,           Z )," &
+              " 117         (bc_1,        P02_6,        input,        0                                           )," &
+              " 118         (bc_1,        *,            control,      1                                           )," &
+              " 119         (bc_1,        P02_7,        output3,      0,             118 ,        1 ,           Z )," &
+              " 120         (bc_1,        P02_7,        input,        0                                           )," &
+              " 121         (bc_1,        *,            control,      1                                           )," &
+              " 122         (bc_1,        P02_8,        output3,      0,             121 ,        1 ,           Z )," &
+              " 123         (bc_1,        P02_8,        input,        0                                           )," &
+              " 124         (bc_1,        *,            control,      1                                           )," &
+              " 125         (bc_1,        P02_9,        output3,      0,             124 ,        1 ,           Z )," &
+              " 126         (bc_1,        P02_9,        input,        0                                           )," &
+              " 127         (bc_1,        *,            control,      1                                           )," &
+              " 128         (bc_1,        P02_10,       output3,      0,             127 ,        1 ,           Z )," &
+              " 129         (bc_1,        P02_10,       input,        0                                           )," &
+              " 130         (bc_1,        *,            control,      1                                           )," &
+              " 131         (bc_1,        P02_11,       output3,      0,             130 ,        1 ,           Z )," &
+              " 132         (bc_1,        P02_11,       input,        0                                           )," &
+              " 133         (bc_1,        *,            internal,     1                                           )," &
+              " 134         (bc_1,        *,            internal,     0                                           )," &
+              " 135         (bc_1,        *,            internal,     0                                           )," &
+              " 136         (bc_1,        *,            internal,     1                                           )," &
+              " 137         (bc_1,        *,            internal,     0                                           )," &
+              " 138         (bc_1,        *,            internal,     0                                           )," &
+              " 139         (bc_1,        *,            internal,     1                                           )," &
+              " 140         (bc_1,        *,            internal,     0                                           )," &
+              " 141         (bc_1,        *,            internal,     0                                           )," &
+              " 142         (bc_1,        *,            internal,     1                                           )," &
+              " 143         (bc_1,        *,            internal,     0                                           )," &
+              " 144         (bc_1,        *,            internal,     0                                           )," &
+              " 145         (bc_1,        *,            control,      1                                           )," &
+              " 146         (bc_1,        P10_0,        output3,      0,             145 ,        1 ,           Z )," &
+              " 147         (bc_1,        P10_0,        input,        0                                           )," &
+              " 148         (bc_1,        *,            control,      1                                           )," &
+              " 149         (bc_1,        P10_1,        output3,      0,             148 ,        1 ,           Z )," &
+              " 150         (bc_1,        P10_1,        input,        0                                           )," &
+              " 151         (bc_1,        *,            control,      1                                           )," &
+              " 152         (bc_1,        P10_2,        output3,      0,             151 ,        1 ,           Z )," &
+              " 153         (bc_1,        P10_2,        input,        0                                           )," &
+              " 154         (bc_1,        *,            control,      1                                           )," &
+              " 155         (bc_1,        P10_3,        output3,      0,             154 ,        1 ,           Z )," &
+              " 156         (bc_1,        P10_3,        input,        0                                           )," &
+              " 157         (bc_1,        *,            control,      1                                           )," &
+              " 158         (bc_1,        P10_4,        output3,      0,             157 ,        1 ,           Z )," &
+              " 159         (bc_1,        P10_4,        input,        0                                           )," &
+              " 160         (bc_1,        *,            control,      1                                           )," &
+              " 161         (bc_1,        P10_5,        output3,      0,             160 ,        1 ,           Z )," &
+              " 162         (bc_1,        P10_5,        input,        0                                           )," &
+              " 163         (bc_1,        *,            control,      1                                           )," &
+              " 164         (bc_1,        P10_6,        output3,      0,             163 ,        1 ,           Z )," &
+              " 165         (bc_1,        P10_6,        input,        0                                           )," &
+              " 166         (bc_1,        *,            control,      1                                           )," &
+              " 167         (bc_1,        P10_7,        output3,      0,             166 ,        1 ,           Z )," &
+              " 168         (bc_1,        P10_7,        input,        0                                           )," &
+              " 169         (bc_1,        *,            control,      1                                           )," &
+              " 170         (bc_1,        P10_8,        output3,      0,             169 ,        1 ,           Z )," &
+              " 171         (bc_1,        P10_8,        input,        0                                           )," &
+              " 172         (bc_1,        *,            internal,     1                                           )," &
+              " 173         (bc_1,        *,            internal,     0                                           )," &
+              " 174         (bc_1,        *,            internal,     0                                           )," &
+              " 175         (bc_1,        *,            internal,     1                                           )," &
+              " 176         (bc_1,        *,            internal,     0                                           )," &
+              " 177         (bc_1,        *,            internal,     0                                           )," &
+              " 178         (bc_1,        *,            internal,     1                                           )," &
+              " 179         (bc_1,        *,            internal,     0                                           )," &
+              " 180         (bc_1,        *,            internal,     0                                           )," &
+              " 181         (bc_1,        *,            internal,     1                                           )," &
+              " 182         (bc_1,        *,            internal,     0                                           )," &
+              " 183         (bc_1,        *,            internal,     0                                           )," &
+              " 184         (bc_1,        *,            internal,     1                                           )," &
+              " 185         (bc_1,        *,            internal,     0                                           )," &
+              " 186         (bc_1,        *,            internal,     0                                           )," &
+              " 187         (bc_1,        *,            internal,     1                                           )," &
+              " 188         (bc_1,        *,            internal,     0                                           )," &
+              " 189         (bc_1,        *,            internal,     0                                           )," &
+              " 190         (bc_1,        *,            internal,     1                                           )," &
+              " 191         (bc_1,        *,            internal,     0                                           )," &
+              " 192         (bc_1,        *,            internal,     0                                           )," &
+              " 193         (bc_1,        *,            control,      1                                           )," &
+              " 194         (bc_1,        P11_0,        output3,      0,             193 ,        1 ,           Z )," &
+              " 195         (bc_1,        P11_0,        input,        0                                           )," &
+              " 196         (bc_1,        *,            control,      1                                           )," &
+              " 197         (bc_1,        P11_1,        output3,      0,             196 ,        1 ,           Z )," &
+              " 198         (bc_1,        P11_1,        input,        0                                           )," &
+              " 199         (bc_1,        *,            control,      1                                           )," &
+              " 200         (bc_1,        P11_2,        output3,      0,             199 ,        1 ,           Z )," &
+              " 201         (bc_1,        P11_2,        input,        0                                           )," &
+              " 202         (bc_1,        *,            control,      1                                           )," &
+              " 203         (bc_1,        P11_3,        output3,      0,             202 ,        1 ,           Z )," &
+              " 204         (bc_1,        P11_3,        input,        0                                           )," &
+              " 205         (bc_1,        *,            control,      1                                           )," &
+              " 206         (bc_1,        P11_4,        output3,      0,             205 ,        1 ,           Z )," &
+              " 207         (bc_1,        P11_4,        input,        0                                           )," &
+              " 208         (bc_1,        *,            control,      1                                           )," &
+              " 209         (bc_1,        P11_5,        output3,      0,             208 ,        1 ,           Z )," &
+              " 210         (bc_1,        P11_5,        input,        0                                           )," &
+              " 211         (bc_1,        *,            control,      1                                           )," &
+              " 212         (bc_1,        P11_6,        output3,      0,             211 ,        1 ,           Z )," &
+              " 213         (bc_1,        P11_6,        input,        0                                           )," &
+              " 214         (bc_1,        *,            control,      1                                           )," &
+              " 215         (bc_1,        P11_7,        output3,      0,             214 ,        1 ,           Z )," &
+              " 216         (bc_1,        P11_7,        input,        0                                           )," &
+              " 217         (bc_1,        *,            control,      1                                           )," &
+              " 218         (bc_1,        P11_8,        output3,      0,             217 ,        1 ,           Z )," &
+              " 219         (bc_1,        P11_8,        input,        0                                           )," &
+              " 220         (bc_1,        *,            control,      1                                           )," &
+              " 221         (bc_1,        P11_9,        output3,      0,             220 ,        1 ,           Z )," &
+              " 222         (bc_1,        P11_9,        input,        0                                           )," &
+              " 223         (bc_1,        *,            control,      1                                           )," &
+              " 224         (bc_1,        P11_10,       output3,      0,             223 ,        1 ,           Z )," &
+              " 225         (bc_1,        P11_10,       input,        0                                           )," &
+              " 226         (bc_1,        *,            control,      1                                           )," &
+              " 227         (bc_1,        P11_11,       output3,      0,             226 ,        1 ,           Z )," &
+              " 228         (bc_1,        P11_11,       input,        0                                           )," &
+              " 229         (bc_1,        *,            control,      1                                           )," &
+              " 230         (bc_1,        P11_12,       output3,      0,             229 ,        1 ,           Z )," &
+              " 231         (bc_1,        P11_12,       input,        0                                           )," &
+              " 232         (bc_1,        *,            control,      1                                           )," &
+              " 233         (bc_1,        P11_13,       output3,      0,             232 ,        1 ,           Z )," &
+              " 234         (bc_1,        P11_13,       input,        0                                           )," &
+              " 235         (bc_1,        *,            control,      1                                           )," &
+              " 236         (bc_1,        P11_14,       output3,      0,             235 ,        1 ,           Z )," &
+              " 237         (bc_1,        P11_14,       input,        0                                           )," &
+              " 238         (bc_1,        *,            control,      1                                           )," &
+              " 239         (bc_1,        P11_15,       output3,      0,             238 ,        1 ,           Z )," &
+              " 240         (bc_1,        P11_15,       input,        0                                           )," &
+              " 241         (bc_1,        *,            control,      1                                           )," &
+              " 242         (bc_1,        P12_0,        output3,      0,             241 ,        1 ,           Z )," &
+              " 243         (bc_1,        P12_0,        input,        0                                           )," &
+              " 244         (bc_1,        *,            control,      1                                           )," &
+              " 245         (bc_1,        P12_1,        output3,      0,             244 ,        1 ,           Z )," &
+              " 246         (bc_1,        P12_1,        input,        0                                           )," &
+              " 247         (bc_1,        *,            internal,     1                                           )," &
+              " 248         (bc_1,        *,            internal,     0                                           )," &
+              " 249         (bc_1,        *,            internal,     0                                           )," &
+              " 250         (bc_1,        *,            internal,     1                                           )," &
+              " 251         (bc_1,        *,            internal,     0                                           )," &
+              " 252         (bc_1,        *,            internal,     0                                           )," &
+              " 253         (bc_1,        *,            control,      1                                           )," &
+              " 254         (bc_1,        P13_0,        output3,      0,             253 ,        1 ,           Z )," &
+              " 255         (bc_1,        P13_0,        input,        0                                           )," &
+              " 256         (bc_1,        *,            control,      1                                           )," &
+              " 257         (bc_1,        P13_1,        output3,      0,             256 ,        1 ,           Z )," &
+              " 258         (bc_1,        P13_1,        input,        0                                           )," &
+              " 259         (bc_1,        *,            control,      1                                           )," &
+              " 260         (bc_1,        P13_2,        output3,      0,             259 ,        1 ,           Z )," &
+              " 261         (bc_1,        P13_2,        input,        0                                           )," &
+              " 262         (bc_1,        *,            control,      1                                           )," &
+              " 263         (bc_1,        P13_3,        output3,      0,             262 ,        1 ,           Z )," &
+              " 264         (bc_1,        P13_3,        input,        0                                           )," &
+              " 265         (bc_1,        *,            internal,     1                                           )," &
+              " 266         (bc_1,        *,            internal,     0                                           )," &
+              " 267         (bc_1,        *,            internal,     0                                           )," &
+              " 268         (bc_1,        *,            internal,     1                                           )," &
+              " 269         (bc_1,        *,            internal,     0                                           )," &
+              " 270         (bc_1,        *,            internal,     0                                           )," &
+              " 271         (bc_1,        *,            internal,     1                                           )," &
+              " 272         (bc_1,        *,            internal,     0                                           )," &
+              " 273         (bc_1,        *,            internal,     0                                           )," &
+              " 274         (bc_1,        *,            internal,     1                                           )," &
+              " 275         (bc_1,        *,            internal,     0                                           )," &
+              " 276         (bc_1,        *,            internal,     0                                           )," &
+              " 277         (bc_1,        *,            internal,     1                                           )," &
+              " 278         (bc_1,        *,            internal,     0                                           )," &
+              " 279         (bc_1,        *,            internal,     0                                           )," &
+              " 280         (bc_1,        *,            internal,     1                                           )," &
+              " 281         (bc_1,        *,            internal,     0                                           )," &
+              " 282         (bc_1,        *,            internal,     0                                           )," &
+              " 283         (bc_1,        *,            internal,     1                                           )," &
+              " 284         (bc_1,        *,            internal,     0                                           )," &
+              " 285         (bc_1,        *,            internal,     0                                           )," &
+              " 286         (bc_1,        *,            internal,     1                                           )," &
+              " 287         (bc_1,        *,            internal,     0                                           )," &
+              " 288         (bc_1,        *,            internal,     0                                           )," &
+              " 289         (bc_1,        *,            internal,     1                                           )," &
+              " 290         (bc_1,        *,            internal,     0                                           )," &
+              " 291         (bc_1,        *,            internal,     0                                           )," &
+              " 292         (bc_1,        *,            internal,     1                                           )," &
+              " 293         (bc_1,        *,            internal,     0                                           )," &
+              " 294         (bc_1,        *,            internal,     0                                           )," &
+              " 295         (bc_1,        *,            internal,     1                                           )," &
+              " 296         (bc_1,        *,            internal,     0                                           )," &
+              " 297         (bc_1,        *,            internal,     0                                           )," &
+              " 298         (bc_1,        *,            internal,     1                                           )," &
+              " 299         (bc_1,        *,            internal,     0                                           )," &
+              " 300         (bc_1,        *,            internal,     0                                           )," &
+              " 301         (bc_1,        *,            control,      1                                           )," &
+              " 302         (bc_1,        P14_0,        output3,      0,             301 ,        1 ,           Z )," &
+              " 303         (bc_1,        P14_0,        input,        0                                           )," &
+              " 304         (bc_1,        *,            control,      1                                           )," &
+              " 305         (bc_1,        P14_1,        output3,      0,             304 ,        1 ,           Z )," &
+              " 306         (bc_1,        P14_1,        input,        0                                           )," &
+              " 307         (bc_1,        *,            control,      1                                           )," &
+              " 308         (bc_1,        P14_2,        output3,      0,             307 ,        1 ,           Z )," &
+              " 309         (bc_1,        P14_2,        input,        0                                           )," &
+              " 310         (bc_1,        *,            control,      1                                           )," &
+              " 311         (bc_1,        P14_3,        output3,      0,             310 ,        1 ,           Z )," &
+              " 312         (bc_1,        P14_3,        input,        0                                           )," &
+              " 313         (bc_1,        *,            control,      1                                           )," &
+              " 314         (bc_1,        P14_4,        output3,      0,             313 ,        1 ,           Z )," &
+              " 315         (bc_1,        P14_4,        input,        0                                           )," &
+              " 316         (bc_1,        *,            control,      1                                           )," &
+              " 317         (bc_1,        P14_5,        output3,      0,             316 ,        1 ,           Z )," &
+              " 318         (bc_1,        P14_5,        input,        0                                           )," &
+              " 319         (bc_1,        *,            control,      1                                           )," &
+              " 320         (bc_1,        P14_6,        output3,      0,             319 ,        1 ,           Z )," &
+              " 321         (bc_1,        P14_6,        input,        0                                           )," &
+              " 322         (bc_1,        *,            control,      1                                           )," &
+              " 323         (bc_1,        P14_7,        output3,      0,             322 ,        1 ,           Z )," &
+              " 324         (bc_1,        P14_7,        input,        0                                           )," &
+              " 325         (bc_1,        *,            control,      1                                           )," &
+              " 326         (bc_1,        P14_8,        output3,      0,             325 ,        1 ,           Z )," &
+              " 327         (bc_1,        P14_8,        input,        0                                           )," &
+              " 328         (bc_1,        *,            control,      1                                           )," &
+              " 329         (bc_1,        P14_9,        output3,      0,             328 ,        1 ,           Z )," &
+              " 330         (bc_1,        P14_9,        input,        0                                           )," &
+              " 331         (bc_1,        *,            control,      1                                           )," &
+              " 332         (bc_1,        P14_10,       output3,      0,             331 ,        1 ,           Z )," &
+              " 333         (bc_1,        P14_10,       input,        0                                           )," &
+              " 334         (bc_1,        *,            internal,     1                                           )," &
+              " 335         (bc_1,        *,            internal,     0                                           )," &
+              " 336         (bc_1,        *,            internal,     0                                           )," &
+              " 337         (bc_1,        *,            internal,     1                                           )," &
+              " 338         (bc_1,        *,            internal,     0                                           )," &
+              " 339         (bc_1,        *,            internal,     0                                           )," &
+              " 340         (bc_1,        *,            internal,     1                                           )," &
+              " 341         (bc_1,        *,            internal,     0                                           )," &
+              " 342         (bc_1,        *,            internal,     0                                           )," &
+              " 343         (bc_1,        *,            internal,     1                                           )," &
+              " 344         (bc_1,        *,            internal,     0                                           )," &
+              " 345         (bc_1,        *,            internal,     0                                           )," &
+              " 346         (bc_1,        *,            internal,     1                                           )," &
+              " 347         (bc_1,        *,            internal,     0                                           )," &
+              " 348         (bc_1,        *,            internal,     0                                           )," &
+              " 349         (bc_1,        *,            control,      1                                           )," &
+              " 350         (bc_1,        P15_0,        output3,      0,             349 ,        1 ,           Z )," &
+              " 351         (bc_1,        P15_0,        input,        0                                           )," &
+              " 352         (bc_1,        *,            control,      1                                           )," &
+              " 353         (bc_1,        P15_1,        output3,      0,             352 ,        1 ,           Z )," &
+              " 354         (bc_1,        P15_1,        input,        0                                           )," &
+              " 355         (bc_1,        *,            control,      1                                           )," &
+              " 356         (bc_1,        P15_2,        output3,      0,             355 ,        1 ,           Z )," &
+              " 357         (bc_1,        P15_2,        input,        0                                           )," &
+              " 358         (bc_1,        *,            control,      1                                           )," &
+              " 359         (bc_1,        P15_3,        output3,      0,             358 ,        1 ,           Z )," &
+              " 360         (bc_1,        P15_3,        input,        0                                           )," &
+              " 361         (bc_1,        *,            control,      1                                           )," &
+              " 362         (bc_1,        P15_4,        output3,      0,             361 ,        1 ,           Z )," &
+              " 363         (bc_1,        P15_4,        input,        0                                           )," &
+              " 364         (bc_1,        *,            control,      1                                           )," &
+              " 365         (bc_1,        P15_5,        output3,      0,             364 ,        1 ,           Z )," &
+              " 366         (bc_1,        P15_5,        input,        0                                           )," &
+              " 367         (bc_1,        *,            control,      1                                           )," &
+              " 368         (bc_1,        P15_6,        output3,      0,             367 ,        1 ,           Z )," &
+              " 369         (bc_1,        P15_6,        input,        0                                           )," &
+              " 370         (bc_1,        *,            control,      1                                           )," &
+              " 371         (bc_1,        P15_7,        output3,      0,             370 ,        1 ,           Z )," &
+              " 372         (bc_1,        P15_7,        input,        0                                           )," &
+              " 373         (bc_1,        *,            control,      1                                           )," &
+              " 374         (bc_1,        P15_8,        output3,      0,             373 ,        1 ,           Z )," &
+              " 375         (bc_1,        P15_8,        input,        0                                           )," &
+              " 376         (bc_1,        *,            internal,     1                                           )," &
+              " 377         (bc_1,        *,            internal,     0                                           )," &
+              " 378         (bc_1,        *,            internal,     0                                           )," &
+              " 379         (bc_1,        *,            internal,     1                                           )," &
+              " 380         (bc_1,        *,            internal,     0                                           )," &
+              " 381         (bc_1,        *,            internal,     0                                           )," &
+              " 382         (bc_1,        *,            internal,     1                                           )," &
+              " 383         (bc_1,        *,            internal,     0                                           )," &
+              " 384         (bc_1,        *,            internal,     0                                           )," &
+              " 385         (bc_1,        *,            internal,     1                                           )," &
+              " 386         (bc_1,        *,            internal,     0                                           )," &
+              " 387         (bc_1,        *,            internal,     0                                           )," &
+              " 388         (bc_1,        *,            internal,     1                                           )," &
+              " 389         (bc_1,        *,            internal,     0                                           )," &
+              " 390         (bc_1,        *,            internal,     0                                           )," &
+              " 391         (bc_1,        *,            internal,     1                                           )," &
+              " 392         (bc_1,        *,            internal,     0                                           )," &
+              " 393         (bc_1,        *,            internal,     0                                           )," &
+              " 394         (bc_1,        *,            internal,     1                                           )," &
+              " 395         (bc_1,        *,            internal,     0                                           )," &
+              " 396         (bc_1,        *,            internal,     0                                           )," &
+              " 397         (bc_1,        *,            control,      1                                           )," &
+              " 398         (bc_1,        P20_0,        output3,      0,             397 ,        1 ,           Z )," &
+              " 399         (bc_1,        P20_0,        input,        0                                           )," &
+              " 400         (bc_1,        *,            control,      1                                           )," &
+              " 401         (bc_1,        P20_1,        output3,      0,             400 ,        1 ,           Z )," &
+              " 402         (bc_1,        P20_1,        input,        0                                           )," &
+              " 403         (bc_1,        *,            internal,     1                                           )," &
+              " 404         (bc_1,        *,            internal,     0                                           )," &
+              " 405         (bc_1,        *,            internal,     0                                           )," &
+              " 406         (bc_1,        *,            control,      1                                           )," &
+              " 407         (bc_1,        P20_3,        output3,      0,             406 ,        1 ,           Z )," &
+              " 408         (bc_1,        P20_3,        input,        0                                           )," &
+              " 409         (bc_1,        *,            internal,     1                                           )," &
+              " 410         (bc_1,        *,            internal,     0                                           )," &
+              " 411         (bc_1,        *,            internal,     0                                           )," &
+              " 412         (bc_1,        *,            internal,     1                                           )," &
+              " 413         (bc_1,        *,            internal,     0                                           )," &
+              " 414         (bc_1,        *,            internal,     0                                           )," &
+              " 415         (bc_1,        *,            control,      1                                           )," &
+              " 416         (bc_1,        P20_6,        output3,      0,             415 ,        1 ,           Z )," &
+              " 417         (bc_1,        P20_6,        input,        0                                           )," &
+              " 418         (bc_1,        *,            control,      1                                           )," &
+              " 419         (bc_1,        P20_7,        output3,      0,             418 ,        1 ,           Z )," &
+              " 420         (bc_1,        P20_7,        input,        0                                           )," &
+              " 421         (bc_1,        *,            control,      1                                           )," &
+              " 422         (bc_1,        P20_8,        output3,      0,             421 ,        1 ,           Z )," &
+              " 423         (bc_1,        P20_8,        input,        0                                           )," &
+              " 424         (bc_1,        *,            control,      1                                           )," &
+              " 425         (bc_1,        P20_9,        output3,      0,             424 ,        1 ,           Z )," &
+              " 426         (bc_1,        P20_9,        input,        0                                           )," &
+              " 427         (bc_1,        *,            control,      1                                           )," &
+              " 428         (bc_1,        P20_10,       output3,      0,             427 ,        1 ,           Z )," &
+              " 429         (bc_1,        P20_10,       input,        0                                           )," &
+              " 430         (bc_1,        *,            control,      1                                           )," &
+              " 431         (bc_1,        P20_11,       output3,      0,             430 ,        1 ,           Z )," &
+              " 432         (bc_1,        P20_11,       input,        0                                           )," &
+              " 433         (bc_1,        *,            control,      1                                           )," &
+              " 434         (bc_1,        P20_12,       output3,      0,             433 ,        1 ,           Z )," &
+              " 435         (bc_1,        P20_12,       input,        0                                           )," &
+              " 436         (bc_1,        *,            control,      1                                           )," &
+              " 437         (bc_1,        P20_13,       output3,      0,             436 ,        1 ,           Z )," &
+              " 438         (bc_1,        P20_13,       input,        0                                           )," &
+              " 439         (bc_1,        *,            control,      1                                           )," &
+              " 440         (bc_1,        P20_14,       output3,      0,             439 ,        1 ,           Z )," &
+              " 441         (bc_1,        P20_14,       input,        0                                           )," &
+              " 442         (bc_1,        *,            internal,     1                                           )," &
+              " 443         (bc_1,        *,            internal,     0                                           )," &
+              " 444         (bc_1,        *,            internal,     0                                           )," &
+              " 445         (bc_1,        *,            control,      1                                           )," &
+              " 446         (bc_1,        P21_0,        output3,      0,             445 ,        1 ,           Z )," &
+              " 447         (bc_1,        P21_0,        input,        0                                           )," &
+              " 448         (bc_1,        *,            control,      1                                           )," &
+              " 449         (bc_1,        P21_1,        output3,      0,             448 ,        1 ,           Z )," &
+              " 450         (bc_1,        P21_1,        input,        0                                           )," &
+              " 451         (bc_1,        *,            control,      1                                           )," &
+              " 452         (bc_1,        P21_2,        output3,      0,             451 ,        1 ,           Z )," &
+              " 453         (bc_1,        P21_2,        input,        0                                           )," &
+              " 454         (bc_1,        *,            control,      1                                           )," &
+              " 455         (bc_1,        P21_3,        output3,      0,             454 ,        1 ,           Z )," &
+              " 456         (bc_1,        P21_3,        input,        0                                           )," &
+              " 457         (bc_1,        *,            control,      1                                           )," &
+              " 458         (bc_1,        P21_4,        output3,      0,             457 ,        1 ,           Z )," &
+              " 459         (bc_1,        P21_4,        input,        0                                           )," &
+              " 460         (bc_1,        *,            control,      1                                           )," &
+              " 461         (bc_1,        P21_5,        output3,      0,             460 ,        1 ,           Z )," &
+              " 462         (bc_1,        P21_5,        input,        0                                           )," &
+              " 463         (bc_1,        *,            internal,     1                                           )," &
+              " 464         (bc_1,        *,            internal,     0                                           )," &
+              " 465         (bc_1,        *,            internal,     0                                           )," &
+              " 466         (bc_1,        *,            internal,     1                                           )," &
+              " 467         (bc_1,        *,            internal,     0                                           )," &
+              " 468         (bc_1,        *,            internal,     0                                           )," &
+              " 469         (bc_1,        *,            control,      1                                           )," &
+              " 470         (bc_1,        P22_0,        output3,      0,             469 ,        1 ,           Z )," &
+              " 471         (bc_1,        P22_0,        input,        0                                           )," &
+              " 472         (bc_1,        *,            control,      1                                           )," &
+              " 473         (bc_1,        P22_1,        output3,      0,             472 ,        1 ,           Z )," &
+              " 474         (bc_1,        P22_1,        input,        0                                           )," &
+              " 475         (bc_1,        *,            control,      1                                           )," &
+              " 476         (bc_1,        P22_2,        output3,      0,             475 ,        1 ,           Z )," &
+              " 477         (bc_1,        P22_2,        input,        0                                           )," &
+              " 478         (bc_1,        *,            control,      1                                           )," &
+              " 479         (bc_1,        P22_3,        output3,      0,             478 ,        1 ,           Z )," &
+              " 480         (bc_1,        P22_3,        input,        0                                           )," &
+              " 481         (bc_1,        *,            control,      1                                           )," &
+              " 482         (bc_1,        P22_4,        output3,      0,             481 ,        1 ,           Z )," &
+              " 483         (bc_1,        P22_4,        input,        0                                           )," &
+              " 484         (bc_1,        *,            control,      1                                           )," &
+              " 485         (bc_1,        P22_5,        output3,      0,             484 ,        1 ,           Z )," &
+              " 486         (bc_1,        P22_5,        input,        0                                           )," &
+              " 487         (bc_1,        *,            control,      1                                           )," &
+              " 488         (bc_1,        P22_6,        output3,      0,             487 ,        1 ,           Z )," &
+              " 489         (bc_1,        P22_6,        input,        0                                           )," &
+              " 490         (bc_1,        *,            control,      1                                           )," &
+              " 491         (bc_1,        P22_7,        output3,      0,             490 ,        1 ,           Z )," &
+              " 492         (bc_1,        P22_7,        input,        0                                           )," &
+              " 493         (bc_1,        *,            control,      1                                           )," &
+              " 494         (bc_1,        P22_8,        output3,      0,             493 ,        1 ,           Z )," &
+              " 495         (bc_1,        P22_8,        input,        0                                           )," &
+              " 496         (bc_1,        *,            control,      1                                           )," &
+              " 497         (bc_1,        P22_9,        output3,      0,             496 ,        1 ,           Z )," &
+              " 498         (bc_1,        P22_9,        input,        0                                           )," &
+              " 499         (bc_1,        *,            control,      1                                           )," &
+              " 500         (bc_1,        P22_10,       output3,      0,             499 ,        1 ,           Z )," &
+              " 501         (bc_1,        P22_10,       input,        0                                           )," &
+              " 502         (bc_1,        *,            control,      1                                           )," &
+              " 503         (bc_1,        P22_11,       output3,      0,             502 ,        1 ,           Z )," &
+              " 504         (bc_1,        P22_11,       input,        0                                           )," &
+              " 505         (bc_1,        *,            control,      1                                           )," &
+              " 506         (bc_1,        P23_0,        output3,      0,             505 ,        1 ,           Z )," &
+              " 507         (bc_1,        P23_0,        input,        0                                           )," &
+              " 508         (bc_1,        *,            control,      1                                           )," &
+              " 509         (bc_1,        P23_1,        output3,      0,             508 ,        1 ,           Z )," &
+              " 510         (bc_1,        P23_1,        input,        0                                           )," &
+              " 511         (bc_1,        *,            control,      1                                           )," &
+              " 512         (bc_1,        P23_2,        output3,      0,             511 ,        1 ,           Z )," &
+              " 513         (bc_1,        P23_2,        input,        0                                           )," &
+              " 514         (bc_1,        *,            control,      1                                           )," &
+              " 515         (bc_1,        P23_3,        output3,      0,             514 ,        1 ,           Z )," &
+              " 516         (bc_1,        P23_3,        input,        0                                           )," &
+              " 517         (bc_1,        *,            control,      1                                           )," &
+              " 518         (bc_1,        P23_4,        output3,      0,             517 ,        1 ,           Z )," &
+              " 519         (bc_1,        P23_4,        input,        0                                           )," &
+              " 520         (bc_1,        *,            control,      1                                           )," &
+              " 521         (bc_1,        P23_5,        output3,      0,             520 ,        1 ,           Z )," &
+              " 522         (bc_1,        P23_5,        input,        0                                           )," &
+              " 523         (bc_1,        *,            control,      1                                           )," &
+              " 524         (bc_1,        P23_6,        output3,      0,             523 ,        1 ,           Z )," &
+              " 525         (bc_1,        P23_6,        input,        0                                           )," &
+              " 526         (bc_1,        *,            control,      1                                           )," &
+              " 527         (bc_1,        P23_7,        output3,      0,             526 ,        1 ,           Z )," &
+              " 528         (bc_1,        P23_7,        input,        0                                           )," &
+              " 529         (bc_1,        *,            internal,     1                                           )," &
+              " 530         (bc_1,        *,            internal,     0                                           )," &
+              " 531         (bc_1,        *,            internal,     0                                           )," &
+              " 532         (bc_1,        *,            internal,     1                                           )," &
+              " 533         (bc_1,        *,            internal,     0                                           )," &
+              " 534         (bc_1,        *,            internal,     0                                           )," &
+              " 535         (bc_1,        *,            internal,     1                                           )," &
+              " 536         (bc_1,        *,            internal,     0                                           )," &
+              " 537         (bc_1,        *,            internal,     0                                           )," &
+              " 538         (bc_1,        *,            internal,     1                                           )," &
+              " 539         (bc_1,        *,            internal,     0                                           )," &
+              " 540         (bc_1,        *,            internal,     0                                           )," &
+              " 541         (bc_1,        *,            internal,     1                                           )," &
+              " 542         (bc_1,        *,            internal,     0                                           )," &
+              " 543         (bc_1,        *,            internal,     0                                           )," &
+              " 544         (bc_1,        *,            internal,     1                                           )," &
+              " 545         (bc_1,        *,            internal,     0                                           )," &
+              " 546         (bc_1,        *,            internal,     0                                           )," &
+              " 547         (bc_1,        *,            internal,     1                                           )," &
+              " 548         (bc_1,        *,            internal,     0                                           )," &
+              " 549         (bc_1,        *,            internal,     0                                           )," &
+              " 550         (bc_1,        *,            internal,     1                                           )," &
+              " 551         (bc_1,        *,            internal,     0                                           )," &
+              " 552         (bc_1,        *,            internal,     0                                           )," &
+              " 553         (bc_1,        *,            internal,     1                                           )," &
+              " 554         (bc_1,        *,            internal,     0                                           )," &
+              " 555         (bc_1,        *,            internal,     0                                           )," &
+              " 556         (bc_1,        *,            internal,     1                                           )," &
+              " 557         (bc_1,        *,            internal,     0                                           )," &
+              " 558         (bc_1,        *,            internal,     0                                           )," &
+              " 559         (bc_1,        *,            internal,     1                                           )," &
+              " 560         (bc_1,        *,            internal,     0                                           )," &
+              " 561         (bc_1,        *,            internal,     0                                           )," &
+              " 562         (bc_1,        *,            internal,     1                                           )," &
+              " 563         (bc_1,        *,            internal,     0                                           )," &
+              " 564         (bc_1,        *,            internal,     0                                           )," &
+              " 565         (bc_1,        *,            internal,     1                                           )," &
+              " 566         (bc_1,        *,            internal,     0                                           )," &
+              " 567         (bc_1,        *,            internal,     0                                           )," &
+              " 568         (bc_1,        *,            internal,     1                                           )," &
+              " 569         (bc_1,        *,            internal,     0                                           )," &
+              " 570         (bc_1,        *,            internal,     0                                           )," &
+              " 571         (bc_1,        *,            internal,     1                                           )," &
+              " 572         (bc_1,        *,            internal,     0                                           )," &
+              " 573         (bc_1,        *,            internal,     0                                           )," &
+              " 574         (bc_1,        *,            internal,     1                                           )," &
+              " 575         (bc_1,        *,            internal,     0                                           )," &
+              " 576         (bc_1,        *,            internal,     0                                           )," &
+              " 577         (bc_1,        *,            internal,     1                                           )," &
+              " 578         (bc_1,        *,            internal,     0                                           )," &
+              " 579         (bc_1,        *,            internal,     0                                           )," &
+              " 580         (bc_1,        *,            internal,     1                                           )," &
+              " 581         (bc_1,        *,            internal,     0                                           )," &
+              " 582         (bc_1,        *,            internal,     0                                           )," &
+              " 583         (bc_1,        *,            internal,     1                                           )," &
+              " 584         (bc_1,        *,            internal,     0                                           )," &
+              " 585         (bc_1,        *,            internal,     0                                           )," &
+              " 586         (bc_1,        *,            internal,     1                                           )," &
+              " 587         (bc_1,        *,            internal,     0                                           )," &
+              " 588         (bc_1,        *,            internal,     0                                           )," &
+              " 589         (bc_1,        *,            internal,     1                                           )," &
+              " 590         (bc_1,        *,            internal,     0                                           )," &
+              " 591         (bc_1,        *,            internal,     0                                           )," &
+              " 592         (bc_1,        *,            internal,     1                                           )," &
+              " 593         (bc_1,        *,            internal,     0                                           )," &
+              " 594         (bc_1,        *,            internal,     0                                           )," &
+              " 595         (bc_1,        *,            internal,     1                                           )," &
+              " 596         (bc_1,        *,            internal,     0                                           )," &
+              " 597         (bc_1,        *,            internal,     0                                           )," &
+              " 598         (bc_1,        *,            internal,     1                                           )," &
+              " 599         (bc_1,        *,            internal,     0                                           )," &
+              " 600         (bc_1,        *,            internal,     0                                           )," &
+              " 601         (bc_1,        *,            internal,     1                                           )," &
+              " 602         (bc_1,        *,            internal,     0                                           )," &
+              " 603         (bc_1,        *,            internal,     0                                           )," &
+              " 604         (bc_1,        *,            internal,     1                                           )," &
+              " 605         (bc_1,        *,            internal,     0                                           )," &
+              " 606         (bc_1,        *,            internal,     0                                           )," &
+              " 607         (bc_1,        *,            internal,     1                                           )," &
+              " 608         (bc_1,        *,            internal,     0                                           )," &
+              " 609         (bc_1,        *,            internal,     0                                           )," &
+              " 610         (bc_1,        *,            internal,     1                                           )," &
+              " 611         (bc_1,        *,            internal,     0                                           )," &
+              " 612         (bc_1,        *,            internal,     0                                           )," &
+              " 613         (bc_1,        *,            internal,     1                                           )," &
+              " 614         (bc_1,        *,            internal,     0                                           )," &
+              " 615         (bc_1,        *,            internal,     0                                           )," &
+              " 616         (bc_1,        *,            internal,     1                                           )," &
+              " 617         (bc_1,        *,            internal,     0                                           )," &
+              " 618         (bc_1,        *,            internal,     0                                           )," &
+              " 619         (bc_1,        *,            internal,     1                                           )," &
+              " 620         (bc_1,        *,            internal,     0                                           )," &
+              " 621         (bc_1,        *,            internal,     0                                           )," &
+              " 622         (bc_1,        *,            internal,     1                                           )," &
+              " 623         (bc_1,        *,            internal,     0                                           )," &
+              " 624         (bc_1,        *,            internal,     0                                           )," &
+              " 625         (bc_1,        *,            internal,     1                                           )," &
+              " 626         (bc_1,        *,            internal,     0                                           )," &
+              " 627         (bc_1,        *,            internal,     0                                           )," &
+              " 628         (bc_1,        *,            internal,     1                                           )," &
+              " 629         (bc_1,        *,            internal,     0                                           )," &
+              " 630         (bc_1,        *,            internal,     0                                           )," &
+              " 631         (bc_1,        *,            internal,     1                                           )," &
+              " 632         (bc_1,        *,            internal,     0                                           )," &
+              " 633         (bc_1,        *,            internal,     0                                           )," &
+              " 634         (bc_1,        *,            internal,     1                                           )," &
+              " 635         (bc_1,        *,            internal,     0                                           )," &
+              " 636         (bc_1,        *,            internal,     0                                           )," &
+              " 637         (bc_1,        *,            internal,     1                                           )," &
+              " 638         (bc_1,        *,            internal,     0                                           )," &
+              " 639         (bc_1,        *,            internal,     0                                           )," &
+              " 640         (bc_1,        *,            internal,     1                                           )," &
+              " 641         (bc_1,        *,            internal,     0                                           )," &
+              " 642         (bc_1,        *,            internal,     0                                           )," &
+              " 643         (bc_1,        *,            internal,     1                                           )," &
+              " 644         (bc_1,        *,            internal,     0                                           )," &
+              " 645         (bc_1,        *,            internal,     0                                           )," &
+              " 646         (bc_1,        *,            internal,     1                                           )," &
+              " 647         (bc_1,        *,            internal,     0                                           )," &
+              " 648         (bc_1,        *,            internal,     0                                           )," &
+              " 649         (bc_1,        *,            internal,     1                                           )," &
+              " 650         (bc_1,        *,            internal,     0                                           )," &
+              " 651         (bc_1,        *,            internal,     0                                           )," &
+              " 652         (bc_1,        *,            internal,     1                                           )," &
+              " 653         (bc_1,        *,            internal,     0                                           )," &
+              " 654         (bc_1,        *,            internal,     0                                           )," &
+              " 655         (bc_1,        *,            internal,     1                                           )," &
+              " 656         (bc_1,        *,            internal,     0                                           )," &
+              " 657         (bc_1,        *,            internal,     0                                           )," &
+              " 658         (bc_1,        *,            internal,     1                                           )," &
+              " 659         (bc_1,        *,            internal,     0                                           )," &
+              " 660         (bc_1,        *,            internal,     0                                           )," &
+              " 661         (bc_1,        *,            internal,     1                                           )," &
+              " 662         (bc_1,        *,            internal,     0                                           )," &
+              " 663         (bc_1,        *,            internal,     0                                           )," &
+              " 664         (bc_1,        *,            internal,     1                                           )," &
+              " 665         (bc_1,        *,            internal,     0                                           )," &
+              " 666         (bc_1,        *,            internal,     0                                           )," &
+              " 667         (bc_1,        *,            internal,     1                                           )," &
+              " 668         (bc_1,        *,            internal,     0                                           )," &
+              " 669         (bc_1,        *,            internal,     0                                           )," &
+              " 670         (bc_1,        *,            internal,     1                                           )," &
+              " 671         (bc_1,        *,            internal,     0                                           )," &
+              " 672         (bc_1,        *,            internal,     0                                           )," &
+              " 673         (bc_1,        *,            internal,     1                                           )," &
+              " 674         (bc_1,        *,            internal,     0                                           )," &
+              " 675         (bc_1,        *,            internal,     0                                           )," &
+              " 676         (bc_1,        *,            internal,     1                                           )," &
+              " 677         (bc_1,        *,            internal,     0                                           )," &
+              " 678         (bc_1,        *,            internal,     0                                           )," &
+              " 679         (bc_1,        *,            internal,     1                                           )," &
+              " 680         (bc_1,        *,            internal,     0                                           )," &
+              " 681         (bc_1,        *,            internal,     0                                           )," &
+              " 682         (bc_1,        *,            internal,     1                                           )," &
+              " 683         (bc_1,        *,            internal,     0                                           )," &
+              " 684         (bc_1,        *,            internal,     0                                           )," &
+              " 685         (bc_1,        *,            internal,     1                                           )," &
+              " 686         (bc_1,        *,            internal,     0                                           )," &
+              " 687         (bc_1,        *,            internal,     0                                           )," &
+              " 688         (bc_1,        *,            internal,     1                                           )," &
+              " 689         (bc_1,        *,            internal,     0                                           )," &
+              " 690         (bc_1,        *,            internal,     0                                           )," &
+              " 691         (bc_1,        *,            internal,     1                                           )," &
+              " 692         (bc_1,        *,            internal,     0                                           )," &
+              " 693         (bc_1,        *,            internal,     0                                           )," &
+              " 694         (bc_1,        *,            internal,     1                                           )," &
+              " 695         (bc_1,        *,            internal,     0                                           )," &
+              " 696         (bc_1,        *,            internal,     0                                           )," &
+              " 697         (bc_1,        *,            internal,     1                                           )," &
+              " 698         (bc_1,        *,            internal,     0                                           )," &
+              " 699         (bc_1,        *,            internal,     0                                           )," &
+              " 700         (bc_1,        *,            internal,     1                                           )," &
+              " 701         (bc_1,        *,            internal,     0                                           )," &
+              " 702         (bc_1,        *,            internal,     0                                           )," &
+              " 703         (bc_1,        *,            internal,     1                                           )," &
+              " 704         (bc_1,        *,            internal,     0                                           )," &
+              " 705         (bc_1,        *,            internal,     0                                           )," &
+              " 706         (bc_1,        *,            internal,     1                                           )," &
+              " 707         (bc_1,        *,            internal,     0                                           )," &
+              " 708         (bc_1,        *,            internal,     0                                           )," &
+              " 709         (bc_1,        *,            internal,     1                                           )," &
+              " 710         (bc_1,        *,            internal,     0                                           )," &
+              " 711         (bc_1,        *,            internal,     0                                           )," &
+              " 712         (bc_1,        *,            internal,     1                                           )," &
+              " 713         (bc_1,        *,            internal,     0                                           )," &
+              " 714         (bc_1,        *,            internal,     0                                           )," &
+              " 715         (bc_1,        *,            internal,     1                                           )," &
+              " 716         (bc_1,        *,            internal,     0                                           )," &
+              " 717         (bc_1,        *,            internal,     0                                           )," &
+              " 718         (bc_1,        *,            internal,     1                                           )," &
+              " 719         (bc_1,        *,            internal,     0                                           )," &
+              " 720         (bc_1,        *,            internal,     0                                           )," &
+              " 721         (bc_1,        *,            internal,     1                                           )," &
+              " 722         (bc_1,        *,            internal,     0                                           )," &
+              " 723         (bc_1,        *,            internal,     0                                           )," &
+              " 724         (bc_1,        *,            internal,     1                                           )," &
+              " 725         (bc_1,        *,            internal,     0                                           )," &
+              " 726         (bc_1,        *,            internal,     0                                           )," &
+              " 727         (bc_1,        *,            internal,     1                                           )," &
+              " 728         (bc_1,        *,            internal,     0                                           )," &
+              " 729         (bc_1,        *,            internal,     0                                           )," &
+              " 730         (bc_1,        *,            internal,     1                                           )," &
+              " 731         (bc_1,        *,            internal,     0                                           )," &
+              " 732         (bc_1,        *,            internal,     0                                           )," &
+              " 733         (bc_1,        *,            control,      1                                           )," &
+              " 734         (bc_1,        P32_0,        output3,      0,             733 ,        1 ,           Z )," &
+              " 735         (bc_1,        P32_0,        input,        0                                           )," &
+              " 736         (bc_1,        *,            control,      1                                           )," &
+              " 737         (bc_1,        P32_1,        output3,      0,             736 ,        1 ,           Z )," &
+              " 738         (bc_1,        P32_1,        input,        0                                           )," &
+              " 739         (bc_1,        *,            control,      1                                           )," &
+              " 740         (bc_1,        P32_2,        output3,      0,             739 ,        1 ,           Z )," &
+              " 741         (bc_1,        P32_2,        input,        0                                           )," &
+              " 742         (bc_1,        *,            control,      1                                           )," &
+              " 743         (bc_1,        P32_3,        output3,      0,             742 ,        1 ,           Z )," &
+              " 744         (bc_1,        P32_3,        input,        0                                           )," &
+              " 745         (bc_1,        *,            control,      1                                           )," &
+              " 746         (bc_1,        P32_4,        output3,      0,             745 ,        1 ,           Z )," &
+              " 747         (bc_1,        P32_4,        input,        0                                           )," &
+              " 748         (bc_1,        *,            control,      1                                           )," &
+              " 749         (bc_1,        P32_5,        output3,      0,             748 ,        1 ,           Z )," &
+              " 750         (bc_1,        P32_5,        input,        0                                           )," &
+              " 751         (bc_1,        *,            control,      1                                           )," &
+              " 752         (bc_1,        P32_6,        output3,      0,             751 ,        1 ,           Z )," &
+              " 753         (bc_1,        P32_6,        input,        0                                           )," &
+              " 754         (bc_1,        *,            control,      1                                           )," &
+              " 755         (bc_1,        P32_7,        output3,      0,             754 ,        1 ,           Z )," &
+              " 756         (bc_1,        P32_7,        input,        0                                           )," &
+              " 757         (bc_1,        *,            control,      1                                           )," &
+              " 758         (bc_1,        P33_0,        output3,      0,             757 ,        1 ,           Z )," &
+              " 759         (bc_1,        P33_0,        input,        0                                           )," &
+              " 760         (bc_1,        *,            control,      1                                           )," &
+              " 761         (bc_1,        P33_1,        output3,      0,             760 ,        1 ,           Z )," &
+              " 762         (bc_1,        P33_1,        input,        0                                           )," &
+              " 763         (bc_1,        *,            control,      1                                           )," &
+              " 764         (bc_1,        P33_2,        output3,      0,             763 ,        1 ,           Z )," &
+              " 765         (bc_1,        P33_2,        input,        0                                           )," &
+              " 766         (bc_1,        *,            control,      1                                           )," &
+              " 767         (bc_1,        P33_3,        output3,      0,             766 ,        1 ,           Z )," &
+              " 768         (bc_1,        P33_3,        input,        0                                           )," &
+              " 769         (bc_1,        *,            control,      1                                           )," &
+              " 770         (bc_1,        P33_4,        output3,      0,             769 ,        1 ,           Z )," &
+              " 771         (bc_1,        P33_4,        input,        0                                           )," &
+              " 772         (bc_1,        *,            control,      1                                           )," &
+              " 773         (bc_1,        P33_5,        output3,      0,             772 ,        1 ,           Z )," &
+              " 774         (bc_1,        P33_5,        input,        0                                           )," &
+              " 775         (bc_1,        *,            control,      1                                           )," &
+              " 776         (bc_1,        P33_6,        output3,      0,             775 ,        1 ,           Z )," &
+              " 777         (bc_1,        P33_6,        input,        0                                           )," &
+              " 778         (bc_1,        *,            control,      1                                           )," &
+              " 779         (bc_1,        P33_7,        output3,      0,             778 ,        1 ,           Z )," &
+              " 780         (bc_1,        P33_7,        input,        0                                           )," &
+              " 781         (bc_1,        *,            control,      1                                           )," &
+              " 782         (bc_1,        P33_8,        output3,      0,             781 ,        1 ,           Z )," &
+              " 783         (bc_1,        P33_8,        input,        0                                           )," &
+              " 784         (bc_1,        *,            control,      1                                           )," &
+              " 785         (bc_1,        P33_9,        output3,      0,             784 ,        1 ,           Z )," &
+              " 786         (bc_1,        P33_9,        input,        0                                           )," &
+              " 787         (bc_1,        *,            control,      1                                           )," &
+              " 788         (bc_1,        P33_10,       output3,      0,             787 ,        1 ,           Z )," &
+              " 789         (bc_1,        P33_10,       input,        0                                           )," &
+              " 790         (bc_1,        *,            control,      1                                           )," &
+              " 791         (bc_1,        P33_11,       output3,      0,             790 ,        1 ,           Z )," &
+              " 792         (bc_1,        P33_11,       input,        0                                           )," &
+              " 793         (bc_1,        *,            control,      1                                           )," &
+              " 794         (bc_1,        P33_12,       output3,      0,             793 ,        1 ,           Z )," &
+              " 795         (bc_1,        P33_12,       input,        0                                           )," &
+              " 796         (bc_1,        *,            control,      1                                           )," &
+              " 797         (bc_1,        P33_13,       output3,      0,             796 ,        1 ,           Z )," &
+              " 798         (bc_1,        P33_13,       input,        0                                           )," &
+              " 799         (bc_1,        *,            control,      1                                           )," &
+              " 800         (bc_1,        P33_14,       output3,      0,             799 ,        1 ,           Z )," &
+              " 801         (bc_1,        P33_14,       input,        0                                           )," &
+              " 802         (bc_1,        *,            control,      1                                           )," &
+              " 803         (bc_1,        P33_15,       output3,      0,             802 ,        1 ,           Z )," &
+              " 804         (bc_1,        P33_15,       input,        0                                           )," &
+              " 805         (bc_1,        *,            internal,     1                                           )," &
+              " 806         (bc_1,        *,            internal,     0                                           )," &
+              " 807         (bc_1,        *,            internal,     0                                           )," &
+              " 808         (bc_1,        *,            control,      1                                           )," &
+              " 809         (bc_1,        P34_1,        output3,      0,             808 ,        1 ,           Z )," &
+              " 810         (bc_1,        P34_1,        input,        0                                           )," &
+              " 811         (bc_1,        *,            control,      1                                           )," &
+              " 812         (bc_1,        P34_2,        output3,      0,             811 ,        1 ,           Z )," &
+              " 813         (bc_1,        P34_2,        input,        0                                           )," &
+              " 814         (bc_1,        *,            control,      1                                           )," &
+              " 815         (bc_1,        P34_3,        output3,      0,             814 ,        1 ,           Z )," &
+              " 816         (bc_1,        P34_3,        input,        0                                           )," &
+              " 817         (bc_1,        *,            control,      1                                           )," &
+              " 818         (bc_1,        P34_4,        output3,      0,             817 ,        1 ,           Z )," &
+              " 819         (bc_1,        P34_4,        input,        0                                           )," &
+              " 820         (bc_1,        *,            control,      1                                           )," &
+              " 821         (bc_1,        P34_5,        output3,      0,             820 ,        1 ,           Z )," &
+              " 822         (bc_1,        P34_5,        input,        0                                           )," &
+              " 823         (bc_1,        *,            internal,     1                                           )," &
+              " 824         (bc_1,        *,            internal,     0                                           )," &
+              " 825         (bc_1,        *,            internal,     0                                           )," &
+              " 826         (bc_1,        *,            internal,     1                                           )," &
+              " 827         (bc_1,        *,            internal,     0                                           )," &
+              " 828         (bc_1,        *,            internal,     0                                           )," &
+              " 829         (bc_1,        *,            internal,     1                                           )," &
+              " 830         (bc_1,        *,            internal,     0                                           )," &
+              " 831         (bc_1,        P40_0,        input,        0                                           )," &
+              " 832         (bc_1,        *,            internal,     1                                           )," &
+              " 833         (bc_1,        *,            internal,     0                                           )," &
+              " 834         (bc_1,        P40_1,        input,        0                                           )," &
+              " 835         (bc_1,        *,            internal,     1                                           )," &
+              " 836         (bc_1,        *,            internal,     0                                           )," &
+              " 837         (bc_1,        P40_2,        input,        0                                           )," &
+              " 838         (bc_1,        *,            internal,     1                                           )," &
+              " 839         (bc_1,        *,            internal,     0                                           )," &
+              " 840         (bc_1,        P40_3,        input,        0                                           )," &
+              " 841         (bc_1,        *,            internal,     1                                           )," &
+              " 842         (bc_1,        *,            internal,     0                                           )," &
+              " 843         (bc_1,        P40_4,        input,        0                                           )," &
+              " 844         (bc_1,        *,            internal,     1                                           )," &
+              " 845         (bc_1,        *,            internal,     0                                           )," &
+              " 846         (bc_1,        P40_5,        input,        0                                           )," &
+              " 847         (bc_1,        *,            internal,     1                                           )," &
+              " 848         (bc_1,        *,            internal,     0                                           )," &
+              " 849         (bc_1,        P40_6,        input,        0                                           )," &
+              " 850         (bc_1,        *,            internal,     1                                           )," &
+              " 851         (bc_1,        *,            internal,     0                                           )," &
+              " 852         (bc_1,        P40_7,        input,        0                                           )," &
+              " 853         (bc_1,        *,            internal,     1                                           )," &
+              " 854         (bc_1,        *,            internal,     0                                           )," &
+              " 855         (bc_1,        P40_8,        input,        0                                           )," &
+              " 856         (bc_1,        *,            internal,     1                                           )," &
+              " 857         (bc_1,        *,            internal,     0                                           )," &
+              " 858         (bc_1,        P40_9,        input,        0                                           )," &
+              " 859         (bc_1,        *,            internal,     1                                           )," &
+              " 860         (bc_1,        *,            internal,     0                                           )," &
+              " 861         (bc_1,        P40_10,       input,        0                                           )," &
+              " 862         (bc_1,        *,            internal,     1                                           )," &
+              " 863         (bc_1,        *,            internal,     0                                           )," &
+              " 864         (bc_1,        P40_11,       input,        0                                           )," &
+              " 865         (bc_1,        *,            internal,     1                                           )," &
+              " 866         (bc_1,        *,            internal,     0                                           )," &
+              " 867         (bc_1,        P40_12,       input,        0                                           )," &
+              " 868         (bc_1,        *,            internal,     1                                           )," &
+              " 869         (bc_1,        *,            internal,     0                                           )," &
+              " 870         (bc_1,        P40_13,       input,        0                                           )," &
+              " 871         (bc_1,        *,            internal,     1                                           )," &
+              " 872         (bc_1,        *,            internal,     0                                           )," &
+              " 873         (bc_1,        P40_14,       input,        0                                           )," &
+              " 874         (bc_1,        *,            internal,     1                                           )," &
+              " 875         (bc_1,        *,            internal,     0                                           )," &
+              " 876         (bc_1,        *,            internal,     0                                           )," &
+              " 877         (bc_1,        *,            internal,     1                                           )," &
+              " 878         (bc_1,        *,            internal,     0                                           )," &
+              " 879         (bc_1,        *,            internal,     0                                           )," &
+              " 880         (bc_1,        *,            internal,     1                                           )," &
+              " 881         (bc_1,        *,            internal,     0                                           )," &
+              " 882         (bc_1,        *,            internal,     0                                           )," &
+              " 883         (bc_1,        *,            internal,     1                                           )," &
+              " 884         (bc_1,        *,            internal,     0                                           )," &
+              " 885         (bc_1,        *,            internal,     0                                           )," &
+              " 886         (bc_1,        *,            internal,     1                                           )," &
+              " 887         (bc_1,        *,            internal,     0                                           )," &
+              " 888         (bc_1,        *,            internal,     0                                           )," &
+              " 889         (bc_1,        *,            internal,     1                                           )," &
+              " 890         (bc_1,        *,            internal,     0                                           )," &
+              " 891         (bc_1,        *,            internal,     0                                           )," &
+              " 892         (bc_1,        *,            internal,     1                                           )," &
+              " 893         (bc_1,        *,            internal,     0                                           )," &
+              " 894         (bc_1,        *,            internal,     0                                           )," &
+              " 895         (bc_1,        *,            internal,     1                                           )," &
+              " 896         (bc_1,        *,            internal,     0                                           )," &
+              " 897         (bc_1,        *,            internal,     0                                           )," &
+              " 898         (bc_1,        *,            internal,     1                                           )," &
+              " 899         (bc_1,        *,            internal,     0                                           )," &
+              " 900         (bc_1,        *,            internal,     0                                           )," &
+              " 901         (bc_1,        *,            internal,     1                                           )," &
+              " 902         (bc_1,        *,            internal,     0                                           )," &
+              " 903         (bc_1,        *,            internal,     0                                           )," &
+              " 904         (bc_1,        *,            internal,     1                                           )," &
+              " 905         (bc_1,        *,            internal,     0                                           )," &
+              " 906         (bc_1,        *,            internal,     0                                           )," &
+              " 907         (bc_1,        *,            internal,     1                                           )," &
+              " 908         (bc_1,        *,            internal,     0                                           )," &
+              " 909         (bc_1,        *,            internal,     0                                           )," &
+              " 910         (bc_1,        *,            internal,     1                                           )," &
+              " 911         (bc_1,        *,            internal,     0                                           )," &
+              " 912         (bc_1,        *,            internal,     0                                           )," &
+              " 913         (bc_1,        *,            control,      1                                           )," &
+              " 914         (bc_1,        ESR0,         output3,      0,             913 ,        1 ,           Z )," &
+              " 915         (bc_1,        ESR0,         input,        0                                           )," &
+              " 916         (bc_1,        *,            control,      1                                           )," &
+              " 917         (bc_1,        ESR1,         output3,      0,             916 ,        1 ,           Z )," &
+              " 918         (bc_1,        ESR1,         input,        0                                           ) " ;
+
+end bsr;

@@ -2,7 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+	<VersionPrefix>1.0.1</VersionPrefix>
+    <PackageId>ProMik.SmartIct.Svf.SvfFileCreation</PackageId>
+    <PackageProjectUrl>https://gitlab.promik.local/flash_task/host/smart_ict_analyser/-/tree/master/SmartIctTool/NetStandard/SvfHelper</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,15 +19,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SmartIct.Interfaces\Interfaces.csproj" />
+    <PackageReference Include="ProMik.BSDL.Interfaces" Version="1.0.16-beta" />
+    <PackageReference Include="ProMik.Svf.Contracts" Version="1.0.0" />
+    <PackageReference Include="ProMik.SvfPlayer" Version="1.0.20-beta" />
   </ItemGroup>
+
   <ItemGroup>
-    <Reference Include="ProMik.SvfPlayer">
-      <HintPath>..\..\External DLLs\ProMik.SvfPlayer.dll</HintPath>
-    </Reference>
-    <Reference Include="BSDLProcessor.Interfaces">
-      <HintPath>..\..\External DLLs\BSDLProcessor.Interfaces.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\SmartIct.Interfaces\Interfaces.csproj" />
+    <ProjectReference Include="..\ManifestHandling\ManifestHandling.csproj" />
+    <ProjectReference Include="..\SvfInterfaces\SvfInterfaces\SvfInterfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SvfPlayer_x86.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

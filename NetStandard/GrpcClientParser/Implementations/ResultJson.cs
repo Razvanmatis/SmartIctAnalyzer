@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
-using GrpcClientParser.Helper.JsonObjects;
-using GrpcClientParser.Interfaces;
+using ProMik.SmartIct.PCBComponentParser.Helper.JsonObjects;
+using ProMik.SmartIct.PCBComponentParser.Interfaces;
 
-namespace GrpcClientParser.Implementations
+namespace ProMik.SmartIct.PCBComponentParser.Implementations
 {
     public class ResultJson : IResultJson
     {
-        public ResultJson(IList<PinJson> pins, IList<ComponentJson> components, IList<NetJson> nets)
+        public ResultJson(IList<PinJson> pins, IList<ComponentJson> components, IList<NetJson> nets, int stepAmount)
         {
             Pins = pins;
             Components = components;
             Nets = nets;
+            StepAmount = stepAmount;
         }
 
         public IList<PinJson> Pins { get; set; }
@@ -18,5 +19,7 @@ namespace GrpcClientParser.Implementations
         public IList<ComponentJson> Components { get; set; }
 
         public IList<NetJson> Nets { get; set; }
+
+        public int StepAmount { get; }
     }
 }

@@ -2,17 +2,53 @@
 using System.IO;
 using System.Security;
 using System.Text;
-using Interfaces.Gui;
 using Newtonsoft.Json;
+using ProMik.SmartIct.Interfaces.Gui;
 using Ui.Modules.ModuleName.Helper;
 using Ui.Modules.ModuleName.Interfaces;
 using Ui.Modules.ModuleName.Model;
 
 namespace Ui.Modules.ModuleName.Implementations
 {
+    public enum TargetDef
+    {
+        /// <summary>
+        /// Channel_A
+        /// </summary>
+        Channel_A,
+
+        /// <summary>
+        /// Channel_B
+        /// </summary>
+        /// TO DO: EXTEND THE SVF PLAYER TO SUPPORT ALSO CHANNEL B
+        Channel_B,
+    }
+
+    public enum SlotDef
+    {
+        /// <summary>
+        /// Slot_1
+        /// </summary>
+        Slot_1,
+
+        /// <summary>
+        /// Slot_2
+        /// </summary>
+        Slot_2,
+
+        /// <summary>
+        /// Slot_3
+        /// </summary>
+        Slot_3,
+
+        /// <summary>
+        /// Slot_4
+        /// </summary>
+        Slot_4,
+    }
+
     public class JsonSettingsStorageManager : ISettingsStorageManager
     {
-        public const string JtagDef = "jtag";
         public const string PowerDef = "3v;5v;vdd";
         public const string GndDef = "gnd";
         public const string ConDef = "x";
@@ -22,12 +58,15 @@ namespace Ui.Modules.ModuleName.Implementations
         public const int FontDef = 12;
         public const string CDef = "c";
         public const string RDef = "r";
-        public const string Ipdef = "10.91.30.184";
-        public const string PgmIpDef = "192.168.3.11";
+        public const string Ipdef = "127.0.0.1";
+        public const string PgmIpDef = "192.168.1.2";
         public const string StepsDef = "-1";
         public const uint PgmPortDef = 15504;
         public const uint SupplyVoltageMvDef = 12000;
-        public const uint IoVoltageMvDef = 5000;
+        public const uint IoVoltageMvDef = 3300;
+        public const uint FrequencyDef = 1000;
+        public const uint CableCompensationDef = 0;
+        public const bool AskForSvfSettingsDef = true;
         public static readonly StorageColor RDefColor = new StorageColor(245, 245, 220);
         public static readonly StorageColor CDefColor = new StorageColor(0, 191, 255);
         public static readonly StorageColor IDefColor = new StorageColor(255, 255, 0);
@@ -92,7 +131,8 @@ namespace Ui.Modules.ModuleName.Implementations
                 return null;
             }
 
-            if ((settingValue == null) || (settingValue.CColor == null && settingValue.CIdentifier == null && settingValue.CompColor == null))
+            if ((settingValue == null) ||
+                (settingValue.CColor == null && settingValue.CIdentifier == null && settingValue.CompColor == null))
             {
                 return null;
             }
@@ -129,7 +169,6 @@ namespace Ui.Modules.ModuleName.Implementations
                 false,
                 GndDef,
                 PowerDef,
-                JtagDef,
                 string.Empty,
                 string.Empty,
                 string.Empty,
@@ -140,7 +179,13 @@ namespace Ui.Modules.ModuleName.Implementations
                 SupplyVoltageMvDef,
                 IoVoltageMvDef,
                 StepsDef,
-                string.Empty);
+                string.Empty,
+                FrequencyDef,
+                CableCompensationDef,
+                TargetDef.Channel_A,
+                SlotDef.Slot_1,
+                AskForSvfSettingsDef,
+                false);
         }
 
         private byte[] GetBytesOfFile(string fileToUse)

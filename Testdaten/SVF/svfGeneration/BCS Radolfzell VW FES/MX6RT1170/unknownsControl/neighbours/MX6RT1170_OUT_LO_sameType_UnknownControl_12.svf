@@ -1,0 +1,11 @@
+//{"PinInformation":[{"PinName":"D10","MaskPosition":42,"PinPort":"GPIO_DISP_B1_06","ConnectedComponents":["TP610","R623"],"TestType":8},{"PinName":"T8","MaskPosition":334,"PinPort":"WAKEUP","ConnectedComponents":["R1109","TP1112"],"TestType":4},{"PinName":"F2","MaskPosition":286,"PinPort":"GPIO_EMC_B1_01","ConnectedComponents":["TP706","R701"],"TestType":4},{"PinName":"B2","MaskPosition":242,"PinPort":"GPIO_EMC_B1_23","ConnectedComponents":["TP829","R811"],"TestType":4},{"PinName":"H2","MaskPosition":244,"PinPort":"GPIO_EMC_B1_22","ConnectedComponents":["TP832","R812"],"TestType":4},{"PinName":"B3","MaskPosition":254,"PinPort":"GPIO_EMC_B1_17","ConnectedComponents":["TP835","R813"],"TestType":4},{"PinName":"A3","MaskPosition":270,"PinPort":"GPIO_EMC_B1_09","ConnectedComponents":["TP827","R809"],"TestType":4},{"PinName":"J2","MaskPosition":210,"PinPort":"GPIO_EMC_B1_39","ConnectedComponents":["TP830","R816"],"TestType":4},{"PinName":"C4","MaskPosition":250,"PinPort":"GPIO_EMC_B1_19","ConnectedComponents":["R817","TP833"],"TestType":4},{"PinName":"A2","MaskPosition":268,"PinPort":"GPIO_EMC_B1_10","ConnectedComponents":["TP828","R810"],"TestType":4},{"PinName":"J1","MaskPosition":212,"PinPort":"GPIO_EMC_B1_38","ConnectedComponents":["TP831","R815"],"TestType":4},{"PinName":"B4","MaskPosition":252,"PinPort":"GPIO_EMC_B1_18","ConnectedComponents":["TP834","R814"],"TestType":4}],"TestType":8}
+// FREQUENCY 10E6 HZ;
+STATE IDLE;
+ENDIR IDLE;
+ENDDR IDLE;
+SIR 4 TDI (02);
+SDR 336 TDI (AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA);
+SIR 4 TDI (04);
+SDR 336 TDI (AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)
+TDO (AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)
+MASK (400000000000400050005414000000140000000000000000000000000000000000000000040000000000);

@@ -1,4 +1,4 @@
-﻿namespace TestCoverage.Helper
+﻿namespace ProMik.SmartIct.TestCoverageDeterminer.Helper
 {
     public class IdentifierBlacklistContainer
     {
@@ -7,15 +7,15 @@
             string gndNetBlacklist,
             string powerNetIdentifier,
             string powerNetBlacklist,
-            string jtagNetIdentifier,
+            string jTAGPinIdentifier,
             string jtagNetBlacklist)
         {
             GndNetIdentifier = gndNetIdentifier;
             GndNetBlacklist = gndNetBlacklist;
             PowerNetIdentifier = powerNetIdentifier;
             PowerNetBlacklist = powerNetBlacklist;
-            JTAGNetIdentifier = jtagNetIdentifier;
             JTAGNetBlacklist = jtagNetBlacklist;
+            JTAGPinIdentifier = jTAGPinIdentifier;
         }
 
         public string GndNetIdentifier { get; }
@@ -26,8 +26,8 @@
 
         public string PowerNetBlacklist { get; }
 
-        public string JTAGNetIdentifier { get; }
-
         public string JTAGNetBlacklist { get; }
+
+        public string JTAGPinIdentifier { get; }
     }
 }

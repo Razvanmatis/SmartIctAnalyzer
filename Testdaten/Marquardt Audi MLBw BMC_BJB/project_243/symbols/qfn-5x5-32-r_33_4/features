@@ -1,0 +1,21 @@
+#
+#Units
+#
+UNITS=MM
+ID=110
+#
+#Num Features
+#
+F 5
+#
+#Feature symbol names
+#
+$0 r698.5
+#
+#Layer features
+#
+P -0.8001 0.8001 0 P 0 1 ;;ID=111
+P 0.8001 0.8001 0 P 0 1 ;;ID=112
+P 0.8001 -0.8001 0 P 0 1 ;;ID=113
+P -0.8001 -0.8001 0 P 0 1 ;;ID=114
+P 0 0 0 P 0 1 ;;ID=115

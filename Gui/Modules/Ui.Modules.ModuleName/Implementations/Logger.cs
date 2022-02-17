@@ -1,6 +1,6 @@
-﻿using Interfaces.Gui;
-using ProMik.Core.Interfaces.Events;
+﻿using ProMik.Core.Interfaces.Events;
 using ProMik.Core.Interfaces.Events.UIEvents;
+using ProMik.SmartIct.Interfaces.Gui;
 
 namespace Ui.Modules.ModuleName.Implementations
 {

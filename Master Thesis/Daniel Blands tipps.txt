@@ -1,0 +1,15 @@
+Hi Razvan,
+
+As a native speaker, there are many things I would have written differently.  I’m not going to go through each sentence, because I would honestly have written about half of the sentences differently.  With that said, it all still makes sense and is readable.  It’s just that it is written different to how a native speaker would write it.
+
+With that, there are some general points for your review.  These are things I saw a lot that could be updated.
+-	Try to avoid casual words (e.g. “popped up”) .
+-	Try to avoid emotional words (e.g. “comfortable”).
+-	Try to break up your sentences with commas.  A good trick is to read it in your head, and whenever you would make a short pause when speaking, then you would add a comma in the text.
+-	Generally (not always) when describing something with “which” or “that”, there is a rule to follow.  When using “which”, you put a comma before it.  When using “that”, you do not.  So if it feels like it needs a pause (adding a comma), use “which”, if it feels like it just continues (no comma), use “that”.  Example: “The JTAG is a serial interface, which is widely used for different field programmable gate arrays,” or “The JTAG is a serial interface that is widely used for different field programmable gate arrays,”.
+-	ZIP should always be all upper case.
+-	You use “quit” a lot, where it should be “quite”.  Maybe some are really meant to be “quit” (verlassen), but from most of what I saw, you meant “quite” (ziemlich).
+
+That covers about 80% of stuff I saw.  There are lots of other little smaller things, but as I said, I didn’t want to go through an re-write the whole thesis   They aren’t major anyway, just written different to what might normally be expected, but they still make sense.
+
+Anyway, hope that helps you.

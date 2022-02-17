@@ -95,12 +95,16 @@ namespace Ui.Modules.ModuleName.Helper
 
         public bool IsHorizontalOverlap(PositionHelper p)
         {
-            return (p.Center.X > UpperLeft.X && p.Center.X < UpperRight.X) || (MidTop.X > p.MidLeft.X && MidTop.X < p.MidRight.X) || (p.MidTop.X > MidLeft.X && p.MidTop.X < MidRight.X);
+            return (p.Center.X > UpperLeft.X && p.Center.X < UpperRight.X)
+                || (MidTop.X > p.MidLeft.X && MidTop.X < p.MidRight.X)
+                || (p.MidTop.X > MidLeft.X && p.MidTop.X < MidRight.X);
         }
 
         public bool IsVerticalOverlap(PositionHelper p)
         {
-            return (p.Center.Y > BottomLeft.Y && p.Center.Y < UpperLeft.Y) || (MidLeft.Y < p.MidBottom.Y && MidLeft.Y > p.MidTop.Y) || (p.MidLeft.Y < MidBottom.Y && p.MidLeft.Y > MidTop.Y);
+            return (p.Center.Y > BottomLeft.Y && p.Center.Y < UpperLeft.Y)
+                || (MidLeft.Y < p.MidBottom.Y && MidLeft.Y > p.MidTop.Y)
+                || (p.MidLeft.Y < MidBottom.Y && p.MidLeft.Y > MidTop.Y);
         }
 
         public PointCollection GetPointsForObject(PositionHelper p)

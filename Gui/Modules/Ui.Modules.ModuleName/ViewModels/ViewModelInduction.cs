@@ -1,5 +1,5 @@
 ﻿using System.Windows.Media;
-using Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
 using Ui.Modules.ModuleName.Interfaces;
 
 namespace Ui.Modules.ModuleName.ViewModels

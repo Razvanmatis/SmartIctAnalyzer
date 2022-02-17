@@ -1,12 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using Interfaces.PcbInvestigator;
+using ProMik.SmartIct.Interfaces.PcbInvestigator;
 
 namespace Ui.Modules.ModuleName.Helper
 {
     public static class DummyDataHandler
     {
-        public static void LogResults(IList<INetComponent> gndNets, IList<INetComponent> powerNets, IList<INetComponent> jtagNets, IList<IPCBComponent> pullDownObjects, IList<IPCBComponent> pullUpObjects, IList<IPCBComponent> icObjects)
+        public static void LogResults(
+            IList<INetComponent> gndNets,
+            IList<INetComponent> powerNets,
+            IList<INetComponent> jtagNets,
+            IList<IPCBComponent> pullDownObjects,
+            IList<IPCBComponent> pullUpObjects,
+            IList<IPCBComponent> icObjects)
         {
             Debug.WriteLine("GND nets:");
             foreach (var net in gndNets)
